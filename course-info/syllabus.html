@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -58,14 +61,14 @@ div.csl-indent {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-97a3f7bd44938f1eb9fffd7485dde69b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-efb90c8c32a7e296f136dc2d5dc02b84.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-97a3f7bd44938f1eb9fffd7485dde69b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -95,7 +98,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -325,6 +328,10 @@ window.Quarto = {
     <a class="nav-link" href="../content/computer-lab/index.html"> 
 <span class="menu-text">Práticas em R</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../content/assignment/index.html"> 
+<span class="menu-text">Atividades extraclasse</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -406,16 +413,16 @@ window.Quarto = {
 <section id="como-a-uc-funciona" class="level2">
 <h2 class="anchored" data-anchor-id="como-a-uc-funciona">Como a UC funciona</h2>
 <p>A UC ocupa 15 sextas-feiras, listadas no <a href="../index.html">Cronograma</a>: <strong>10 aulas presenciais</strong> no laboratório de informática e <strong>5 atividades extraclasse</strong> realizadas em casa, nas semanas em que não há aula presencial.</p>
-<p>Cada componente do cronograma reúne dois materiais:</p>
+<p>Cada semana do cronograma reúne exatamente dois materiais:</p>
 <ul>
 <li>uma <strong><a href="../content/pre-reading/index.html">Leitura prévia</a></strong>, curta e conceitual, para ler antes do encontro;</li>
-<li>uma <strong><a href="../content/computer-lab/index.html">Prática em R</a></strong>, onde a investigação acontece.</li>
+<li>uma <strong><a href="../content/computer-lab/index.html">Prática em R</a></strong>, onde a investigação acontece, nas semanas com aula presencial, ou uma <strong><a href="../content/assignment/index.html">Atividade extraclasse</a></strong> nas demais.</li>
 </ul>
 <p>Todos os materiais são independentes: cada um carrega seus próprios pacotes, importa seus próprios dados e roda do início ao fim em uma sessão nova do R. Nenhum conhecimento prévio de R é exigido.</p>
 </section>
 <section id="avaliação" class="level2">
 <h2 class="anchored" data-anchor-id="avaliação">Avaliação</h2>
-<p>Não há provas. Cada aula presencial e cada atividade extraclasse produz uma entrega, totalizando <strong>15 entregas</strong> ao longo do semestre. O que deve ser entregue está descrito no fim de cada Prática em R, no callout <strong>Entregue</strong>.</p>
+<p>Não há provas. Cada aula presencial e cada atividade extraclasse produz uma entrega, totalizando <strong>15 entregas</strong> ao longo do semestre. O que deve ser entregue está descrito no fim de cada Prática em R e de cada Atividade extraclasse, no callout <strong>Entregue</strong>.</p>
 <p>A <strong>Nota do Período Letivo (NL)</strong> é a média das 15 entregas. A aprovação depende do cumprimento simultâneo da <strong>frequência mínima de 75%</strong> e do aproveitamento acadêmico, conforme o Regulamento dos Cursos de Graduação da Unifesp.</p>
 <ul>
 <li><span class="math inline">\(NL \geq 6{,}0\)</span>: <strong>aprovado</strong>, com Nota Final <span class="math inline">\(NF = NL\)</span>.</li>

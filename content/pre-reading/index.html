@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -39,14 +42,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-97a3f7bd44938f1eb9fffd7485dde69b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-efb90c8c32a7e296f136dc2d5dc02b84.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-97a3f7bd44938f1eb9fffd7485dde69b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -277,6 +280,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../../content/computer-lab/index.html"> 
 <span class="menu-text">Práticas em R</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../content/assignment/index.html"> 
+<span class="menu-text">Atividades extraclasse</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -314,57 +321,75 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Cada leitura prévia é curta e apresenta a ideia central do encontro a partir de um problema concreto. Vale lê-la antes da aula: a Prática em R começa supondo que a pergunta já está na sua cabeça.</p>
-<p>As leituras são independentes entre si: você pode ler qualquer uma sem ter lido as anteriores.</p>
+<p>Cada semana do cronograma tem a sua leitura prévia. Ela apresenta a ideia central do encontro a partir de um problema concreto e deve ser lida <strong>antes</strong> da aula ou da atividade extraclasse correspondente: tanto a <a href="../../content/computer-lab/index.html">Prática em R</a> quanto a <a href="../../content/assignment/index.html">Atividade extraclasse</a> partem do princípio de que esse contexto teórico já foi compreendido.</p>
 <div class="catalogo-materiais">
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
-<th style="text-align: left;">Leitura prévia</th>
 <th style="text-align: left;">Semana no <a href="../../index.html">cronograma</a></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><strong>LP01</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-01-dados-unidades-variacao.html">Por que duas medidas nunca são iguais?</a></td>
-<td style="text-align: left;">Aulas 01 e 02</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-dados-unidades-variacao.html">Por que duas medidas nunca são iguais?</a></td>
+<td style="text-align: left;">Semana 1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>LP02</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-02-variabilidade-amostral.html">Por que a média muda de uma amostra para outra?</a></td>
-<td style="text-align: left;">Extraclasse 01 e Aula 03</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-populacao-amostra.html">O que 45 estações dizem sobre a região?</a></td>
+<td style="text-align: left;">Semana 2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>LP03</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-03-replicacao-unidades.html">O que conta como réplica?</a></td>
-<td style="text-align: left;">Aula 04 e Extraclasse 02</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-variabilidade-amostral.html">Por que a média muda de uma amostra para outra?</a></td>
+<td style="text-align: left;">Semana 3</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>LP04</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-04-modelo-nulo-evidencia.html">Uma diferença poderia surgir só por acaso?</a></td>
-<td style="text-align: left;">Aulas 05 e 06</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-erro-padrao-intervalo.html">Quanta confiança cabe numa única amostra?</a></td>
+<td style="text-align: left;">Semana 4</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>LP05</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-05-fontes-variacao-anova.html">Entre grupos ou dentro dos grupos?</a></td>
-<td style="text-align: left;">Extraclasse 03 e Aula 07</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-replicacao-unidades.html">O que conta como réplica?</a></td>
+<td style="text-align: left;">Semana 5</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>LP06</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-06-blocos-interacao.html">Controlar um gradiente, combinar dois fatores</a></td>
-<td style="text-align: left;">Aula 08 e Extraclasse 04</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-aleatorizacao-controle.html">Como montar um experimento que responde à pergunta?</a></td>
+<td style="text-align: left;">Semana 6</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>LP07</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-07-relacao-linear.html">Uma reta como processo gerador</a></td>
-<td style="text-align: left;">Aula 09</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-modelo-nulo-evidencia.html">Uma diferença poderia surgir só por acaso?</a></td>
+<td style="text-align: left;">Semana 7</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>LP08</strong></td>
-<td style="text-align: left;"><a href="../../content/pre-reading/pread-08-tratamento-covariavel.html">Tratamento e covariável no mesmo modelo</a></td>
-<td style="text-align: left;">Extraclasse 05 e Aula 10</td>
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-erros-poder.html">Quando o teste erra, e quanto ele enxerga</a></td>
+<td style="text-align: left;">Semana 8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-comparacoes-multiplas.html">Por que não comparar os grupos dois a dois?</a></td>
+<td style="text-align: left;">Semana 9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-fontes-variacao-anova.html">Entre grupos ou dentro dos grupos?</a></td>
+<td style="text-align: left;">Semana 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-blocos-interacao.html">Controlar um gradiente, combinar dois fatores</a></td>
+<td style="text-align: left;">Semana 11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-papeis-fator-bloco-covariavel.html">Você sorteia, agrupa ou mede?</a></td>
+<td style="text-align: left;">Semana 12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-relacao-linear.html">Uma reta como processo gerador</a></td>
+<td style="text-align: left;">Semana 13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-retas-paralelas.html">A mesma reta serve para os dois grupos?</a></td>
+<td style="text-align: left;">Semana 14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="../../content/pre-reading/pread-tratamento-covariavel.html">Tratamento e covariável no mesmo modelo</a></td>
+<td style="text-align: left;">Semana 15</td>
 </tr>
 </tbody>
 </table>
