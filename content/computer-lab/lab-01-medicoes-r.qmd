@@ -1,0 +1,272 @@
+---
+title: "Prática em R 01"
+subtitle: "Primeiras medições em R"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# Cinco poças, cinco temperaturas
+
+Você mediu a temperatura da água em cinco poças de maré de um costão rochoso e anotou:
+
+> 25,4; 25,9; 24,8; 26,3; 25,1 °C
+
+Cinco números diferentes para a mesma coisa. Nesta prática vamos colocar essas medidas no R,
+descrever o que elas têm em comum, ver como elas se distribuem e, no fim, pedir ao computador que
+gere novas medidas como se tivéssemos voltado ao costão.
+
+Abra o RStudio, crie um script novo e comece por aqui:
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+A primeira linha carrega o conjunto de pacotes que usaremos o semestre inteiro. A segunda define
+a aparência dos gráficos, para não termos de repetir isso depois.
+
+::: {.callout-tip appearance="minimal" collapse="true" title="Dica"}
+Se aparecer `there is no package called 'tidyverse'`, instale-o uma única vez com
+`install.packages("tidyverse")` e execute o `library()` novamente.
+:::
+
+# Vamos guardar as medidas
+
+No R, guardamos valores dentro de **objetos**. A seta `<-` faz essa atribuição, e `c()` junta
+vários números em um **vetor**.
+
+```{r}
+temperatura <- c(25.4, 25.9, 24.8, 26.3, 25.1)
+temperatura
+```
+
+Note que no R o separador decimal é o ponto, não a vírgula.
+
+Com o vetor criado, podemos perguntar coisas a ele:
+
+```{r}
+length(temperatura)
+mean(temperatura)
+sd(temperatura)
+```
+
+`length()` conta quantos valores existem, `mean()` calcula a média e `sd()` mede o quanto os
+valores se espalham em torno dela.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+A média fica perto de 25,5 °C, mas nenhuma poça mediu exatamente isso. A média é um resumo do
+conjunto, não uma das medidas.
+:::
+
+# Uma poça tem mais de uma característica
+
+Na prática você não anota só a temperatura. Anota também a profundidade, o sombreamento, o
+identificador da poça. Para isso precisamos de uma **tabela**, onde cada linha é uma poça e cada
+coluna é uma característica medida nela.
+
+```{r}
+pocas <- tibble(
+  poca = 1:5,
+  temperatura = c(25.4, 25.9, 24.8, 26.3, 25.1),
+  profundidade = c(12, 8, 20, 6, 15),
+  sombreamento = c("baixo", "baixo", "alto", "baixo", "médio")
+)
+
+pocas
+```
+
+Cinco linhas, cinco poças. A saída mostra também o tipo de cada coluna: `<dbl>` para números com
+casas decimais, `<int>` para inteiros, `<chr>` para texto.
+
+Para ver a estrutura de uma tabela rapidamente, use `glimpse()`:
+
+```{r}
+glimpse(pocas)
+```
+
+# Como escolher só uma parte da tabela?
+
+Duas operações resolvem quase tudo no começo: `filter()` escolhe **linhas** e `select()` escolhe
+**colunas**.
+
+```{r}
+pocas |> filter(profundidade > 10)
+```
+
+O símbolo `|>` é o **pipe**: ele leva o valor da esquerda para o primeiro argumento da função à
+direita. Leia como "tome `pocas`, **e então** filtre".
+
+```{r}
+pocas |> select(poca, temperatura)
+```
+
+Para criar uma coluna nova, use `mutate()`:
+
+```{r}
+pocas |> mutate(diferenca = temperatura - mean(temperatura))
+```
+
+A nova coluna mostra quanto cada poça se afasta da média: valores negativos são poças mais frias
+que a média, positivos são mais quentes.
+
+::: {.callout-tip appearance="minimal" title="Modifique"}
+Troque `profundidade > 10` por `sombreamento == "baixo"` e execute novamente. Repare que comparação de
+texto usa `==` e aspas.
+:::
+
+# As poças sombreadas são mais frias?
+
+Cinco poças são poucas, mas o procedimento é o mesmo com quinhentas. Para resumir por grupo,
+combine `group_by()` com `summarise()`:
+
+```{r}
+pocas |>
+  group_by(sombreamento) |>
+  summarise(
+    n = n(),
+    media = mean(temperatura),
+    desvio = sd(temperatura)
+  )
+```
+
+O `desvio` aparece como `NA` onde há uma única poça: não é possível medir espalhamento com um
+único valor.
+
+# O que o gráfico mostra?
+
+Números resumem; gráficos revelam. Todo gráfico do `ggplot2` tem três partes: os dados, o
+mapeamento entre variáveis e eixos (`aes`) e a forma de desenhar (`geom_`).
+
+```{r}
+#| label: fig-lab01-dispersao
+#| fig-cap: "Temperatura em função da profundidade nas cinco poças, com o sombreamento indicado pela cor."
+#| fig-height: 3.4
+
+ggplot(pocas, aes(x = profundidade, y = temperatura, colour = sombreamento)) +
+  geom_point(size = 4) +
+  labs(x = "Profundidade (cm)", y = "Temperatura (°C)", colour = "Sombreamento")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Com cinco pontos, qualquer padrão aparente pode ser coincidência. A pergunta certa a fazer diante
+deste gráfico é: **quantas poças eu precisaria medir para confiar no que estou vendo?**
+:::
+
+# E se o computador gerasse as medidas?
+
+Aqui entra a ferramenta que usaremos o semestre inteiro. A função `rnorm()` sorteia valores em
+torno de um centro, com um espalhamento que você define:
+
+```{r}
+rnorm(5, mean = 25.5, sd = 0.6)
+```
+
+Os três argumentos são explícitos: **quantos** valores gerar, qual a **média** e qual o
+**desvio-padrão**.
+
+Execute essa linha algumas vezes seguidas. Cada execução produz cinco números diferentes, e é essa
+a ideia de "voltar ao costão e medir outras cinco poças". Os números desta página também mudam a cada vez
+que o material é gerado.
+
+::: {.callout-tip appearance="minimal" collapse="true" title="Dica"}
+Quando é preciso que um sorteio se repita exatamente igual (para conferir um resultado com um
+colega, por exemplo), o R oferece a função `set.seed()`, que fixa o ponto de partida do sorteio:
+
+```r
+set.seed(1)
+rnorm(5, mean = 25.5, sd = 0.6)
+```
+
+Não vamos usá-la nesta unidade curricular. A variação entre execuções é justamente o que queremos
+observar.
+:::
+
+Agora vamos gerar trinta poças e olhar a distribuição delas:
+
+```{r}
+#| label: fig-lab01-histograma
+#| fig-cap: "Distribuição da temperatura em trinta poças simuladas com média 25,5 °C e desvio-padrão 0,6 °C."
+#| fig-height: 3.2
+
+simuladas <- tibble(
+  poca = 1:30,
+  temperatura = rnorm(30, mean = 25.5, sd = 0.6)
+)
+
+ggplot(simuladas, aes(x = temperatura)) +
+  geom_histogram(bins = 12, fill = "#0072B2", colour = "white") +
+  labs(x = "Temperatura (°C)", y = "Número de poças")
+```
+
+```{r}
+simuladas |>
+  summarise(
+    media = mean(temperatura),
+    desvio = sd(temperatura)
+  )
+```
+
+A média e o desvio calculados a partir das trinta poças ficam **perto** dos valores que pedimos,
+mas não idênticos. Isso não é erro: é a variação amostral de que trata a leitura prévia.
+
+::: {.callout-tip appearance="minimal" title="Modifique"}
+Execute o bloco acima trocando `sd = 0.6` por `sd = 2`. Depois volte para `0.6` e troque
+`30` por `300`.
+
+Para cada mudança, observe:
+
+- o histograma ficou mais largo ou mais estreito?
+- a média calculada ficou mais perto ou mais longe de 25,5?
+:::
+
+# Duas amostras do mesmo costão
+
+Uma última pergunta, que abre a próxima aula: se o costão é o mesmo, duas amostras produzem a mesma
+média?
+
+```{r}
+amostra_a <- rnorm(30, mean = 25.5, sd = 0.6)
+amostra_b <- rnorm(30, mean = 25.5, sd = 0.6)
+
+media_a <- mean(amostra_a)
+media_b <- mean(amostra_b)
+
+c(media_a, media_b)
+```
+
+```{r}
+#| echo: false
+dif_txt <- formatC(abs(media_a - media_b), format = "f", digits = 2, decimal.mark = ",")
+```
+
+Mesmo processo gerador, médias diferentes: nesta execução elas ficaram separadas por `r dif_txt` °C. Nenhuma das duas é a média "verdadeira" de 25,5 e, com
+dados reais, nunca saberíamos qual está mais perto.
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-01-medicoes.R` que rode do início ao fim em uma sessão nova do R e contenha:
+
+1. a tabela `pocas` com as cinco poças e o resumo por `sombreamento`;
+2. o gráfico de dispersão da temperatura em função da profundidade;
+3. uma simulação de 30 poças com `sd = 0.6` e outra com `sd = 2`, cada uma com seu histograma;
+4. em comentários (`#`), duas a três frases respondendo: **o que muda no histograma quando o
+   desvio-padrão aumenta, e por que a média calculada não é exatamente 25,5?**
+:::
+
+# Para saber mais
+
+- [Estrutura da linguagem R](https://fcopf.github.io/mead/content/introducao-r/estrutura-linguagem.html) (MEAD)
+- [Gráficos em camadas com ggplot2](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html) (MEAD)

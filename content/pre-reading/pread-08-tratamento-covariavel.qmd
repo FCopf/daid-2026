@@ -1,0 +1,181 @@
+---
+title: "Leitura prévia 08"
+subtitle: "Tratamento e covariável no mesmo modelo"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Os moluscos de fevereiro pesam menos. Ou não?
+
+Uma equipe coleta moluscos em um banco de areia em dois meses diferentes e mede a biomassa de cada
+indivíduo. A média de fevereiro é claramente menor que a de abril.
+
+Antes de falar em efeito do mês, uma pergunta: **os moluscos dos dois meses tinham o mesmo
+tamanho?**
+
+Biomassa cresce com o comprimento da concha. Se os indivíduos de fevereiro eram menores, parte da
+diferença (talvez toda ela) é uma diferença de tamanho, não de mês.
+
+O comprimento aqui é uma **covariável**: uma medida contínua, registrada em cada unidade, que
+afeta a resposta e não é o que queremos comparar.
+
+# Comparar em condições equivalentes
+
+A ideia central é simples: em vez de comparar as médias brutas, comparar os meses **em um mesmo
+comprimento de concha**.
+
+```{r}
+#| echo: false
+#| label: fig-pread08-ajuste
+#| fig-cap: "Biomassa em função do comprimento em dois meses. As linhas verticais tracejadas marcam o comprimento médio de cada mês; a linha cheia marca um comprimento comum aos dois."
+#| fig-alt: "Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita."
+#| fig-height: 3.8
+
+fev <- tibble(mes = "fevereiro", comprimento = rnorm(60, 18, 2.5))
+abr <- tibble(mes = "abril",     comprimento = rnorm(60, 24, 2.5))
+
+moluscos <- bind_rows(fev, abr) |>
+  mutate(
+    biomassa = -1.2 + 0.11 * comprimento + if_else(mes == "abril", 0.20, 0) + rnorm(120, 0, 0.12),
+    mes = fct_relevel(mes, "fevereiro")
+  )
+
+medias_mes <- moluscos |>
+  group_by(mes) |>
+  summarise(comprimento_medio = mean(comprimento))
+
+comprimento_comum <- mean(medias_mes$comprimento_medio)
+
+ggplot(moluscos, aes(x = comprimento, y = biomassa, colour = mes)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
+  geom_vline(xintercept = medias_mes$comprimento_medio, linetype = "dashed", colour = "grey40") +
+  geom_vline(xintercept = comprimento_comum, linewidth = 0.8) +
+  scale_colour_manual(values = c(fevereiro = "#0072B2", abril = "#D55E00")) +
+  labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)", colour = "Mês")
+```
+
+A figura mostra o problema e a solução ao mesmo tempo. Os dois grupos ocupam faixas diferentes de
+comprimento, e por isso a comparação das médias brutas mistura mês e tamanho. Mas as duas retas
+podem ser lidas em um comprimento comum, e a distância vertical entre elas nesse ponto é o
+**efeito ajustado do mês**.
+
+::: {.callout-note appearance="minimal" title="Análise de covariância"}
+A **ANCOVA** ajusta um modelo com um fator categórico e uma covariável contínua:
+
+$$\text{biomassa} = \beta_0 + \beta_1 \times \text{comprimento} + \text{efeito do mês} + \varepsilon$$
+
+Ela responde a duas perguntas ao mesmo tempo: como a resposta varia com a covariável, e quanto os
+grupos diferem **depois de descontar** essa variação.
+:::
+
+::: {.callout-warning appearance="minimal" title="Escolha um valor sustentado pelos dois grupos"}
+Comparar os meses em um comprimento que só um deles apresenta é extrapolar. O ponto de comparação
+precisa estar na faixa em que **ambos** os grupos foram observados.
+:::
+
+# Retas paralelas ou não?
+
+O modelo acima supõe que a biomassa cresce com o comprimento **na mesma taxa** nos dois meses:
+retas paralelas, deslocadas verticalmente. Essa suposição pode ser falsa, e precisa ser verificada
+antes de interpretar o efeito do mês.
+
+```{r}
+#| echo: false
+#| label: fig-pread08-paralelas
+#| fig-cap: "Dois cenários possíveis. À esquerda, o modelo aditivo com retas paralelas. À direita, inclinações diferentes entre os grupos."
+#| fig-alt: "Dois painéis. No painel da esquerda as duas retas são paralelas; no da direita elas divergem, com a reta de abril subindo mais rápido."
+#| fig-height: 3.4
+
+x <- runif(120, 14, 30)
+grupo <- rep(c("fevereiro", "abril"), each = 60)
+
+cen <- bind_rows(
+  tibble(cenario = "Retas paralelas", mes = grupo, comprimento = x,
+         biomassa = -1.2 + 0.11 * x + if_else(grupo == "abril", 0.20, 0) + rnorm(120, 0, 0.15)),
+  tibble(cenario = "Inclinações diferentes", mes = grupo, comprimento = x,
+         biomassa = -1.2 + if_else(grupo == "abril", 0.16, 0.07) * x + rnorm(120, 0, 0.15))
+) |>
+  mutate(
+    mes = fct_relevel(mes, "fevereiro"),
+    cenario = fct_relevel(cenario, "Retas paralelas")
+  )
+
+ggplot(cen, aes(x = comprimento, y = biomassa, colour = mes)) +
+  geom_point(alpha = 0.5, size = 1.4) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
+  facet_wrap(~ cenario) +
+  scale_colour_manual(values = c(fevereiro = "#0072B2", abril = "#D55E00")) +
+  labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)", colour = "Mês")
+```
+
+À esquerda, a distância entre as retas é a mesma em qualquer comprimento: existe **um** efeito do
+mês, e informá-lo faz sentido.
+
+À direita, as retas divergem. O efeito do mês depende do comprimento: é pequeno nos indivíduos
+menores e grande nos maiores. Isso é uma **interação** entre a covariável e o fator, e nesse caso
+não existe um único "efeito do mês" a relatar: é preciso descrever como ele muda ao longo da
+covariável.
+
+Na prática, portanto, ajusta-se primeiro o modelo com interação, verifica-se se ela é necessária e,
+se não for, segue-se com o modelo aditivo, mais simples de interpretar.
+
+# A mesma família de modelos
+
+Vale notar o que aconteceu ao longo do semestre. Comparar dois grupos, comparar quatro grupos,
+ajustar uma reta e agora combinar grupo e reta. Tudo isso são variações de uma mesma estrutura:
+
+$$\text{resposta} = \text{parte sistemática} + \text{variação residual}$$
+
+O que muda é quem entra na parte sistemática. Só categorias, e temos ANOVA. Só uma variável
+contínua, e temos regressão. Os dois juntos, e temos ANCOVA. As ferramentas de diagnóstico
+(resíduos, pressupostos, partição da variação) são as mesmas nos três casos.
+
+# Ajustar não é aleatorizar
+
+Um ponto que decide o alcance das conclusões.
+
+Se o mês tivesse sido **sorteado** para cada molusco (o que é impossível, mas serve de referência),
+qualquer outra diferença entre os grupos estaria distribuída ao acaso, e o efeito ajustado
+poderia ser lido como efeito causal.
+
+Como os meses são condições observadas, os grupos podem diferir em muitas outras coisas:
+temperatura da água, disponibilidade de alimento, fase reprodutiva, profundidade de coleta. Ajustar
+pelo comprimento remove **apenas** a diferença devida ao comprimento.
+
+::: {.callout-warning appearance="minimal" title="O que o ajuste estatístico faz e não faz"}
+Ajustar por uma covariável torna a comparação mais justa em relação **àquela** variável.
+
+Não substitui a aleatorização e não elimina as demais diferenças entre grupos que ninguém mediu.
+Em estudos observacionais, o resultado é uma associação ajustada, não uma demonstração de causa.
+:::
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Se os dois meses tivessem exatamente a mesma distribuição de comprimentos, o efeito ajustado
+  seria muito diferente da diferença bruta entre as médias?
+- Um pesquisador ajusta por uma covariável que foi **medida depois** do tratamento e pode ter sido
+  afetada por ele. Que problema isso cria?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html) (MEAD)
+
+:::

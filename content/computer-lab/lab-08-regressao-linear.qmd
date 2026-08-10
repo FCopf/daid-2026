@@ -1,0 +1,277 @@
+---
+title: "Prática em R 08"
+subtitle: "Uma reta para dados costeiros"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# Quanto pesa um molusco de 20 mm?
+
+Moluscos maiores pesam mais, e isso ninguém duvida. A pergunta útil é outra: **quanto** a biomassa
+aumenta por milímetro de concha, e com que precisão conseguimos prever a biomassa de um indivíduo
+a partir do seu comprimento.
+
+Nesta prática o preditor é contínuo: não há grupos a comparar, e sim uma relação a descrever.
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Vamos abrir os dados
+
+```{r}
+url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Clams.txt"
+
+moluscos <- read_tsv(url, show_col_types = FALSE)
+
+glimpse(moluscos)
+```
+
+As colunas que interessam são `LENGTH` (comprimento da concha, em mm) e `AFD` (biomassa livre de
+cinzas, em gramas). `MONTH` indica o mês de coleta.
+
+Para começar com uma pergunta simples, vamos ficar em um mês só:
+
+```{r}
+abril <- moluscos |> filter(MONTH == 4)
+
+nrow(abril)
+```
+
+# Como as duas variáveis se relacionam?
+
+```{r}
+#| label: fig-lab08-dispersao
+#| fig-cap: "Biomassa em função do comprimento da concha, em abril."
+#| fig-height: 3.4
+
+ggplot(abril, aes(x = LENGTH, y = AFD)) +
+  geom_point(alpha = 0.6, colour = "#0072B2") +
+  labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+A relação é claramente crescente. Mas ela é **reta**?
+
+Olhe os extremos: nos moluscos pequenos os pontos ficam quase colados no eixo; nos grandes, eles
+disparam. E o espalhamento vertical cresce da esquerda para a direita.
+:::
+
+# Ajustando uma reta assim mesmo
+
+A função `lm()` ajusta um modelo linear. A fórmula tem a resposta à esquerda e o preditor à direita:
+
+```{r}
+modelo <- lm(AFD ~ LENGTH, data = abril)
+
+summary(modelo)
+```
+
+Na tabela de coeficientes, `(Intercept)` é o valor esperado quando o comprimento é zero e `LENGTH`
+é a **inclinação**: quanto a biomassa esperada muda a cada milímetro a mais de concha.
+
+```{r}
+coef(modelo)
+confint(modelo)
+```
+
+O `R-squared` da saída indica a proporção da variação da biomassa que acompanha a variação do
+comprimento. Aqui ele é alto.
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Um $R^2$ alto convida a parar por aqui. Não pare: ele mede o quanto os pontos estão perto da reta,
+não se a **reta** é a forma certa.
+
+O intercepto, aliás, é negativo: um molusco de comprimento zero teria biomassa negativa. Sinal de
+que o modelo está sendo forçado fora da faixa em que faz sentido.
+:::
+
+# O que os resíduos dizem?
+
+```{r}
+#| label: fig-lab08-residuos-bruto
+#| fig-cap: "Resíduos do modelo ajustado na escala original, em função dos valores ajustados."
+#| fig-height: 3.2
+
+diagnostico <- tibble(
+  ajustado = fitted(modelo),
+  residuo = residuals(modelo)
+)
+
+ggplot(diagnostico, aes(x = ajustado, y = residuo)) +
+  geom_hline(yintercept = 0, linewidth = 0.6) +
+  geom_point(alpha = 0.6, colour = "#D55E00") +
+  labs(x = "Biomassa ajustada (g)", y = "Resíduo (g)")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Dois problemas aparecem de uma vez:
+
+- os resíduos formam uma **curva**, e não uma nuvem sem padrão: a relação não é reta;
+- o espalhamento **cresce** da esquerda para a direita, em forma de funil: a variação não é
+  constante.
+
+Nenhum dos dois seria detectável olhando apenas o $R^2$.
+:::
+
+# E se mudarmos a escala?
+
+Relações entre tamanho e massa em organismos costumam ser multiplicativas: a massa cresce
+aproximadamente com uma potência do comprimento. Tomar o logaritmo dos dois lados transforma essa
+relação em uma reta.
+
+Os dados já trazem as colunas transformadas, `LNLENGTH` e `LNAFD`, mas podemos criá-las para
+deixar claro o que está sendo feito:
+
+```{r}
+abril <- abril |>
+  mutate(
+    log_comprimento = log(LENGTH),
+    log_biomassa = log(AFD)
+  )
+```
+
+```{r}
+#| label: fig-lab08-log
+#| fig-cap: "As mesmas observações na escala logarítmica, com a reta ajustada."
+#| fig-height: 3.4
+
+ggplot(abril, aes(x = log_comprimento, y = log_biomassa)) +
+  geom_point(alpha = 0.6, colour = "#0072B2") +
+  geom_smooth(method = "lm", se = FALSE, colour = "black", linewidth = 0.8) +
+  labs(x = "log do comprimento (mm)", y = "log da biomassa (g)")
+```
+
+```{r}
+modelo_log <- lm(log_biomassa ~ log_comprimento, data = abril)
+
+summary(modelo_log)
+```
+
+```{r}
+#| label: fig-lab08-residuos-log
+#| fig-cap: "Resíduos do modelo ajustado na escala logarítmica."
+#| fig-height: 3.2
+
+diagnostico_log <- tibble(
+  ajustado = fitted(modelo_log),
+  residuo = residuals(modelo_log)
+)
+
+ggplot(diagnostico_log, aes(x = ajustado, y = residuo)) +
+  geom_hline(yintercept = 0, linewidth = 0.6) +
+  geom_point(alpha = 0.6, colour = "#D55E00") +
+  labs(x = "log da biomassa ajustada", y = "Resíduo")
+```
+
+::: {.callout-tip appearance="minimal" title="Compare"}
+Coloque os dois gráficos de resíduos lado a lado. A curvatura sumiu? E o funil?
+
+Compare também os dois $R^2$. O ganho no ajuste é grande, mas o argumento mais forte a favor da
+escala logarítmica está nos resíduos, não no $R^2$.
+:::
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Na escala logarítmica, a inclinação tem uma leitura direta: ela é o **expoente** da relação entre
+comprimento e biomassa.
+
+Um valor próximo de 3 é o que se espera de uma relação em que a massa acompanha o volume. O valor
+estimado aqui está perto disso?
+:::
+
+# Prevendo a biomassa de um novo molusco
+
+Com o modelo ajustado, `predict()` calcula o valor esperado para comprimentos escolhidos por você:
+
+```{r}
+novos <- tibble(log_comprimento = log(c(10, 20, 30)))
+
+previsao <- predict(modelo_log, newdata = novos, interval = "confidence")
+
+previsao
+```
+
+Os valores estão na escala logarítmica. Para voltar à escala original, aplique `exp()`:
+
+```{r}
+exp(previsao)
+```
+
+::: {.callout-warning appearance="minimal" title="Não peça previsões fora da faixa observada"}
+```{r}
+range(abril$LENGTH)
+```
+
+Prever a biomassa de um molusco de 60 mm seria supor que a mesma relação continua onde nenhum
+indivíduo foi medido. Os dados não sustentam essa suposição.
+:::
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-08-regressao.R` que rode em sessão nova e contenha:
+
+1. o gráfico de dispersão e o modelo na escala original, com o respectivo gráfico de resíduos;
+2. o modelo na escala logarítmica, com gráfico e resíduos;
+3. a previsão da biomassa para comprimentos de 10, 20 e 30 mm, na escala original;
+4. em comentários, quatro a cinco frases respondendo: **o que o gráfico de resíduos revelou que o
+   $R^2$ escondia, e como se interpreta a inclinação estimada na escala logarítmica.**
+:::
+
+# Atividade extraclasse 05: A relação é a mesma em todos os grupos?
+
+Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
+entrega própria.
+
+Até aqui usamos um mês só. O conjunto completo tem seis:
+
+```{r}
+moluscos |> count(MONTH)
+```
+
+Vamos olhar dois deles ao mesmo tempo:
+
+```{r}
+#| label: fig-lab08-extra
+#| fig-cap: "Relação entre comprimento e biomassa, na escala logarítmica, em dois meses."
+#| fig-height: 3.6
+
+dois_meses <- moluscos |>
+  filter(MONTH %in% c(2, 4)) |>
+  mutate(mes = factor(MONTH))
+
+ggplot(dois_meses, aes(x = LNLENGTH, y = LNAFD, colour = mes)) +
+  geom_point(alpha = 0.5, size = 1.5) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
+  labs(x = "log do comprimento", y = "log da biomassa", colour = "Mês")
+```
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `ae-05-dois-meses.R` que rode em sessão nova e contenha:
+
+1. o ajuste de `lm(LNAFD ~ LNLENGTH)` **separadamente** em cada um dos dois meses, com os
+   coeficientes de cada um;
+2. o gráfico acima, com as duas retas;
+3. uma comparação das duas inclinações e dos dois interceptos;
+4. em comentários, três a quatro frases respondendo: **as duas retas parecem paralelas? Se sim,
+   o que isso significa biologicamente, e o que ainda diferencia os dois meses?** Escolha um
+   comprimento presente nos dois meses e calcule a diferença de biomassa esperada nesse ponto.
+:::
+
+# Para saber mais
+
+- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html) (MEAD)
+- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html) (MEAD)

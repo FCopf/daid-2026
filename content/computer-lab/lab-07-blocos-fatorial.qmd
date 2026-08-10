@@ -1,0 +1,305 @@
+---
+title: "Prática em R 07"
+subtitle: "Blocos e dois fatores"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# Dois problemas diferentes de delineamento
+
+O primeiro: você quer comparar três tipos de placa de assentamento, mas o costão tem um gradiente
+forte de altura que afeta muito o recrutamento. Como impedir que o gradiente esconda o efeito das
+placas?
+
+O segundo: você tem **dois** fatores que interessam de verdade e quer saber se o efeito de um
+depende do outro.
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Um costão com gradiente
+
+Vamos construir o experimento no computador, para saber exatamente qual é a verdade. Seis faixas
+de altura, três placas em cada faixa:
+
+```{r}
+experimento <- tibble(
+  bloco = rep(1:6, each = 3),
+  placa = rep(c("A", "B", "C"), times = 6)
+) |>
+  mutate(
+    media_esperada = 20 + 4 * bloco +
+      if_else(placa == "B", 2.5, 0) +
+      if_else(placa == "C", 5, 0),
+    recrutas = media_esperada + rnorm(18, mean = 0, sd = 1.2)
+  )
+
+experimento
+```
+
+Leia a linha da `media_esperada`. Ela diz três coisas, todas visíveis:
+
+- cada faixa acrescenta 4 recrutas em relação à anterior: é o gradiente;
+- a placa B tem 2,5 recrutas a mais que a A, e a C tem 5 a mais: é o efeito que queremos detectar;
+- o `rnorm()` acrescenta a variação que sobra.
+
+Repare na escala: o gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o
+efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer.
+
+```{r}
+#| label: fig-lab07-gradiente
+#| fig-cap: "Recrutamento nas seis faixas de altura. Dentro de cada faixa estão as três placas."
+#| fig-height: 3.4
+
+ggplot(experimento, aes(x = factor(bloco), y = recrutas, colour = placa)) +
+  geom_point(size = 3) +
+  labs(x = "Faixa de altura (bloco)", y = "Recrutas por placa", colour = "Placa")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+O gradiente domina o gráfico: a faixa 6 tem quase o dobro de recrutas da faixa 1.
+
+Dentro de cada faixa, porém, a ordem A → B → C se repete com regularidade. É esse padrão local que
+a análise precisa enxergar.
+:::
+
+# A análise que ignora o bloco
+
+```{r}
+sem_bloco <- aov(recrutas ~ placa, data = experimento)
+
+summary(sem_bloco)
+```
+
+O valor de p não indica efeito nenhum. E sabemos que o efeito existe: nós o colocamos ali.
+
+O motivo está no `Mean Sq` dos resíduos: ele é enorme, porque toda a variação entre faixas foi
+jogada no resíduo. A régua ficou grosseira demais para medir um efeito de 2,5 a 5 recrutas.
+
+# A análise que reconhece o bloco
+
+Basta somar o bloco à fórmula:
+
+```{r}
+com_bloco <- aov(recrutas ~ placa + factor(bloco), data = experimento)
+
+summary(com_bloco)
+```
+
+```{r}
+#| echo: false
+p_sem <- summary(sem_bloco)[[1]][["Pr(>F)"]][1]
+p_com <- summary(com_bloco)[[1]][["Pr(>F)"]][1]
+qm_sem <- summary(sem_bloco)[[1]][["Mean Sq"]][2]
+qm_com <- summary(com_bloco)[[1]][["Mean Sq"]][3]
+
+p_sem_txt <- if (p_sem < 0.001) "menor que 0,001" else formatC(p_sem, format = "f", digits = 3, decimal.mark = ",")
+p_com_txt <- if (p_com < 0.001) "menor que 0,001" else formatC(p_com, format = "f", digits = 3, decimal.mark = ",")
+qm_sem_txt <- formatC(qm_sem, format = "f", digits = 1, decimal.mark = ",")
+qm_com_txt <- formatC(qm_com, format = "f", digits = 1, decimal.mark = ",")
+```
+
+Nesta execução, o valor de p da linha `placa` passou de `r p_sem_txt` no primeiro modelo para
+`r p_com_txt` no segundo. O quadrado médio residual caiu de `r qm_sem_txt` para `r qm_com_txt`.
+
+::: {.callout-tip appearance="minimal" title="Compare"}
+Coloque as duas saídas lado a lado e repare em um detalhe decisivo:
+
+- a `Sum Sq` da linha `placa` é **exatamente a mesma** nos dois modelos;
+- o que mudou foi a `Sum Sq` dos resíduos, que caiu drasticamente.
+
+Nenhum dado novo foi coletado. A variação do gradiente apenas deixou o resíduo e passou a ser
+atribuída ao bloco, e o mesmo efeito de placa se tornou detectável.
+:::
+
+::: {.callout-tip appearance="minimal" title="Modifique"}
+Troque `4 * bloco` por `0.5 * bloco` (gradiente fraco) e execute os dois modelos novamente.
+
+Com um gradiente fraco, o bloco ainda faz diferença? O que isso sugere sobre quando vale a pena
+bloquear?
+:::
+
+::: {.callout-note appearance="minimal" title="O bloco não é um resultado"}
+O bloco entra no modelo para retirar variação conhecida do resíduo, não para ser interpretado.
+
+Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difere da faixa 1" seria
+descrever o costão, não o experimento.
+:::
+
+# Agora, dois fatores de interesse
+
+O segundo problema muda de natureza. Um experimento em mesocosmos cruzou dois fatores: presença de
+algas (dois níveis) e tipo de nutriente adicionado (três níveis).
+
+```{r}
+url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Biodiversity.txt"
+
+biodiv <- read_tsv(url, show_col_types = FALSE)
+
+nrow(biodiv)
+n_distinct(biodiv$MU)
+```
+
+São 108 linhas, mas apenas 36 mesocosmos: cada um foi medido três vezes. O mesocosmo é a unidade
+experimental, então resumimos as três medidas antes de analisar:
+
+```{r}
+mesocosmos <- biodiv |>
+  group_by(MU, Treatment, Nutrient) |>
+  summarise(concentracao = mean(Concentration), .groups = "drop")
+
+mesocosmos |> count(Treatment, Nutrient)
+```
+
+Seis mesocosmos em cada uma das seis combinações, em um fatorial 2 × 3 equilibrado.
+
+# Como ficam as seis combinações?
+
+```{r}
+resumo <- mesocosmos |>
+  group_by(Treatment, Nutrient) |>
+  summarise(
+    media = mean(concentracao),
+    desvio = sd(concentracao),
+    .groups = "drop"
+  )
+
+resumo
+```
+
+```{r}
+#| label: fig-lab07-interacao
+#| fig-cap: "Concentração média em cada combinação de tratamento e nutriente. As linhas ligam as médias de um mesmo nutriente."
+#| fig-height: 3.6
+
+ggplot(resumo, aes(x = Treatment, y = media, colour = Nutrient, group = Nutrient)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 3) +
+  labs(x = "Tratamento", y = "Concentração média", colour = "Nutriente")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+As três linhas são paralelas?
+
+Se fossem, o efeito de adicionar algas seria o mesmo para os três nutrientes, e faria sentido
+resumi-lo em um único número. Não é o caso aqui.
+:::
+
+# O modelo com dois fatores
+
+Na fórmula, `+` combina os fatores sem interação e `*` acrescenta o termo de interação:
+
+```{r}
+aditivo <- aov(concentracao ~ Treatment + Nutrient, data = mesocosmos)
+
+summary(aditivo)
+```
+
+```{r}
+com_interacao <- aov(concentracao ~ Treatment * Nutrient, data = mesocosmos)
+
+summary(com_interacao)
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Compare os dois resíduos. No modelo aditivo, a estrutura que o gráfico mostrou (linhas que não são
+paralelas) ficou dentro do resíduo. Ao incluir a interação, essa parte passa a ser explicada e o
+`Mean Sq` residual despenca.
+
+A linha `Treatment:Nutrient` é a resposta à pergunta "o efeito das algas depende do nutriente?".
+:::
+
+::: {.callout-warning appearance="minimal" title="Com interação, o efeito principal engana"}
+No modelo com interação, a linha `Treatment` descreve um efeito **médio** de algas sobre os três
+nutrientes.
+
+Olhe o gráfico: com NH4 a adição de algas aumenta muito a concentração, com NO3 ela diminui.
+Relatar apenas a média desses comportamentos produziria uma descrição que não vale para nenhum dos
+nutrientes.
+:::
+
+# Os resíduos se comportam bem?
+
+```{r}
+#| label: fig-lab07-residuos
+#| fig-cap: "Resíduos do modelo com interação em função dos valores ajustados."
+#| fig-height: 3.2
+
+diagnostico <- tibble(
+  ajustado = fitted(com_interacao),
+  residuo = residuals(com_interacao)
+)
+
+ggplot(diagnostico, aes(x = ajustado, y = residuo)) +
+  geom_hline(yintercept = 0, linewidth = 0.6) +
+  geom_point(size = 2, alpha = 0.7, colour = "#0072B2") +
+  labs(x = "Valor ajustado", y = "Resíduo")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Os resíduos se espalham igualmente ao longo do eixo, ou o espalhamento cresce nos valores
+ajustados mais altos?
+
+Uma dispersão em forma de funil indica que a suposição de variação constante não se sustenta, e é
+comum quando a resposta é uma concentração que varia por ordens de grandeza.
+:::
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-07-blocos-fatorial.R` que rode em sessão nova e contenha:
+
+1. a simulação do costão com gradiente, o gráfico por faixa e os dois modelos (com e sem bloco);
+2. a mesma simulação com `0.5 * bloco`;
+3. a importação dos dados, a redução aos 36 mesocosmos e o gráfico das seis combinações;
+4. os modelos aditivo e com interação, e o gráfico de resíduos;
+5. em comentários, quatro a cinco frases respondendo: **por que o bloco torna o efeito da placa
+   detectável sem coletar dados novos, e por que não faz sentido relatar um único "efeito das
+   algas" neste experimento.**
+:::
+
+# Atividade extraclasse 04: Fator, bloco ou covariável?
+
+Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
+entrega própria.
+
+Cada situação abaixo descreve um estudo. Para cada uma, decida o papel de cada variável mencionada
+e justifique.
+
+1. Um experimento testa três rações para camarões em 12 tanques, montados em três salas com
+   temperaturas ligeiramente diferentes. **O que é a sala?**
+2. Um estudo compara o crescimento de mudas de mangue em dois substratos. A altura inicial de cada
+   muda foi medida antes do plantio. **O que é a altura inicial?**
+3. Um experimento cruza duas temperaturas e três salinidades para avaliar a sobrevivência de
+   larvas. **O que são temperatura e salinidade?**
+4. Um levantamento compara a riqueza de peixes entre dois estuários. A profundidade de cada ponto
+   de coleta foi registrada. **O que é a profundidade?**
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um documento curto ou um script `ae-04-papeis.R` com comentários, contendo:
+
+1. para cada uma das quatro situações: o papel de cada variável (fator, bloco ou covariável), a
+   justificativa em uma frase, e a fórmula do modelo em R que você usaria;
+2. uma simulação, adaptada da primeira parte desta prática, mostrando o efeito de tratar uma
+   variável de bloco como se ela não existisse (use a situação 1 como base);
+3. em comentários, duas a três frases respondendo: **o que distingue um bloco de um fator, se os
+   dois aparecem do mesmo jeito na fórmula do modelo?**
+:::
+
+# Para saber mais
+
+- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html) (MEAD)

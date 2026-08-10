@@ -1,0 +1,195 @@
+---
+title: "Leitura prévia 07"
+subtitle: "Uma reta como processo gerador"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Quando o preditor não tem níveis
+
+Até aqui as comparações envolviam categorias: duas dietas, quatro concentrações, dois substratos.
+Mas muitas perguntas nas Ciências do Mar não têm essa forma.
+
+*A riqueza de espécies diminui conforme a altura da estação em relação à maré?*
+
+Aqui não há grupos. A altura é uma medida contínua: cada estação tem o seu valor, e não existem
+"níveis de altura" a comparar. Precisamos de uma descrição que funcione para **qualquer** valor do
+preditor.
+
+# Uma reta descreve o centro, não as observações
+
+O ponto de partida é escrever como a resposta esperada muda com o preditor:
+
+$$\text{riqueza esperada} = \beta_0 + \beta_1 \times \text{altura}$$
+
+Os dois números têm significado concreto.
+
+O **intercepto** $\beta_0$ é a riqueza esperada quando a altura vale zero. Ele só é interpretável
+se o valor zero fizer sentido e estiver dentro da faixa observada.
+
+A **inclinação** $\beta_1$ é o que realmente responde à pergunta: quanto a riqueza esperada muda
+quando a altura aumenta em uma unidade. Seu sinal indica a direção, seu valor indica a magnitude, e
+sua unidade é a da resposta dividida pela do preditor, espécies por metro, por exemplo.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+A reta descreve o **centro** da resposta, não cada observação. Nenhuma estação precisa cair sobre
+a reta, assim como nenhum peixe precisa ter exatamente o comprimento médio do seu tanque.
+:::
+
+# O processo gerador tem duas partes
+
+Se a reta descrevesse tudo, todas as estações com a mesma altura teriam exatamente a mesma riqueza.
+Não é o que acontece. Falta a segunda metade do processo:
+
+$$\text{riqueza} = \underbrace{\beta_0 + \beta_1 \times \text{altura}}_{\text{parte sistemática}}
++ \underbrace{\varepsilon}_{\text{variação ao redor}}$$
+
+A parte sistemática diz onde está o centro para cada altura. O termo $\varepsilon$ representa tudo
+o que faz uma estação específica ficar acima ou abaixo desse centro.
+
+Escrever o modelo assim permite **gerar dados**: escolha valores de altura, calcule o centro para
+cada um, sorteie um desvio em torno dele. Isso é exatamente o que faremos no computador, e é o
+que torna a regressão um modelo generativo, e não apenas uma linha traçada sobre pontos.
+
+```{r}
+#| echo: false
+#| label: fig-pread07-mesma-reta
+#| fig-cap: "Dados gerados pela mesma reta (intercepto 6,7 e inclinação -2,9) com duas magnitudes de variação residual."
+#| fig-alt: "Dois painéis com a mesma reta descendente. No painel da esquerda os pontos ficam colados à reta; no da direita se espalham amplamente ao redor dela."
+#| fig-height: 3.4
+
+altura <- runif(60, -1.5, 2.5)
+
+dados <- bind_rows(
+  tibble(cenario = "Variação pequena", altura = altura,
+         riqueza = 6.7 - 2.9 * altura + rnorm(60, 0, 1)),
+  tibble(cenario = "Variação grande", altura = altura,
+         riqueza = 6.7 - 2.9 * altura + rnorm(60, 0, 4))
+) |>
+  mutate(cenario = fct_relevel(cenario, "Variação pequena"))
+
+ggplot(dados, aes(x = altura, y = riqueza)) +
+  geom_point(alpha = 0.6, colour = "#0072B2") +
+  geom_abline(intercept = 6.7, slope = -2.9, linewidth = 0.9) +
+  facet_wrap(~ cenario) +
+  labs(x = "Altura em relação à maré (m)", y = "Riqueza de espécies")
+```
+
+Os dois painéis vêm da **mesma** reta. A relação sistemática é idêntica; o que muda é o quanto as
+observações se afastam dela. À esquerda a relação salta aos olhos; à direita ela existe, mas exige
+mais dados para ser estimada com precisão.
+
+Guarde isso: uma inclinação forte e uma relação *aparentemente* forte não são a mesma coisa.
+
+# Da reta verdadeira à reta estimada
+
+No mundo real, $\beta_0$ e $\beta_1$ são desconhecidos. Temos apenas as estações medidas, e a
+partir delas estimamos uma reta.
+
+O critério mais usado é o dos **mínimos quadrados**: entre todas as retas possíveis, escolher a que
+torna mínima a soma dos quadrados das distâncias verticais entre cada ponto e a reta.
+
+Essas distâncias são os **resíduos**: o que sobrou depois de descontar a parte explicada pela
+altura. Elevá-las ao quadrado faz com que desvios grandes pesem desproporcionalmente, o que também
+significa que um único ponto muito afastado pode puxar a reta inteira.
+
+# Quanto da variação a reta explica?
+
+Assim como na análise de variância, a variação total da resposta se parte em duas: a parte descrita
+pela reta e a parte residual. A proporção descrita é o **coeficiente de determinação**:
+
+$$R^2 = \frac{\text{variação descrita pela reta}}{\text{variação total}}$$
+
+Um $R^2$ de 0,80 significa que 80% da variação na riqueza acompanha a variação na altura. Um valor
+alto indica pontos próximos da reta, não que a inclinação seja grande, nem que a altura *cause*
+a mudança na riqueza.
+
+::: {.callout-warning appearance="minimal" title="Duas informações diferentes"}
+A **inclinação** responde "quanto muda?". O **$R^2$** responde "quão bem a reta descreve os
+pontos?".
+
+É perfeitamente possível ter inclinação grande com $R^2$ baixo (efeito forte, muito ruído) e
+inclinação pequena com $R^2$ alto (efeito fraco, pouco ruído).
+:::
+
+# A forma linear é uma hipótese
+
+Ajustar uma reta é sempre possível. Ela ser adequada é outra questão, e o lugar de verificar isso
+é o gráfico de resíduos.
+
+```{r}
+#| echo: false
+#| label: fig-pread07-residuos
+#| fig-cap: "À esquerda, dados realmente lineares. À direita, uma relação curva à qual se ajustou uma reta. Abaixo, os resíduos correspondentes."
+#| fig-alt: "Quatro painéis em duas colunas. Na coluna da direita, o ajuste linear passa acima dos pontos nas extremidades e abaixo no meio, e o gráfico de resíduos mostra um padrão claro em forma de U."
+#| fig-height: 5
+
+x <- runif(80, 1, 10)
+linear <- tibble(tipo = "Relação linear", x = x, y = 2 + 1.2 * x + rnorm(80, 0, 1.5))
+curva  <- tibble(tipo = "Relação curva",  x = x, y = 2 + 0.25 * x^2 + rnorm(80, 0, 1.5))
+
+todos <- bind_rows(linear, curva) |> mutate(tipo = fct_relevel(tipo, "Relação linear"))
+
+p1 <- ggplot(todos, aes(x = x, y = y)) +
+  geom_point(alpha = 0.6, colour = "#0072B2") +
+  geom_smooth(method = "lm", se = FALSE, colour = "black", linewidth = 0.8) +
+  facet_wrap(~ tipo, scales = "free_y") +
+  labs(x = "Preditor", y = "Resposta")
+
+residuos <- bind_rows(
+  mutate(linear, residuo = residuals(lm(y ~ x, data = linear))),
+  mutate(curva,  residuo = residuals(lm(y ~ x, data = curva)))
+) |>
+  mutate(tipo = fct_relevel(tipo, "Relação linear"))
+
+p2 <- ggplot(residuos, aes(x = x, y = residuo)) +
+  geom_hline(yintercept = 0, linewidth = 0.6) +
+  geom_point(alpha = 0.6, colour = "#D55E00") +
+  facet_wrap(~ tipo) +
+  labs(x = "Preditor", y = "Resíduo")
+
+patchwork::wrap_plots(p1, p2, ncol = 1)
+```
+
+À esquerda, os resíduos se espalham sem padrão em torno de zero: a reta captou o que havia para
+captar. À direita, eles desenham um U nítido, sinal de que a relação não é reta, ainda que
+o $R^2$ possa ser alto.
+
+O gráfico de resíduos é a ferramenta mais barata e mais informativa de toda a modelagem. Ele revela
+curvatura, dispersão que cresce com o preditor e pontos isolados que dominam o ajuste.
+
+# Interpolar não é extrapolar
+
+Um último cuidado. A reta foi estimada dentro da faixa de alturas efetivamente medidas. Usá-la para
+prever a riqueza em uma altura muito além dessa faixa é supor que a relação continua a mesma onde
+ninguém observou, uma suposição que os dados não sustentam.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Duas praias têm a mesma inclinação estimada, mas $R^2$ de 0,25 e 0,85. O que difere entre elas?
+- Um gráfico de resíduos mostra um funil que abre para a direita. O que isso indica sobre a
+  suposição de variação constante?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html) (MEAD)
+- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html) (MEAD)
+
+:::

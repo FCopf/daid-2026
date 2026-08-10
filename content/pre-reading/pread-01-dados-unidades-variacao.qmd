@@ -1,0 +1,171 @@
+---
+title: "Leitura prévia 01"
+subtitle: "Por que duas medidas nunca são iguais?"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Duas medidas, dois números
+
+Você desce até um costão rochoso com um termômetro e mede a temperatura da água em uma poça de maré:
+**25,4 °C**. Um colega mede a poça ao lado: **25,9 °C**. Em uma terceira poça, medimos **24,8 °C**.
+
+Três medidas, três números. Nenhum errado.
+
+Essa é a situação mais comum em qualquer ciência que trabalha com o ambiente. Quando repetimos uma
+medida, quase nunca obtemos o mesmo valor. E a primeira decisão de quem analisa dados é justamente
+esta: **o que fazer com essa diferença?**
+
+Há duas saídas ruins. A primeira é tratar a variação como defeito: "meu método está impreciso".
+A segunda é ignorá-la e ficar só com a média: "a temperatura é 25,4 °C". Nesta unidade curricular
+seguimos por outro caminho: a variação é informação, e boa parte do trabalho consiste em descobrir
+**de onde ela vem**.
+
+# De onde vem a diferença entre duas medidas?
+
+Quando dois números diferem, pelo menos três coisas podem estar acontecendo ao mesmo tempo.
+
+**As poças são realmente diferentes.** Uma recebe mais sol, outra é mais funda, outra tem mais
+sombra de alga. Essa é uma diferença que existe no mundo, independentemente de você medi-la.
+
+**O instrumento não é perfeito.** O mesmo termômetro, na mesma poça, no mesmo instante, pode
+registrar 25,4 ou 25,5 °C. Essa diferença não está na poça: está na medição.
+
+**Você escolheu essas poças e não outras.** Havia dezenas de poças no costão e você mediu três.
+Outro grupo mediria outras três e chegaria a outros números.
+
+As três fontes se somam no valor que você anota na planilha. Separá-las não é um detalhe técnico:
+é o que permite dizer se um resultado significa alguma coisa.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Repare que a terceira fonte não tem nada a ver com o cuidado da medição. Mesmo com um instrumento
+perfeito e poças medidas sem nenhum erro, mediríamos três números diferentes em três poças
+diferentes.
+:::
+
+# O que é uma unidade amostral?
+
+Antes de anotar qualquer número, é preciso responder: **o número descreve o quê?**
+
+No exemplo, cada número descreve **uma poça de maré**. A poça é a *unidade amostral*: a coisa
+sobre a qual a medida é feita. Se estivéssemos pesando peixes, a unidade seria cada peixe. Se
+contássemos espécies em quadrados de 1 m² na praia, a unidade seria cada quadrado.
+
+Essa escolha parece óbvia, mas é o ponto onde mais se erra. Se você mede a temperatura da mesma
+poça cinco vezes, você tem cinco medidas, mas continua tendo **uma** poça. Cinco medidas de uma
+poça não são a mesma coisa que uma medida de cinco poças, ainda que a planilha fique com cinco
+linhas nos dois casos.
+
+# Como isso vira uma tabela?
+
+Uma tabela de dados organizada segue duas regras simples:
+
+- **cada linha é uma unidade amostral**;
+- **cada coluna é uma característica medida nessa unidade**.
+
+Para as poças de maré, ficaria assim:
+
+```{r}
+#| echo: false
+tibble(
+  poca = c(1, 2, 3, 4, 5),
+  temperatura = c(25.4, 25.9, 24.8, 26.3, 25.1),
+  profundidade = c(12, 8, 20, 6, 15),
+  sombreamento = c("baixo", "baixo", "alto", "baixo", "médio")
+) |>
+  knitr::kable(
+    col.names = c("Poça", "Temperatura (°C)", "Profundidade (cm)", "Sombreamento"),
+    caption = "Cinco poças de maré: cada linha é uma poça, cada coluna é uma característica medida."
+  )
+```
+
+Cinco linhas, cinco poças. A coluna `poca` não é uma medida: é o identificador da unidade. As
+outras três colunas são características dessa unidade: duas numéricas e uma categórica.
+
+Guardar os dados nesse formato não é preciosismo de organização. É ele que permite responder
+perguntas como "as poças mais fundas são mais frias?" sem reescrever nada.
+
+# O que a variação parece quando a vemos?
+
+Cinco números são poucos para enxergar um padrão. Com trinta poças, a figura abaixo mostra o que
+costuma acontecer: os valores se espalham em torno de um centro, a maioria perto dele e poucos
+bem longe.
+
+```{r}
+#| echo: false
+#| label: fig-pread01-espalhamento
+#| fig-cap: "Temperatura medida em trinta poças de maré. A linha marca a média das trinta medidas."
+#| fig-alt: "Gráfico de pontos mostrando trinta valores de temperatura espalhados ao longo do eixo, com uma linha vertical marcando a média das trinta medidas. A maioria dos pontos fica próxima da linha e poucos ficam nas extremidades."
+#| fig-height: 3.2
+
+pocas <- tibble(
+  poca = 1:30,
+  temperatura = rnorm(30, mean = 25.5, sd = 1.1)
+)
+
+ggplot(pocas, aes(x = temperatura, y = 0)) +
+  geom_vline(xintercept = mean(pocas$temperatura), linewidth = 1, colour = "#0072B2") +
+  geom_point(size = 3, alpha = 0.6) +
+  labs(x = "Temperatura (°C)", y = NULL) +
+  scale_y_continuous(breaks = NULL)
+```
+
+Duas coisas descrevem essa figura, e vamos usá-las o semestre inteiro:
+
+- **onde está o centro**: a média das trinta medidas;
+- **quão espalhados estão os valores** em torno desse centro.
+
+Um resumo que informa só o centro esconde metade do que aconteceu. Dizer "a temperatura média é
+25,5 °C" é verdadeiro tanto para poças que variam de 25,4 a 25,6 quanto para poças que variam de
+21 a 30. São situações completamente diferentes.
+
+# O que queremos saber e o que conseguimos medir
+
+Você mediu trinta poças. Mas a pergunta que interessa quase nunca é sobre essas trinta.
+
+A pergunta costuma ser sobre **todas as poças daquele costão**, inclusive as que você não visitou.
+Esse conjunto maior, sobre o qual queremos falar, é a **população**. As trinta poças medidas são
+a **amostra**.
+
+::: {.callout-note appearance="minimal" title="População e amostra"}
+A **população** é o conjunto de todas as unidades sobre as quais queremos concluir alguma coisa.
+A **amostra** é o subconjunto que efetivamente medimos.
+
+A média das trinta poças que você mediu é um número exato e conhecido. A média de todas as poças
+do costão é um número desconhecido, que a amostra permite **estimar**, nunca conhecer com certeza.
+:::
+
+Essa distinção explica por que a variação importa tanto. Se as poças fossem todas idênticas, uma
+medida bastaria e não haveria incerteza nenhuma. Como elas variam, cada amostra produz uma resposta
+um pouco diferente, e precisamos de um jeito de dizer quanto confiar nela.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Se você medisse a temperatura de outras trinta poças no mesmo costão, esperaria obter exatamente
+  a mesma média? E um valor muito diferente?
+- Um pesquisador mede vinte vezes a mesma poça e conclui que "a variação entre poças é muito
+  pequena". Onde está o problema?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Estrutura e tipos de dados](https://fcopf.github.io/mead/content/estrutura-dados/estrutura-tipo.html) (MEAD)
+- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html) (MEAD)
+
+:::

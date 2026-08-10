@@ -1,0 +1,76 @@
+project:
+  type: website
+  output-dir: _site
+  execute-dir: project
+  render:
+    - "index.qmd"
+    - "content/*/*.qmd"
+    - "course-info/*.qmd"
+    - "!prob-est-2026-main/"
+    - "!mead-main-EXAMPLE/"
+    - "!plans_rules/"
+    - "!prompts/"
+    - "!bobliografia/"
+    - "!.agents/"
+
+lang: pt-BR
+
+website:
+  page-navigation: true
+  title: "10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS"
+  description: "Cronograma, leituras prévias e práticas em R da UC 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS. Bict Mar, Unifesp."
+  site-url: "https://fcopf.github.io/daid-2026/"
+  repo-url: "https://github.com/FCopf/daid-2026"
+  search: true
+
+  page-footer:
+    right: "BACHARELADO INTERDISCIPLINAR EM CIÊNCIA E TECNOLOGIA DO MAR - Bict Mar - Unifesp"
+    left: "10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS"
+    background: "#296354"
+
+  navbar:
+    background: "#3b8170"
+    search: true
+    left:
+      - text: "Identificação da UC"
+        href: course-info/uc-id.qmd
+      - text: "Plano de Ensino"
+        href: course-info/syllabus.qmd
+      - text: "Cronograma"
+        href: index.qmd
+      - text: "Leituras prévias"
+        href: content/pre-reading/index.qmd
+      - text: "Práticas em R"
+        href: content/computer-lab/index.qmd
+    tools:
+      - icon: mortarboard-fill
+        href: "https://moodlegrad.unifesp.br/"
+        text: "Moodle Graduação"
+        target: "_blank"
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles/theme.scss]
+      dark: [cosmo, styles/theme-dark.scss]
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-copy: true
+    code-overflow: wrap
+    fig-align: center
+    fig-width: 7
+    fig-height: 4.5
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    df-print: default
+
+execute:
+  freeze: auto
+  cache: false
+  warning: false
+  message: false
+  error: false
+
+bibliography: references.bib
+link-citations: true

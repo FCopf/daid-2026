@@ -1,0 +1,193 @@
+---
+title: "Leitura prévia 06"
+subtitle: "Controlar um gradiente, combinar dois fatores"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Um costão que não é uniforme
+
+Você vai testar três tipos de placa de assentamento em um costão rochoso. O problema é que o
+costão tem um gradiente evidente: perto da linha d'água a superfície fica submersa quase o tempo
+todo; perto do topo, exposta ao sol por horas.
+
+Se você instalar as placas do tipo A na faixa inferior, as do tipo B no meio e as do tipo C no
+topo, o experimento está perdido antes de começar. Qualquer diferença entre as placas pode ser da
+placa ou da altura no costão, e **não há análise capaz de separar as duas coisas depois**.
+
+Esse é o problema do confundimento. E existem duas maneiras muito diferentes de lidar com um
+gradiente conhecido.
+
+# Primeira saída: aleatorizar
+
+Sortear a posição de cada placa espalha o gradiente entre os tratamentos. Nenhum tipo de placa
+fica sistematicamente mais alto que os outros, e o confundimento desaparece.
+
+Mas o gradiente continua ali. Ele passa a entrar na variação residual, aquela que serve de régua
+para julgar o efeito do tratamento. Com um gradiente forte, o resíduo fica grande e o efeito das
+placas fica difícil de enxergar, mesmo existindo.
+
+# Segunda saída: formar blocos
+
+A alternativa é reconhecer o gradiente e usá-lo a favor do experimento.
+
+Divida o costão em três faixas de altura. Dentro de **cada faixa**, instale uma placa de cada tipo,
+sorteando as posições. Cada faixa é um **bloco**: um conjunto de unidades parecidas entre si, onde
+todos os tratamentos aparecem.
+
+```{r}
+#| echo: false
+#| label: fig-pread06-blocos
+#| fig-cap: "Alocação em três blocos de altura. Dentro de cada faixa, os três tipos de placa aparecem uma vez, em posições sorteadas."
+#| fig-alt: "Diagrama com três faixas horizontais empilhadas, representando as alturas inferior, média e superior do costão. Em cada faixa há três quadrados coloridos, um para cada tipo de placa, em ordem diferente entre as faixas."
+#| fig-height: 3
+
+aloc <- tibble(
+  bloco = rep(c("superior", "média", "inferior"), each = 3),
+  posicao = rep(1:3, times = 3),
+  placa = c("C", "A", "B", "A", "C", "B", "B", "A", "C")
+) |>
+  mutate(bloco = fct_relevel(bloco, "inferior", "média", "superior"))
+
+ggplot(aloc, aes(x = posicao, y = bloco, fill = placa)) +
+  geom_tile(colour = "white", linewidth = 2) +
+  geom_text(aes(label = placa), colour = "white", size = 5, fontface = "bold") +
+  scale_fill_manual(values = c(A = "#0072B2", B = "#D55E00", C = "#009E73")) +
+  labs(x = "Posição dentro da faixa", y = "Faixa de altura", fill = "Placa") +
+  scale_x_continuous(breaks = 1:3)
+```
+
+O que muda na análise é o que acontece com a variação devida à altura. Em vez de ficar no resíduo,
+ela é **atribuída ao bloco** e retirada dali. O resíduo passa a conter apenas o que sobra depois de
+descontar tratamento e bloco, e fica menor.
+
+O ganho é real: o mesmo efeito de tratamento se torna mais fácil de detectar, sem coletar um dado
+a mais.
+
+::: {.callout-note appearance="minimal" title="Bloco e tratamento não têm o mesmo papel"}
+O **tratamento** é o que você quer comparar. Seus níveis foram sorteados para as unidades.
+
+O **bloco** é uma fonte de variação conhecida e indesejada, que você agrupa em vez de sortear.
+Ninguém sorteia qual faixa do costão será "superior".
+
+Por isso não se interpreta o efeito de bloco como resultado do estudo: ele é um recurso de
+controle, não uma resposta.
+:::
+
+::: {.callout-warning appearance="minimal" title="Bloco se decide antes"}
+Blocos precisam ser definidos **no planejamento**, antes de alocar os tratamentos.
+
+Agrupar unidades depois de ver os dados não é controle local: é seleção de resultado.
+:::
+
+# Quando há dois fatores de interesse
+
+O segundo problema é diferente. Agora você não tem um fator e um incômodo: você tem **dois fatores
+que interessam de verdade**.
+
+Suponha um experimento em mesocosmos onde interessam a presença de algas (com ou sem) e o tipo de
+nutriente adicionado (três tipos). Uma opção seria fazer dois experimentos separados. Combinar os
+dois fatores em um só experimento é melhor por dois motivos.
+
+O primeiro é econômico: as mesmas unidades servem às duas perguntas. O segundo é conceitual, e é o
+que realmente importa: só o experimento combinado permite descobrir se **o efeito de um fator
+depende do outro**.
+
+Com 2 níveis de algas e 3 de nutriente, há $2 \times 3 = 6$ combinações. Um delineamento
+**fatorial** aloca unidades experimentais a todas elas.
+
+# Efeitos principais e interação
+
+```{r}
+#| echo: false
+#| label: fig-pread06-interacao
+#| fig-cap: "Três resultados possíveis em um experimento fatorial. Cada ponto é a média de uma combinação; as linhas ligam as médias de um mesmo nutriente."
+#| fig-alt: "Três painéis lado a lado. No primeiro as linhas são horizontais e sobrepostas; no segundo são paralelas e deslocadas; no terceiro se cruzam."
+#| fig-height: 3.4
+
+cenarios <- bind_rows(
+  tibble(cenario = "Sem efeito de algas",
+         algas = rep(c("sem", "com"), each = 3), nutriente = rep(c("NH4","NO3","PO3"), 2),
+         resposta = c(2, 2.4, 1.8,  2, 2.4, 1.8)),
+  tibble(cenario = "Efeitos aditivos",
+         algas = rep(c("sem", "com"), each = 3), nutriente = rep(c("NH4","NO3","PO3"), 2),
+         resposta = c(2, 2.4, 1.8,  3.2, 3.6, 3.0)),
+  tibble(cenario = "Com interação",
+         algas = rep(c("sem", "com"), each = 3), nutriente = rep(c("NH4","NO3","PO3"), 2),
+         resposta = c(2, 2.4, 1.8,  4.5, 1.9, 2.6))
+) |>
+  mutate(
+    algas = fct_relevel(algas, "sem"),
+    cenario = fct_relevel(cenario, "Sem efeito de algas", "Efeitos aditivos")
+  )
+
+ggplot(cenarios, aes(x = algas, y = resposta, colour = nutriente, group = nutriente)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2.6) +
+  facet_wrap(~ cenario) +
+  scale_colour_manual(values = c(NH4 = "#0072B2", NO3 = "#D55E00", PO3 = "#009E73")) +
+  labs(x = "Presença de algas", y = "Concentração", colour = "Nutriente")
+```
+
+No primeiro painel, adicionar algas não muda nada: as linhas são horizontais.
+
+No segundo, adicionar algas eleva a resposta **na mesma medida** para os três nutrientes. As linhas
+são paralelas. Nesse caso os dois fatores agem de forma independente, e faz sentido resumir cada um
+por um **efeito principal**: "algas aumentam a concentração em 1,2 unidade, seja qual for o
+nutriente".
+
+No terceiro, as linhas se cruzam. Com NH4, adicionar algas aumenta muito a concentração; com NO3,
+diminui. Existe **interação**: o efeito de um fator depende do nível do outro.
+
+::: {.callout-warning appearance="minimal" title="Com interação, o efeito principal engana"}
+No terceiro painel, a média geral do efeito de algas seria pequena: os aumentos e as quedas quase
+se cancelam.
+
+Dizer "algas quase não afetam a concentração" seria falso para todos os nutrientes individualmente.
+Quando há interação, é o padrão combinado que precisa ser descrito, não a média dos efeitos.
+:::
+
+# Bloco, fator ou covariável?
+
+As três coisas podem aparecer no mesmo estudo, e distingui-las é uma decisão de delineamento, não
+de análise.
+
+| | O que é | Você sorteia? | Interpreta o efeito? |
+|---|---|---|---|
+| **Fator** | condição que você quer comparar | sim | sim, é a resposta do estudo |
+| **Bloco** | agrupamento de unidades parecidas | não, você agrupa | não, é controle |
+| **Covariável** | medida contínua registrada em cada unidade | não, você mede | como ajuste |
+
+A covariável entra na próxima etapa do curso: em vez de agrupar unidades parecidas, mede-se uma
+característica contínua de cada uma e desconta-se o seu efeito. A lógica é a mesma (retirar do
+resíduo uma variação conhecida), mas o instrumento é diferente.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Um experimento é montado em três salas com temperaturas diferentes. Sala é fator, bloco ou
+  covariável?
+- Em um fatorial 2 × 3, o gráfico de linhas mostra retas quase paralelas. O que isso sugere sobre
+  a necessidade do termo de interação no modelo?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html) (MEAD)
+
+:::

@@ -1,0 +1,281 @@
+---
+title: "Prática em R 02"
+subtitle: "A amostra representa a praia?"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# Nove praias, 45 estações
+
+Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de
+invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As
+estações se distribuem por nove praias.
+
+A pergunta desta prática é a mais básica de qualquer levantamento: **o que essas 45 estações
+permitem dizer sobre a região, e o que não permitem?**
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Vamos abrir os dados
+
+Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos
+o endereço em um objeto e passamos para `read_tsv()`:
+
+```{r}
+url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"
+
+rikz <- read_tsv(url, show_col_types = FALSE)
+
+glimpse(rikz)
+```
+
+São 45 linhas e 5 colunas:
+
+- `Sample`: identificador da estação;
+- `Richness`: número de espécies encontradas;
+- `Exposure`: índice de exposição da praia às ondas;
+- `NAP`: altura da estação em relação à maré, em metros (valores negativos ficam abaixo do nível médio);
+- `Beach`: identificador da praia.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e nove
+praias aparecem repetidas várias vezes cada uma.
+:::
+
+# Como os dados estão distribuídos entre as praias?
+
+Antes de calcular qualquer média, vale conferir se o esforço de coleta foi o mesmo em toda parte.
+
+```{r}
+rikz |> count(Beach)
+```
+
+Cinco estações por praia, nas nove praias. Um levantamento equilibrado, o que nem sempre acontece.
+
+# Qual é a riqueza típica da região?
+
+```{r}
+rikz |>
+  summarise(
+    n = n(),
+    media = mean(Richness),
+    desvio = sd(Richness),
+    minimo = min(Richness),
+    maximo = max(Richness)
+  )
+```
+
+A média fica em torno de 5 espécies, mas o intervalo entre mínimo e máximo é enorme. Um único
+número esconde isso.
+
+```{r}
+#| label: fig-lab02-histograma
+#| fig-cap: "Distribuição do número de espécies nas 45 estações."
+#| fig-height: 3.2
+
+ggplot(rikz, aes(x = Richness)) +
+  geom_histogram(binwidth = 2, fill = "#0072B2", colour = "white") +
+  labs(x = "Número de espécies", y = "Número de estações")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+A distribuição é assimétrica: muitas estações com poucas espécies e algumas com muitas. Quando a
+distribuição é assim, a média fica puxada para cima pelos valores altos e deixa de representar bem
+"a estação típica".
+:::
+
+# As praias são todas parecidas?
+
+```{r}
+resumo_praias <- rikz |>
+  group_by(Beach) |>
+  summarise(
+    media = mean(Richness),
+    desvio = sd(Richness)
+  )
+
+resumo_praias
+```
+
+```{r}
+#| label: fig-lab02-praias
+#| fig-cap: "Riqueza de espécies por praia. Cada ponto é uma estação."
+#| fig-height: 3.4
+
+ggplot(rikz, aes(x = factor(Beach), y = Richness)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.6, colour = "#0072B2") +
+  labs(x = "Praia", y = "Número de espécies")
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+As praias não são intercambiáveis: algumas concentram estações pobres, outras estações ricas.
+
+Isso tem uma consequência prática imediata. Uma amostra que caísse por acaso só em praias ricas
+produziria uma estimativa alta para a região inteira, sem que ninguém tivesse errado nada.
+:::
+
+# E se tivéssemos medido só uma parte?
+
+Vamos testar essa ideia. A função `slice_sample()` sorteia linhas de uma tabela. Aqui pegamos 10
+das 45 estações, como se o orçamento só permitisse isso:
+
+```{r}
+primeira_amostra <- rikz |> slice_sample(n = 10)
+media_primeira <- mean(primeira_amostra$Richness)
+
+media_primeira
+```
+
+Compare com a média das 45 estações calculada acima. Agora sorteie outra amostra de 10:
+
+```{r}
+segunda_amostra <- rikz |> slice_sample(n = 10)
+media_segunda <- mean(segunda_amostra$Richness)
+
+media_segunda
+```
+
+```{r}
+#| echo: false
+dif_txt <- formatC(abs(media_primeira - media_segunda), format = "f", digits = 2, decimal.mark = ",")
+```
+
+Duas amostras do mesmo levantamento, duas estimativas diferentes: nesta execução, a diferença entre elas foi de `r dif_txt`.
+
+::: {.callout-tip appearance="minimal" title="Modifique"}
+Execute o bloco acima cinco vezes seguidas e anote as cinco médias. Cada execução sorteia dez estações
+diferentes.
+
+Depois troque `n = 10` por `n = 30` e repita. As médias ficaram mais parecidas entre si ou mais
+diferentes?
+:::
+
+# Sortear estações ou sortear praias?
+
+Existe outra maneira de amostrar, e ela muda o resultado. Em vez de sortear estações soltas,
+podemos sortear **praias inteiras** e usar todas as suas estações.
+
+```{r}
+praias_sorteadas <- sample(1:9, size = 3)
+praias_sorteadas
+
+rikz |>
+  filter(Beach %in% praias_sorteadas) |>
+  summarise(n = n(), media = mean(Richness))
+```
+
+São 15 estações, mais do que as 10 do sorteio anterior, mas vindas de apenas três praias.
+
+::: {.callout-tip appearance="minimal" title="Compare"}
+Execute o bloco acima três vezes e anote as médias. Depois compare a variação dessas médias com a
+variação das médias obtidas ao sortear 15 estações soltas, rodando três vezes também:
+
+```r
+rikz |> slice_sample(n = 15) |> summarise(media = mean(Richness))
+```
+
+Qual das duas estratégias produz estimativas mais instáveis? Por que praias inteiras tornam o
+resultado mais dependente da sorte do sorteio?
+:::
+
+# A altura da estação explica alguma coisa?
+
+Uma última olhada, que prepara boa parte do semestre:
+
+```{r}
+#| label: fig-lab02-nap
+#| fig-cap: "Riqueza de espécies em função da altura da estação em relação à maré."
+#| fig-height: 3.4
+
+ggplot(rikz, aes(x = NAP, y = Richness)) +
+  geom_point(alpha = 0.7, colour = "#0072B2") +
+  labs(x = "Altura em relação à maré (m)", y = "Número de espécies")
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Estações mais altas ficam expostas mais tempo fora d'água. O gráfico sugere alguma relação entre
+altura e riqueza? Em que direção?
+
+Repare que ainda não estamos ajustando nada, apenas observando. Descrever antes de modelar é sempre
+a ordem certa.
+:::
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-02-amostragem.R` que rode em uma sessão nova e contenha:
+
+1. a importação dos dados a partir da URL e o resumo geral da riqueza;
+2. o gráfico de riqueza por praia;
+3. cinco amostras de 10 estações e cinco de 30, com as respectivas médias;
+4. em comentários, três a quatro frases respondendo: **por que as médias de amostras pequenas
+   variam mais, e o que se perde ao sortear praias inteiras em vez de estações soltas?**
+:::
+
+# Atividade extraclasse 01: Um processo, muitas amostras
+
+Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
+entrega própria.
+
+Até aqui você sorteou amostras uma a uma e comparou as médias na mão. Agora vamos automatizar a
+repetição para enxergar o padrão.
+
+A função `replicate()` repete uma expressão quantas vezes você pedir e guarda os resultados:
+
+```{r}
+medias_10 <- replicate(1000, mean(sample(rikz$Richness, size = 10)))
+medias_30 <- replicate(1000, mean(sample(rikz$Richness, size = 30)))
+
+sd(medias_10)
+sd(medias_30)
+```
+
+`sample(rikz$Richness, size = 10)` sorteia 10 valores da coluna de riqueza; `mean()` calcula a
+média deles; `replicate(1000, ...)` faz isso mil vezes.
+
+```{r}
+#| label: fig-lab02-extra
+#| fig-cap: "Médias de mil amostras de 10 e de 30 estações, sorteadas do mesmo conjunto de 45."
+#| fig-height: 3.4
+
+simulacoes <- bind_rows(
+  tibble(tamanho = "10 estações", media = medias_10),
+  tibble(tamanho = "30 estações", media = medias_30)
+)
+
+ggplot(simulacoes, aes(x = media)) +
+  geom_histogram(bins = 30, fill = "#0072B2", colour = "white") +
+  facet_wrap(~ tamanho) +
+  labs(x = "Média da amostra (número de espécies)", y = "Frequência")
+```
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `ae-01-muitas-amostras.R` que rode em sessão nova e contenha:
+
+1. as mil médias para `size = 5`, `size = 10` e `size = 30`, com o desvio-padrão de cada conjunto;
+2. um gráfico comparando as três distribuições de médias;
+3. em comentários, três a quatro frases respondendo: **o que acontece com a largura da distribuição
+   quando a amostra cresce, e por que os três histogramas ficam centrados aproximadamente no mesmo
+   lugar?**
+:::
+
+# Para saber mais
+
+- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html) (MEAD)
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html) (MEAD)

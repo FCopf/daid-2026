@@ -1,0 +1,8 @@
+# Cópias locais de outros projetos — não fazem parte das dependências deste site
+prob-est-2026-main/
+mead-main-EXAMPLE/
+
+# Bibliografia (PDFs) e saídas de build
+bobliografia/
+_freeze/
+_site/

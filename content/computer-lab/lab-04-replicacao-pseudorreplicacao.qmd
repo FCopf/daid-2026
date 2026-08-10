@@ -1,0 +1,331 @@
+---
+title: "Prática em R 04"
+subtitle: "Tanques, subamostras e o que conta como réplica"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# Um experimento que parece bom
+
+Duas dietas para juvenis de robalo. Dois tanques: no tanque 1, dieta comum; no tanque 2, dieta
+enriquecida. Trinta peixes em cada. Sessenta medidas de comprimento.
+
+Nesta prática vamos **construir** esse experimento no computador, de modo que saibamos exatamente
+qual é a verdade, e depois analisá-lo de duas maneiras: uma errada e uma certa.
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Como se monta um experimento com tanques?
+
+O ponto que decide tudo é este: peixes do mesmo tanque **compartilham** as condições daquele
+tanque. Se o tanque 1 está meio grau mais quente, todos os seus peixes sentem isso.
+
+Vamos escrever isso em duas etapas.
+
+Primeiro, cada tanque recebe o seu próprio desvio em relação ao que a dieta prevê:
+
+```{r}
+efeito_dieta <- 0        # nenhuma diferença entre as dietas
+variacao_entre_tanques <- 0.8
+variacao_entre_peixes <- 0.5
+
+tanques <- tibble(
+  tanque = 1:8,
+  dieta = rep(c("comum", "enriquecida"), each = 4),
+  media_tanque = 10 + if_else(dieta == "enriquecida", efeito_dieta, 0) +
+    rnorm(8, mean = 0, sd = variacao_entre_tanques)
+)
+
+tanques
+```
+
+Repare no que acabamos de fazer: **`efeito_dieta` vale zero**. As duas dietas são idênticas. Toda
+diferença entre tanques vem do `rnorm()` da última linha, ou seja, do acaso de cada tanque.
+
+Agora os peixes, sorteados em torno da média do seu tanque:
+
+```{r}
+peixes <- tanques |>
+  slice(rep(1:8, each = 15)) |>
+  mutate(comprimento = rnorm(120, mean = media_tanque, sd = variacao_entre_peixes))
+
+glimpse(peixes)
+```
+
+`slice(rep(1:8, each = 15))` repete cada linha de tanque 15 vezes, criando 15 peixes por tanque.
+
+# Como fica o experimento?
+
+```{r}
+#| label: fig-lab04-tanques
+#| fig-cap: "Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a barra é a média do tanque."
+#| fig-height: 3.6
+
+ggplot(peixes, aes(x = factor(tanque), y = comprimento, colour = dieta)) +
+  geom_jitter(width = 0.15, alpha = 0.5) +
+  stat_summary(fun = mean, geom = "crossbar", width = 0.6, linewidth = 0.4, colour = "black") +
+  labs(x = "Tanque", y = "Comprimento (cm)", colour = "Dieta")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Dentro de cada tanque, os peixes formam nuvens compactas.
+
+Entre tanques que receberam **a mesma dieta**, as médias já não coincidem. Como sabemos que
+`efeito_dieta` é zero, essa diferença entre tanques vem apenas do acaso, e é exatamente a régua que
+precisamos para julgar a dieta.
+:::
+
+# A análise errada: 60 peixes por dieta
+
+A tentação é comparar as duas dietas usando todos os peixes:
+
+```{r}
+peixes |>
+  group_by(dieta) |>
+  summarise(n = n(), media = mean(comprimento), desvio = sd(comprimento))
+```
+
+```{r}
+teste_errado <- t.test(comprimento ~ dieta, data = peixes)
+
+teste_errado
+```
+
+```{r}
+#| echo: false
+p_errado_txt <- if (teste_errado$p.value < 0.001) "menor que 0,001" else formatC(teste_errado$p.value, format = "f", digits = 3, decimal.mark = ",")
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Nesta execução o valor de p foi `r p_errado_txt`.
+
+Qualquer que seja ele, guarde o essencial: este teste supôs **120 observações independentes**,
+quando o sorteio da dieta aconteceu apenas 8 vezes. Ele está medindo a variação entre peixes do
+mesmo tanque, e não a variação entre tanques.
+
+Execute o script novamente algumas vezes e observe como esse valor de p muda de uma execução para
+outra.
+:::
+
+# A análise certa: 8 tanques
+
+A unidade experimental é o tanque. Então primeiro resumimos cada tanque a um valor, e só depois
+comparamos as dietas:
+
+```{r}
+medias_tanque <- peixes |>
+  group_by(tanque, dieta) |>
+  summarise(media = mean(comprimento), .groups = "drop")
+
+medias_tanque
+```
+
+```{r}
+teste_certo <- t.test(media ~ dieta, data = medias_tanque)
+
+teste_certo
+```
+
+```{r}
+#| echo: false
+p_certo_txt <- if (teste_certo$p.value < 0.001) "menor que 0,001" else formatC(teste_certo$p.value, format = "f", digits = 3, decimal.mark = ",")
+```
+
+Agora são 4 valores por dieta, e a variação usada como referência é a variação **entre tanques**,
+que é a variação relevante.
+
+::: {.callout-tip appearance="minimal" title="Compare"}
+Coloque os dois resultados lado a lado:
+
+- quantos "n" cada análise usou?
+- qual das duas produziu o intervalo de confiança mais estreito?
+- nesta execução, o valor de p foi `r p_errado_txt` na análise com 120 peixes e `r p_certo_txt`
+  na análise com 8 tanques.
+:::
+
+# Uma execução não decide nada. E se repetíssemos 300 vezes?
+
+Comparar as duas análises em um experimento só é frágil: cada execução sorteia tanques diferentes e
+pode dar qualquer resultado. A pergunta certa é sobre o **comportamento a longo prazo** de cada
+análise.
+
+Como sabemos que a dieta não faz nada, qualquer conclusão de "há efeito" é um alarme falso. Um
+teste bem calibrado a 5% deveria dar alarme falso em cerca de 5% dos experimentos. Vamos medir isso
+nas duas análises.
+
+```{r}
+resultados <- replicate(300, {
+  tanques <- tibble(
+    tanque = 1:8,
+    dieta = rep(c("comum", "enriquecida"), each = 4),
+    media_tanque = 10 + rnorm(8, mean = 0, sd = variacao_entre_tanques)
+  )
+
+  peixes <- tanques |>
+    slice(rep(1:8, each = 15)) |>
+    mutate(comprimento = rnorm(120, mean = media_tanque, sd = variacao_entre_peixes))
+
+  medias <- peixes |>
+    group_by(tanque, dieta) |>
+    summarise(media = mean(comprimento), .groups = "drop")
+
+  c(
+    errada = t.test(comprimento ~ dieta, data = peixes)$p.value,
+    certa  = t.test(media ~ dieta, data = medias)$p.value
+  )
+})
+```
+
+Cada repetição monta um experimento novo, do zero, e devolve os dois valores de p. O objeto
+`resultados` guarda uma linha para cada análise:
+
+```{r}
+taxa_errada <- mean(resultados["errada", ] < 0.05)
+taxa_certa <- mean(resultados["certa", ] < 0.05)
+
+c(errada = taxa_errada, certa = taxa_certa)
+```
+
+```{r}
+#| label: fig-lab04-taxas
+#| fig-cap: "Distribuição dos valores de p nas duas análises, em 300 experimentos sem nenhum efeito de dieta. A linha marca o limiar de 0,05."
+#| fig-height: 3.4
+
+valores_p <- bind_rows(
+  tibble(analise = "120 peixes", p = resultados["errada", ]),
+  tibble(analise = "8 tanques",  p = resultados["certa", ])
+)
+
+ggplot(valores_p, aes(x = p)) +
+  geom_histogram(binwidth = 0.05, boundary = 0, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = 0.05, colour = "#D55E00", linewidth = 1) +
+  facet_wrap(~ analise) +
+  labs(x = "Valor de p", y = "Número de experimentos")
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Nestes 300 experimentos **sem efeito nenhum**, a análise com 120 peixes acusou diferença em
+`r round(100 * taxa_errada)`% das vezes, e a análise com 8 tanques em
+`r round(100 * taxa_certa)`%.
+
+A segunda taxa é a que se espera de um teste a 5%. A primeira é muitas vezes maior, e isso é
+pseudorreplicação em números: um procedimento que erra a unidade experimental transforma variação
+entre tanques em "evidência" de efeito da dieta.
+
+Repare também na forma dos histogramas. Na análise correta os valores de p se espalham por igual
+entre 0 e 1, como deve acontecer quando a hipótese nula é verdadeira. Na análise errada eles se
+amontoam perto de zero.
+:::
+
+# E se a dieta realmente funcionasse?
+
+Volte ao primeiro bloco e troque uma linha:
+
+```r
+efeito_dieta <- 1.2   # a dieta enriquecida aumenta 1,2 cm
+```
+
+::: {.callout-tip appearance="minimal" title="Modifique"}
+Com `efeito_dieta <- 1.2`, execute o script inteiro novamente e responda:
+
+1. a análise por tanques detecta o efeito?
+2. e se você também aumentar `variacao_entre_tanques` para `2`?
+3. e se, em vez disso, aumentar o número de peixes por tanque de 15 para 50, mantendo 8 tanques?
+
+O item 3 é o mais importante: medir mais peixes por tanque **resolve** o problema?
+:::
+
+# O mesmo problema em dados reais
+
+Isso não é um artefato de simulação. Um levantamento no litoral holandês registrou o número de
+espécies em 45 estações distribuídas por 9 praias:
+
+```{r}
+url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"
+rikz <- read_tsv(url, show_col_types = FALSE)
+
+rikz |> count(Beach)
+```
+
+Cinco estações por praia. Se a pergunta for sobre **estações**, as 45 linhas são 45 unidades. Se
+for sobre **praias**, há apenas 9, e as cinco estações de uma praia são subamostras dela.
+
+```{r}
+por_praia <- rikz |>
+  group_by(Beach) |>
+  summarise(riqueza_media = mean(Richness))
+
+por_praia
+```
+
+```{r}
+sd(rikz$Richness) / sqrt(45)          # tratando as 45 estações como réplicas
+sd(por_praia$riqueza_media) / sqrt(9) # tratando as 9 praias como réplicas
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Os dois erros padrão descrevem coisas diferentes. O primeiro responde "quanto varia a média de 45
+estações da mesma região?"; o segundo, "quanto varia a média de 9 praias?".
+
+Qual dos dois é o certo depende inteiramente da pergunta, e a pergunta precisa ser decidida antes
+de abrir o R.
+:::
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-04-replicacao.R` que rode em sessão nova e contenha:
+
+1. a simulação dos 8 tanques com `efeito_dieta <- 0`, o gráfico por tanque e as duas análises
+   (120 peixes e 8 médias de tanque);
+2. a repetição do experimento 300 vezes, com as duas taxas de alarme falso e o gráfico dos
+   valores de p;
+3. a mesma simulação com `efeito_dieta <- 1.2`;
+4. os dois erros padrão calculados a partir dos dados do RIKZ;
+5. em comentários, quatro a cinco frases respondendo: **por que a análise com 120 peixes acusa
+   efeito muito mais do que os 5% esperados, e por que aumentar o número de peixes por tanque não
+   corrige isso?**
+:::
+
+# Atividade extraclasse 02: Redesenhar antes de analisar
+
+Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
+entrega própria.
+
+Um pesquisador propõe o seguinte estudo: comparar a cobertura de algas em dois costões, um exposto
+e um abrigado. Em cada costão, ele lança 20 quadrados de 1 m² e mede a cobertura em cada um. Depois
+compara os dois costões com um teste t sobre as 40 medidas.
+
+Sua tarefa é **avaliar e redesenhar** esse estudo.
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um documento curto (uma página) ou um script `ae-02-redesenho.R` com comentários, contendo:
+
+1. **Diagnóstico.** Qual é a unidade experimental do estudo proposto? Quantas réplicas existem por
+   condição? O teste t sobre 40 medidas é apropriado? Justifique.
+2. **Redesenho.** Descreva uma versão do estudo que permita responder à pergunta sobre exposição.
+   Quantos costões, quantos quadrados por costão, e como as condições seriam atribuídas.
+3. **Simulação.** Adapte a simulação de tanques desta prática para o seu redesenho, com o efeito
+   da exposição fixado em zero, e mostre que a análise correta **não** encontra efeito.
+4. **Limite.** Uma frase sobre o que continua impossível concluir mesmo com o redesenho, dado que
+   ninguém sorteia qual costão será exposto.
+:::
+
+# Para saber mais
+
+- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html) (MEAD)

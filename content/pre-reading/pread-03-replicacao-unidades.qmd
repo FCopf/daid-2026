@@ -1,0 +1,164 @@
+---
+title: "Leitura prévia 03"
+subtitle: "O que conta como réplica?"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Um experimento com 60 peixes
+
+Uma pesquisadora quer saber se uma dieta enriquecida faz juvenis de robalo crescerem mais rápido.
+
+Ela monta o experimento assim: **dois tanques**. No tanque 1, todos os peixes recebem a dieta
+comum. No tanque 2, todos recebem a dieta enriquecida. Trinta peixes em cada tanque. Ao fim de
+seis semanas, ela mede o comprimento de cada peixe: 60 medidas.
+
+A dieta enriquecida apresenta média maior. A diferença é grande e o teste estatístico produz um
+resultado convincente.
+
+Só que o experimento não permite concluir nada sobre a dieta.
+
+# Siga o tratamento até onde ele foi aplicado
+
+A pergunta que desmonta o problema é simples: **o sorteio da dieta foi feito quantas vezes?**
+
+Duas. A dieta comum foi atribuída ao tanque 1 e a enriquecida ao tanque 2. Nenhum peixe recebeu
+uma dieta individualmente: cada peixe recebeu a dieta *do seu tanque*.
+
+Isso significa que o tratamento foi aplicado ao **tanque**, não ao peixe. O tanque é a
+**unidade experimental**: a menor unidade que recebeu uma atribuição independente de tratamento.
+
+Os 30 peixes de um tanque são **subamostras**: medidas repetidas dentro da mesma unidade
+experimental. Eles descrevem muito bem aquele tanque, mas não acrescentam nenhuma repetição
+independente do tratamento.
+
+::: {.callout-note appearance="minimal" title="Três papéis que não se misturam"}
+**Unidade experimental**: o que recebeu o tratamento por sorteio. É ela que se replica.
+
+**Subamostra**: medida repetida dentro de uma unidade experimental. Melhora a precisão da medida
+daquela unidade; não aumenta o número de réplicas.
+
+**Réplica**: cada unidade experimental adicional que recebeu o mesmo tratamento de forma
+independente.
+:::
+
+Com dois tanques, o experimento tem **uma réplica por tratamento**. E com uma réplica por
+tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra coisa que
+diferencie os dois tanques: temperatura, luz, aeração, posição na sala, o acaso da distribuição
+inicial dos peixes.
+
+Não há como separar. O efeito da dieta está **confundido** com o efeito do tanque.
+
+# Por que 60 medidas não resolvem
+
+É tentador pensar que 30 peixes por tratamento é bastante gente e que isso compensa. Não compensa,
+e vale entender por quê.
+
+Medir mais peixes dentro do mesmo tanque reduz a incerteza sobre **a média daquele tanque**. Mas o
+que a pergunta exige é comparar dietas, e para isso precisamos saber quanto **tanques tratados da
+mesma forma** variam entre si. Com um tanque por dieta, essa variação nunca foi observada.
+
+O gráfico abaixo mostra o que acontece nos dois cenários.
+
+```{r}
+#| echo: false
+#| label: fig-pread03-duas-fontes
+#| fig-cap: "Comprimento de peixes em oito tanques. Cada ponto é um peixe; cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros."
+#| fig-alt: "Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta."
+#| fig-height: 3.8
+
+media_tanque <- c(rnorm(4, 10.0, 0.7), rnorm(4, 11.0, 0.7))
+
+peixes <- tibble(
+  tanque = factor(rep(1:8, each = 15)),
+  dieta = rep(c("comum", "enriquecida"), each = 60),
+  comprimento = rnorm(120, mean = rep(media_tanque, each = 15), sd = 0.5)
+)
+
+medias <- peixes |>
+  group_by(tanque, dieta) |>
+  summarise(media = mean(comprimento), .groups = "drop")
+
+ggplot(peixes, aes(x = tanque, y = comprimento, colour = dieta)) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.6) +
+  geom_point(data = medias, aes(y = media), shape = 95, size = 14) +
+  labs(x = "Tanque", y = "Comprimento (cm)", colour = "Dieta") +
+  scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00"))
+```
+
+Repare em duas coisas na figura.
+
+Dentro de cada tanque, os peixes se parecem: os pontos formam nuvens compactas. Entre tanques da
+**mesma dieta**, as médias já não coincidem: o tanque 1 e o tanque 3 receberam a mesma coisa e
+mesmo assim diferem.
+
+Essa segunda variação é a régua correta para julgar o efeito da dieta. Um experimento com dois
+tanques a apaga por completo.
+
+# Pseudorreplicação
+
+Analisar os 60 peixes como se fossem 60 réplicas independentes tem nome: **pseudorreplicação**.
+O termo foi popularizado por Hurlbert [@hurlbert1984] justamente ao revisar experimentos ecológicos
+publicados, e o diagnóstico continua atual.
+
+O sintoma é sempre o mesmo: o número de linhas da planilha é maior que o número de vezes que o
+tratamento foi realmente sorteado. O efeito prático também: o erro padrão fica artificialmente
+pequeno, o intervalo de confiança fica estreito demais e o resultado parece mais convincente do
+que é.
+
+::: {.callout-warning appearance="minimal" title="Um teste rápido antes de analisar"}
+Conte quantas vezes o tratamento foi atribuído. Esse é o seu número de unidades experimentais.
+
+Se a análise usa mais observações do que isso, há subamostras entrando como se fossem réplicas.
+:::
+
+# Como o experimento deveria ter sido montado
+
+A correção não exige mais peixes. Exige mais **tanques**.
+
+Com oito tanques menores (quatro sorteados para cada dieta), passamos a ter quatro réplicas por
+tratamento. As subamostras dentro de cada tanque continuam sendo úteis: elas fornecem uma medida
+confiável da média de cada tanque. Mas a comparação entre dietas passa a usar as **médias dos
+tanques**, que são oito valores independentes.
+
+Há ainda outros dois ingredientes que separam um experimento de uma coleta oportunista.
+
+**Aleatorização.** Sortear qual tanque recebe qual dieta impede que diferenças pré-existentes se
+alinhem com o tratamento. Se a pesquisadora escolhesse "os tanques mais claros para a dieta nova",
+luz e dieta ficariam confundidas para sempre.
+
+**Controle local.** Manter constante tudo o que puder ser mantido constante (temperatura,
+fotoperíodo, densidade inicial, horário de alimentação) reduz a variação residual e torna o efeito
+do tratamento mais fácil de enxergar.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Um estudo mede a salinidade em 3 pontos de cada um de 2 estuários e compara os estuários com
+  6 medidas. Qual é a unidade experimental? Quantas réplicas existem por estuário?
+- Se um pesquisador só pode montar 6 tanques, é melhor colocar 30 peixes em cada um ou 10 peixes
+  em cada um e usar o restante do orçamento em mais tanques?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html) (MEAD)
+
+:::
+
+# Referências

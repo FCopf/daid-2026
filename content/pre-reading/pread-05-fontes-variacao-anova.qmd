@@ -1,0 +1,191 @@
+---
+title: "Leitura prévia 05"
+subtitle: "Entre grupos ou dentro dos grupos?"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Agora são quatro tratamentos
+
+Um experimento avalia o efeito de quatro concentrações de zinco sobre a diversidade de algas em
+canais experimentais. Quatro tratamentos, oito canais por tratamento, uma medida de diversidade
+em cada canal.
+
+A saída óbvia seria comparar os tratamentos dois a dois. Mas quatro tratamentos geram seis pares,
+e cada comparação carrega sua própria chance de alarme falso. Fazendo seis testes a 5%, a chance
+de pelo menos um alarme falso passa de 25%, mesmo que o zinco não faça absolutamente nada.
+
+Precisamos de uma pergunta que valha para o conjunto:
+
+> **A separação entre os quatro grupos é grande em comparação com a variação que existe dentro
+> deles?**
+
+# Duas situações com a mesma diferença de médias
+
+Compare os dois cenários abaixo. Em ambos, as médias dos quatro grupos são exatamente as mesmas.
+
+```{r}
+#| echo: false
+#| label: fig-pread05-dois-cenarios
+#| fig-cap: "Dois experimentos com as mesmas quatro médias de grupo (linhas horizontais) e variações internas diferentes."
+#| fig-alt: "Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente."
+#| fig-height: 3.6
+
+medias_grupo <- c(2.0, 1.8, 1.5, 1.1)
+grupos <- c("controle", "baixo", "médio", "alto")
+
+dados <- bind_rows(
+  tibble(cenario = "Variação pequena dentro dos grupos",
+         grupo = rep(grupos, each = 8),
+         valor = rnorm(32, mean = rep(medias_grupo, each = 8), sd = 0.15)),
+  tibble(cenario = "Variação grande dentro dos grupos",
+         grupo = rep(grupos, each = 8),
+         valor = rnorm(32, mean = rep(medias_grupo, each = 8), sd = 0.60))
+) |>
+  mutate(
+    grupo = fct_relevel(grupo, grupos),
+    cenario = fct_relevel(cenario, "Variação pequena dentro dos grupos")
+  )
+
+ggplot(dados, aes(x = grupo, y = valor)) +
+  geom_jitter(width = 0.12, alpha = 0.6, size = 1.8, colour = "#0072B2") +
+  stat_summary(fun = mean, geom = "crossbar", width = 0.5, linewidth = 0.4) +
+  facet_wrap(~ cenario) +
+  labs(x = "Concentração de zinco", y = "Diversidade")
+```
+
+À esquerda, a queda da diversidade ao longo das quatro concentrações salta aos olhos: cada grupo
+ocupa uma faixa estreita e a ordem entre eles é imediata. À direita, com as **mesmas médias**, as
+nuvens se sobrepõem amplamente: olhando um canal isolado, seria difícil dizer de qual tratamento
+ele veio.
+
+A conclusão é que a diferença entre médias, sozinha, não diz nada. Ela só ganha sentido quando
+comparada à variação de fundo.
+
+# Duas fontes de variação
+
+Toda observação carrega duas contribuições, e a análise consiste em separá-las.
+
+**Variação entre grupos.** O quanto as médias dos tratamentos se afastam da média geral. É a parte
+que o tratamento explica.
+
+**Variação dentro dos grupos.** O quanto os canais de um *mesmo* tratamento diferem entre si. Como
+receberam a mesma condição, essa variação vem de tudo o que não é o tratamento: diferenças entre
+canais, erro de medição, acaso. É a variação **residual**.
+
+::: {.callout-note appearance="minimal" title="Somas de quadrados"}
+Cada uma dessas variações é medida somando desvios ao quadrado:
+
+- $SQ_{\text{entre}}$ soma, para cada grupo, o quadrado da distância entre a média do grupo e a
+  média geral;
+- $SQ_{\text{dentro}}$ soma, para cada observação, o quadrado da distância até a média do seu
+  próprio grupo.
+
+As duas se somam exatamente na variação total: $SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}$.
+:::
+
+# Por que não comparar as somas diretamente
+
+Porque somas dependem de quantas parcelas foram somadas. $SQ_{\text{dentro}}$ acumula uma parcela
+por canal; $SQ_{\text{entre}}$, uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.
+
+A correção é dividir cada soma pelo seu número de **graus de liberdade**, ou seja, quantos valores
+podiam variar livremente. Com $k$ grupos e $n$ observações no total:
+
+$$QM_{\text{entre}} = \frac{SQ_{\text{entre}}}{k - 1}
+\qquad
+QM_{\text{dentro}} = \frac{SQ_{\text{dentro}}}{n - k}$$
+
+O resultado, chamado **quadrado médio**, é uma variação média por grau de liberdade. Agora as
+duas quantidades são comparáveis.
+
+# A razão F
+
+Comparáveis, elas podem ser postas em uma razão:
+
+$$F = \frac{QM_{\text{entre}}}{QM_{\text{dentro}}}$$
+
+A leitura é direta. Se o tratamento não faz nada, as duas fontes medem a mesma coisa (variação
+residual) e $F$ fica em torno de 1. Se o tratamento separa os grupos além do ruído, o numerador
+cresce e $F$ fica maior que 1.
+
+```{r}
+#| echo: false
+#| label: fig-pread05-distribuicao-f
+#| fig-cap: "Valores de F obtidos em 3000 experimentos simulados sem nenhum efeito de tratamento (quatro grupos, oito canais por grupo)."
+#| fig-alt: "Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F."
+#| fig-height: 3.2
+
+f_nulos <- replicate(3000, {
+  d <- tibble(grupo = rep(letters[1:4], each = 8), valor = rnorm(32, 1.6, 0.5))
+  summary(aov(valor ~ grupo, data = d))[[1]][["F value"]][1]
+})
+
+limiar_5pc <- qf(0.95, df1 = 3, df2 = 28)
+
+ggplot(tibble(f = f_nulos), aes(x = f)) +
+  geom_histogram(bins = 60, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = limiar_5pc, colour = "#D55E00", linewidth = 1.1) +
+  labs(x = "Razão F sob a hipótese nula", y = "Frequência")
+```
+
+```{r}
+#| echo: false
+prop_acima <- mean(f_nulos >= limiar_5pc)
+
+limiar_txt <- formatC(limiar_5pc, format = "f", digits = 2, decimal.mark = ",")
+prop_txt   <- formatC(100 * prop_acima, format = "f", digits = 1, decimal.mark = ",")
+```
+
+A linha marca `r limiar_txt`, o valor acima do qual ficam os 5% maiores $F$ quando não há efeito
+nenhum. Nesta simulação, `r prop_txt`% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.
+
+::: {.callout-warning appearance="minimal" title="Um F grande não conserta o delineamento"}
+A razão F compara duas fontes de variação. Se a variação "dentro dos grupos" foi calculada sobre
+subamostras em vez de unidades experimentais, o denominador fica pequeno demais e $F$ fica inflado.
+
+O teste responde à pergunta que o delineamento permite fazer, não à pergunta que queríamos fazer.
+:::
+
+# O que a razão F responde, e o que não responde
+
+A hipótese testada é sobre o conjunto: **todas as médias de tratamento são iguais**. Um valor de p
+pequeno indica que essa descrição não se sustenta, mas não diz *quais* tratamentos diferem.
+
+Descobrir isso é o passo seguinte, feito com comparações **a posteriori**, como o teste de Tukey,
+que compara todos os pares controlando a taxa global de alarmes falsos. A ordem importa: primeiro
+a pergunta global, depois as comparações específicas.
+
+Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente
+à mesma conclusão: são duas formas de escrever a mesma comparação. A análise de variância apenas
+generaliza a ideia para qualquer número de grupos.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Dois experimentos têm as mesmas médias de tratamento, mas um usa canais muito homogêneos e o
+  outro canais heterogêneos. Qual terá o maior $F$? Por quê?
+- Se um pesquisador aumenta o número de canais por tratamento sem mudar mais nada, o que acontece
+  com $QM_{\text{dentro}}$ e com os graus de liberdade do denominador?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html) (MEAD)
+
+:::

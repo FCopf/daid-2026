@@ -1,0 +1,43 @@
+---
+title: "Práticas em R"
+number-sections: false
+toc: false
+---
+
+As práticas são o centro da unidade curricular. Em cada uma você abre dados, faz gráficos, simula
+experimentos e interpreta resultados, e entrega um script ao final.
+
+Cada prática é independente: carrega os próprios pacotes, importa os próprios dados e roda do
+início ao fim em uma sessão nova do R. Não é preciso ter feito as anteriores para executar qualquer
+uma delas.
+
+Cinco práticas trazem, no final, uma **atividade extraclasse**, feita em casa na semana indicada
+no [cronograma](../../index.qmd).
+
+::: {.catalogo-materiais}
+
+| | Prática em R | Semana no [cronograma](../../index.qmd) |
+|:--|:--|:--|
+| **PR01** | [Primeiras medições em R](lab-01-medicoes-r.qmd) | Aula 01 |
+| **PR02** | [A amostra representa a praia?](lab-02-amostragem-dados.qmd) | Aula 02 e Extraclasse 01 |
+| **PR03** | [Médias que variam e intervalos que cobrem](lab-03-medias-intervalos.qmd) | Aula 03 |
+| **PR04** | [Tanques, subamostras e o que conta como réplica](lab-04-replicacao-pseudorreplicacao.qmd) | Aula 04 e Extraclasse 02 |
+| **PR05** | [Do acaso à comparação de dois grupos](lab-05-inferencia-dois-grupos.qmd) | Aulas 05 e 06, Extraclasse 03 |
+| **PR06** | [Um fator, quatro níveis](lab-06-anova-um-fator.qmd) | Aula 07 |
+| **PR07** | [Blocos e dois fatores](lab-07-blocos-fatorial.qmd) | Aula 08 e Extraclasse 04 |
+| **PR08** | [Uma reta para dados costeiros](lab-08-regressao-linear.qmd) | Aula 09 e Extraclasse 05 |
+| **PR09** | [Do delineamento à conclusão](lab-09-ancova-integradora.qmd) | Aula 10 |
+
+:::
+
+## Antes da primeira aula
+
+Instale o [R](https://cran.r-project.org/){target="_blank"} e o
+[RStudio](https://posit.co/download/rstudio-desktop/){target="_blank"}. Depois, abra o RStudio e
+execute uma única vez:
+
+```r
+install.packages(c("tidyverse", "patchwork"))
+```
+
+Todas as práticas começam carregando esses pacotes.
