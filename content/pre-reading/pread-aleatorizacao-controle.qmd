@@ -1,0 +1,184 @@
+---
+title: "Como montar um experimento que responde à pergunta?"
+subtitle: "Leitura prévia"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Cento e vinte peixes para distribuir
+
+Uma pesquisadora vai comparar duas dietas para juvenis de robalo. O orçamento dá para 120 peixes e
+para o espaço, a mão de obra e a ração que eles exigem. Esse número está fechado.
+
+O que ainda não está fechado é como distribuí-los. Dois tanques de 60 peixes? Quatro de 30? Vinte
+de 6? Todas as opções gastam o mesmo, ocupam a mesma sala e produzem 120 medidas de comprimento.
+
+Elas não produzem, porém, a mesma capacidade de responder à pergunta. Esta leitura trata das três
+decisões que definem isso, todas tomadas **antes** de o primeiro peixe entrar na água.
+
+# Primeira decisão: quantas unidades experimentais?
+
+Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é atribuída ao tanque,
+não ao peixe. Quem se replica, portanto, é o tanque.
+
+Vale ver o que isso significa em números. A figura abaixo repete duas mil vezes um experimento em
+que **as duas dietas são idênticas**, variando apenas a distribuição dos 120 peixes, e guarda a
+diferença estimada entre as dietas em cada repetição.
+
+```{r}
+#| echo: false
+#| label: fig-aleatorizacao-alocacao
+#| fig-cap: "Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero."
+#| fig-alt: "Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero."
+#| fig-height: 4.6
+
+variacao_entre_tanques <- 0.8
+variacao_entre_peixes <- 0.5
+orcamento <- 120
+
+diferenca_estimada <- function(n_tanques) {
+  peixes_por_tanque <- orcamento / n_tanques
+  dieta <- rep(c("comum", "enriquecida"), each = n_tanques / 2)
+
+  media_tanque <- rnorm(n_tanques, mean = 10, sd = variacao_entre_tanques)
+  media_medida <- media_tanque +
+    rnorm(n_tanques, mean = 0, sd = variacao_entre_peixes / sqrt(peixes_por_tanque))
+
+  mean(media_medida[dieta == "enriquecida"]) - mean(media_medida[dieta == "comum"])
+}
+
+alocacoes <- c(2, 4, 8, 20)
+rotulos <- paste0(alocacoes, " tanques de ", orcamento / alocacoes, " peixes")
+
+diferencas <- bind_rows(lapply(seq_along(alocacoes), function(i) {
+  tibble(
+    alocacao = rotulos[i],
+    diferenca = replicate(2000, diferenca_estimada(alocacoes[i]))
+  )
+})) |>
+  mutate(alocacao = fct_relevel(alocacao, rotulos))
+
+ggplot(diferencas, aes(x = diferenca)) +
+  geom_histogram(bins = 50, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = 0, colour = "#D55E00", linewidth = 1) +
+  facet_wrap(~ alocacao, ncol = 1, scales = "free_y") +
+  labs(x = "Diferença estimada entre as dietas (cm)", y = "Frequência")
+```
+
+```{r}
+#| echo: false
+espalhamento <- diferencas |>
+  group_by(alocacao) |>
+  summarise(desvio = sd(diferenca))
+
+sd_2  <- formatC(espalhamento$desvio[1], format = "f", digits = 2, decimal.mark = ",")
+sd_20 <- formatC(espalhamento$desvio[4], format = "f", digits = 2, decimal.mark = ",")
+```
+
+Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão
+de `r sd_2` cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento
+produziu estimativas com desvio-padrão de `r sd_20` cm.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a
+dieta foi sorteada de forma independente.
+
+Repare também que os quatro histogramas estão centrados em zero. Distribuir mal os peixes não faz o
+experimento errar para um lado: faz cada resultado ser muito mais instável, e portanto muito mais
+fácil de confundir com um efeito real.
+:::
+
+Isso não significa que subamostras sejam inúteis. Medir vários peixes por tanque produz uma média
+confiável **daquele** tanque, e isso melhora a estimativa. Só que o ganho satura rápido, enquanto
+cada tanque novo acrescenta uma repetição independente do tratamento.
+
+::: {.callout-warning appearance="minimal" title="Um extremo também não serve"}
+Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas: densidade
+irrealista, mais trabalho de manutenção, mais chance de perder unidades inteiras durante o
+experimento.
+
+A decisão é um equilíbrio, mas ele começa contando unidades experimentais, não observações.
+:::
+
+# Segunda decisão: quem recebe qual tratamento?
+
+Definidos os tanques, resta atribuir as dietas. E essa atribuição precisa ser **sorteada**.
+
+Sortear não é uma formalidade burocrática. É o que impede que diferenças pré-existentes se alinhem
+com o tratamento. Se a pesquisadora escolher "os tanques mais claros para a dieta nova", luz e
+dieta ficam confundidas para sempre, e nenhuma análise posterior separa as duas.
+
+O sorteio também cobre o que ninguém pensou em medir: a posição na sala, a idade da bomba de
+aeração, a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha
+entre os tratamentos, em vez de deixá-las acumular de um lado.
+
+::: {.callout-warning appearance="minimal" title="Aleatorizar não é escolher sem critério"}
+"Distribuir de qualquer jeito" e "sortear" não são a mesma coisa. Uma escolha informal tende a
+seguir padrões que quem escolhe nem percebe.
+
+O sorteio precisa ser feito com um mecanismo explícito, e vale registrar no caderno de campo qual
+foi.
+:::
+
+# Terceira decisão: o que manter constante?
+
+A última decisão é sobre tudo aquilo que **não** é o tratamento.
+
+Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial,
+horário de alimentação, origem dos juvenis) é o que se chama de **controle local**. Cada uma dessas
+fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a
+qual o efeito do tratamento é julgado.
+
+O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.
+
+::: {.callout-note appearance="minimal" title="Três decisões, três funções"}
+**Quantas unidades experimentais**: define quantas repetições independentes do tratamento existem.
+
+**Aleatorização**: impede que diferenças pré-existentes se confundam com o tratamento.
+
+**Controle local**: reduz a variação residual e torna o efeito mais fácil de detectar.
+
+As três são decisões de delineamento. Nenhuma delas pode ser tomada depois, na análise.
+:::
+
+# Nem tudo pode ser sorteado
+
+Uma ressalva que acompanha boa parte das Ciências do Mar.
+
+Em muitos estudos o "tratamento" é uma condição observada, não atribuída: costões expostos e
+abrigados, meses de coleta, estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.
+
+Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para
+controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido: sem
+aleatorização, a conclusão é sobre associação, não sobre causa.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Se a pesquisadora só puder montar 6 tanques, é melhor colocar 30 peixes em cada um, ou 10 peixes
+  em cada um e usar o restante do orçamento em mais tanques?
+- Um colega sugere manter os tanques da dieta nova em uma sala mais quente, "para os peixes
+  crescerem melhor". Que problema isso cria para a comparação?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
+- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html){target="_blank"} (MEAD)
+
+:::

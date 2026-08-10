@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 03"
-subtitle: "Médias que variam e intervalos que cobrem"
+title: "Médias que variam e intervalos que cobrem"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -83,7 +83,7 @@ O objeto `medias` guarda duas mil médias, cada uma vinda de uma coleta independ
 mexilhões.
 
 ```{r}
-#| label: fig-lab03-distribuicao-amostral
+#| label: fig-medias-distribuicao-amostral
 #| fig-cap: "Duas mil médias amostrais, cada uma calculada a partir de 20 mexilhões. A linha marca o valor real de 5 cm."
 #| fig-height: 3.2
 
@@ -110,7 +110,7 @@ Não confunda os dois: um descreve mexilhões, o outro descreve médias de 20 me
 # O que muda quando a amostra cresce?
 
 ```{r}
-#| label: fig-lab03-tamanhos
+#| label: fig-medias-tamanhos
 #| fig-cap: "Distribuição das médias amostrais para três tamanhos de amostra, no mesmo costão."
 #| fig-height: 4
 
@@ -230,7 +230,7 @@ não. O valor oscila em torno de 95% a cada nova execução, e é essa a taxa de
 nome promete.
 
 ```{r}
-#| label: fig-lab03-cobertura
+#| label: fig-medias-cobertura
 #| fig-cap: "Os primeiros 50 intervalos de confiança. A linha vertical é o valor real de 5 cm; em laranja, os intervalos que não o contêm."
 #| fig-height: 4.5
 
@@ -260,7 +260,7 @@ A proporção de intervalos que cobrem o valor real muda? E a **largura** deles?
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-03-medias-intervalos.R` que rode em sessão nova e contenha:
+Um script `pr-medias-intervalos.R` que rode em sessão nova e contenha:
 
 1. a distribuição de 2000 médias amostrais para `n = 5`, `n = 20` e `n = 100`, com o desvio-padrão
    de cada conjunto;
@@ -272,5 +272,5 @@ Um script `pr-03-medias-intervalos.R` que rode em sessão nova e contenha:
 
 # Para saber mais
 
-- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html) (MEAD)
-- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html) (MEAD)
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"} (MEAD)
+- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"} (MEAD)

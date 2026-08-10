@@ -1,0 +1,152 @@
+---
+title: "Por que não comparar os grupos dois a dois?"
+subtitle: "Leitura prévia"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Quando aparece um terceiro grupo
+
+Comparar dois grupos é uma operação bem definida: existe uma diferença, existe uma régua para
+julgá-la, existe um resultado.
+
+Agora suponha que o experimento tenha **três**. Um estudo em mesocosmos mede a concentração de três
+nutrientes na água, e a pergunta é se eles diferem entre si.
+
+A saída óbvia é fazer o que já se sabe fazer, três vezes: comparar o primeiro com o segundo, o
+primeiro com o terceiro, o segundo com o terceiro. Três testes, três valores de p, e pronto.
+
+Essa saída tem um problema, e ele não é pequeno.
+
+# Cada teste traz o seu próprio alarme falso
+
+Um teste a 5% é um procedimento que, quando não há efeito nenhum, ainda assim acusa diferença em
+cerca de 5% das vezes. Esses 5% não são um defeito: são o preço combinado de antemão para poder
+decidir a partir de dados que variam.
+
+O problema é que esse preço é cobrado **por teste**. Fazendo três testes em grupos idênticos, há
+três oportunidades independentes de o acaso produzir um resultado chamativo, e basta que uma delas
+aconteça para alguém anunciar uma descoberta.
+
+E o número de testes cresce depressa. Com $k$ grupos, o número de pares é
+
+$$\frac{k(k-1)}{2}$$
+
+o que dá 3 pares com 3 grupos, 6 com 4 grupos e 15 com 6 grupos.
+
+# Quanto isso custa, em números
+
+A figura abaixo simula experimentos em que **todos os grupos são idênticos**, faz todos os testes
+entre pares e conta em que proporção das repetições pelo menos um deles acusou diferença.
+
+```{r}
+#| echo: false
+#| label: fig-comparacoes-inflacao
+#| fig-cap: "Proporção de experimentos em que pelo menos um teste entre pares acusa diferença, quando nenhum grupo difere de fato. A linha marca os 5% que cada teste isolado promete."
+#| fig-alt: "Curva crescente. Com 2 grupos a proporção fica próxima da linha de 5%; com 3 grupos passa de 10%; com 6 grupos ultrapassa 30%."
+#| fig-height: 3.4
+
+prop_alarme <- function(k, repeticoes = 1500) {
+  mean(replicate(repeticoes, {
+    grupos <- matrix(rnorm(k * 6, mean = 2, sd = 0.5), nrow = 6)
+    pares <- combn(k, 2)
+    valores_p <- apply(pares, 2, function(par) {
+      t.test(grupos[, par[1]], grupos[, par[2]])$p.value
+    })
+    min(valores_p) < 0.05
+  }))
+}
+
+numero_grupos <- 2:6
+
+curva <- tibble(
+  grupos = numero_grupos,
+  pares = choose(numero_grupos, 2),
+  alarme = vapply(numero_grupos, prop_alarme, numeric(1))
+)
+
+ggplot(curva, aes(x = grupos, y = alarme)) +
+  geom_hline(yintercept = 0.05, colour = "#D55E00", linewidth = 1) +
+  geom_line(linewidth = 0.9, colour = "#0072B2") +
+  geom_point(size = 2.6, colour = "#0072B2") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, NA)) +
+  labs(x = "Número de grupos comparados", y = "Chance de ao menos um alarme falso")
+```
+
+```{r}
+#| echo: false
+alarme_3 <- formatC(100 * curva$alarme[curva$grupos == 3], format = "f", digits = 0, decimal.mark = ",")
+alarme_6 <- formatC(100 * curva$alarme[curva$grupos == 6], format = "f", digits = 0, decimal.mark = ",")
+```
+
+Com três grupos idênticos, cerca de `r alarme_3`% dos experimentos desta simulação produziram ao
+menos um par "diferente". Com seis grupos, `r alarme_6`%.
+
+Nenhum grupo difere de nenhum outro em nenhuma dessas simulações. A diferença anunciada seria
+inteiramente fabricada pelo procedimento de análise.
+
+::: {.callout-warning appearance="minimal" title="Duas taxas de erro com o mesmo nome"}
+A **taxa por comparação** é o risco de alarme falso de cada teste isolado. Ela continua valendo
+5%, e não é isso que está errado.
+
+A **taxa por experimento** é o risco de alarme falso em algum lugar do conjunto de testes. É essa
+que interessa a quem lê o artigo, porque é ela que descreve a chance de a conclusão publicada estar
+errada.
+
+Fazer muitos testes mantém a primeira e infla a segunda.
+:::
+
+# Escolher o menor valor de p é escolher o extremo
+
+Vale entender o mecanismo, porque ele reaparece em muitas situações além desta.
+
+Quando três testes são feitos e o resultado relatado é o mais chamativo dos três, o número
+informado não é o valor de p de um teste: é o **mínimo** de três valores de p. E mínimos de
+vários sorteios se concentram perto de zero mesmo quando cada sorteio isolado é bem comportado.
+
+O mesmo raciocínio vale para quem testa vários nutrientes, várias espécies ou várias praias e
+relata só o que "deu certo". Quanto mais coisas se olha, mais fácil encontrar alguma.
+
+# A saída é mudar a pergunta
+
+A correção não é fazer os mesmos testes com mais cuidado. É fazer uma pergunta diferente, primeiro:
+
+> **Existe alguma diferença entre os grupos?**
+
+Uma pergunta só, um teste só, um risco de alarme falso só. Se a resposta for que os grupos não se
+distinguem do que o acaso produz, a investigação para aí. Se for que se distinguem, aí sim vale
+descobrir quais deles, com procedimentos que já levam em conta quantas comparações estão sendo
+feitas.
+
+A ordem importa: primeiro a pergunta global, depois as comparações específicas.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Um estudo compara a riqueza de peixes entre cinco estuários, faz todos os testes entre pares e
+  relata os dois que deram p menor que 0,05. Quantos testes foram feitos, e o que falta informar?
+- Se cada teste isolado continua com risco de 5%, por que dizer que o conjunto de testes "está
+  errado"?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"} (MEAD)
+- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"} (MEAD)
+
+:::

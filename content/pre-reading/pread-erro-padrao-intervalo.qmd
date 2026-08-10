@@ -1,0 +1,163 @@
+---
+title: "Quanta confiança cabe numa única amostra?"
+subtitle: "Leitura prévia"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Você tem uma amostra, não duas mil
+
+Uma equipe coleta 20 mexilhões de um costão, mede um por um e calcula a média: 4,9 cm.
+
+Sabemos que esse número não é o comprimento médio do costão. Se outra equipe repetisse o trabalho,
+chegaria a outro valor, e a coleção dessas respostas possíveis tem uma largura própria. O problema
+prático é que ninguém repete o trabalho duas mil vezes. Você tem uma coleta, um número, e precisa
+informar alguma coisa sobre a confiança que ele merece.
+
+A pergunta desta leitura é justamente essa: **como medir o espalhamento de um procedimento que
+foi executado uma única vez?**
+
+# O erro padrão
+
+A saída é surpreendentemente econômica. A própria amostra já contém a informação necessária, e ela
+se resume em uma conta:
+
+$$EP = \frac{s}{\sqrt{n}}$$
+
+onde $s$ é o desvio-padrão dos valores da amostra e $n$ é o número de unidades amostrais.
+
+Esse número é o **erro padrão da média**, e ele estima o quanto a média variaria se o estudo fosse
+repetido.
+
+Repare no que a fórmula diz. O erro padrão **cresce** quando os indivíduos variam mais: quanto mais
+heterogêneo o costão, mais instável a estimativa. E **cai** quando a amostra aumenta, mas cai com a
+raiz de $n$, o que tem uma consequência prática incômoda: para reduzir a incerteza pela metade é
+preciso quadruplicar a coleta.
+
+::: {.callout-warning appearance="minimal" title="Erro padrão e desvio-padrão medem coisas diferentes"}
+O **desvio-padrão** descreve quanto os mexilhões variam entre si. É uma característica do costão, e
+não muda quando você coleta mais.
+
+O **erro padrão** descreve quanto a *média de uma amostra* variaria de coleta para coleta. É uma
+característica do estudo, e encolhe conforme a amostra cresce.
+
+Informar um pelo outro é um erro comum, e ele muda a conclusão por um fator de $\sqrt{n}$.
+:::
+
+# De um número para um intervalo
+
+Se a média de uma amostra quase nunca acerta o valor da população, informar só a média é informar
+pouco. É mais honesto informar uma **faixa** de valores compatíveis com o que foi observado.
+
+É isso que faz um **intervalo de confiança**: em vez de "a média é 4,9 cm", ele diz algo como
+"a média está entre 4,5 e 5,3 cm". O intervalo se constrói a partir da média e do erro padrão,
+
+$$\bar{x} \pm t \times EP$$
+
+e portanto encolhe quando a amostra cresce e alarga quando os indivíduos variam mais. O
+multiplicador $t$ depende do nível de confiança escolhido e do tamanho da amostra.
+
+# O que os 95% prometem
+
+Aqui está o ponto que exige mais cuidado de toda a leitura. O intervalo não é uma promessa sobre a
+sua amostra específica: é um **procedimento** que, aplicado repetidamente, acerta em uma proporção
+conhecida das vezes.
+
+Para enxergar isso, vale fazer o que não se pode fazer na vida real: inventar um costão cujo
+comprimento médio sabemos ser exatamente 5 cm, repetir a coleta cem vezes e olhar os cem
+intervalos.
+
+```{r}
+#| echo: false
+#| label: fig-intervalo-cobertura
+#| fig-cap: "Intervalos de 95% calculados em 100 amostras de 20 mexilhões cada. A linha vertical é a média real da população (5 cm). Em laranja, os intervalos que não a contêm."
+#| fig-alt: "Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados."
+#| fig-height: 5
+
+amostras <- tibble(
+  id = rep(1:100, each = 20),
+  valor = rnorm(100 * 20, mean = 5, sd = 1)
+)
+
+intervalos <- amostras |>
+  group_by(id) |>
+  summarise(
+    media = mean(valor),
+    erro = qt(0.975, df = 19) * sd(valor) / sqrt(20)
+  ) |>
+  mutate(
+    inferior = media - erro,
+    superior = media + erro,
+    cobre = factor(
+      if_else(inferior <= 5 & superior >= 5, "contém 5 cm", "não contém"),
+      levels = c("contém 5 cm", "não contém")
+    )
+  )
+
+ggplot(intervalos, aes(y = id, x = media, colour = cobre)) +
+  geom_vline(xintercept = 5, linewidth = 0.8) +
+  geom_errorbarh(aes(xmin = inferior, xmax = superior), height = 0) +
+  geom_point(size = 1.4) +
+  scale_colour_manual(values = c("contém 5 cm" = "#0072B2", "não contém" = "#D55E00"),
+                      drop = FALSE) +
+  labs(x = "Comprimento médio (cm)", y = "Amostra", colour = NULL)
+```
+
+```{r}
+#| echo: false
+n_falhas <- sum(intervalos$cobre == "não contém")
+```
+
+Nesta simulação, o número de intervalos que **não** contêm o valor real foi `r n_falhas`, de 100.
+Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população.
+É por isso que o procedimento se chama "intervalo de 95% de confiança".
+
+Os intervalos laranja não foram calculados de forma diferente dos azuis. Ninguém errou a medição
+neles. Eles são a fração de coletas que, pelo sorteio, caiu longe demais do centro.
+
+::: {.callout-warning appearance="minimal" title="A confiança é do procedimento, não do intervalo"}
+Com uma amostra só, **você nunca sabe se está em um intervalo azul ou laranja**.
+
+Por isso a frase "há 95% de probabilidade de a média estar neste intervalo" não descreve o que foi
+calculado. O que se sabe é a taxa de acerto do método quando ele é usado repetidamente.
+:::
+
+# Por que informar o intervalo muda a leitura de um resultado
+
+Um intervalo estreito e um intervalo largo em torno da mesma média dizem coisas muito diferentes
+sobre o que o estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa só a média.
+
+Um intervalo largo não é um resultado ruim: é um resultado honesto sobre um estudo pequeno ou sobre
+uma população heterogênea. O que seria ruim é apresentar a média sozinha e deixar quem lê supor
+uma precisão que os dados não têm.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Duas equipes obtêm intervalos que se sobrepõem quase inteiramente. Isso é sinal de que erraram a
+  medição, ou é o resultado esperado?
+- Uma equipe informa média 4,9 cm sem nenhum intervalo. Que informação está faltando para alguém
+  avaliar o resultado?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"} (MEAD)
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"} (MEAD)
+
+:::

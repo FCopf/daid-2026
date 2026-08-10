@@ -1,0 +1,172 @@
+---
+title: "O que 45 estações dizem sobre a região?"
+subtitle: "Leitura prévia"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Um levantamento termina, e começa o problema
+
+Uma equipe percorre o litoral e registra, em 45 estações distribuídas por nove praias, quantas
+espécies de invertebrados encontra em cada uma. Ao fim, a planilha tem 45 linhas.
+
+Só que o relatório não vai falar sobre essas 45 estações. Vai falar sobre a região: quantas
+espécies uma estação daquele litoral costuma abrigar, se as praias se parecem entre si, se o
+padrão observado justifica voltar lá.
+
+É aí que aparece a pergunta que separa a planilha da conclusão: **o que 45 estações permitem
+dizer sobre um litoral que tem milhares delas?**
+
+# Duas coisas com nomes diferentes
+
+::: {.callout-note appearance="minimal" title="População e amostra"}
+A **população** é o conjunto de todas as unidades sobre as quais queremos concluir alguma coisa.
+A **amostra** é o subconjunto que efetivamente medimos.
+
+A média das 45 estações medidas é um número exato e conhecido. A média de todas as estações da
+região é um número desconhecido, que a amostra permite **estimar**, nunca conhecer com certeza.
+:::
+
+Repare que a população não é definida pelos dados: é definida pela pergunta. Se a pergunta é sobre
+aquele litoral, a população são todas as estações do litoral. Se é sobre uma praia específica, a
+população encolhe, e as 5 estações daquela praia passam a ser a amostra.
+
+Definir a população antes de coletar evita a situação mais desconfortável da análise de dados:
+descobrir, no fim, que os dados respondem a uma pergunta diferente da que se queria fazer.
+
+# Estimar é aceitar uma margem
+
+Se todas as estações do litoral fossem idênticas, uma única medida bastaria e não haveria
+incerteza nenhuma. Como elas variam, cada amostra produz uma resposta um pouco diferente.
+
+Isso não é um defeito do levantamento. É a consequência inevitável de medir uma parte para falar
+do todo, e é por isso que uma estimativa sempre vem acompanhada de uma margem.
+
+# Sortear estações soltas ou praias inteiras?
+
+Aqui entra a decisão que mais influencia a qualidade de uma estimativa, e que quase nunca recebe
+a atenção que merece: **como as unidades entram na amostra**.
+
+Suponha que o orçamento permita visitar 15 estações. Há pelo menos dois jeitos de escolhê-las.
+
+Sortear **15 estações soltas** por toda a região, ou sortear **3 praias inteiras** e medir as 5
+estações de cada uma. Nos dois casos são 15 estações, o mesmo esforço de campo, e a segunda opção
+é bem mais barata: menos deslocamento, menos dias de viagem.
+
+A figura abaixo repete as duas estratégias duas mil vezes em uma região onde as praias diferem
+bastante entre si.
+
+```{r}
+#| echo: false
+#| label: fig-populacao-estrategias
+#| fig-cap: "Estimativas da riqueza média da região obtidas por duas estratégias de amostragem, ambas com 15 estações. A linha marca a riqueza média real da região."
+#| fig-alt: "Dois histogramas empilhados na mesma escala. O das estações soltas é estreito e concentrado em torno da linha do valor real. O das praias inteiras é muito mais largo, com estimativas que vão de valores baixos a valores altos."
+#| fig-height: 4
+
+praias <- tibble(
+  praia = 1:9,
+  media_praia = c(11, 10, 4, 3, 6, 3, 4, 4, 6)
+)
+
+regiao <- praias |>
+  slice(rep(1:9, each = 5)) |>
+  mutate(riqueza = pmax(0, rnorm(45, mean = media_praia, sd = 1.5)))
+
+media_regiao <- mean(regiao$riqueza)
+
+estimativas <- bind_rows(
+  tibble(
+    estrategia = "15 estações soltas",
+    media = replicate(2000, mean(sample(regiao$riqueza, size = 15)))
+  ),
+  tibble(
+    estrategia = "3 praias inteiras",
+    media = replicate(2000, {
+      sorteadas <- sample(1:9, size = 3)
+      mean(regiao$riqueza[regiao$praia %in% sorteadas])
+    })
+  )
+) |>
+  mutate(estrategia = fct_relevel(estrategia, "15 estações soltas"))
+
+ggplot(estimativas, aes(x = media)) +
+  geom_histogram(bins = 45, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = media_regiao, colour = "#D55E00", linewidth = 1.1) +
+  facet_wrap(~ estrategia, ncol = 1) +
+  labs(x = "Riqueza média estimada para a região", y = "Frequência")
+```
+
+```{r}
+#| echo: false
+espalhamento <- estimativas |>
+  group_by(estrategia) |>
+  summarise(desvio = sd(media))
+
+sd_soltas <- formatC(espalhamento$desvio[1], format = "f", digits = 2, decimal.mark = ",")
+sd_praias <- formatC(espalhamento$desvio[2], format = "f", digits = 2, decimal.mark = ",")
+```
+
+As duas estratégias acertam **em média**: os dois histogramas estão centrados no valor real. O que
+muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com
+desvio-padrão de `r sd_soltas` espécies, e as por praias inteiras, de `r sd_praias`.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+As 15 estações de três praias inteiras trazem menos informação que 15 estações espalhadas, apesar
+de serem o mesmo número de medidas.
+
+O motivo é que estações da mesma praia se parecem entre si. Ao sortear uma praia rica, você leva
+cinco estações ricas de uma vez; ao sortear uma pobre, cinco pobres. A estimativa passa a depender
+muito mais da sorte do sorteio.
+:::
+
+# Amostra maior não conserta amostra torta
+
+As duas estratégias acima diferem em **precisão**, e a precisão melhora ao coletar mais.
+
+Existe um problema diferente, que coletar mais não resolve. Se a equipe visitar apenas as praias
+de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra deixa de representar a
+região, e as estimativas passam a errar sistematicamente para o mesmo lado.
+
+::: {.callout-warning appearance="minimal" title="Duas falhas que não se corrigem do mesmo jeito"}
+Uma amostra **imprecisa** produz estimativas espalhadas em torno do valor certo. Mais unidades
+amostrais resolvem.
+
+Uma amostra **enviesada** produz estimativas concentradas em torno do valor errado. Mil estações
+escolhidas pelo mesmo critério torto continuam dando a resposta errada, agora com aparência de
+segurança.
+:::
+
+O sorteio é o que protege contra a segunda falha. Ele não garante uma boa amostra em cada
+levantamento específico, mas garante que nenhuma característica da região seja sistematicamente
+favorecida ou excluída.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Uma equipe mede 200 estações, todas na mesma praia. Sobre qual população essas 200 estações
+  permitem concluir alguma coisa?
+- Duas equipes visitam a mesma região com o mesmo orçamento e chegam a estimativas diferentes.
+  Isso indica que uma delas trabalhou mal?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html){target="_blank"} (MEAD)
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
+
+:::

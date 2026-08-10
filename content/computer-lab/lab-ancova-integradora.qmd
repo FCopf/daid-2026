@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 09"
-subtitle: "Do delineamento à conclusão"
+title: "Do delineamento à conclusão"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -78,7 +78,7 @@ Antes de atribuir a diferença ao mês, precisamos descontar o tamanho. É isso 
 # Como as duas variáveis se relacionam?
 
 ```{r}
-#| label: fig-lab09-bruto
+#| label: fig-ancova-bruto
 #| fig-cap: "Peso dos testículos em função do comprimento do manto, nos dois meses."
 #| fig-height: 3.6
 
@@ -101,7 +101,7 @@ dois_meses <- dois_meses |>
 ```
 
 ```{r}
-#| label: fig-lab09-log
+#| label: fig-ancova-log
 #| fig-cap: "As mesmas observações com o peso em escala logarítmica, com uma reta ajustada por mês."
 #| fig-height: 3.6
 
@@ -202,7 +202,7 @@ afirmando.
 # Os resíduos sustentam o modelo?
 
 ```{r}
-#| label: fig-lab09-residuos
+#| label: fig-ancova-residuos
 #| fig-cap: "Resíduos do modelo com interação em função dos valores ajustados."
 #| fig-height: 3.2
 
@@ -219,7 +219,7 @@ ggplot(diagnostico, aes(x = ajustado, y = residuo, colour = mes)) +
 ```
 
 ```{r}
-#| label: fig-lab09-qq
+#| label: fig-ancova-qq
 #| fig-cap: "Gráfico quantil-quantil dos resíduos."
 #| fig-height: 3.2
 
@@ -258,7 +258,7 @@ causa a diferença.
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-09-ancova.R` que rode em sessão nova e contenha:
+Um script `pr-ancova.R` que rode em sessão nova e contenha:
 
 1. a importação, a seleção dos dois meses e a comparação bruta das médias;
 2. os gráficos na escala original e na escala logarítmica, e a verificação de sobreposição das
@@ -275,4 +275,4 @@ Um script `pr-09-ancova.R` que rode em sessão nova e contenha:
 
 # Para saber mais
 
-- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html) (MEAD)
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD)

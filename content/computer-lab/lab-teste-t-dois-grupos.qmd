@@ -1,0 +1,257 @@
+---
+title: "As algas mudam a concentração de fosfato?"
+subtitle: "Prática em R"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# Um experimento em mesocosmos
+
+Um experimento investigou como a presença de algas afeta a concentração de nutrientes na água.
+Tanques experimentais receberam ou não algas, e a concentração de três nutrientes foi medida em
+cada um.
+
+Nesta prática comparamos dois grupos com dados reais, do começo ao fim: contar as unidades
+experimentais, olhar os dados, aplicar o teste, ler o intervalo de confiança e, por último, fazer
+a pergunta que quase ninguém faz: **este experimento seria capaz de detectar um efeito, se ele
+existisse?**
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Vamos abrir os dados
+
+```{r}
+url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Biodiversity.txt"
+
+biodiv <- read_tsv(url, show_col_types = FALSE)
+
+glimpse(biodiv)
+```
+
+`MU` identifica o mesocosmo, `Treatment` indica a presença de algas, `Nutrient` o nutriente medido
+e `Concentration` a concentração observada.
+
+# Quantas unidades experimentais existem?
+
+Antes de qualquer teste, a pergunta obrigatória: quantas vezes o tratamento foi de fato aplicado?
+
+```{r}
+nrow(biodiv)
+n_distinct(biodiv$MU)
+```
+
+São 108 linhas, mas apenas 36 mesocosmos. Cada mesocosmo foi medido três vezes.
+
+```{r}
+biodiv |> count(MU) |> count(n, name = "quantos_mesocosmos")
+```
+
+As três medidas de um mesmo mesocosmo são subamostras: descrevem bem aquele mesocosmo, mas não são
+repetições independentes do tratamento. A unidade experimental é o **mesocosmo**, e é a ele que
+reduzimos os dados antes de analisar.
+
+```{r}
+mesocosmos <- biodiv |>
+  group_by(MU, Treatment, Nutrient) |>
+  summarise(concentracao = mean(Concentration), .groups = "drop")
+
+mesocosmos |> count(Treatment, Nutrient)
+```
+
+Trinta e seis unidades, seis em cada combinação de tratamento e nutriente.
+
+# Como ficam os dois grupos?
+
+Vamos começar por um nutriente só:
+
+```{r}
+fosfato <- mesocosmos |> filter(Nutrient == "PO3")
+
+fosfato |>
+  group_by(Treatment) |>
+  summarise(
+    n = n(),
+    media = mean(concentracao),
+    desvio = sd(concentracao)
+  )
+```
+
+```{r}
+#| label: fig-fosfato-grupos
+#| fig-cap: "Concentração de fosfato nos mesocosmos com e sem algas. Cada ponto é um mesocosmo."
+#| fig-height: 3.4
+
+ggplot(fosfato, aes(x = Treatment, y = concentracao)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.12, size = 2.5, alpha = 0.7, colour = "#0072B2") +
+  labs(x = "Tratamento", y = "Concentração de fosfato")
+```
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+As duas nuvens de pontos se sobrepõem? A diferença entre elas parece grande em relação ao
+espalhamento dentro de cada grupo?
+
+Responda **antes** de rodar o teste. Comparar a sua impressão com o resultado é uma boa forma de
+calibrar a leitura de gráficos.
+:::
+
+# O teste t
+
+Comparar duas médias é uma operação tão frequente que existe uma função pronta para ela. Em vez de
+simular a distribuição nula, `t.test()` chega ao mesmo lugar por um caminho matemático:
+
+```{r}
+teste <- t.test(concentracao ~ Treatment, data = fosfato)
+
+teste
+```
+
+A saída traz, em ordem: a estatística `t`, os graus de liberdade, o valor de p, o intervalo de
+confiança de 95% para a diferença entre as médias e as duas médias.
+
+A fórmula `concentracao ~ Treatment` lê-se "concentração **em função de** tratamento", a mesma
+notação que usaremos em todos os modelos daqui em diante.
+
+```{r}
+teste$conf.int
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+O intervalo de confiança costuma ser mais informativo que o valor de p, porque está na unidade da
+resposta: ele diz **de quanto** é a diferença, com que incerteza.
+
+Escreva uma frase de conclusão que use o intervalo, não apenas o "significativo". Repare também no
+que o intervalo **exclui**: valores fora dele são pouco compatíveis com o que foi observado.
+:::
+
+# Os pressupostos se sustentam?
+
+O teste t supõe que os valores de cada grupo se distribuem de forma aproximadamente simétrica em
+torno da média. Com poucas unidades, o jeito mais honesto de verificar isso é olhar.
+
+```{r}
+#| label: fig-fosfato-pressupostos
+#| fig-cap: "Distribuição dos valores dentro de cada grupo."
+#| fig-height: 3
+
+ggplot(fosfato, aes(x = concentracao)) +
+  geom_dotplot(binwidth = 0.1, fill = "#0072B2", colour = "white") +
+  facet_wrap(~ Treatment) +
+  labs(x = "Concentração de fosfato", y = NULL) +
+  scale_y_continuous(breaks = NULL)
+```
+
+Compare também os desvios-padrão dos dois grupos na tabela anterior. Se um for muito maior que o
+outro, a versão do teste que o R usa por padrão (`Welch`) já lida com isso: repare que os graus
+de liberdade não são inteiros.
+
+# Este experimento enxergaria um efeito?
+
+Seis mesocosmos por grupo é pouco. Vale medir o quanto esse tamanho limita o que o experimento
+consegue detectar, e para isso simulamos experimentos em que o efeito **existe** e contamos quantas
+vezes ele é detectado.
+
+O tamanho do efeito é expresso em desvios-padrão, para não depender da escala do nutriente: um
+efeito de `1` significa "uma diferença do tamanho da variação entre mesocosmos".
+
+```{r}
+poder_para <- function(n_por_grupo, efeito, repeticoes = 1000) {
+  mean(replicate(repeticoes, {
+    sem_algas <- rnorm(n_por_grupo, mean = 0, sd = 1)
+    com_algas <- rnorm(n_por_grupo, mean = efeito, sd = 1)
+    t.test(sem_algas, com_algas)$p.value < 0.05
+  }))
+}
+
+poder_para(n_por_grupo = 6, efeito = 1)
+```
+
+A função devolve a proporção de experimentos em que o efeito foi detectado. Agora vamos percorrer
+vários tamanhos de experimento e vários tamanhos de efeito:
+
+```{r}
+cenarios <- expand_grid(
+  n_por_grupo = c(6, 12, 20, 40),
+  efeito = c(0.5, 1, 1.5)
+) |>
+  mutate(poder = map2_dbl(n_por_grupo, efeito, poder_para))
+
+cenarios
+```
+
+```{r}
+#| label: fig-fosfato-poder
+#| fig-cap: "Proporção de experimentos que detectam o efeito, por tamanho de experimento e tamanho de efeito. A linha tracejada marca 80%, um alvo usual no planejamento."
+#| fig-height: 3.4
+
+ggplot(cenarios, aes(x = n_por_grupo, y = poder, colour = factor(efeito))) +
+  geom_hline(yintercept = 0.8, linetype = "dashed", colour = "grey40") +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2.4) +
+  scale_colour_manual(values = c("0.5" = "#0072B2", "1" = "#D55E00", "1.5" = "#009E73")) +
+  labs(
+    x = "Mesocosmos por grupo",
+    y = "Proporção de experimentos que detectam o efeito",
+    colour = "Efeito (em desvios-padrão)"
+  )
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Olhe a coluna dos 6 mesocosmos por grupo, que é o tamanho real deste experimento.
+
+Um efeito de meio desvio-padrão passaria despercebido na maioria das vezes. Um efeito grande, de
+1,5 desvio-padrão, seria detectado com frequência razoável.
+
+Isso muda a leitura de um resultado não significativo: ele não diz que as algas não fazem nada, diz
+que este experimento só teria enxergado efeitos grandes.
+:::
+
+::: {.callout-warning appearance="minimal" title="O tamanho do efeito é escolhido, não observado"}
+Repare que em nenhum momento usamos a diferença que apareceu nos dados para calcular essas
+proporções.
+
+Calcular o poder a partir do efeito observado apenas reescreve o valor de p em outra escala.
+O cálculo útil é feito **antes** de coletar, com o efeito que seria biologicamente relevante
+detectar.
+:::
+
+::: {.callout-tip appearance="minimal" title="Explore"}
+Refaça a análise trocando `PO3` por `NH4` ou `NO3` no `filter()`.
+
+A conclusão sobre o efeito das algas é a mesma para os três nutrientes? Guarde a resposta: ela
+volta mais adiante na unidade curricular.
+:::
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-dois-grupos.R` que rode em sessão nova e contenha:
+
+1. a importação dos dados e a redução às 36 unidades experimentais, com a contagem que justifica
+   essa redução;
+2. o gráfico do fosfato, o teste t e o gráfico de verificação dos pressupostos;
+3. a tabela e o gráfico de poder para os quatro tamanhos de experimento;
+4. em comentários, quatro a cinco frases contendo: uma conclusão sobre o efeito das algas escrita
+   com o intervalo de confiança, uma explicação de **por que as 108 linhas não podem ser usadas
+   diretamente no teste**, e uma frase sobre qual tamanho de efeito este experimento conseguiria
+   detectar.
+:::
+
+# Para saber mais
+
+- [Comparando médias: teste t de Student](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html){target="_blank"} (MEAD)

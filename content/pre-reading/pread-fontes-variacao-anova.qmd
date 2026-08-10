@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 05"
-subtitle: "Entre grupos ou dentro dos grupos?"
+title: "Entre grupos ou dentro dos grupos?"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -22,20 +22,19 @@ library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-# Agora são quatro tratamentos
+# Uma pergunta que vale para os quatro grupos
 
 Um experimento avalia o efeito de quatro concentrações de zinco sobre a diversidade de algas em
 canais experimentais. Quatro tratamentos, oito canais por tratamento, uma medida de diversidade
 em cada canal.
 
-A saída óbvia seria comparar os tratamentos dois a dois. Mas quatro tratamentos geram seis pares,
-e cada comparação carrega sua própria chance de alarme falso. Fazendo seis testes a 5%, a chance
-de pelo menos um alarme falso passa de 25%, mesmo que o zinco não faça absolutamente nada.
-
-Precisamos de uma pergunta que valha para o conjunto:
+Comparar os tratamentos dois a dois multiplica as chances de alarme falso e ainda deixa sem
+resposta o que interessa primeiro. A pergunta que vale para o conjunto é esta:
 
 > **A separação entre os quatro grupos é grande em comparação com a variação que existe dentro
 > deles?**
+
+Esta leitura mostra como transformar essa frase em uma conta.
 
 # Duas situações com a mesma diferença de médias
 
@@ -43,7 +42,7 @@ Compare os dois cenários abaixo. Em ambos, as médias dos quatro grupos são ex
 
 ```{r}
 #| echo: false
-#| label: fig-pread05-dois-cenarios
+#| label: fig-anova-dois-cenarios
 #| fig-cap: "Dois experimentos com as mesmas quatro médias de grupo (linhas horizontais) e variações internas diferentes."
 #| fig-alt: "Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente."
 #| fig-height: 3.6
@@ -128,7 +127,7 @@ cresce e $F$ fica maior que 1.
 
 ```{r}
 #| echo: false
-#| label: fig-pread05-distribuicao-f
+#| label: fig-anova-distribuicao-f
 #| fig-cap: "Valores de F obtidos em 3000 experimentos simulados sem nenhum efeito de tratamento (quatro grupos, oito canais por grupo)."
 #| fig-alt: "Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F."
 #| fig-height: 3.2
@@ -186,6 +185,6 @@ generaliza a ideia para qualquer número de grupos.
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html) (MEAD)
+- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"} (MEAD)
 
 :::

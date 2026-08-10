@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 03"
-subtitle: "O que conta como réplica?"
+title: "O que conta como réplica?"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -79,7 +79,7 @@ O gráfico abaixo mostra o que acontece nos dois cenários.
 
 ```{r}
 #| echo: false
-#| label: fig-pread03-duas-fontes
+#| label: fig-replicacao-duas-fontes
 #| fig-cap: "Comprimento de peixes em oito tanques. Cada ponto é um peixe; cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros."
 #| fig-alt: "Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta."
 #| fig-height: 3.8
@@ -129,35 +129,27 @@ Conte quantas vezes o tratamento foi atribuído. Esse é o seu número de unidad
 Se a análise usa mais observações do que isso, há subamostras entrando como se fossem réplicas.
 :::
 
-# Como o experimento deveria ter sido montado
+# A correção não é medir mais
 
-A correção não exige mais peixes. Exige mais **tanques**.
+Vale antecipar o desfecho, porque ele costuma contrariar a intuição.
 
-Com oito tanques menores (quatro sorteados para cada dieta), passamos a ter quatro réplicas por
-tratamento. As subamostras dentro de cada tanque continuam sendo úteis: elas fornecem uma medida
-confiável da média de cada tanque. Mas a comparação entre dietas passa a usar as **médias dos
-tanques**, que são oito valores independentes.
+O experimento dos dois tanques não melhora com 60 peixes por tanque, nem com 300. Cada peixe a
+mais refina a estimativa da média daquele tanque, e o que falta não é isso: falta ter visto tanques
+tratados da mesma forma diferirem entre si.
 
-Há ainda outros dois ingredientes que separam um experimento de uma coleta oportunista.
-
-**Aleatorização.** Sortear qual tanque recebe qual dieta impede que diferenças pré-existentes se
-alinhem com o tratamento. Se a pesquisadora escolhesse "os tanques mais claros para a dieta nova",
-luz e dieta ficariam confundidas para sempre.
-
-**Controle local.** Manter constante tudo o que puder ser mantido constante (temperatura,
-fotoperíodo, densidade inicial, horário de alimentação) reduz a variação residual e torna o efeito
-do tratamento mais fácil de enxergar.
+O que o experimento precisa é de **mais tanques**, ainda que menores e com menos peixes em cada um.
+Uma medida repetida barata não substitui uma unidade experimental cara.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Um estudo mede a salinidade em 3 pontos de cada um de 2 estuários e compara os estuários com
   6 medidas. Qual é a unidade experimental? Quantas réplicas existem por estuário?
-- Se um pesquisador só pode montar 6 tanques, é melhor colocar 30 peixes em cada um ou 10 peixes
-  em cada um e usar o restante do orçamento em mais tanques?
+- Uma pesquisadora relata "n = 60" em um experimento com dois tanques. Que número ela deveria ter
+  informado?
 :::
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html) (MEAD)
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
 
 :::
 

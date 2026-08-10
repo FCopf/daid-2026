@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 08"
-subtitle: "Uma reta para dados costeiros"
+title: "Uma reta para dados costeiros"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -54,7 +54,7 @@ nrow(abril)
 # Como as duas variáveis se relacionam?
 
 ```{r}
-#| label: fig-lab08-dispersao
+#| label: fig-regressao-dispersao
 #| fig-cap: "Biomassa em função do comprimento da concha, em abril."
 #| fig-height: 3.4
 
@@ -102,7 +102,7 @@ que o modelo está sendo forçado fora da faixa em que faz sentido.
 # O que os resíduos dizem?
 
 ```{r}
-#| label: fig-lab08-residuos-bruto
+#| label: fig-regressao-residuos-bruto
 #| fig-cap: "Resíduos do modelo ajustado na escala original, em função dos valores ajustados."
 #| fig-height: 3.2
 
@@ -145,7 +145,7 @@ abril <- abril |>
 ```
 
 ```{r}
-#| label: fig-lab08-log
+#| label: fig-regressao-log
 #| fig-cap: "As mesmas observações na escala logarítmica, com a reta ajustada."
 #| fig-height: 3.4
 
@@ -162,7 +162,7 @@ summary(modelo_log)
 ```
 
 ```{r}
-#| label: fig-lab08-residuos-log
+#| label: fig-regressao-residuos-log
 #| fig-cap: "Resíduos do modelo ajustado na escala logarítmica."
 #| fig-height: 3.2
 
@@ -222,7 +222,7 @@ indivíduo foi medido. Os dados não sustentam essa suposição.
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-08-regressao.R` que rode em sessão nova e contenha:
+Um script `pr-regressao.R` que rode em sessão nova e contenha:
 
 1. o gráfico de dispersão e o modelo na escala original, com o respectivo gráfico de resíduos;
 2. o modelo na escala logarítmica, com gráfico e resíduos;
@@ -231,47 +231,7 @@ Um script `pr-08-regressao.R` que rode em sessão nova e contenha:
    $R^2$ escondia, e como se interpreta a inclinação estimada na escala logarítmica.**
 :::
 
-# Atividade extraclasse 05: A relação é a mesma em todos os grupos?
-
-Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
-entrega própria.
-
-Até aqui usamos um mês só. O conjunto completo tem seis:
-
-```{r}
-moluscos |> count(MONTH)
-```
-
-Vamos olhar dois deles ao mesmo tempo:
-
-```{r}
-#| label: fig-lab08-extra
-#| fig-cap: "Relação entre comprimento e biomassa, na escala logarítmica, em dois meses."
-#| fig-height: 3.6
-
-dois_meses <- moluscos |>
-  filter(MONTH %in% c(2, 4)) |>
-  mutate(mes = factor(MONTH))
-
-ggplot(dois_meses, aes(x = LNLENGTH, y = LNAFD, colour = mes)) +
-  geom_point(alpha = 0.5, size = 1.5) +
-  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
-  labs(x = "log do comprimento", y = "log da biomassa", colour = "Mês")
-```
-
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `ae-05-dois-meses.R` que rode em sessão nova e contenha:
-
-1. o ajuste de `lm(LNAFD ~ LNLENGTH)` **separadamente** em cada um dos dois meses, com os
-   coeficientes de cada um;
-2. o gráfico acima, com as duas retas;
-3. uma comparação das duas inclinações e dos dois interceptos;
-4. em comentários, três a quatro frases respondendo: **as duas retas parecem paralelas? Se sim,
-   o que isso significa biologicamente, e o que ainda diferencia os dois meses?** Escolha um
-   comprimento presente nos dois meses e calcule a diferença de biomassa esperada nesse ponto.
-:::
-
 # Para saber mais
 
-- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html) (MEAD)
-- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html) (MEAD)
+- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html){target="_blank"} (MEAD)
+- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html){target="_blank"} (MEAD)

@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 02"
-subtitle: "A amostra representa a praia?"
+title: "A amostra representa a praia?"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -84,7 +84,7 @@ A média fica em torno de 5 espécies, mas o intervalo entre mínimo e máximo �
 número esconde isso.
 
 ```{r}
-#| label: fig-lab02-histograma
+#| label: fig-amostragem-histograma
 #| fig-cap: "Distribuição do número de espécies nas 45 estações."
 #| fig-height: 3.2
 
@@ -113,7 +113,7 @@ resumo_praias
 ```
 
 ```{r}
-#| label: fig-lab02-praias
+#| label: fig-amostragem-praias
 #| fig-cap: "Riqueza de espécies por praia. Cada ponto é uma estação."
 #| fig-height: 3.4
 
@@ -199,7 +199,7 @@ resultado mais dependente da sorte do sorteio?
 Uma última olhada, que prepara boa parte do semestre:
 
 ```{r}
-#| label: fig-lab02-nap
+#| label: fig-amostragem-nap
 #| fig-cap: "Riqueza de espécies em função da altura da estação em relação à maré."
 #| fig-height: 3.4
 
@@ -219,7 +219,7 @@ a ordem certa.
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-02-amostragem.R` que rode em uma sessão nova e contenha:
+Um script `pr-amostragem.R` que rode em uma sessão nova e contenha:
 
 1. a importação dos dados a partir da URL e o resumo geral da riqueza;
 2. o gráfico de riqueza por praia;
@@ -228,54 +228,7 @@ Um script `pr-02-amostragem.R` que rode em uma sessão nova e contenha:
    variam mais, e o que se perde ao sortear praias inteiras em vez de estações soltas?**
 :::
 
-# Atividade extraclasse 01: Um processo, muitas amostras
-
-Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
-entrega própria.
-
-Até aqui você sorteou amostras uma a uma e comparou as médias na mão. Agora vamos automatizar a
-repetição para enxergar o padrão.
-
-A função `replicate()` repete uma expressão quantas vezes você pedir e guarda os resultados:
-
-```{r}
-medias_10 <- replicate(1000, mean(sample(rikz$Richness, size = 10)))
-medias_30 <- replicate(1000, mean(sample(rikz$Richness, size = 30)))
-
-sd(medias_10)
-sd(medias_30)
-```
-
-`sample(rikz$Richness, size = 10)` sorteia 10 valores da coluna de riqueza; `mean()` calcula a
-média deles; `replicate(1000, ...)` faz isso mil vezes.
-
-```{r}
-#| label: fig-lab02-extra
-#| fig-cap: "Médias de mil amostras de 10 e de 30 estações, sorteadas do mesmo conjunto de 45."
-#| fig-height: 3.4
-
-simulacoes <- bind_rows(
-  tibble(tamanho = "10 estações", media = medias_10),
-  tibble(tamanho = "30 estações", media = medias_30)
-)
-
-ggplot(simulacoes, aes(x = media)) +
-  geom_histogram(bins = 30, fill = "#0072B2", colour = "white") +
-  facet_wrap(~ tamanho) +
-  labs(x = "Média da amostra (número de espécies)", y = "Frequência")
-```
-
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `ae-01-muitas-amostras.R` que rode em sessão nova e contenha:
-
-1. as mil médias para `size = 5`, `size = 10` e `size = 30`, com o desvio-padrão de cada conjunto;
-2. um gráfico comparando as três distribuições de médias;
-3. em comentários, três a quatro frases respondendo: **o que acontece com a largura da distribuição
-   quando a amostra cresce, e por que os três histogramas ficam centrados aproximadamente no mesmo
-   lugar?**
-:::
-
 # Para saber mais
 
-- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html) (MEAD)
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html) (MEAD)
+- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html){target="_blank"} (MEAD)
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)

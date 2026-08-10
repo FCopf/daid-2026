@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 04"
-subtitle: "Tanques, subamostras e o que conta como réplica"
+title: "Tanques, subamostras e o que conta como réplica"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -72,7 +72,7 @@ glimpse(peixes)
 # Como fica o experimento?
 
 ```{r}
-#| label: fig-lab04-tanques
+#| label: fig-replicacao-tanques
 #| fig-cap: "Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a barra é a média do tanque."
 #| fig-height: 3.6
 
@@ -202,7 +202,7 @@ c(errada = taxa_errada, certa = taxa_certa)
 ```
 
 ```{r}
-#| label: fig-lab04-taxas
+#| label: fig-replicacao-taxas
 #| fig-cap: "Distribuição dos valores de p nas duas análises, em 300 experimentos sem nenhum efeito de dieta. A linha marca o limiar de 0,05."
 #| fig-height: 3.4
 
@@ -289,7 +289,7 @@ de abrir o R.
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-04-replicacao.R` que rode em sessão nova e contenha:
+Um script `pr-replicacao.R` que rode em sessão nova e contenha:
 
 1. a simulação dos 8 tanques com `efeito_dieta <- 0`, o gráfico por tanque e as duas análises
    (120 peixes e 8 médias de tanque);
@@ -302,30 +302,6 @@ Um script `pr-04-replicacao.R` que rode em sessão nova e contenha:
    corrige isso?**
 :::
 
-# Atividade extraclasse 02: Redesenhar antes de analisar
-
-Esta seção é feita em casa, na semana indicada no [cronograma](../../index.qmd), e produz uma
-entrega própria.
-
-Um pesquisador propõe o seguinte estudo: comparar a cobertura de algas em dois costões, um exposto
-e um abrigado. Em cada costão, ele lança 20 quadrados de 1 m² e mede a cobertura em cada um. Depois
-compara os dois costões com um teste t sobre as 40 medidas.
-
-Sua tarefa é **avaliar e redesenhar** esse estudo.
-
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um documento curto (uma página) ou um script `ae-02-redesenho.R` com comentários, contendo:
-
-1. **Diagnóstico.** Qual é a unidade experimental do estudo proposto? Quantas réplicas existem por
-   condição? O teste t sobre 40 medidas é apropriado? Justifique.
-2. **Redesenho.** Descreva uma versão do estudo que permita responder à pergunta sobre exposição.
-   Quantos costões, quantos quadrados por costão, e como as condições seriam atribuídas.
-3. **Simulação.** Adapte a simulação de tanques desta prática para o seu redesenho, com o efeito
-   da exposição fixado em zero, e mostre que a análise correta **não** encontra efeito.
-4. **Limite.** Uma frase sobre o que continua impossível concluir mesmo com o redesenho, dado que
-   ninguém sorteia qual costão será exposto.
-:::
-
 # Para saber mais
 
-- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html) (MEAD)
+- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html){target="_blank"} (MEAD)

@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 06"
-subtitle: "Um fator, quatro níveis"
+title: "Um fator, quatro níveis"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -70,7 +70,7 @@ algas |>
 ```
 
 ```{r}
-#| label: fig-lab06-boxplot
+#| label: fig-anova-boxplot
 #| fig-cap: "Diversidade de algas nas quatro concentrações de zinco. Cada ponto é um canal."
 #| fig-height: 3.4
 
@@ -129,7 +129,7 @@ Ele **não** diz quais concentrações diferem entre si. Para isso existe o pass
 Antes de seguir, vale conferir se o modelo é razoável. Dois gráficos bastam:
 
 ```{r}
-#| label: fig-lab06-residuos
+#| label: fig-anova-residuos
 #| fig-cap: "Resíduos do modelo em função dos valores ajustados, e distribuição dos resíduos."
 #| fig-height: 3.2
 
@@ -145,7 +145,7 @@ ggplot(diagnostico, aes(x = ajustado, y = residuo)) +
 ```
 
 ```{r}
-#| label: fig-lab06-qq
+#| label: fig-anova-qq
 #| fig-cap: "Gráfico quantil-quantil dos resíduos. Pontos próximos da linha indicam resíduos aproximadamente normais."
 #| fig-height: 3.2
 
@@ -186,7 +186,7 @@ diversidade ao longo das quatro concentrações, ou apenas os extremos se separa
 Para calibrar a leitura do F, vale ver que valores ele assume quando não há efeito algum:
 
 ```{r}
-#| label: fig-lab06-f-nulo
+#| label: fig-anova-f-nulo
 #| fig-cap: "Valores de F em 2000 experimentos simulados com quatro grupos e nenhum efeito. A linha marca o F observado nos dados reais."
 #| fig-height: 3.2
 
@@ -236,7 +236,7 @@ A distribuição de F sob a nula muda de forma? E a posição da linha laranja e
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-06-anova.R` que rode em sessão nova e contenha:
+Um script `pr-anova.R` que rode em sessão nova e contenha:
 
 1. a importação dos dados, o reordenamento dos níveis e o gráfico dos quatro grupos;
 2. a tabela de resumo por grupo e a saída de `summary(aov(...))`;
@@ -249,4 +249,4 @@ Um script `pr-06-anova.R` que rode em sessão nova e contenha:
 
 # Para saber mais
 
-- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html) (MEAD)
+- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"} (MEAD)

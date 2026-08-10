@@ -4,23 +4,30 @@ number-sections: false
 toc: false
 ---
 
-Cada leitura prévia é curta e apresenta a ideia central do encontro a partir de um problema
-concreto. Vale lê-la antes da aula: a Prática em R começa supondo que a pergunta já está na sua
-cabeça.
-
-As leituras são independentes entre si: você pode ler qualquer uma sem ter lido as anteriores.
+Cada semana do cronograma tem a sua leitura prévia. Ela apresenta a ideia central do encontro a
+partir de um problema concreto e deve ser lida **antes** da aula ou da atividade extraclasse
+correspondente: tanto a [Prática em R](../computer-lab/index.qmd) quanto a
+[Atividade extraclasse](../assignment/index.qmd) partem do princípio de que esse contexto teórico
+já foi compreendido.
 
 ::: {.catalogo-materiais}
 
-| | Leitura prévia | Semana no [cronograma](../../index.qmd) |
-|:--|:--|:--|
-| **LP01** | [Por que duas medidas nunca são iguais?](pread-01-dados-unidades-variacao.qmd) | Aulas 01 e 02 |
-| **LP02** | [Por que a média muda de uma amostra para outra?](pread-02-variabilidade-amostral.qmd) | Extraclasse 01 e Aula 03 |
-| **LP03** | [O que conta como réplica?](pread-03-replicacao-unidades.qmd) | Aula 04 e Extraclasse 02 |
-| **LP04** | [Uma diferença poderia surgir só por acaso?](pread-04-modelo-nulo-evidencia.qmd) | Aulas 05 e 06 |
-| **LP05** | [Entre grupos ou dentro dos grupos?](pread-05-fontes-variacao-anova.qmd) | Extraclasse 03 e Aula 07 |
-| **LP06** | [Controlar um gradiente, combinar dois fatores](pread-06-blocos-interacao.qmd) | Aula 08 e Extraclasse 04 |
-| **LP07** | [Uma reta como processo gerador](pread-07-relacao-linear.qmd) | Aula 09 |
-| **LP08** | [Tratamento e covariável no mesmo modelo](pread-08-tratamento-covariavel.qmd) | Extraclasse 05 e Aula 10 |
+| | Semana no [cronograma](../../index.qmd) |
+|:--|:--|
+| [Por que duas medidas nunca são iguais?](pread-dados-unidades-variacao.qmd) | Semana 1 |
+| [O que 45 estações dizem sobre a região?](pread-populacao-amostra.qmd) | Semana 2 |
+| [Por que a média muda de uma amostra para outra?](pread-variabilidade-amostral.qmd) | Semana 3 |
+| [Quanta confiança cabe numa única amostra?](pread-erro-padrao-intervalo.qmd) | Semana 4 |
+| [O que conta como réplica?](pread-replicacao-unidades.qmd) | Semana 5 |
+| [Como montar um experimento que responde à pergunta?](pread-aleatorizacao-controle.qmd) | Semana 6 |
+| [Uma diferença poderia surgir só por acaso?](pread-modelo-nulo-evidencia.qmd) | Semana 7 |
+| [Quando o teste erra, e quanto ele enxerga](pread-erros-poder.qmd) | Semana 8 |
+| [Por que não comparar os grupos dois a dois?](pread-comparacoes-multiplas.qmd) | Semana 9 |
+| [Entre grupos ou dentro dos grupos?](pread-fontes-variacao-anova.qmd) | Semana 10 |
+| [Controlar um gradiente, combinar dois fatores](pread-blocos-interacao.qmd) | Semana 11 |
+| [Você sorteia, agrupa ou mede?](pread-papeis-fator-bloco-covariavel.qmd) | Semana 12 |
+| [Uma reta como processo gerador](pread-relacao-linear.qmd) | Semana 13 |
+| [A mesma reta serve para os dois grupos?](pread-retas-paralelas.qmd) | Semana 14 |
+| [Tratamento e covariável no mesmo modelo](pread-tratamento-covariavel.qmd) | Semana 15 |
 
 :::

@@ -42,6 +42,8 @@ website:
         href: content/pre-reading/index.qmd
       - text: "Práticas em R"
         href: content/computer-lab/index.qmd
+      - text: "Atividades extraclasse"
+        href: content/assignment/index.qmd
     tools:
       - icon: mortarboard-fill
         href: "https://moodlegrad.unifesp.br/"

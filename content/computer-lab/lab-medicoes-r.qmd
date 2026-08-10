@@ -1,6 +1,6 @@
 ---
-title: "Prática em R 01"
-subtitle: "Primeiras medições em R"
+title: "Primeiras medições em R"
+subtitle: "Prática em R"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -150,7 +150,7 @@ Números resumem; gráficos revelam. Todo gráfico do `ggplot2` tem três partes
 mapeamento entre variáveis e eixos (`aes`) e a forma de desenhar (`geom_`).
 
 ```{r}
-#| label: fig-lab01-dispersao
+#| label: fig-medicoes-dispersao
 #| fig-cap: "Temperatura em função da profundidade nas cinco poças, com o sombreamento indicado pela cor."
 #| fig-height: 3.4
 
@@ -196,7 +196,7 @@ observar.
 Agora vamos gerar trinta poças e olhar a distribuição delas:
 
 ```{r}
-#| label: fig-lab01-histograma
+#| label: fig-medicoes-histograma
 #| fig-cap: "Distribuição da temperatura em trinta poças simuladas com média 25,5 °C e desvio-padrão 0,6 °C."
 #| fig-height: 3.2
 
@@ -219,7 +219,7 @@ simuladas |>
 ```
 
 A média e o desvio calculados a partir das trinta poças ficam **perto** dos valores que pedimos,
-mas não idênticos. Isso não é erro: é a variação amostral de que trata a leitura prévia.
+mas não idênticos. Isso não é erro: é o que acontece quando se mede uma parte em vez do todo.
 
 ::: {.callout-tip appearance="minimal" title="Modifique"}
 Execute o bloco acima trocando `sd = 0.6` por `sd = 2`. Depois volte para `0.6` e troque
@@ -233,7 +233,7 @@ Para cada mudança, observe:
 
 # Duas amostras do mesmo costão
 
-Uma última pergunta, que abre a próxima aula: se o costão é o mesmo, duas amostras produzem a mesma
+Uma última pergunta, e ela vale guardar: se o costão é o mesmo, duas amostras produzem a mesma
 média?
 
 ```{r}
@@ -257,7 +257,7 @@ dados reais, nunca saberíamos qual está mais perto.
 # Entrega
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-01-medicoes.R` que rode do início ao fim em uma sessão nova do R e contenha:
+Um script `pr-medicoes.R` que rode do início ao fim em uma sessão nova do R e contenha:
 
 1. a tabela `pocas` com as cinco poças e o resumo por `sombreamento`;
 2. o gráfico de dispersão da temperatura em função da profundidade;
@@ -268,5 +268,5 @@ Um script `pr-01-medicoes.R` que rode do início ao fim em uma sessão nova do R
 
 # Para saber mais
 
-- [Estrutura da linguagem R](https://fcopf.github.io/mead/content/introducao-r/estrutura-linguagem.html) (MEAD)
-- [Gráficos em camadas com ggplot2](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html) (MEAD)
+- [Estrutura da linguagem R](https://fcopf.github.io/mead/content/introducao-r/estrutura-linguagem.html){target="_blank"} (MEAD)
+- [Gráficos em camadas com ggplot2](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html){target="_blank"} (MEAD)

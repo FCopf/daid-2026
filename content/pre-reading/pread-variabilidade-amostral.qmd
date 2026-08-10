@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 02"
-subtitle: "Por que a média muda de uma amostra para outra?"
+title: "Por que a média muda de uma amostra para outra?"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -44,7 +44,7 @@ Suponha um costão onde os mexilhões têm comprimento médio de 5 cm e variam c
 
 ```{r}
 #| echo: false
-#| label: fig-pread02-duas-distribuicoes
+#| label: fig-variabilidade-duas-distribuicoes
 #| fig-cap: "À esquerda, os comprimentos de 2000 mexilhões individuais. À direita, as médias de 2000 amostras de 20 mexilhões cada. Os dois gráficos usam a mesma escala no eixo horizontal."
 #| fig-alt: "Dois histogramas lado a lado na mesma escala. O da esquerda, de mexilhões individuais, é largo. O da direita, de médias amostrais, é muito mais estreito e concentrado em torno do centro."
 #| fig-height: 3.4
@@ -97,7 +97,7 @@ indivíduos entram em cada amostra.
 
 ```{r}
 #| echo: false
-#| label: fig-pread02-tamanho-amostra
+#| label: fig-variabilidade-tamanho-amostra
 #| fig-cap: "Distribuição das médias amostrais para três tamanhos de amostra, na mesma população de mexilhões."
 #| fig-alt: "Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga; com n igual a 20 a faixa encolhe; com n igual a 100 as médias ficam concentradas em torno do centro."
 #| fig-height: 4.2
@@ -137,94 +137,29 @@ equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amo
 
 Ou seja: **amostras maiores não mudam a população, mudam a nossa incerteza sobre ela.**
 
-# Quanto uma média típica erra?
+# Um resultado que não depende dos mexilhões
 
-Em vez de descrever a figura com palavras, é útil ter um número que diga o quanto as médias se
-espalham. Esse número é o **erro padrão da média**:
+O que acabamos de ver na simulação vale muito além dela.
 
-$$EP = \frac{s}{\sqrt{n}}$$
+Sempre que a resposta de um estudo é uma média, ela tem a sua própria distribuição, centrada no
+valor da população e mais estreita que a distribuição dos indivíduos. A forma dessa distribuição
+se aproxima de um sino mesmo quando os indivíduos não se distribuem assim, desde que a amostra não
+seja pequena demais.
 
-onde $s$ é o desvio-padrão dos valores da amostra e $n$ é o número de unidades amostrais.
-
-Repare no que a fórmula diz. O erro padrão **cresce** quando os indivíduos variam mais e **cai**
-quando a amostra aumenta, exatamente o que as figuras mostraram. E cai com a raiz de $n$: para
-reduzir a incerteza pela metade é preciso quadruplicar a amostra.
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-O erro padrão **não** descreve quanto os mexilhões variam entre si. Isso é o desvio-padrão.
-O erro padrão descreve quanto a *média* variaria se o estudo fosse repetido.
-:::
-
-# De um número para um intervalo
-
-Se a média de uma amostra quase nunca acerta o valor da população, informar só a média é informar
-pouco. É mais honesto informar uma **faixa** de valores compatíveis com o que foi observado.
-
-É isso que faz um **intervalo de confiança**: em vez de "a média é 4,9 cm", ele diz algo como
-"a média está entre 4,5 e 5,3 cm". A largura do intervalo vem do erro padrão, e portanto encolhe
-quando a amostra cresce.
-
-A interpretação exige cuidado. O intervalo não é uma promessa sobre uma amostra específica: é um
-procedimento que, aplicado repetidamente, **acerta em uma proporção conhecida das vezes**.
-
-```{r}
-#| echo: false
-#| label: fig-pread02-cobertura
-#| fig-cap: "Intervalos de 95% calculados em 100 amostras de 20 mexilhões cada. A linha vertical é a média real da população (5 cm). Em laranja, os intervalos que não a contêm."
-#| fig-alt: "Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados."
-#| fig-height: 5
-
-amostras <- tibble(
-  id = rep(1:100, each = 20),
-  valor = rnorm(100 * 20, mean = 5, sd = 1)
-)
-
-intervalos <- amostras |>
-  group_by(id) |>
-  summarise(
-    media = mean(valor),
-    erro = qt(0.975, df = 19) * sd(valor) / sqrt(20)
-  ) |>
-  mutate(
-    inferior = media - erro,
-    superior = media + erro,
-    cobre = factor(
-      if_else(inferior <= 5 & superior >= 5, "contém 5 cm", "não contém"),
-      levels = c("contém 5 cm", "não contém")
-    )
-  )
-
-ggplot(intervalos, aes(y = id, x = media, colour = cobre)) +
-  geom_vline(xintercept = 5, linewidth = 0.8) +
-  geom_errorbarh(aes(xmin = inferior, xmax = superior), height = 0) +
-  geom_point(size = 1.4) +
-  scale_colour_manual(values = c("contém 5 cm" = "#0072B2", "não contém" = "#D55E00"),
-                      drop = FALSE) +
-  labs(x = "Comprimento médio (cm)", y = "Amostra", colour = NULL)
-```
-
-```{r}
-#| echo: false
-n_falhas <- sum(intervalos$cobre == "não contém")
-```
-
-Nesta simulação, o número de intervalos que **não** contêm o valor real foi `r n_falhas`, de 100.
-Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população.
-É por isso que o procedimento se chama "intervalo de 95% de confiança".
-
-O detalhe incômodo é que, com uma amostra só, **você nunca sabe se está em um intervalo azul ou
-laranja**. O que você sabe é a taxa de acerto do procedimento.
+É por isso que a distribuição amostral da média é o alicerce de quase tudo o que vem depois. Ela
+transforma "a resposta muda a cada amostra" em algo que se pode medir e, portanto, informar junto
+com o resultado.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Duas equipes obtêm intervalos que se sobrepõem quase inteiramente. Isso é sinal de que erraram
-  a medição, ou é o resultado esperado?
-- Uma equipe informa média 4,9 cm sem nenhum intervalo. Que informação está faltando para alguém
-  avaliar o resultado?
+- Duas equipes coletam 20 mexilhões cada e obtêm médias de 4,9 e 5,3 cm. Isso é sinal de que uma
+  delas trabalhou mal, ou é o resultado esperado?
+- Uma equipe quer reduzir pela metade o espalhamento das suas estimativas. Basta dobrar o número
+  de mexilhões coletados?
 :::
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html) (MEAD)
-- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html) (MEAD)
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"} (MEAD)
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
 
 :::

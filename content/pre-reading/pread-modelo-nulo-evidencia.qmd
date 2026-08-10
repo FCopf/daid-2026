@@ -1,0 +1,134 @@
+---
+title: "Uma diferença poderia surgir só por acaso?"
+subtitle: "Leitura prévia"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# A diferença é de 1,4 cm. E daí?
+
+Um experimento compara dois substratos para o assentamento de larvas de mexilhão. Doze placas
+recebem o substrato A e doze recebem o substrato B, sorteadas. Ao fim, mede-se o comprimento médio
+dos indivíduos em cada placa.
+
+Substrato A: **10,2 cm**. Substrato B: **11,6 cm**. Diferença: **1,4 cm**.
+
+Parece um efeito. Mas antes de anunciá-lo, vale lembrar de onde viemos: duas amostras da mesma
+população já teriam médias diferentes. Então a pergunta correta não é "houve diferença?". Houve,
+sempre há. A pergunta é:
+
+> **Uma diferença desse tamanho apareceria com frequência mesmo que os dois substratos fossem
+> idênticos?**
+
+# Construindo um mundo sem efeito
+
+Para responder, precisamos saber como seriam os resultados **se o substrato não fizesse diferença
+nenhuma**. Esse cenário tem nome: **hipótese nula**.
+
+A hipótese nula não é uma opinião sobre o mundo. É um **processo gerador de dados**, uma receita
+que podemos escrever e executar no computador:
+
+> sorteie 12 placas com média 10,2 e desvio-padrão 2; sorteie outras 12 com **a mesma** média e
+> **o mesmo** desvio-padrão; calcule a diferença entre as médias.
+
+Rodando essa receita uma vez, obtemos uma diferença. Rodando 5000 vezes, obtemos o conjunto de
+diferenças que o acaso sozinho é capaz de produzir.
+
+```{r}
+#| echo: false
+#| label: fig-modelo-nulo-distribuicao
+#| fig-cap: "Cinco mil diferenças entre médias de dois grupos gerados pelo mesmo processo. A linha marca a diferença de 1,4 cm observada no experimento."
+#| fig-alt: "Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda."
+#| fig-height: 3.4
+
+diferencas <- replicate(5000, mean(rnorm(12, 10.2, 2)) - mean(rnorm(12, 10.2, 2)))
+
+ggplot(tibble(d = diferencas), aes(x = d)) +
+  geom_histogram(bins = 45, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = 1.4, colour = "#D55E00", linewidth = 1.1) +
+  labs(x = "Diferença entre as médias (cm)", y = "Frequência")
+```
+
+O histograma está centrado em zero, como esperado: em média, dois grupos idênticos não diferem.
+Mas ele é **largo**. Diferenças de 1 cm, de 2 cm e até maiores acontecem com alguma frequência,
+sem que exista qualquer efeito.
+
+A diferença observada, 1,4 cm, cai numa região onde o acaso ainda produz resultados com certa
+regularidade.
+
+# O valor de p
+
+Agora podemos transformar essa leitura visual em um número: **a proporção das diferenças simuladas
+que é tão extrema quanto a observada**.
+
+```{r}
+#| echo: false
+valor_p <- mean(abs(diferencas) >= 1.4)
+```
+
+No caso, cerca de **`r round(valor_p * 100)`%** das simulações produziram uma diferença de 1,4 cm
+ou mais, para mais ou para menos, num mundo sem efeito nenhum. Essa proporção é o **valor de p**.
+
+::: {.callout-note appearance="minimal" title="O que o valor de p responde"}
+O valor de p é a probabilidade de observar um resultado **tão ou mais extremo** que o obtido,
+**supondo que a hipótese nula seja verdadeira**.
+
+Ele parte do modelo sem efeito e olha para os dados.
+:::
+
+::: {.callout-warning appearance="minimal" title="O que o valor de p não responde"}
+Ele **não** é a probabilidade de a hipótese nula ser verdadeira. E **não** é a probabilidade de o
+resultado ter sido "sorte".
+
+Trocar essas duas leituras é o erro de interpretação mais frequente em toda a estatística aplicada.
+:::
+
+# Uma receita que serve para qualquer comparação
+
+Vale reparar no que foi feito aqui, porque o procedimento se repete em praticamente toda a
+estatística aplicada.
+
+Escrevemos o cenário sem efeito como um processo gerador de dados. Executamos esse processo muitas
+vezes. Olhamos onde o resultado observado cai dentro do que o acaso produz. Contamos.
+
+Nenhuma fórmula apareceu, e nenhuma foi necessária. As fórmulas dos testes clássicos existem
+porque, antes dos computadores, simular cinco mil experimentos era impossível. Elas chegam ao mesmo
+lugar por um atalho matemático, mas a pergunta que respondem continua sendo esta.
+
+::: {.callout-warning appearance="minimal" title="A distribuição nula não é fixa"}
+Ela não depende só do que se mede: depende do experimento que foi montado.
+
+Com menos placas por grupo, o acaso produz diferenças maiores com facilidade e a distribuição nula
+fica mais larga. Com mais placas, ela se estreita. A mesma diferença de 1,4 cm pode ser banal em um
+experimento e rara em outro.
+:::
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Uma simulação de 5000 repetições devolve 40 resultados tão extremos quanto o observado. Qual é o
+  valor de p, e como você o descreveria em uma frase para quem não estudou estatística?
+- Se a hipótese nula é uma receita que escrevemos, o que aconteceria com o valor de p caso
+  escolhêssemos um desvio-padrão maior ao escrevê-la?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"} (MEAD)
+
+:::

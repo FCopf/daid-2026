@@ -1,0 +1,247 @@
+---
+title: "Construindo um mundo sem efeito"
+subtitle: "Prática em R"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+    code-tools: true
+---
+
+# A diferença é de 1,4 cm. Isso é muito?
+
+Um experimento comparou dois substratos para o assentamento de larvas de mexilhão. Doze placas
+receberam o substrato A e doze receberam o substrato B, sorteadas. Ao fim, o comprimento médio dos
+indivíduos diferiu em **1,4 cm** entre os dois grupos.
+
+Antes de anunciar um efeito, é preciso responder a uma pergunta que só o computador responde bem:
+**uma diferença desse tamanho apareceria com que frequência se os dois substratos fossem
+idênticos?**
+
+Nesta prática construímos esse mundo sem efeito, olhamos o que ele produz e transformamos essa
+leitura em um número.
+
+```{r}
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Um experimento onde sabemos que não há efeito
+
+Vamos montar um experimento em que a resposta certa é conhecida: doze placas por substrato,
+variação de 2 cm entre placas, e **nenhuma diferença real** entre os substratos.
+
+```{r}
+n_por_grupo <- 12
+desvio <- 2
+centro <- 10.2
+
+substrato_a <- rnorm(n_por_grupo, mean = centro, sd = desvio)
+substrato_b <- rnorm(n_por_grupo, mean = centro, sd = desvio)
+
+diferenca <- mean(substrato_b) - mean(substrato_a)
+diferenca
+```
+
+```{r}
+#| echo: false
+diferenca_txt <- formatC(diferenca, format = "f", digits = 2, decimal.mark = ",")
+```
+
+As duas linhas de `rnorm()` usam a **mesma** média. Ainda assim a diferença observada não é zero:
+nesta execução ela foi de `r diferenca_txt` cm.
+
+::: {.callout-tip appearance="minimal" title="Modifique"}
+Execute novamente as três últimas linhas (os dois `rnorm()` e a diferença), oito vezes. Anote os
+resultados.
+
+Qual foi a maior diferença que você viu? Ela seria convincente se aparecesse em um artigo?
+:::
+
+# Muitas repetições do mesmo experimento
+
+Repetir na mão dá uma impressão, não uma medida. Para ter uma medida, precisamos de muitas
+repetições, e `replicate()` faz isso:
+
+```{r}
+diferencas <- replicate(
+  5000,
+  mean(rnorm(12, mean = 10.2, sd = 2)) - mean(rnorm(12, mean = 10.2, sd = 2))
+)
+
+length(diferencas)
+mean(diferencas)
+sd(diferencas)
+```
+
+Cinco mil experimentos, todos sem efeito nenhum. O conjunto de resultados que eles produzem é a
+**distribuição nula**.
+
+Repare em dois números da saída. A média das cinco mil diferenças fica perto de zero, como se
+espera de grupos idênticos. O desvio-padrão delas, bem maior que zero, é a medida de quanto o acaso
+sozinho consegue afastar duas médias.
+
+```{r}
+#| label: fig-nula-histograma
+#| fig-cap: "Distribuição nula da diferença entre médias. A linha marca a diferença de 1,4 cm observada no experimento."
+#| fig-height: 3.2
+
+diferenca_observada <- 1.4
+
+ggplot(tibble(d = diferencas), aes(x = d)) +
+  geom_histogram(bins = 45, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = diferenca_observada, colour = "#D55E00", linewidth = 1.1) +
+  labs(x = "Diferença entre as médias (cm)", y = "Frequência")
+```
+
+# Qual é a proporção de resultados tão extremos?
+
+O valor de p é apenas uma contagem: quantas das cinco mil diferenças foram tão distantes de zero
+quanto a observada.
+
+```{r}
+proporcao_extremos <- mean(abs(diferencas) >= diferenca_observada)
+proporcao_extremos
+```
+
+```{r}
+#| echo: false
+prop_txt <- formatC(100 * proporcao_extremos, format = "f", digits = 1, decimal.mark = ",")
+```
+
+`abs()` toma o valor absoluto, o `>=` gera `TRUE`/`FALSE` para cada uma das cinco mil, e `mean()`
+de um vetor lógico devolve a proporção de `TRUE`.
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Nesta simulação, `r prop_txt`% dos cinco mil experimentos sem efeito
+produziram uma diferença de 1,4 cm ou mais, em qualquer direção.
+
+Essa proporção responde: "num mundo sem efeito, com que frequência eu veria algo assim?".
+
+Ela **não** responde: "qual a chance de não haver efeito?". A diferença entre as duas frases é o
+erro de interpretação mais comum em estatística aplicada.
+:::
+
+# O mesmo mexilhão, três experimentos diferentes
+
+A distribuição nula não descreve o mexilhão: descreve o **experimento**. Vamos refazer a simulação
+com 5, 12 e 60 placas por grupo, mantendo tudo o mais igual.
+
+```{r}
+nulas <- bind_rows(
+  tibble(cenario = "5 placas por grupo",
+         diferenca = replicate(4000, mean(rnorm(5, 10.2, 2)) - mean(rnorm(5, 10.2, 2)))),
+  tibble(cenario = "12 placas por grupo",
+         diferenca = replicate(4000, mean(rnorm(12, 10.2, 2)) - mean(rnorm(12, 10.2, 2)))),
+  tibble(cenario = "60 placas por grupo",
+         diferenca = replicate(4000, mean(rnorm(60, 10.2, 2)) - mean(rnorm(60, 10.2, 2))))
+) |>
+  mutate(cenario = fct_relevel(cenario, "5 placas por grupo", "12 placas por grupo"))
+
+glimpse(nulas)
+```
+
+```{r}
+#| label: fig-nula-tamanhos
+#| fig-cap: "Distribuição nula para três tamanhos de experimento. A linha marca sempre a mesma diferença observada de 1,4 cm."
+#| fig-height: 4.4
+
+ggplot(nulas, aes(x = diferenca)) +
+  geom_histogram(bins = 50, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = diferenca_observada, colour = "#D55E00", linewidth = 1.1) +
+  facet_wrap(~ cenario, ncol = 1, scales = "free_y") +
+  labs(x = "Diferença entre as médias (cm)", y = "Frequência")
+```
+
+A mesma conta de antes, agora feita nos três cenários de uma vez:
+
+```{r}
+nulas |>
+  group_by(cenario) |>
+  summarise(
+    espalhamento = sd(diferenca),
+    proporcao_extremos = mean(abs(diferenca) >= diferenca_observada)
+  )
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Percorra a coluna `proporcao_extremos`. Com 5 placas por grupo, 1,4 cm é um resultado banal: o
+acaso produz isso o tempo todo. Com 60, a mesma diferença passa a ser rara.
+
+**Nada mudou no mexilhão.** Os três cenários usam a mesma média e o mesmo desvio-padrão. O que
+mudou foi a capacidade do experimento de distinguir um efeito do ruído.
+:::
+
+::: {.callout-tip appearance="minimal" title="Explore"}
+No bloco acima, troque o `sd = 2` dos três cenários por `sd = 4` e refaça a tabela.
+
+Placas mais heterogêneas tornam a mesma diferença de 1,4 cm mais comum ou mais rara sob a hipótese
+nula? Que decisão de campo isso sugere?
+:::
+
+# O limiar de 5% cumpre o que promete?
+
+Escolher 5% como limiar significa aceitar acusar diferença em cerca de 5% das vezes quando não há
+diferença nenhuma. Como construímos um mundo sem efeito, podemos verificar isso.
+
+Primeiro, o valor acima do qual ficam as 5% maiores diferenças da distribuição nula:
+
+```{r}
+limiar <- quantile(abs(diferencas), 0.95)
+limiar
+```
+
+Agora rodamos **novos** experimentos, também sem efeito, e contamos quantos ultrapassam esse
+limiar:
+
+```{r}
+novos_experimentos <- replicate(
+  2000,
+  mean(rnorm(12, mean = 10.2, sd = 2)) - mean(rnorm(12, mean = 10.2, sd = 2))
+)
+
+taxa_alarme <- mean(abs(novos_experimentos) >= limiar)
+taxa_alarme
+```
+
+```{r}
+#| echo: false
+taxa_txt <- formatC(100 * taxa_alarme, format = "f", digits = 1, decimal.mark = ",")
+```
+
+::: {.callout-tip appearance="minimal" title="Interprete"}
+Nesta execução, `r taxa_txt`% dos dois mil experimentos sem efeito nenhum ultrapassaram o limiar e
+seriam anunciados como diferença.
+
+Esse número é o preço combinado de antemão para poder decidir a partir de dados que variam. Ele não
+some com mais cuidado na coleta nem com um instrumento melhor: ele é uma propriedade do
+procedimento.
+:::
+
+# Entrega
+
+::: {.callout-important appearance="minimal" title="Entregue"}
+Um script `pr-distribuicao-nula.R` que rode em sessão nova e contenha:
+
+1. a distribuição nula com 5000 repetições, o gráfico correspondente e o cálculo da proporção de
+   resultados tão extremos quanto 1,4 cm;
+2. a mesma simulação para 5, 12 e 60 placas por grupo, com o gráfico e a tabela das três
+   proporções;
+3. a verificação do limiar de 5% com 2000 experimentos novos;
+4. em comentários, quatro a cinco frases respondendo: **por que a mesma diferença de 1,4 cm produz
+   valores de p tão distintos nos três cenários, e por que a proporção calculada não é a chance de
+   o efeito não existir.**
+:::
+
+# Para saber mais
+
+- [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"} (MEAD)

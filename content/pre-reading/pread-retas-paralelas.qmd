@@ -1,0 +1,140 @@
+---
+title: "A mesma reta serve para os dois grupos?"
+subtitle: "Leitura prévia"
+author:
+  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
+  - "Instituto do Mar - Unifesp"
+date: today
+lang: pt-BR
+language:
+  title-block-author-single: ""
+  title-block-author-plural: ""
+format:
+  html:
+    toc: true
+    toc-title: "Conteúdo"
+    toc-depth: 2
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+```
+
+# Uma reta, e depois duas
+
+Uma reta descreve bem como a biomassa de um molusco cresce com o comprimento da concha: uma
+inclinação diz quanto a biomassa esperada aumenta por milímetro, e um intercepto ancora a reta na
+escala da resposta.
+
+Agora suponha que os moluscos venham de **dois meses de coleta**. A pergunta muda de forma:
+
+> **Uma única reta descreve os dois meses, ou cada um tem a sua?**
+
+Não é uma pergunta técnica. É uma pergunta biológica sobre se a relação entre tamanho e massa se
+mantém ao longo do ano, ou se ela própria muda com a estação.
+
+# Três cenários, e só três
+
+Duas retas podem se relacionar de três maneiras, e vale saber reconhecê-las antes de olhar
+qualquer saída de modelo.
+
+```{r}
+#| echo: false
+#| label: fig-retas-tres-cenarios
+#| fig-cap: "Três relações possíveis entre dois grupos. Em todos os painéis os dados foram gerados com a mesma variação em torno das retas."
+#| fig-alt: "Três painéis lado a lado. No primeiro as duas retas se sobrepõem; no segundo são paralelas e deslocadas verticalmente; no terceiro partem do mesmo lugar e divergem, com uma subindo mais rápido que a outra."
+#| fig-height: 3.4
+
+x <- runif(160, 14, 30)
+grupo <- rep(c("fevereiro", "abril"), each = 80)
+
+cenarios <- bind_rows(
+  tibble(cenario = "Uma reta só", mes = grupo, comprimento = x,
+         biomassa = -1.2 + 0.11 * x + rnorm(160, 0, 0.15)),
+  tibble(cenario = "Interceptos diferentes", mes = grupo, comprimento = x,
+         biomassa = -1.2 + 0.11 * x + if_else(grupo == "abril", 0.35, 0) + rnorm(160, 0, 0.15)),
+  tibble(cenario = "Inclinações diferentes", mes = grupo, comprimento = x,
+         biomassa = -1.2 + if_else(grupo == "abril", 0.16, 0.07) * x + rnorm(160, 0, 0.15))
+) |>
+  mutate(
+    mes = fct_relevel(mes, "fevereiro"),
+    cenario = fct_relevel(cenario, "Uma reta só", "Interceptos diferentes")
+  )
+
+ggplot(cenarios, aes(x = comprimento, y = biomassa, colour = mes)) +
+  geom_point(alpha = 0.45, size = 1.3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
+  facet_wrap(~ cenario) +
+  scale_colour_manual(values = c(fevereiro = "#0072B2", abril = "#D55E00")) +
+  labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)", colour = "Mês")
+```
+
+**Uma reta só.** Os dois meses seguem a mesma relação. O mês não acrescenta informação: saber o
+comprimento de um indivíduo basta para prever a sua biomassa, venha ele de fevereiro ou de abril.
+
+**Interceptos diferentes, mesma inclinação.** As retas são paralelas. A biomassa cresce com o
+comprimento na mesma taxa nos dois meses, mas um deles está sistematicamente acima do outro. A
+distância vertical entre as retas é a mesma em qualquer comprimento, e por isso pode ser resumida
+em um número: é o **efeito do mês**.
+
+**Inclinações diferentes.** As retas divergem. O quanto a biomassa aumenta por milímetro depende do
+mês, e a distância entre as retas muda ao longo do eixo. Isso é uma **interação** entre a
+covariável e o grupo.
+
+# Por que o terceiro caso é diferente dos outros
+
+Nos dois primeiros cenários existe uma frase única e verdadeira sobre o mês. No terceiro, não.
+
+Olhe o painel da direita. Nos indivíduos pequenos as duas retas quase se tocam; nos grandes, estão
+bem separadas. Dizer "abril tem biomassa maior" é verdade em uma parte da faixa e quase falso na
+outra.
+
+::: {.callout-warning appearance="minimal" title="Com inclinações diferentes, a diferença precisa de endereço"}
+Quando as retas não são paralelas, nenhuma conclusão sobre a diferença entre os grupos está
+completa sem dizer **em qual valor da covariável** ela vale.
+
+"A biomassa de abril é 0,4 g maior" não é uma frase interpretável. "Em uma concha de 25 mm, a
+biomassa de abril é 0,4 g maior" é.
+:::
+
+# Como distinguir os três casos
+
+O caminho mais direto é ajustar uma reta em cada grupo e comparar os coeficientes: dois interceptos
+e duas inclinações, quatro números.
+
+Só que dois números estimados quase nunca são exatamente iguais, mesmo quando as retas verdadeiras
+são as mesmas. A comparação, portanto, não é entre os valores, e sim entre a diferença observada e
+a incerteza de cada estimativa.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Duas inclinações de 0,110 e 0,118 são "diferentes" no sentido aritmético.
+
+Se cada uma vier com um intervalo de confiança que cobre folgadamente a outra, os dados não
+distinguem os dois meses, e insistir em duas retas é descrever o ruído.
+:::
+
+# Dois cuidados ao olhar o gráfico
+
+**Faixas que não se sobrepõem.** Se um mês só tem conchas pequenas e o outro só grandes, as duas
+retas se apoiam em regiões diferentes do eixo. Elas podem parecer muito distintas sem que exista
+nenhuma diferença real na faixa em que ambos foram observados.
+
+**Poucos pontos nos extremos.** A inclinação estimada é muito sensível aos pontos das pontas.
+Alguns indivíduos isolados no extremo direito podem girar a reta inteira e criar uma divergência
+que some ao coletar mais dados.
+
+::: {.callout-tip appearance="minimal" title="Para pensar"}
+- Se as duas retas forem paralelas, a distância vertical entre elas é a mesma em qualquer
+  comprimento. Isso significa que a **razão** entre as duas biomassas também é a mesma?
+- Um estudo relata que os dois meses têm inclinações diferentes, mas as faixas de comprimento
+  quase não se sobrepõem. Que dúvida isso levanta sobre a conclusão?
+:::
+
+::: {.callout-tip appearance="minimal" title="Para saber mais"}
+
+- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html){target="_blank"} (MEAD)
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD)
+
+:::

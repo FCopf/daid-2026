@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 01"
-subtitle: "Por que duas medidas nunca são iguais?"
+title: "Por que duas medidas nunca são iguais?"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -110,7 +110,7 @@ bem longe.
 
 ```{r}
 #| echo: false
-#| label: fig-pread01-espalhamento
+#| label: fig-variacao-espalhamento
 #| fig-cap: "Temperatura medida em trinta poças de maré. A linha marca a média das trinta medidas."
 #| fig-alt: "Gráfico de pontos mostrando trinta valores de temperatura espalhados ao longo do eixo, com uma linha vertical marcando a média das trinta medidas. A maioria dos pontos fica próxima da linha e poucos ficam nas extremidades."
 #| fig-height: 3.2
@@ -136,25 +136,9 @@ Um resumo que informa só o centro esconde metade do que aconteceu. Dizer "a tem
 25,5 °C" é verdadeiro tanto para poças que variam de 25,4 a 25,6 quanto para poças que variam de
 21 a 30. São situações completamente diferentes.
 
-# O que queremos saber e o que conseguimos medir
-
-Você mediu trinta poças. Mas a pergunta que interessa quase nunca é sobre essas trinta.
-
-A pergunta costuma ser sobre **todas as poças daquele costão**, inclusive as que você não visitou.
-Esse conjunto maior, sobre o qual queremos falar, é a **população**. As trinta poças medidas são
-a **amostra**.
-
-::: {.callout-note appearance="minimal" title="População e amostra"}
-A **população** é o conjunto de todas as unidades sobre as quais queremos concluir alguma coisa.
-A **amostra** é o subconjunto que efetivamente medimos.
-
-A média das trinta poças que você mediu é um número exato e conhecido. A média de todas as poças
-do costão é um número desconhecido, que a amostra permite **estimar**, nunca conhecer com certeza.
-:::
-
-Essa distinção explica por que a variação importa tanto. Se as poças fossem todas idênticas, uma
-medida bastaria e não haveria incerteza nenhuma. Como elas variam, cada amostra produz uma resposta
-um pouco diferente, e precisamos de um jeito de dizer quanto confiar nela.
+Descrever essas duas coisas é a primeira tarefa de quem analisa dados, e é por ela que a unidade
+curricular começa. Antes de comparar, testar ou modelar qualquer coisa, é preciso saber dizer onde
+está o centro das medidas e o quanto elas se afastam dele.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Se você medisse a temperatura de outras trinta poças no mesmo costão, esperaria obter exatamente
@@ -165,7 +149,7 @@ um pouco diferente, e precisamos de um jeito de dizer quanto confiar nela.
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Estrutura e tipos de dados](https://fcopf.github.io/mead/content/estrutura-dados/estrutura-tipo.html) (MEAD)
-- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html) (MEAD)
+- [Estrutura e tipos de dados](https://fcopf.github.io/mead/content/estrutura-dados/estrutura-tipo.html){target="_blank"} (MEAD)
+- [Gráficos em camadas com ggplot2](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html){target="_blank"} (MEAD)
 
 :::

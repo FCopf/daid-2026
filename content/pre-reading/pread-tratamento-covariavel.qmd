@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 08"
-subtitle: "Tratamento e covariável no mesmo modelo"
+title: "Tratamento e covariável no mesmo modelo"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -43,7 +43,7 @@ comprimento de concha**.
 
 ```{r}
 #| echo: false
-#| label: fig-pread08-ajuste
+#| label: fig-covariavel-ajuste
 #| fig-cap: "Biomassa em função do comprimento em dois meses. As linhas verticais tracejadas marcam o comprimento médio de cada mês; a linha cheia marca um comprimento comum aos dois."
 #| fig-alt: "Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita."
 #| fig-height: 3.8
@@ -91,51 +91,14 @@ Comparar os meses em um comprimento que só um deles apresenta é extrapolar. O 
 precisa estar na faixa em que **ambos** os grupos foram observados.
 :::
 
-# Retas paralelas ou não?
+::: {.callout-warning appearance="minimal" title="Um efeito ajustado só existe se as retas forem paralelas"}
+O modelo acima resume o mês em **um** número, e isso só faz sentido se a biomassa crescer com o
+comprimento na mesma taxa nos dois meses.
 
-O modelo acima supõe que a biomassa cresce com o comprimento **na mesma taxa** nos dois meses:
-retas paralelas, deslocadas verticalmente. Essa suposição pode ser falsa, e precisa ser verificada
-antes de interpretar o efeito do mês.
-
-```{r}
-#| echo: false
-#| label: fig-pread08-paralelas
-#| fig-cap: "Dois cenários possíveis. À esquerda, o modelo aditivo com retas paralelas. À direita, inclinações diferentes entre os grupos."
-#| fig-alt: "Dois painéis. No painel da esquerda as duas retas são paralelas; no da direita elas divergem, com a reta de abril subindo mais rápido."
-#| fig-height: 3.4
-
-x <- runif(120, 14, 30)
-grupo <- rep(c("fevereiro", "abril"), each = 60)
-
-cen <- bind_rows(
-  tibble(cenario = "Retas paralelas", mes = grupo, comprimento = x,
-         biomassa = -1.2 + 0.11 * x + if_else(grupo == "abril", 0.20, 0) + rnorm(120, 0, 0.15)),
-  tibble(cenario = "Inclinações diferentes", mes = grupo, comprimento = x,
-         biomassa = -1.2 + if_else(grupo == "abril", 0.16, 0.07) * x + rnorm(120, 0, 0.15))
-) |>
-  mutate(
-    mes = fct_relevel(mes, "fevereiro"),
-    cenario = fct_relevel(cenario, "Retas paralelas")
-  )
-
-ggplot(cen, aes(x = comprimento, y = biomassa, colour = mes)) +
-  geom_point(alpha = 0.5, size = 1.4) +
-  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
-  facet_wrap(~ cenario) +
-  scale_colour_manual(values = c(fevereiro = "#0072B2", abril = "#D55E00")) +
-  labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)", colour = "Mês")
-```
-
-À esquerda, a distância entre as retas é a mesma em qualquer comprimento: existe **um** efeito do
-mês, e informá-lo faz sentido.
-
-À direita, as retas divergem. O efeito do mês depende do comprimento: é pequeno nos indivíduos
-menores e grande nos maiores. Isso é uma **interação** entre a covariável e o fator, e nesse caso
-não existe um único "efeito do mês" a relatar: é preciso descrever como ele muda ao longo da
-covariável.
-
-Na prática, portanto, ajusta-se primeiro o modelo com interação, verifica-se se ela é necessária e,
-se não for, segue-se com o modelo aditivo, mais simples de interpretar.
+Se as retas divergirem, a distância entre elas muda ao longo do comprimento e não existe um único
+"efeito do mês" a relatar. Por isso, na prática, ajusta-se primeiro o modelo com interação,
+verifica-se se ela é necessária e, se não for, segue-se com o modelo aditivo.
+:::
 
 # A mesma família de modelos
 
@@ -176,6 +139,6 @@ Em estudos observacionais, o resultado é uma associação ajustada, não uma de
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html) (MEAD)
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD)
 
 :::

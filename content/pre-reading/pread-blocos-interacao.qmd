@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 06"
-subtitle: "Controlar um gradiente, combinar dois fatores"
+title: "Controlar um gradiente, combinar dois fatores"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -54,7 +54,7 @@ todos os tratamentos aparecem.
 
 ```{r}
 #| echo: false
-#| label: fig-pread06-blocos
+#| label: fig-blocos-alocacao
 #| fig-cap: "Alocação em três blocos de altura. Dentro de cada faixa, os três tipos de placa aparecem uma vez, em posições sorteadas."
 #| fig-alt: "Diagrama com três faixas horizontais empilhadas, representando as alturas inferior, média e superior do costão. Em cada faixa há três quadrados coloridos, um para cada tipo de placa, em ordem diferente entre as faixas."
 #| fig-height: 3
@@ -117,7 +117,7 @@ Com 2 níveis de algas e 3 de nutriente, há $2 \times 3 = 6$ combinações. Um 
 
 ```{r}
 #| echo: false
-#| label: fig-pread06-interacao
+#| label: fig-blocos-interacao
 #| fig-cap: "Três resultados possíveis em um experimento fatorial. Cada ponto é a média de uma combinação; as linhas ligam as médias de um mesmo nutriente."
 #| fig-alt: "Três painéis lado a lado. No primeiro as linhas são horizontais e sobrepostas; no segundo são paralelas e deslocadas; no terceiro se cruzam."
 #| fig-height: 3.4
@@ -164,30 +164,27 @@ Dizer "algas quase não afetam a concentração" seria falso para todos os nutri
 Quando há interação, é o padrão combinado que precisa ser descrito, não a média dos efeitos.
 :::
 
-# Bloco, fator ou covariável?
+# Duas estruturas, uma mesma ideia
 
-As três coisas podem aparecer no mesmo estudo, e distingui-las é uma decisão de delineamento, não
-de análise.
+Bloco e fatorial resolvem problemas diferentes, mas fazem a mesma coisa com a variação dos dados.
 
-| | O que é | Você sorteia? | Interpreta o efeito? |
-|---|---|---|---|
-| **Fator** | condição que você quer comparar | sim | sim, é a resposta do estudo |
-| **Bloco** | agrupamento de unidades parecidas | não, você agrupa | não, é controle |
-| **Covariável** | medida contínua registrada em cada unidade | não, você mede | como ajuste |
+No delineamento em blocos, a variação devida ao gradiente deixa de ficar no resíduo e passa a ser
+atribuída ao bloco. No fatorial, a variação devida ao segundo fator, e à combinação dos dois,
+deixa de ficar no resíduo e passa a ser atribuída a eles.
 
-A covariável entra na próxima etapa do curso: em vez de agrupar unidades parecidas, mede-se uma
-característica contínua de cada uma e desconta-se o seu efeito. A lógica é a mesma (retirar do
-resíduo uma variação conhecida), mas o instrumento é diferente.
+Nos dois casos o resíduo encolhe, e o resíduo é a régua com que todo efeito é julgado. Reconhecer
+uma estrutura que existe no experimento é, quase sempre, a forma mais barata de tornar um efeito
+detectável.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Um experimento é montado em três salas com temperaturas diferentes. Sala é fator, bloco ou
-  covariável?
+- Você bloqueou por altura no costão, mas o gradiente acabou sendo fraquíssimo. O que aconteceu
+  com a sensibilidade do experimento em relação a simplesmente ter aleatorizado?
 - Em um fatorial 2 × 3, o gráfico de linhas mostra retas quase paralelas. O que isso sugere sobre
   a necessidade do termo de interação no modelo?
 :::
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html) (MEAD)
+- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"} (MEAD)
 
 :::

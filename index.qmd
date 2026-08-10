@@ -1,7 +1,7 @@
 ---
 title: "CRONOGRAMA"
 subtitle: "*2º semestre de 2026*"
-tbl-colwidths: [2,3,6,14,3,3]
+tbl-colwidths: [2,3,6,12,3,3,3]
 page-layout: full
 toc: false
 number-sections: false
@@ -15,16 +15,6 @@ number-sections: false
 
 ::: {.column-screen style="text-align: left; padding: 0 2em;"}
 
-Esta unidade curricular parte de uma pergunta científica e chega até a interpretação dos dados,
-passando pelo delineamento, pelo processo que gera as observações, pela simulação e pela análise.
-Todo o percurso é feito em R, a partir de dados das Ciências do Mar. Não é preciso saber R para
-começar.
-
-São 15 sextas-feiras: **10 aulas presenciais** no laboratório de informática e
-**5 atividades extraclasse**, feitas em casa nas semanas destacadas. Cada encontro tem uma
-[Leitura prévia](content/pre-reading/index.qmd) curta, para ler antes, e uma
-[Prática em R](content/computer-lab/index.qmd), onde a investigação acontece. Cada uma das 15
-semanas produz uma entrega.
 
 [Calendário Acadêmico 2026 Unifesp (PDF)](course-info/academic-calendar-2026.pdf){target="_blank"}
 
@@ -32,30 +22,28 @@ semanas produz uma entrega.
 
 ::: {.column-screen .cronograma-bme style="padding: 0 2em; overflow-x: auto;"}
 
-| SEMEMANA | DATA | AULA | TEMA | LEITURA<br>PRÉVIA | PRÁTICA<br>EM R |
-|:---:|:----:|:-----------|:-----|:----:|:----:|
-| 1 | 21/08 | Aula 01 | Por que medições semelhantes variam? | [📖](content/pre-reading/pread-01-dados-unidades-variacao.qmd){target="_blank" title="Por que duas medidas nunca são iguais?"} | [💻](content/computer-lab/lab-01-medicoes-r.qmd){target="_blank" title="Primeiras medições em R"} |
-| 2 | 28/08 | Aula 02 | A amostra representa o ambiente? | [📖](content/pre-reading/pread-01-dados-unidades-variacao.qmd){target="_blank" title="Por que duas medidas nunca são iguais?"} | [💻](content/computer-lab/lab-02-amostragem-dados.qmd){target="_blank" title="A amostra representa a praia?"} |
-| 3 | 04/09 | [Atividade extraclasse 01]{.aula-celula .is-extraclasse} | Um processo, muitas amostras | [📖](content/pre-reading/pread-02-variabilidade-amostral.qmd){target="_blank" title="Por que a média muda de uma amostra para outra?"} | [💻](content/computer-lab/lab-02-amostragem-dados.qmd){target="_blank" title="A amostra representa a praia?"} |
-| 4 | 11/09 | Aula 03 | Por que a média muda de uma amostra para outra? | [📖](content/pre-reading/pread-02-variabilidade-amostral.qmd){target="_blank" title="Por que a média muda de uma amostra para outra?"} | [💻](content/computer-lab/lab-03-medias-intervalos.qmd){target="_blank" title="Médias que variam e intervalos que cobrem"} |
-| 5 | 18/09 | Aula 04 | O que conta como réplica? | [📖](content/pre-reading/pread-03-replicacao-unidades.qmd){target="_blank" title="O que conta como réplica?"} | [💻](content/computer-lab/lab-04-replicacao-pseudorreplicacao.qmd){target="_blank" title="Tanques, subamostras e o que conta como réplica"} |
-| 6 | 25/09 | [Atividade extraclasse 02]{.aula-celula .is-extraclasse} | Redesenhar antes de analisar | [📖](content/pre-reading/pread-03-replicacao-unidades.qmd){target="_blank" title="O que conta como réplica?"} | [💻](content/computer-lab/lab-04-replicacao-pseudorreplicacao.qmd){target="_blank" title="Tanques, subamostras e o que conta como réplica"} |
-| 7 | 02/10 | Aula 05 | Uma diferença observada poderia surgir ao acaso? | [📖](content/pre-reading/pread-04-modelo-nulo-evidencia.qmd){target="_blank" title="Uma diferença poderia surgir só por acaso?"} | [💻](content/computer-lab/lab-05-inferencia-dois-grupos.qmd){target="_blank" title="Do acaso à comparação de dois grupos"} |
-| 8 | 09/10 | Aula 06 | Do experimento simulado à comparação real de dois grupos | [📖](content/pre-reading/pread-04-modelo-nulo-evidencia.qmd){target="_blank" title="Uma diferença poderia surgir só por acaso?"} | [💻](content/computer-lab/lab-05-inferencia-dois-grupos.qmd){target="_blank" title="Do acaso à comparação de dois grupos"} |
-| 9 | 16/10 | [Atividade extraclasse 03]{.aula-celula .is-extraclasse} | Quando dois grupos se tornam três | [📖](content/pre-reading/pread-05-fontes-variacao-anova.qmd){target="_blank" title="Entre grupos ou dentro dos grupos?"} | [💻](content/computer-lab/lab-05-inferencia-dois-grupos.qmd){target="_blank" title="Do acaso à comparação de dois grupos"} |
-| 10 | 23/10 | Aula 07 | Como separar efeito de tratamento e variação residual? | [📖](content/pre-reading/pread-05-fontes-variacao-anova.qmd){target="_blank" title="Entre grupos ou dentro dos grupos?"} | [💻](content/computer-lab/lab-06-anova-um-fator.qmd){target="_blank" title="Um fator, quatro níveis"} |
-| 11 | 30/10 | Aula 08 | Quando o ambiente também estrutura o experimento | [📖](content/pre-reading/pread-06-blocos-interacao.qmd){target="_blank" title="Controlar um gradiente, combinar dois fatores"} | [💻](content/computer-lab/lab-07-blocos-fatorial.qmd){target="_blank" title="Blocos e dois fatores"} |
-| 12 | 06/11 | [Atividade extraclasse 04]{.aula-celula .is-extraclasse} | Fator, bloco ou covariável? | [📖](content/pre-reading/pread-06-blocos-interacao.qmd){target="_blank" title="Controlar um gradiente, combinar dois fatores"} | [💻](content/computer-lab/lab-07-blocos-fatorial.qmd){target="_blank" title="Blocos e dois fatores"} |
-| 13 | 13/11 | Aula 09 | Como uma variável contínua ajuda a explicar a resposta? | [📖](content/pre-reading/pread-07-relacao-linear.qmd){target="_blank" title="Uma reta como processo gerador"} | [💻](content/computer-lab/lab-08-regressao-linear.qmd){target="_blank" title="Uma reta para dados costeiros"} |
-| | 20/11 | [Feriado]{.aula-celula .is-pausa} | *Consciência Negra, dia não letivo* | | |
-| 14 | 27/11 | [Atividade extraclasse 05]{.aula-celula .is-extraclasse} | A relação é a mesma em todos os grupos? | [📖](content/pre-reading/pread-08-tratamento-covariavel.qmd){target="_blank" title="Tratamento e covariável no mesmo modelo"} | [💻](content/computer-lab/lab-08-regressao-linear.qmd){target="_blank" title="Uma reta para dados costeiros"} |
-| 15 | 04/12 | Aula 10 | Do delineamento à conclusão: análise integradora com ANCOVA | [📖](content/pre-reading/pread-08-tratamento-covariavel.qmd){target="_blank" title="Tratamento e covariável no mesmo modelo"} | [💻](content/computer-lab/lab-09-ancova-integradora.qmd){target="_blank" title="Do delineamento à conclusão"} |
+| SEMANA | DATA | AULA | TEMA | LEITURA<br>PRÉVIA | LAB.<br>INFORMÁTICA | EXTRA<br>CLASSE |
+|:---:|:----:|:-----------|:-----|:----:|:----:|:----:|
+| 1 | 21/08 | Aula 01 | Por que medições semelhantes variam? | [📖](content/pre-reading/pread-dados-unidades-variacao.qmd){target="_blank" title="Por que duas medidas nunca são iguais?"} | [💻](content/computer-lab/lab-medicoes-r.qmd){target="_blank" title="Primeiras medições em R"} | |
+| 2 | 28/08 | Aula 02 | A amostra representa o ambiente? | [📖](content/pre-reading/pread-populacao-amostra.qmd){target="_blank" title="O que 45 estações dizem sobre a região?"} | [💻](content/computer-lab/lab-amostragem-dados.qmd){target="_blank" title="A amostra representa a praia?"} | |
+| 3 | 04/09 | [Atividade extraclasse]{.aula-celula .is-extraclasse} | Um processo, muitas amostras | [📖](content/pre-reading/pread-variabilidade-amostral.qmd){target="_blank" title="Por que a média muda de uma amostra para outra?"} | | [📝](content/assignment/assig-muitas-amostras.qmd){target="_blank" title="Um processo, muitas amostras"} |
+| 4 | 11/09 | Aula 03 | De uma estimativa a um intervalo | [📖](content/pre-reading/pread-erro-padrao-intervalo.qmd){target="_blank" title="Quanta confiança cabe numa única amostra?"} | [💻](content/computer-lab/lab-medias-intervalos.qmd){target="_blank" title="Médias que variam e intervalos que cobrem"} | |
+| 5 | 18/09 | Aula 04 | O que conta como réplica? | [📖](content/pre-reading/pread-replicacao-unidades.qmd){target="_blank" title="O que conta como réplica?"} | [💻](content/computer-lab/lab-replicacao-pseudorreplicacao.qmd){target="_blank" title="Tanques, subamostras e o que conta como réplica"} | |
+| 6 | 25/09 | [Atividade extraclasse]{.aula-celula .is-extraclasse} | Redesenhar antes de analisar | [📖](content/pre-reading/pread-aleatorizacao-controle.qmd){target="_blank" title="Como montar um experimento que responde à pergunta?"} | | [📝](content/assignment/assig-redesenho.qmd){target="_blank" title="Redesenhar antes de analisar"} |
+| 7 | 02/10 | Aula 05 | Uma diferença observada poderia surgir ao acaso? | [📖](content/pre-reading/pread-modelo-nulo-evidencia.qmd){target="_blank" title="Uma diferença poderia surgir só por acaso?"} | [💻](content/computer-lab/lab-distribuicao-nula.qmd){target="_blank" title="Construindo um mundo sem efeito"} | |
+| 8 | 09/10 | Aula 06 | Do experimento simulado à comparação real de dois grupos | [📖](content/pre-reading/pread-erros-poder.qmd){target="_blank" title="Quando o teste erra, e quanto ele enxerga"} | [💻](content/computer-lab/lab-teste-t-dois-grupos.qmd){target="_blank" title="As algas mudam a concentração de fosfato?"} | |
+| 9 | 16/10 | [Atividade extraclasse]{.aula-celula .is-extraclasse} | Quando dois grupos se tornam três | [📖](content/pre-reading/pread-comparacoes-multiplas.qmd){target="_blank" title="Por que não comparar os grupos dois a dois?"} | | [📝](content/assignment/assig-tres-grupos.qmd){target="_blank" title="Quando dois grupos se tornam três"} |
+| 10 | 23/10 | Aula 07 | Como separar efeito de tratamento e variação residual? | [📖](content/pre-reading/pread-fontes-variacao-anova.qmd){target="_blank" title="Entre grupos ou dentro dos grupos?"} | [💻](content/computer-lab/lab-anova-um-fator.qmd){target="_blank" title="Um fator, quatro níveis"} | |
+| 11 | 30/10 | Aula 08 | Quando o ambiente também estrutura o experimento | [📖](content/pre-reading/pread-blocos-interacao.qmd){target="_blank" title="Controlar um gradiente, combinar dois fatores"} | [💻](content/computer-lab/lab-blocos-fatorial.qmd){target="_blank" title="Blocos e dois fatores"} | |
+| 12 | 06/11 | [Atividade extraclasse]{.aula-celula .is-extraclasse} | Fator, bloco ou covariável? | [📖](content/pre-reading/pread-papeis-fator-bloco-covariavel.qmd){target="_blank" title="Você sorteia, agrupa ou mede?"} | | [📝](content/assignment/assig-papeis.qmd){target="_blank" title="Fator, bloco ou covariável?"} |
+| 13 | 13/11 | Aula 09 | Como uma variável contínua ajuda a explicar a resposta? | [📖](content/pre-reading/pread-relacao-linear.qmd){target="_blank" title="Uma reta como processo gerador"} | [💻](content/computer-lab/lab-regressao-linear.qmd){target="_blank" title="Uma reta para dados costeiros"} | |
+| | 20/11 | [Feriado]{.aula-celula .is-pausa} | *Consciência Negra, dia não letivo* | | | |
+| 14 | 27/11 | [Atividade extraclasse]{.aula-celula .is-extraclasse} | A relação é a mesma em todos os grupos? | [📖](content/pre-reading/pread-retas-paralelas.qmd){target="_blank" title="A mesma reta serve para os dois grupos?"} | | [📝](content/assignment/assig-dois-meses.qmd){target="_blank" title="A relação é a mesma em todos os grupos?"} |
+| 15 | 04/12 | Aula 10 | Do delineamento à conclusão: análise integradora com ANCOVA | [📖](content/pre-reading/pread-tratamento-covariavel.qmd){target="_blank" title="Tratamento e covariável no mesmo modelo"} | [💻](content/computer-lab/lab-ancova-integradora.qmd){target="_blank" title="Do delineamento à conclusão"} | |
 
 :::
 
 ::: {.column-screen style="text-align: left; padding: 1.5em 2em 0;"}
 
-Nas semanas de **atividade extraclasse** não há aula presencial: a atividade está na seção final da
-Prática em R indicada na linha e é feita em casa.
 
 :::

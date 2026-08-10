@@ -1,6 +1,6 @@
 ---
-title: "Leitura prévia 07"
-subtitle: "Uma reta como processo gerador"
+title: "Uma reta como processo gerador"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -70,7 +70,7 @@ que torna a regressão um modelo generativo, e não apenas uma linha traçada so
 
 ```{r}
 #| echo: false
-#| label: fig-pread07-mesma-reta
+#| label: fig-relacao-linear-mesma-reta
 #| fig-cap: "Dados gerados pela mesma reta (intercepto 6,7 e inclinação -2,9) com duas magnitudes de variação residual."
 #| fig-alt: "Dois painéis com a mesma reta descendente. No painel da esquerda os pontos ficam colados à reta; no da direita se espalham amplamente ao redor dela."
 #| fig-height: 3.4
@@ -136,7 +136,7 @@ Ajustar uma reta é sempre possível. Ela ser adequada é outra questão, e o lu
 
 ```{r}
 #| echo: false
-#| label: fig-pread07-residuos
+#| label: fig-relacao-linear-residuos
 #| fig-cap: "À esquerda, dados realmente lineares. À direita, uma relação curva à qual se ajustou uma reta. Abaixo, os resíduos correspondentes."
 #| fig-alt: "Quatro painéis em duas colunas. Na coluna da direita, o ajuste linear passa acima dos pontos nas extremidades e abaixo no meio, e o gráfico de resíduos mostra um padrão claro em forma de U."
 #| fig-height: 5
@@ -189,7 +189,7 @@ ninguém observou, uma suposição que os dados não sustentam.
 
 ::: {.callout-tip appearance="minimal" title="Para saber mais"}
 
-- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html) (MEAD)
-- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html) (MEAD)
+- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html){target="_blank"} (MEAD)
+- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html){target="_blank"} (MEAD)
 
 :::

@@ -71,11 +71,13 @@ A UC ocupa 15 sextas-feiras, listadas no [Cronograma](../index.qmd): **10 aulas 
 laboratório de informática e **5 atividades extraclasse** realizadas em casa, nas semanas em que
 não há aula presencial.
 
-Cada componente do cronograma reúne dois materiais:
+Cada semana do cronograma reúne exatamente dois materiais:
 
 - uma **[Leitura prévia](../content/pre-reading/index.qmd)**, curta e conceitual, para ler antes do
   encontro;
-- uma **[Prática em R](../content/computer-lab/index.qmd)**, onde a investigação acontece.
+- uma **[Prática em R](../content/computer-lab/index.qmd)**, onde a investigação acontece, nas
+  semanas com aula presencial, ou uma
+  **[Atividade extraclasse](../content/assignment/index.qmd)** nas demais.
 
 Todos os materiais são independentes: cada um carrega seus próprios pacotes, importa seus próprios
 dados e roda do início ao fim em uma sessão nova do R. Nenhum conhecimento prévio de R é exigido.
@@ -84,7 +86,7 @@ dados e roda do início ao fim em uma sessão nova do R. Nenhum conhecimento pr�
 
 Não há provas. Cada aula presencial e cada atividade extraclasse produz uma entrega, totalizando
 **15 entregas** ao longo do semestre. O que deve ser entregue está descrito no fim de cada Prática
-em R, no callout **Entregue**.
+em R e de cada Atividade extraclasse, no callout **Entregue**.
 
 A **Nota do Período Letivo (NL)** é a média das 15 entregas. A aprovação depende do cumprimento
 simultâneo da **frequência mínima de 75%** e do aproveitamento acadêmico, conforme o Regulamento
