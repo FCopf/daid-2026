@@ -418,24 +418,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 18 × 4
    bloco placa media_esperada recrutas
    &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
- 1     1 A               24       24.9
- 2     1 B               26.5     28.6
- 3     1 C               29       28.6
- 4     2 A               28       26.6
- 5     2 B               30.5     32.0
- 6     2 C               33       31.8
- 7     3 A               32       30.3
- 8     3 B               34.5     34.7
- 9     3 C               37       37.4
-10     4 A               36       37.4
-11     4 B               38.5     39.2
-12     4 C               41       41.5
-13     5 A               40       38.7
-14     5 B               42.5     42.9
-15     5 C               45       44.1
-16     6 A               44       44.7
-17     6 B               46.5     45.0
-18     6 C               49       51.3</code></pre>
+ 1     1 A               24       25.4
+ 2     1 B               26.5     26.7
+ 3     1 C               29       29.1
+ 4     2 A               28       25.9
+ 5     2 B               30.5     31.8
+ 6     2 C               33       32.2
+ 7     3 A               32       31.8
+ 8     3 B               34.5     32.5
+ 9     3 C               37       37.0
+10     4 A               36       35.4
+11     4 B               38.5     38.2
+12     4 C               41       40.1
+13     5 A               40       40.5
+14     5 B               42.5     43.3
+15     5 C               45       45.4
+16     6 A               44       43.2
+17     6 B               46.5     46.1
+18     6 C               49       49.9</code></pre>
 </div>
 </div>
 <p>Leia a linha da <code>media_esperada</code>. Ela diz três coisas, todas visíveis:</p>
@@ -485,8 +485,8 @@ Figura&nbsp;1: Recrutamento nas seis faixas de altura. Dentro de cada faixa est�
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_bloco)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-placa        2   86.9   43.47   0.769  0.481
-Residuals   15  847.9   56.53               </code></pre>
+placa        2   82.3   41.14   0.718  0.504
+Residuals   15  860.1   57.34               </code></pre>
 </div>
 </div>
 <p>O valor de p não indica efeito nenhum. E sabemos que o efeito existe: nós o colocamos ali.</p>
@@ -501,14 +501,14 @@ Residuals   15  847.9   56.53               </code></pre>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_bloco)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-placa          2   86.9   43.47   24.06 0.000151 ***
-factor(bloco)  5  829.9  165.97   91.85 5.02e-08 ***
-Residuals     10   18.1    1.81                     
+placa          2   82.3   41.14   38.45 2.02e-05 ***
+factor(bloco)  5  849.4  169.89  158.76 3.44e-09 ***
+Residuals     10   10.7    1.07                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Nesta execução, o valor de p da linha <code>placa</code> passou de 0,481 no primeiro modelo para menor que 0,001 no segundo. O quadrado médio residual caiu de 56,5 para 1,8.</p>
+<p>Nesta execução, o valor de p da linha <code>placa</code> passou de 0,504 no primeiro modelo para menor que 0,001 no segundo. O quadrado médio residual caiu de 57,3 para 1,1.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Compare">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

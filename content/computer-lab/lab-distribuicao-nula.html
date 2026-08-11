@@ -411,10 +411,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>diferenca <span class="ot">&lt;-</span> <span class="fu">mean</span>(substrato_b) <span class="sc">-</span> <span class="fu">mean</span>(substrato_a)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>diferenca</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.5770646</code></pre>
+<pre><code>[1] -0.2152864</code></pre>
 </div>
 </div>
-<p>As duas linhas de <code>rnorm()</code> usam a <strong>mesma</strong> média. Ainda assim a diferença observada não é zero: nesta execução ela foi de -0,58 cm.</p>
+<p>As duas linhas de <code>rnorm()</code> usam a <strong>mesma</strong> média. Ainda assim a diferença observada não é zero: nesta execução ela foi de -0,22 cm.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Modifique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -445,11 +445,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(diferencas)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0111565</code></pre>
+<pre><code>[1] -0.005643425</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(diferencas)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8109302</code></pre>
+<pre><code>[1] 0.8186269</code></pre>
 </div>
 </div>
 <p>Cinco mil experimentos, todos sem efeito nenhum. O conjunto de resultados que eles produzem é a <strong>distribuição nula</strong>.</p>
@@ -482,7 +482,7 @@ Figura&nbsp;1: Distribuição nula da diferença entre médias. A linha marca a 
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>proporcao_extremos <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas) <span class="sc">&gt;=</span> diferenca_observada)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>proporcao_extremos</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0872</code></pre>
+<pre><code>[1] 0.0892</code></pre>
 </div>
 </div>
 <p><code>abs()</code> toma o valor absoluto, o <code>&gt;=</code> gera <code>TRUE</code>/<code>FALSE</code> para cada uma das cinco mil, e <code>mean()</code> de um vetor lógico devolve a proporção de <code>TRUE</code>.</p>
@@ -496,7 +496,7 @@ Figura&nbsp;1: Distribuição nula da diferença entre médias. A linha marca a 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nesta simulação, 8,7% dos cinco mil experimentos sem efeito produziram uma diferença de 1,4 cm ou mais, em qualquer direção.</p>
+<p>Nesta simulação, 8,9% dos cinco mil experimentos sem efeito produziram uma diferença de 1,4 cm ou mais, em qualquer direção.</p>
 <p>Essa proporção responde: “num mundo sem efeito, com que frequência eu veria algo assim?”.</p>
 <p>Ela <strong>não</strong> responde: “qual a chance de não haver efeito?”. A diferença entre as duas frases é o erro de interpretação mais comum em estatística aplicada.</p>
 </div>
@@ -521,7 +521,7 @@ Figura&nbsp;1: Distribuição nula da diferença entre médias. A linha marca a 
 <pre><code>Rows: 12,000
 Columns: 2
 $ cenario   &lt;fct&gt; 5 placas por grupo, 5 placas por grupo, 5 placas por grupo, …
-$ diferenca &lt;dbl&gt; -0.52786514, 1.26862445, 0.43241778, 1.11297077, -0.02398261…</code></pre>
+$ diferenca &lt;dbl&gt; -0.30074813, 0.02387845, 1.35540677, 0.71666529, 1.01511097,…</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -555,9 +555,9 @@ Figura&nbsp;2: Distribuição nula para três tamanhos de experimento. A linha m
 <pre><code># A tibble: 3 × 3
   cenario             espalhamento proporcao_extremos
   &lt;fct&gt;                      &lt;dbl&gt;              &lt;dbl&gt;
-1 5 placas por grupo         1.27              0.266 
-2 12 placas por grupo        0.825             0.0875
-3 60 placas por grupo        0.366             0     </code></pre>
+1 5 placas por grupo         1.28             0.271  
+2 12 placas por grupo        0.804            0.0818 
+3 60 placas por grupo        0.363            0.00025</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -597,8 +597,8 @@ Figura&nbsp;2: Distribuição nula para três tamanhos de experimento. A linha m
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>limiar <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="fu">abs</span>(diferencas), <span class="fl">0.95</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>limiar</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     95% 
-1.593308 </code></pre>
+<pre><code>   95% 
+1.6246 </code></pre>
 </div>
 </div>
 <p>Agora rodamos <strong>novos</strong> experimentos, também sem efeito, e contamos quantos ultrapassam esse limiar:</p>
@@ -611,7 +611,7 @@ Figura&nbsp;2: Distribuição nula para três tamanhos de experimento. A linha m
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>taxa_alarme <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(novos_experimentos) <span class="sc">&gt;=</span> limiar)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>taxa_alarme</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.0535</code></pre>
+<pre><code>[1] 0.051</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -624,7 +624,7 @@ Figura&nbsp;2: Distribuição nula para três tamanhos de experimento. A linha m
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nesta execução, 5,3% dos dois mil experimentos sem efeito nenhum ultrapassaram o limiar e seriam anunciados como diferença.</p>
+<p>Nesta execução, 5,1% dos dois mil experimentos sem efeito nenhum ultrapassaram o limiar e seriam anunciados como diferença.</p>
 <p>Esse número é o preço combinado de antemão para poder decidir a partir de dados que variam. Ele não some com mais cuidado na coleta nem com um instrumento melhor: ele é uma propriedade do procedimento.</p>
 </div>
 </div>

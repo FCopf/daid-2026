@@ -420,14 +420,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 8 × 3
   tanque dieta       media_tanque
    &lt;int&gt; &lt;chr&gt;              &lt;dbl&gt;
-1      1 comum              10.5 
-2      2 comum              10.9 
-3      3 comum               9.68
-4      4 comum               9.15
-5      5 enriquecida         9.72
-6      6 enriquecida        10.6 
-7      7 enriquecida         9.57
-8      8 enriquecida        10.4 </code></pre>
+1      1 comum               9.52
+2      2 comum               9.39
+3      3 comum               9.97
+4      4 comum              10.0 
+5      5 enriquecida        10.8 
+6      6 enriquecida         8.98
+7      7 enriquecida        10.7 
+8      8 enriquecida        10.6 </code></pre>
 </div>
 </div>
 <p>Repare no que acabamos de fazer: <strong><code>efeito_dieta</code> vale zero</strong>. As duas dietas são idênticas. Toda diferença entre tanques vem do <code>rnorm()</code> da última linha, ou seja, do acaso de cada tanque.</p>
@@ -443,8 +443,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Columns: 4
 $ tanque       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, …
 $ dieta        &lt;chr&gt; "comum", "comum", "comum", "comum", "comum", "comum", "co…
-$ media_tanque &lt;dbl&gt; 10.54000, 10.54000, 10.54000, 10.54000, 10.54000, 10.5400…
-$ comprimento  &lt;dbl&gt; 9.911061, 10.815487, 10.799225, 11.238640, 10.561528, 10.…</code></pre>
+$ media_tanque &lt;dbl&gt; 9.520488, 9.520488, 9.520488, 9.520488, 9.520488, 9.52048…
+$ comprimento  &lt;dbl&gt; 9.093522, 9.388692, 9.869318, 9.326446, 9.471734, 9.79757…</code></pre>
 </div>
 </div>
 <p><code>slice(rep(1:8, each = 15))</code> repete cada linha de tanque 15 vezes, criando 15 peixes por tanque.</p>
@@ -495,8 +495,8 @@ Figura&nbsp;1: Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a
 <pre><code># A tibble: 2 × 4
   dieta           n media desvio
   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1 comum          60  9.99  0.858
-2 enriquecida    60 10.1   0.685</code></pre>
+1 comum          60  9.78  0.431
+2 enriquecida    60 10.2   0.904</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -508,13 +508,13 @@ Figura&nbsp;1: Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a
     Welch Two Sample t-test
 
 data:  comprimento by dieta
-t = -0.67568, df = 112.47, p-value = 0.5006
+t = -3.4944, df = 84.524, p-value = 0.0007589
 alternative hypothesis: true difference in means between group comum and group enriquecida is not equal to 0
 95 percent confidence interval:
- -0.3766498  0.1850820
+ -0.7087601 -0.1946786
 sample estimates:
       mean in group comum mean in group enriquecida 
-                 9.994349                 10.090133 </code></pre>
+                 9.784558                 10.236277 </code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -527,7 +527,7 @@ sample estimates:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nesta execução o valor de p foi 0,501.</p>
+<p>Nesta execução o valor de p foi menor que 0,001.</p>
 <p>Qualquer que seja ele, guarde o essencial: este teste supôs <strong>120 observações independentes</strong>, quando o sorteio da dieta aconteceu apenas 8 vezes. Ele está medindo a variação entre peixes do mesmo tanque, e não a variação entre tanques.</p>
 <p>Execute o script novamente algumas vezes e observe como esse valor de p muda de uma execução para outra.</p>
 </div>
@@ -546,13 +546,13 @@ sample estimates:
 <pre><code># A tibble: 8 × 3
   tanque dieta       media
    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
-1      1 comum       10.6 
-2      2 comum       10.8 
-3      3 comum        9.63
-4      4 comum        8.95
-5      5 enriquecida  9.86
-6      6 enriquecida 10.5 
-7      7 enriquecida  9.47
+1      1 comum        9.61
+2      2 comum        9.54
+3      3 comum        9.89
+4      4 comum       10.1 
+5      5 enriquecida 10.6 
+6      6 enriquecida  8.98
+7      7 enriquecida 10.8 
 8      8 enriquecida 10.5 </code></pre>
 </div>
 </div>
@@ -565,13 +565,13 @@ sample estimates:
     Welch Two Sample t-test
 
 data:  media by dieta
-t = -0.19079, df = 4.912, p-value = 0.8563
+t = -1.0159, df = 3.5537, p-value = 0.3738
 alternative hypothesis: true difference in means between group comum and group enriquecida is not equal to 0
 95 percent confidence interval:
- -1.393308  1.201740
+ -1.7498919  0.8464532
 sample estimates:
       mean in group comum mean in group enriquecida 
-                 9.994349                 10.090133 </code></pre>
+                 9.784558                 10.236277 </code></pre>
 </div>
 </div>
 <p>Agora são 4 valores por dieta, e a variação usada como referência é a variação <strong>entre tanques</strong>, que é a variação relevante.</p>
@@ -589,7 +589,7 @@ sample estimates:
 <ul>
 <li>quantos “n” cada análise usou?</li>
 <li>qual das duas produziu o intervalo de confiança mais estreito?</li>
-<li>nesta execução, o valor de p foi 0,501 na análise com 120 peixes e 0,856 na análise com 8 tanques.</li>
+<li>nesta execução, o valor de p foi menor que 0,001 na análise com 120 peixes e 0,374 na análise com 8 tanques.</li>
 </ul>
 </div>
 </div>
@@ -627,8 +627,8 @@ sample estimates:
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">errada =</span> taxa_errada, <span class="at">certa =</span> taxa_certa)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   errada     certa 
-0.5266667 0.0300000 </code></pre>
+<pre><code>    errada      certa 
+0.63666667 0.04666667 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -665,7 +665,7 @@ Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experi
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nestes 300 experimentos <strong>sem efeito nenhum</strong>, a análise com 120 peixes acusou diferença em 53% das vezes, e a análise com 8 tanques em 3%.</p>
+<p>Nestes 300 experimentos <strong>sem efeito nenhum</strong>, a análise com 120 peixes acusou diferença em 64% das vezes, e a análise com 8 tanques em 5%.</p>
 <p>A segunda taxa é a que se espera de um teste a 5%. A primeira é muitas vezes maior, e isso é pseudorreplicação em números: um procedimento que erra a unidade experimental transforma variação entre tanques em “evidência” de efeito da dieta.</p>
 <p>Repare também na forma dos histogramas. Na análise correta os valores de p se espalham por igual entre 0 e 1, como deve acontecer quando a hipótese nula é verdadeira. Na análise errada eles se amontoam perto de zero.</p>
 </div>
