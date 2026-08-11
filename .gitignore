@@ -51,21 +51,14 @@ Thumbs.db
 # =============================================================================
 # Claude Code — configuração e índices internos do projeto
 # =============================================================================
-CLAUDE.md
-WORKFLOW.md
 .claude/
 .agents/
 skills-lock.json
-.tree.txt
+
 
 
 # =============================================================================
 # Bibliografia — livros e PDFs de referência (não distribuíveis)
 # =============================================================================
-/bobliografia/
+/bibliografia/
 
-# =============================================================================
-# Repositórios de referência — cópias locais de outros projetos
-# =============================================================================
-/prob-est-2026-main/
-/mead-main-EXAMPLE/
