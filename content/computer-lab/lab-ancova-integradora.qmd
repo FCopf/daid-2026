@@ -1,6 +1,6 @@
 ---
 title: "Do delineamento à conclusão"
-subtitle: "Prática em R"
+subtitle: "Prática em R 10"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

@@ -15,7 +15,7 @@ Todo o conteúdo da UC pode preferencialmente ser acessado pelo site oficial:
 O site contém:
 
 - Cronograma das 15 semanas  
-- Leituras prévias, curtas e conceituais, para ler antes de cada encontro  
+- Leituras prévias, completas e conceituais, para ler antes de cada encontro
 - Práticas em R, onde a investigação acontece  
 - Plano de ensino  
 - Identificação da UC e bibliografia  

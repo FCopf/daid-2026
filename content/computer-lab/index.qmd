@@ -13,17 +13,17 @@ pressupõe. Nas semanas sem aula presencial, a investigação continua em uma
 
 ::: {.catalogo-materiais}
 
-| | Semana no [cronograma](../../index.qmd) |
-|:--|:--|
-| [Primeiras medições em R](lab-medicoes-r.qmd) | Semana 1 |
-| [A amostra representa a praia?](lab-amostragem-dados.qmd) | Semana 2 |
-| [Médias que variam e intervalos que cobrem](lab-medias-intervalos.qmd) | Semana 4 |
-| [Tanques, subamostras e o que conta como réplica](lab-replicacao-pseudorreplicacao.qmd) | Semana 5 |
-| [Construindo um mundo sem efeito](lab-distribuicao-nula.qmd) | Semana 7 |
-| [As algas mudam a concentração de fosfato?](lab-teste-t-dois-grupos.qmd) | Semana 8 |
-| [Um fator, quatro níveis](lab-anova-um-fator.qmd) | Semana 10 |
-| [Blocos e dois fatores](lab-blocos-fatorial.qmd) | Semana 11 |
-| [Uma reta para dados costeiros](lab-regressao-linear.qmd) | Semana 13 |
-| [Do delineamento à conclusão](lab-ancova-integradora.qmd) | Semana 15 |
+| Aula | Título | Semana no [cronograma](../../index.qmd) |
+|:--:|:--|:--:|
+| 01 | [Primeiras medições em R](lab-medicoes-r.qmd) | Semana 1 |
+| 02 | [A amostra representa a praia?](lab-amostragem-dados.qmd) | Semana 2 |
+| 03 | [Médias que variam e intervalos que cobrem](lab-medias-intervalos.qmd) | Semana 4 |
+| 04 | [Tanques, subamostras e o que conta como réplica](lab-replicacao-pseudorreplicacao.qmd) | Semana 5 |
+| 05 | [Construindo um mundo sem efeito](lab-distribuicao-nula.qmd) | Semana 7 |
+| 06 | [As algas mudam a concentração de fosfato?](lab-teste-t-dois-grupos.qmd) | Semana 8 |
+| 07 | [Um fator, quatro níveis](lab-anova-um-fator.qmd) | Semana 10 |
+| 08 | [Blocos e dois fatores](lab-blocos-fatorial.qmd) | Semana 11 |
+| 09 | [Uma reta para dados costeiros](lab-regressao-linear.qmd) | Semana 13 |
+| 10 | [Do delineamento à conclusão](lab-ancova-integradora.qmd) | Semana 15 |
 
 :::

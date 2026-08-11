@@ -1,6 +1,6 @@
 ---
 title: "Redesenhar antes de analisar"
-subtitle: "Atividade extraclasse"
+subtitle: "Atividade extraclasse 02"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

@@ -1,6 +1,6 @@
 ---
 title: "Quando dois grupos se tornam três"
-subtitle: "Atividade extraclasse"
+subtitle: "Atividade extraclasse 03"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

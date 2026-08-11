@@ -1,6 +1,6 @@
 ---
 title: "Construindo um mundo sem efeito"
-subtitle: "Prática em R"
+subtitle: "Prática em R 05"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

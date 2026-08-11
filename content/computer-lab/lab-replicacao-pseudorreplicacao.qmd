@@ -1,6 +1,6 @@
 ---
 title: "Tanques, subamostras e o que conta como réplica"
-subtitle: "Prática em R"
+subtitle: "Prática em R 04"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

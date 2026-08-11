@@ -1,6 +1,6 @@
 ---
 title: "Quando o teste erra, e quanto ele enxerga"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 06"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -41,9 +41,19 @@ que há. É o **erro tipo I**. Sua frequência é controlada pelo limiar escolhi
 aceitar cerca de 5% de alarmes falsos quando o efeito não existe.
 
 **Efeito perdido.** Há efeito, mas a diferença observada não se destacou o suficiente do ruído e
-concluímos que não há. É o **erro tipo II**.
+não rejeitamos a hipótese nula. É o **erro tipo II**.
 
 A capacidade de detectar um efeito que realmente existe é o **poder** do estudo.
+
+As quatro combinações possíveis organizam o problema:
+
+| Estado do processo | Rejeitar $H_0$ | Não rejeitar $H_0$ |
+|---|---:|---:|
+| $H_0$ verdadeira | Erro tipo I, probabilidade $\alpha$ | Decisão correta, probabilidade $1-\alpha$ |
+| $H_0$ falsa | Decisão correta, poder $1-\beta$ | Erro tipo II, probabilidade $\beta$ |
+
+$\alpha$ e $\beta$ são probabilidades condicionadas a estados diferentes do processo. Portanto,
+não devem ser somadas nem interpretadas como probabilidades de as hipóteses serem verdadeiras.
 
 ::: {.callout-note appearance="minimal" title="Os dois erros não são simétricos"}
 O erro tipo I você escolhe: ele é o limiar, e vale 5% porque alguém decidiu usar 5%.
@@ -73,11 +83,34 @@ A figura abaixo fixa o efeito em 1,4 cm e a variação entre placas, e varia ape
 placas por grupo, contando em que proporção dos experimentos o efeito é detectado.
 
 ```{r}
-#| echo: false
-#| label: fig-poder-curva
+#| code-fold: true
+#| code-summary: "Ver a lógica da simulação de poder"
+n <- 15
+efeito <- 1.4
+desvio <- 2
+repeticoes <- 1000
+
+detectar <- replicate(1000, {
+  grupo_a <- rnorm(n, mean = 10.2, sd = desvio)
+  grupo_b <- rnorm(n, mean = 10.2 + efeito, sd = desvio)
+  t.test(grupo_a, grupo_b)$p.value < 0.05
+})
+
+poder_estimado <- mean(detectar)
+```
+
+Cada repetição gera dados sob uma alternativa definida e pergunta se o procedimento rejeitou
+$H_0$. A média de `TRUE` e `FALSE` estima $P(\text{rejeitar }H_0\mid H_A)$.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver a curva de poder simulada"
+#| label: fig-pread08-poder-n
 #| fig-cap: "Proporção de experimentos que detectam um efeito real de 1,4 cm, em função do número de placas por grupo. A linha tracejada marca 80%, um alvo usual no planejamento de estudos."
 #| fig-alt: "Curva crescente que começa perto de 20% com 5 placas por grupo, cruza a linha tracejada de 80% em torno de 35 placas por grupo e se aproxima de 100% com 80 placas."
 #| fig-height: 3.4
+
+library(tidyverse)
 
 poder_para_n <- function(n, efeito = 1.4, desvio = 2, repeticoes = 1000) {
   mean(replicate(repeticoes, {
@@ -118,6 +151,62 @@ Calculá-lo depois, usando o efeito que foi observado, não acrescenta informaç
 valor de p obtido em outra escala.
 :::
 
+## O poder é uma superfície, não uma única curva
+
+O tamanho padronizado $d=\Delta/\sigma$ expressa a diferença relevante $\Delta$ em unidades do
+desvio-padrão. Um efeito de 1 cm é fácil de detectar quando $\sigma=0{,}5$ cm e difícil quando
+$\sigma=3$ cm. O poder também muda com $\alpha$ e com a lateralidade. Para uma aproximação normal de
+dois grupos balanceados,
+
+$$
+\text{poder}\approx
+P\!\left(|Z|>z_{1-\alpha/2}\mid
+Z\sim N\!\left(\frac{\Delta}{\sigma\sqrt{2/n}},1\right)\right).
+$$
+
+O deslocamento $\Delta/(\sigma\sqrt{2/n})$ é a relação sinal-ruído da comparação: aumenta com o
+efeito e com $\sqrt n$, e diminui com a variabilidade.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Experimentar efeito, variabilidade e tamanho amostral"
+#| label: fig-pread08-superficie-poder
+#| fig-cap: "Poder aproximado de um teste bilateral para diferentes efeitos e desvios-padrão. Cada linha representa um tamanho de amostra por grupo."
+#| fig-alt: "Painéis de curvas crescentes. O poder aumenta com o efeito e o tamanho amostral, e é menor no painel com maior desvio-padrão."
+#| fig-height: 5
+library(tidyverse)
+
+poder_normal <- function(n, efeito, sigma, alpha = 0.05) {
+  deslocamento <- efeito / (sigma * sqrt(2 / n))
+  critico <- qnorm(1 - alpha / 2)
+  pnorm(-critico, mean = deslocamento) +
+    pnorm(critico, mean = deslocamento, lower.tail = FALSE)
+}
+
+grade_poder <- crossing(
+  n = c(8, 16, 32, 64),
+  efeito = seq(0, 2.5, by = 0.05),
+  sigma = c(1, 2)
+) |>
+  mutate(
+    poder = poder_normal(n, efeito, sigma),
+    tamanho = paste0("n = ", n, " por grupo"),
+    painel = paste0("Desvio-padrão = ", sigma, " cm")
+  )
+
+ggplot(grade_poder, aes(x = efeito, y = poder, colour = tamanho)) +
+  geom_hline(yintercept = 0.8, linetype = 2, colour = "grey50") +
+  geom_line(linewidth = 0.9) +
+  facet_wrap(~ painel) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  labs(x = "Diferença verdadeira (cm)", y = "Poder", colour = NULL) +
+  theme_bw(base_size = 11)
+```
+
+O estudante pode alterar `alpha`, os valores de `sigma`, os tamanhos e a faixa de efeitos. A curva
+deve ser lida a partir da menor diferença cientificamente relevante, não do efeito que seria
+conveniente detectar.
+
 # Não encontrar não é o mesmo que não existir
 
 Daí a frase que vale guardar: **ausência de evidência não é evidência de ausência**.
@@ -144,16 +233,161 @@ O que ele **não** faz é verificar se as unidades sobre as quais você o aplico
 unidades experimentais, nem se a variação usada como régua é a variação certa. Essa parte continua
 sendo sua.
 
+# Como o teste t constrói a régua
+
+Para uma amostra comparada a um valor de referência $\mu_0$, a estatística é
+
+$$
+t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}},
+$$
+
+com $n-1$ graus de liberdade. O numerador é a diferença estimada e o denominador é seu erro padrão.
+
+No caso **pareado**, as duas medições pertencem à mesma unidade, como comprimento antes e depois do
+tratamento. Definimos $D_i=Y_{depois,i}-Y_{antes,i}$ e fazemos um teste de uma amostra sobre as
+diferenças:
+
+$$
+t=\frac{\bar D-\mu_{D,0}}{s_D/\sqrt n}.
+$$
+
+O pareamento remove diferenças estáveis entre indivíduos quando a ligação é real. Tratar medidas
+pareadas como independentes desperdiça informação; parear observações de indivíduos distintos cria
+dependência artificial.
+
+Para dois grupos independentes, o teste de Welch usa
+
+$$
+EP(\bar{x}_1-\bar{x}_2)=
+\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
+$$
+
+e
+
+$$
+t=\frac{(\bar{x}_1-\bar{x}_2)-0}{EP(\bar{x}_1-\bar{x}_2)}.
+$$
+
+Os graus de liberdade são aproximados pela equação de Welch-Satterthwaite. Essa versão não exige
+variâncias iguais e é o padrão de `t.test()` no R. O teste agrupado substitui $s_1^2$ e $s_2^2$ por
+uma variância comum ponderada; ele só é adequado quando a igualdade de variâncias é sustentada pelo
+desenho e pelos dados. Testes preliminares de variância não transformam automaticamente uma escolha
+ruim em boa.
+
+Os graus de liberdade de Welch são
+
+$$
+\nu\approx
+\frac{(s_1^2/n_1+s_2^2/n_2)^2}
+{(s_1^2/n_1)^2/(n_1-1)+(s_2^2/n_2)^2/(n_2-1)}.
+$$
+
+Quando uma variância comum é justificável, a estimativa agrupada é
+
+$$
+s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2},
+$$
+
+e o erro padrão vira $s_p\sqrt{1/n_1+1/n_2}$. A precisão extra depende de a restrição de variâncias
+iguais ser plausível. Welch é uma escolha segura quando os tamanhos ou dispersões diferem.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver um teste de Welch em R"
+substrato_a <- c(9.3, 10.1, 10.8, 9.7, 10.4, 11.0, 9.9, 10.2)
+substrato_b <- c(10.5, 11.7, 12.0, 10.9, 11.2, 12.3, 11.4, 10.8)
+
+t.test(substrato_b, substrato_a, var.equal = FALSE)
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver testes de uma amostra e pareado"
+antes <- c(8.1, 7.5, 9.0, 8.4, 7.9, 8.7, 8.2, 7.8)
+depois <- c(8.8, 8.1, 9.5, 9.0, 8.0, 9.4, 8.9, 8.2)
+
+teste_referencia <- t.test(depois, mu = 8)
+teste_pareado <- t.test(depois, antes, paired = TRUE)
+
+list(
+  uma_amostra = teste_referencia,
+  pareado = teste_pareado
+)
+```
+
+No primeiro teste, as unidades são comparadas a um valor externo. No segundo, o vetor de diferenças
+é a unidade analítica. O código contém os dados e pode ser copiado para uma sessão limpa.
+
+# Comparar variâncias não é uma etapa automática
+
+O teste F clássico para $H_0:\sigma_1^2=\sigma_2^2$ usa
+
+$$
+F=\frac{s_1^2}{s_2^2},
+$$
+
+com $n_1-1$ e $n_2-1$ graus de liberdade. Ele é muito sensível à não normalidade. Testes baseados em
+desvios absolutos, como Levene, são mais robustos, mas nenhum teste preliminar deve decidir
+mecanicamente entre Welch e a versão agrupada. Gráficos, conhecimento do processo e tamanhos de
+grupo importam mais que uma dicotomia produzida por outro valor de p.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver variâncias, teste F e diagnósticos"
+#| label: fig-pread08-diagnosticos-t
+#| fig-cap: "Distribuições dos dois substratos e gráfico quantil-quantil dos resíduos do modelo de grupos."
+#| fig-alt: "Um painel mostra pontos e boxplots dos dois substratos; outro compara quantis dos resíduos com uma linha normal de referência."
+#| fig-height: 4.4
+library(tidyverse)
+
+dados_t <- tibble(
+  substrato = rep(c("A", "B"), each = 8),
+  comprimento = c(
+    9.3, 10.1, 10.8, 9.7, 10.4, 11.0, 9.9, 10.2,
+    10.5, 11.7, 12.0, 10.9, 11.2, 12.3, 11.4, 10.8
+  )
+)
+
+teste_variancias <- var.test(comprimento ~ substrato, data = dados_t)
+modelo <- lm(comprimento ~ substrato, data = dados_t)
+
+ggplot(dados_t, aes(x = substrato, y = comprimento, colour = substrato)) +
+  geom_boxplot(outlier.shape = NA, width = 0.45) +
+  geom_jitter(width = 0.08, size = 2) +
+  guides(colour = "none") +
+  labs(x = "Substrato", y = "Comprimento (cm)") +
+  theme_bw(base_size = 12)
+
+ggplot(tibble(residuo = residuals(modelo)), aes(sample = residuo)) +
+  stat_qq() +
+  stat_qq_line(colour = "#D55E00") +
+  labs(x = "Quantis normais", y = "Resíduos ordenados") +
+  theme_bw(base_size = 12)
+
+teste_variancias
+```
+
+O intervalo de confiança fornecido pelo teste usa a mesma estimativa e o mesmo erro padrão. Em um
+teste bilateral a 5%, rejeitar diferença zero equivale a obter um intervalo de 95% que não contém
+zero. O intervalo acrescenta o que o valor de p não informa: a faixa de magnitudes compatíveis com
+os dados.
+
+# Pressupostos e planejamento
+
+O teste t requer unidades independentes e respostas quantitativas. A distribuição normal se refere
+aos erros dentro de cada população; com amostras moderadas, a média é robusta a desvios leves, mas
+assimetria extrema e valores influentes precisam ser investigados. Welch acomoda variâncias
+diferentes, mas não corrige dependência, viés de seleção ou pseudorreplicação.
+
+Planejar poder exige definir antes uma diferença mínima cientificamente importante, uma estimativa
+realista da variação, $\alpha$, lateralidade e número de unidades independentes. Aumentar $\alpha$
+eleva o poder à custa de mais alarmes falsos. Reduzir variação por controle local ou melhorar a
+medição pode ser tão útil quanto aumentar $n$. O planejamento deve considerar perdas e não usar o
+efeito observado no próprio estudo como substituto da diferença relevante.
+
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Um estudo com 5 placas por grupo obtém valor de p igual a 0,30. Isso demonstra que o substrato
   não tem efeito?
 - Dois estudos encontram a mesma diferença de 1,4 cm, mas um usa 10 placas por grupo e o outro usa
   100. Por que os valores de p serão diferentes?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Comparando médias: teste t de Student](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html){target="_blank"} (MEAD)
-- [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"} (MEAD)
-
 :::

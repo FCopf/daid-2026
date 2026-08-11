@@ -1,6 +1,6 @@
 ---
 title: "Uma reta como processo gerador"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 09"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -69,11 +69,14 @@ cada um, sorteie um desvio em torno dele. Isso é exatamente o que faremos no co
 que torna a regressão um modelo generativo, e não apenas uma linha traçada sobre pontos.
 
 ```{r}
-#| echo: false
-#| label: fig-relacao-linear-mesma-reta
+#| code-fold: true
+#| code-summary: "Ver o processo gerador com dois resíduos"
+#| label: fig-pread13-mesma-reta
 #| fig-cap: "Dados gerados pela mesma reta (intercepto 6,7 e inclinação -2,9) com duas magnitudes de variação residual."
 #| fig-alt: "Dois painéis com a mesma reta descendente. No painel da esquerda os pontos ficam colados à reta; no da direita se espalham amplamente ao redor dela."
 #| fig-height: 3.4
+
+library(tidyverse)
 
 altura <- runif(60, -1.5, 2.5)
 
@@ -110,6 +113,126 @@ Essas distâncias são os **resíduos**: o que sobrou depois de descontar a part
 altura. Elevá-las ao quadrado faz com que desvios grandes pesem desproporcionalmente, o que também
 significa que um único ponto muito afastado pode puxar a reta inteira.
 
+Para observações $(x_i,y_i)$, as estimativas de mínimos quadrados têm forma fechada:
+
+$$
+\hat\beta_1=
+\frac{\sum_i(x_i-\bar{x})(y_i-\bar{y})}
+{\sum_i(x_i-\bar{x})^2}
+=\frac{s_{XY}}{s_X^2}
+$$
+
+e
+
+$$
+\hat\beta_0=\bar{y}-\hat\beta_1\bar{x}.
+$$
+
+A inclinação é a covariância entre $X$ e $Y$ dividida pela variância de $X$. A reta estimada passa
+por $(\bar{x},\bar{y})$. Cada valor ajustado é
+$\hat y_i=\hat\beta_0+\hat\beta_1x_i$ e cada resíduo é $e_i=y_i-\hat y_i$.
+
+Covariância e correlação descrevem associação simétrica: trocar $X$ e $Y$ não muda seu sentido.
+A correlação de Pearson é
+
+$$
+r=\frac{s_{XY}}{s_Xs_Y},
+$$
+
+e varia de -1 a 1. A regressão não é simétrica: escolher $Y$ como resposta define quais distâncias
+são minimizadas e qual variável será prevista. Correlação alta não demonstra causalidade, pois uma
+terceira variável, tendência temporal ou seleção das unidades pode produzir a associação.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver o ajuste da reta em R"
+library(tidyverse)
+
+dados_precisos <- tibble(
+  altura = runif(60, -1.5, 2.5)
+) |>
+  mutate(riqueza = 6.7 - 2.9 * altura + rnorm(60, 0, 1))
+
+ajuste_reta <- lm(riqueza ~ altura, data = dados_precisos)
+summary(ajuste_reta)
+confint(ajuste_reta)
+```
+
+`lm()` estima os coeficientes; `summary()` informa erros padrão, testes e $R^2$; e `confint()`
+fornece intervalos para os parâmetros.
+
+## Um cálculo aplicado, do ponto à reta
+
+Considere dez estações do conjunto RIKZ, com riqueza da macrofauna praial e o índice NAP de exposição
+às ondas, coletadas na costa da Holanda [@zuur2009]. Valores menores de NAP representam estações mais
+expostas. O exemplo conserva unidades reais e permite acompanhar todas as parcelas do ajuste.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver dados, cálculos escalares e partição gráfica"
+#| label: fig-pread13-rikz-particao
+#| fig-cap: "Reta ajustada a dez estações RIKZ. Segmentos verdes mostram a parte entre a média geral e o valor ajustado; segmentos laranja mostram os resíduos."
+#| fig-alt: "Gráfico de riqueza contra NAP com reta descendente, linha horizontal na média e segmentos verticais de duas cores decompondo os desvios de cada ponto."
+#| fig-height: 4.8
+library(tidyverse)
+
+rikz <- tibble(
+  riqueza = c(11, 10, 13, 11, 10, 8, 9, 8, 19, 17),
+  nap = c(0.045, -1.036, -1.336, 0.616, -0.684,
+          1.190, 0.820, 0.635, 0.061, -1.334)
+)
+
+x_c <- rikz$nap - mean(rikz$nap)
+y_c <- rikz$riqueza - mean(rikz$riqueza)
+sq_x <- sum(x_c^2)
+sp_xy <- sum(x_c * y_c)
+
+b1 <- sp_xy / sq_x
+b0 <- mean(rikz$riqueza) - b1 * mean(rikz$nap)
+
+rikz_calculo <- rikz |>
+  mutate(
+    ajustado = b0 + b1 * nap,
+    residuo = riqueza - ajustado,
+    media = mean(riqueza)
+  )
+
+sq_total <- sum((rikz_calculo$riqueza - rikz_calculo$media)^2)
+sq_reg <- sum((rikz_calculo$ajustado - rikz_calculo$media)^2)
+sq_res <- sum(rikz_calculo$residuo^2)
+r2 <- sq_reg / sq_total
+
+ggplot(rikz_calculo, aes(x = nap, y = riqueza)) +
+  geom_hline(aes(yintercept = media), linetype = 2, colour = "grey40") +
+  geom_segment(aes(xend = nap, y = media, yend = ajustado),
+               colour = "#009E73", alpha = 0.65) +
+  geom_segment(aes(xend = nap, y = ajustado, yend = riqueza),
+               colour = "#D55E00", alpha = 0.75) +
+  geom_abline(intercept = b0, slope = b1, colour = "#0072B2", linewidth = 1) +
+  geom_point(size = 2.4) +
+  labs(x = "Índice NAP", y = "Riqueza de espécies") +
+  theme_bw(base_size = 12)
+
+tibble(
+  intercepto = b0,
+  inclinacao = b1,
+  SQ_total = sq_total,
+  SQ_regressao = sq_reg,
+  SQ_residuo = sq_res,
+  R2 = r2,
+  correlacao = cor(rikz$nap, rikz$riqueza)
+)
+```
+
+O código calcula $SP_{XY}=\sum(x_i-\bar x)(y_i-\bar y)$ e
+$SQ_X=\sum(x_i-\bar x)^2$, obtém $\hat\beta_1=SP_{XY}/SQ_X$ e então o intercepto. Os três somatórios
+verificam $SQ_{Total}=SQ_{Reg}+SQ_{Res}$. A última coluna permite conferir $R^2=r^2$ neste modelo
+simples com intercepto.
+
+O segmento verde de uma estação é o desvio explicado $\hat y_i-\bar y$; o laranja é o resíduo
+$y_i-\hat y_i$. A decomposição ocorre nos quadrados desses comprimentos, não na simples soma de seus
+valores absolutos.
+
 # Quanto da variação a reta explica?
 
 Assim como na análise de variância, a variação total da resposta se parte em duas: a parte descrita
@@ -129,17 +252,68 @@ pontos?".
 inclinação pequena com $R^2$ alto (efeito fraco, pouco ruído).
 :::
 
+A decomposição exata é
+
+$$
+\underbrace{\sum_i(y_i-\bar y)^2}_{SQ_{Total}}=
+\underbrace{\sum_i(\hat y_i-\bar y)^2}_{SQ_{Reg}}+
+\underbrace{\sum_i(y_i-\hat y_i)^2}_{SQ_{Res}}.
+$$
+
+Assim,
+
+$$
+R^2=\frac{SQ_{Reg}}{SQ_{Total}}=1-\frac{SQ_{Res}}{SQ_{Total}}.
+$$
+
+Na regressão linear simples com intercepto, $R^2=r^2$. Essa igualdade não torna regressão e
+correlação equivalentes: apenas mostra que compartilham a mesma medida de associação linear nesse
+caso. $R^2$ depende da faixa de $X$ observada; restringir essa faixa pode reduzi-lo sem alterar o
+processo biológico.
+
+# Incerteza da inclinação
+
+Com $n$ observações, a variância residual é estimada por
+
+$$
+s_e^2=\frac{SQ_{Res}}{n-2},
+$$
+
+pois dois parâmetros foram estimados. O erro padrão da inclinação é
+
+$$
+EP(\hat\beta_1)=
+\frac{s_e}{\sqrt{\sum_i(x_i-\bar{x})^2}}.
+$$
+
+Ele diminui quando há menos variação residual, mais observações ou maior dispersão informativa de
+$X$. Espalhar $X$ apenas com pontos extremos artificiais não é solução, pois aumenta o risco de
+extrapolação e influência.
+
+Para testar $H_0:\beta_1=0$, usamos
+
+$$
+t=\frac{\hat\beta_1}{EP(\hat\beta_1)},
+$$
+
+com $n-2$ graus de liberdade. O intervalo é
+$\hat\beta_1\pm t_{1-\alpha/2,n-2}EP(\hat\beta_1)$. A ANOVA da regressão testa a mesma hipótese por
+$F=QM_{Reg}/QM_{Res}$; com um preditor, $F=t^2$.
+
 # A forma linear é uma hipótese
 
 Ajustar uma reta é sempre possível. Ela ser adequada é outra questão, e o lugar de verificar isso
 é o gráfico de resíduos.
 
 ```{r}
-#| echo: false
-#| label: fig-relacao-linear-residuos
+#| code-fold: true
+#| code-summary: "Ver relações e resíduos correspondentes"
+#| label: fig-pread13-residuos-forma
 #| fig-cap: "À esquerda, dados realmente lineares. À direita, uma relação curva à qual se ajustou uma reta. Abaixo, os resíduos correspondentes."
 #| fig-alt: "Quatro painéis em duas colunas. Na coluna da direita, o ajuste linear passa acima dos pontos nas extremidades e abaixo no meio, e o gráfico de resíduos mostra um padrão claro em forma de U."
 #| fig-height: 5
+
+library(tidyverse)
 
 x <- runif(80, 1, 10)
 linear <- tibble(tipo = "Relação linear", x = x, y = 2 + 1.2 * x + rnorm(80, 0, 1.5))
@@ -175,6 +349,200 @@ o $R^2$ possa ser alto.
 O gráfico de resíduos é a ferramenta mais barata e mais informativa de toda a modelagem. Ele revela
 curvatura, dispersão que cresce com o preditor e pontos isolados que dominam o ajuste.
 
+# O que os resíduos precisam sustentar
+
+O modelo linear clássico supõe:
+
+- independência entre unidades;
+- relação linear entre o preditor e a resposta média;
+- variância residual aproximadamente constante;
+- resíduos aproximadamente normais para testes e intervalos em amostras pequenas.
+
+Independência é uma propriedade do desenho. Os gráficos avaliam forma, dispersão e observações
+influentes, mas não demonstram que unidades foram amostradas ou tratadas de modo independente.
+
+Um ponto com valor de $X$ distante dos demais tem **alta alavancagem**. Um resíduo grande é uma
+observação mal descrita pela reta. Um ponto é **influente** quando removê-lo mudaria bastante os
+coeficientes; a distância de Cook combina alavancagem e resíduo para sinalizar essa situação.
+Sinalizar não significa apagar. Primeiro se verifica erro de registro, mecanismo de medição e
+população representada; qualquer exclusão precisa de justificativa científica.
+
+Alavancagem depende apenas dos valores de $X$. Na regressão simples com intercepto,
+
+$$
+h_{ii}=\frac{1}{n}+\frac{(x_i-\bar x)^2}{\sum_j(x_j-\bar x)^2}.
+$$
+
+Ela cresce nas extremidades da faixa. A distância de Cook compara quanto todos os valores ajustados
+mudariam ao remover a observação. Não existe um limiar universal que autorize exclusão; valores como
+$4/n$ funcionam apenas como sinal para inspeção.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver alavancagem, resíduos e distância de Cook"
+#| label: fig-pread13-influencia
+#| fig-cap: "Influência em uma regressão. O tamanho dos pontos representa a distância de Cook e a cor representa a alavancagem."
+#| fig-alt: "Nuvem de pontos com reta ajustada. Um ponto distante no eixo horizontal aparece maior e com cor destacada por combinar alavancagem e resíduo."
+#| fig-height: 4
+library(tidyverse)
+
+dados_influencia <- tibble(
+  x = c(seq(1, 10, length.out = 28), 16),
+  y = c(2 + 1.2 * seq(1, 10, length.out = 28) + rnorm(28, 0, 1.2), 13)
+)
+
+modelo_influencia <- lm(y ~ x, data = dados_influencia)
+
+diagnostico <- dados_influencia |>
+  mutate(
+    ajustado = fitted(modelo_influencia),
+    residuo_padronizado = rstandard(modelo_influencia),
+    alavancagem = hatvalues(modelo_influencia),
+    cook = cooks.distance(modelo_influencia)
+  )
+
+ggplot(diagnostico, aes(x = x, y = y, size = cook, colour = alavancagem)) +
+  geom_smooth(method = "lm", se = FALSE, colour = "grey30") +
+  geom_point(alpha = 0.8) +
+  scale_colour_viridis_c(option = "C", end = 0.9) +
+  scale_size_continuous(range = c(2, 8)) +
+  labs(x = "Preditor", y = "Resposta", size = "Cook", colour = "Alavancagem") +
+  theme_bw(base_size = 11)
+```
+
+# Duas incertezas de previsão
+
+Para um valor $x_0$, uma **banda de confiança** estima a média de todas as unidades com aquele valor.
+Ela é mais estreita perto de $\bar{x}$, onde há mais informação sobre a posição da reta, e alarga nas
+extremidades.
+
+Um **intervalo de previsão** descreve uma nova unidade individual. Além da incerteza da reta, inclui
+a variação residual da própria unidade e por isso é sempre mais largo. Confundir os dois produz
+previsões individuais otimistas demais.
+
+Para a média em $x_0$, o erro padrão é
+
+$$
+EP\{\widehat{E(Y\mid x_0)}\}
+=s_e\sqrt{\frac{1}{n}+\frac{(x_0-\bar x)^2}{\sum_i(x_i-\bar x)^2}}.
+$$
+
+Para uma nova unidade, acrescenta-se 1 dentro da raiz. Esse termo representa a variabilidade
+individual que não desaparece mesmo que a reta seja conhecida com grande precisão.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver confiança e previsão no R"
+library(tidyverse)
+
+dados_precisos <- tibble(
+  altura = runif(60, -1.5, 2.5)
+) |>
+  mutate(riqueza = 6.7 - 2.9 * altura + rnorm(60, 0, 1))
+
+ajuste_reta <- lm(riqueza ~ altura, data = dados_precisos)
+novas_alturas <- tibble(altura = c(-1, 0, 1, 2))
+
+predict(ajuste_reta, novas_alturas, interval = "confidence")
+predict(ajuste_reta, novas_alturas, interval = "prediction")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver bandas de confiança e previsão"
+#| label: fig-pread13-bandas
+#| fig-cap: "Reta estimada, banda de confiança para a média e banda de previsão para uma nova estação."
+#| fig-alt: "Pontos ao redor de uma reta descendente com duas faixas. A faixa de previsão é mais larga que a faixa de confiança, e ambas se alargam nas extremidades."
+#| fig-height: 4.2
+library(tidyverse)
+
+dados <- tibble(altura = runif(60, -1.5, 2.5)) |>
+  mutate(riqueza = 6.7 - 2.9 * altura + rnorm(60, 0, 1.4))
+modelo <- lm(riqueza ~ altura, data = dados)
+grade <- tibble(altura = seq(min(dados$altura), max(dados$altura), length.out = 150))
+
+ic <- bind_cols(
+  grade,
+  as_tibble(predict(modelo, grade, interval = "confidence"))
+)
+ip <- bind_cols(
+  grade,
+  as_tibble(predict(modelo, grade, interval = "prediction")) |>
+    rename(ip_fit = fit, ip_lwr = lwr, ip_upr = upr)
+)
+
+bandas <- left_join(ic, ip, by = "altura")
+
+ggplot(dados, aes(x = altura, y = riqueza)) +
+  geom_ribbon(data = bandas, aes(x = altura, ymin = ip_lwr, ymax = ip_upr),
+              inherit.aes = FALSE, fill = "#56B4E9", alpha = 0.22) +
+  geom_ribbon(data = bandas, aes(x = altura, ymin = lwr, ymax = upr),
+              inherit.aes = FALSE, fill = "#0072B2", alpha = 0.35) +
+  geom_line(data = bandas, aes(x = altura, y = fit), inherit.aes = FALSE,
+            colour = "#0072B2", linewidth = 1) +
+  geom_point(alpha = 0.6) +
+  labs(x = "Altura em relação à maré", y = "Riqueza") +
+  theme_bw(base_size = 12)
+```
+
+# Quando outra escala torna a relação linear
+
+Alguns processos seguem funções de potência, $Y=aX^b$. Aplicar logaritmo aos dois lados produz
+
+$$
+\log(Y)=\log(a)+b\log(X),
+$$
+
+uma relação linear em escala logarítmica. Nesse modelo, $b$ descreve elasticidade: a mudança
+percentual aproximada em $Y$ para uma mudança percentual em $X$. Transformações também podem
+estabilizar variância, mas mudam a escala da interpretação e exigem valores compatíveis com o
+logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar
+o valor de p.
+
+Uma relação espécie-área é um exemplo clássico: $S=cA^z$, em que $S$ é riqueza, $A$ é área, $c$ é
+a riqueza esperada quando $A=1$ e $z$ controla a velocidade de crescimento. Na escala logarítmica,
+o intercepto é $\log(c)$ e a inclinação é $z$.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver uma função de potência nas duas escalas"
+#| label: fig-pread13-potencia
+#| fig-cap: "Relação espécie-área em escala original e logarítmica. A curva de potência torna-se reta depois de aplicar logaritmo aos dois eixos."
+#| fig-alt: "Dois painéis dos mesmos dados. No primeiro a riqueza cresce como curva; no segundo os logaritmos se alinham aproximadamente em uma reta."
+#| fig-height: 4.2
+library(tidyverse)
+
+especie_area <- tibble(
+  area = exp(seq(log(1), log(500), length.out = 45))
+) |>
+  mutate(
+    riqueza_esperada = 4 * area^0.32,
+    riqueza = riqueza_esperada * exp(rnorm(n(), 0, 0.12)),
+    log_area = log(area),
+    log_riqueza = log(riqueza)
+  )
+
+p_original <- ggplot(especie_area, aes(x = area, y = riqueza)) +
+  geom_point(colour = "#0072B2") +
+  geom_line(aes(y = riqueza_esperada), colour = "#D55E00") +
+  labs(title = "Escala original", x = "Área", y = "Riqueza") +
+  theme_bw(base_size = 11)
+
+p_log <- ggplot(especie_area, aes(x = log_area, y = log_riqueza)) +
+  geom_point(colour = "#0072B2") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#D55E00") +
+  labs(title = "Escala logarítmica", x = "log(área)", y = "log(riqueza)") +
+  theme_bw(base_size = 11)
+
+patchwork::wrap_plots(p_original, p_log)
+
+coef(lm(log_riqueza ~ log_area, data = especie_area))
+```
+
+Ao voltar para a escala original, $\exp(\widehat{\log Y})$ estima a mediana condicional sob erro
+log-normal, não necessariamente a média. Previsões médias podem exigir correção de retransformação.
+Esse detalhe reforça que transformação é parte do modelo probabilístico e da interpretação.
+
 # Interpolar não é extrapolar
 
 Um último cuidado. A reta foi estimada dentro da faixa de alturas efetivamente medidas. Usá-la para
@@ -185,11 +553,4 @@ ninguém observou, uma suposição que os dados não sustentam.
 - Duas praias têm a mesma inclinação estimada, mas $R^2$ de 0,25 e 0,85. O que difere entre elas?
 - Um gráfico de resíduos mostra um funil que abre para a direita. O que isso indica sobre a
   suposição de variação constante?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html){target="_blank"} (MEAD)
-- [Partição da soma dos quadrados e $R^2$](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html){target="_blank"} (MEAD)
-
 :::

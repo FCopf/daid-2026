@@ -1,6 +1,6 @@
 ---
 title: "O que conta como réplica?"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 04"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -59,6 +59,19 @@ daquela unidade; não aumenta o número de réplicas.
 independente.
 :::
 
+Há ainda dois nomes úteis. A **unidade amostral** é a entidade selecionada pelo plano de amostragem;
+a **unidade de medição** é aquela sobre a qual o instrumento produz um valor. Em um experimento, a
+unidade observacional pode coincidir ou não com ambas. O vocabulário só é útil quando cada papel é
+ligado a uma ação concreta: selecionar, atribuir tratamento, observar ou medir.
+
+| Papel | Pergunta de diagnóstico | Exemplo dos tanques |
+|---|---|---|
+| Unidade experimental | o que poderia receber outro tratamento independentemente? | tanque |
+| Unidade amostral | o que foi selecionado para representar a população? | tanque, se tanques foram sorteados |
+| Unidade observacional | sobre o que existe uma linha de observação? | peixe |
+| Unidade de medição | onde o instrumento foi aplicado? | peixe, ou cada leitura do peixe |
+| Subamostra | o que foi medido dentro de uma unidade maior? | peixes do mesmo tanque |
+
 Com dois tanques, o experimento tem **uma réplica por tratamento**. E com uma réplica por
 tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra coisa que
 diferencie os dois tanques: temperatura, luz, aeração, posição na sala, o acaso da distribuição
@@ -78,11 +91,14 @@ mesma forma** variam entre si. Com um tanque por dieta, essa variação nunca fo
 O gráfico abaixo mostra o que acontece nos dois cenários.
 
 ```{r}
-#| echo: false
-#| label: fig-replicacao-duas-fontes
+#| code-fold: true
+#| code-summary: "Ver a simulação hierárquica de tanques e peixes"
+#| label: fig-pread05-duas-fontes
 #| fig-cap: "Comprimento de peixes em oito tanques. Cada ponto é um peixe; cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros."
 #| fig-alt: "Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta."
 #| fig-height: 3.8
+
+library(tidyverse)
 
 media_tanque <- c(rnorm(4, 10.0, 0.7), rnorm(4, 11.0, 0.7))
 
@@ -123,6 +139,11 @@ tratamento foi realmente sorteado. O efeito prático também: o erro padrão fic
 pequeno, o intervalo de confiança fica estreito demais e o resultado parece mais convincente do
 que é.
 
+Pseudorreplicação também ocorre sem tanques. Pontos muito próximos podem compartilhar o mesmo
+processo espacial; medidas sucessivas no mesmo organismo compartilham história; anos consecutivos
+podem estar ligados pela dinâmica da população. A dependência não é identificada apenas olhando a
+correlação observada. Ela começa no modo como as unidades foram geradas e selecionadas.
+
 ::: {.callout-warning appearance="minimal" title="Um teste rápido antes de analisar"}
 Conte quantas vezes o tratamento foi atribuído. Esse é o seu número de unidades experimentais.
 
@@ -140,17 +161,144 @@ tratados da mesma forma diferirem entre si.
 O que o experimento precisa é de **mais tanques**, ainda que menores e com menos peixes em cada um.
 Uma medida repetida barata não substitui uma unidade experimental cara.
 
+# Uma planilha pode conter vários níveis de unidade
+
+Em um estudo hierárquico, a mesma linha pode representar uma **unidade observacional**, enquanto o
+tratamento foi aplicado em outro nível. No exemplo, cada peixe é uma unidade observacional e de
+medição; cada tanque é uma unidade experimental; e o conjunto de tanques representa a população de
+unidades sobre a qual se deseja generalizar.
+
+Esses papéis não são definidos pelo nome biológico. Um peixe pode ser unidade experimental se cada
+indivíduo receber uma dieta sorteada separadamente. O mesmo peixe passa a ser subamostra quando a
+dieta é distribuída ao tanque. Para reconhecer o nível correto, siga três perguntas:
+
+1. Qual entidade poderia ter recebido outro tratamento sem obrigar as demais a mudar?
+2. Em qual nível o tratamento foi sorteado?
+3. Qual fonte de variação deve servir de comparação para o efeito?
+
+**Réplicas biológicas** são unidades independentes que representam variação do sistema de interesse.
+**Réplicas técnicas** repetem a medição da mesma unidade, como três leituras da mesma amostra em um
+equipamento. Réplicas técnicas ajudam a estimar e reduzir erro de medição, mas não representam novos
+organismos, tanques ou locais.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver uma representação da hierarquia"
+#| label: fig-pread05-hierarquia
+#| fig-cap: "Estrutura de um experimento com duas dietas, quatro tanques por dieta e três peixes destacados por tanque."
+#| fig-alt: "Diagrama em níveis. No topo aparecem duas dietas; abaixo, quatro tanques por dieta; abaixo de cada tanque, três peixes."
+#| fig-height: 5
+library(tidyverse)
+
+hierarquia <- crossing(
+  dieta = c("comum", "enriquecida"),
+  tanque = 1:4,
+  peixe = 1:3
+) |>
+  mutate(
+    tanque_id = paste(substr(dieta, 1, 1), tanque, sep = "-"),
+    x_tanque = tanque + if_else(dieta == "enriquecida", 5, 0),
+    x_peixe = x_tanque + (peixe - 2) * 0.22
+  )
+
+ggplot(hierarquia) +
+  geom_segment(aes(x = x_tanque, xend = x_peixe, y = 2, yend = 1),
+               colour = "grey60") +
+  geom_point(aes(x = x_peixe, y = 1, colour = dieta), size = 2.5) +
+  geom_point(aes(x = x_tanque, y = 2, colour = dieta), size = 6,
+             shape = 22, fill = "white") +
+  geom_text(data = distinct(hierarquia, dieta, tanque_id, x_tanque),
+            aes(x = x_tanque, y = 2, label = tanque_id), size = 3) +
+  geom_text(data = tibble(dieta = c("comum", "enriquecida"), x = c(2.5, 7.5)),
+            aes(x = x, y = 3, label = dieta, colour = dieta), fontface = "bold") +
+  scale_y_continuous(breaks = 1:3,
+                     labels = c("Peixes medidos", "Tanques tratados", "Dietas")) +
+  scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00"),
+                      guide = "none") +
+  coord_cartesian(ylim = c(0.7, 3.2)) +
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 11) +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
+
+O diagrama deixa visível por que três peixes ligados ao mesmo tanque não equivalem a três tanques.
+O tratamento chega ao tanque; as medidas de peixe estão aninhadas abaixo dele.
+
+# Por que observações do mesmo grupo trazem informação repetida?
+
+Peixes do mesmo tanque compartilham água, alimento, temperatura e manejo. Essa semelhança pode ser
+descrita por uma correlação intragrupo $\rho$. Se cada um de $m$ peixes fosse independente,
+$m$ medidas forneceriam $m$ unidades de informação. Quando $\rho>0$, uma aproximação para o efeito
+da dependência é
+
+$$
+\text{efeito do agrupamento}=1+(m-1)\rho.
+$$
+
+Quanto maior o grupo e a correlação, maior a diferença entre o número de linhas e a informação
+efetiva. A fórmula não cria réplicas e não salva um estudo com um tanque por tratamento. Ela apenas
+explica quantitativamente por que tratar observações correlacionadas como independentes produz erros
+padrão pequenos demais.
+
+Uma aproximação para o tamanho amostral efetivo é
+
+$$
+n_{efetivo}\approx\frac{n_{nominal}}{1+(m-1)\rho}.
+$$
+
+Se há 120 peixes, 15 por tanque, e $\rho=0{,}30$, o efeito do agrupamento é
+$1+14\times0{,}30=5{,}2$ e o tamanho efetivo aproximado é $120/5{,}2\approx23$. Esse número quantifica
+perda de precisão, mas não muda o fato de existirem somente oito unidades experimentais para avaliar
+a dieta.
+
+# Resumir no nível correto
+
+Quando há vários peixes em cada tanque, uma análise introdutória transparente é calcular uma média
+por tanque e comparar essas médias. Assim cada linha da tabela analítica corresponde a uma atribuição
+independente de tratamento.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver a mudança de unidade no R"
+library(tidyverse)
+
+media_tanque <- c(rnorm(4, 10.0, 0.7), rnorm(4, 11.0, 0.7))
+
+peixes <- tibble(
+  tanque = factor(rep(1:8, each = 15)),
+  dieta = rep(c("comum", "enriquecida"), each = 60),
+  comprimento = rnorm(120, mean = rep(media_tanque, each = 15), sd = 0.5)
+)
+
+dados_por_tanque <- peixes |>
+  group_by(tanque, dieta) |>
+  summarise(
+    n_peixes = n(),
+    comprimento_medio = mean(comprimento),
+    .groups = "drop"
+  )
+
+dados_por_tanque
+```
+
+O código pode ser experimentado mudando o número de peixes por tanque ou a variabilidade entre
+tanques. Aumentar peixes estabiliza cada média; aumentar tanques mostra mais diretamente a variação
+relevante para comparar dietas.
+
+Modelos hierárquicos podem conservar as medidas individuais e representar explicitamente a
+variação entre tanques e entre peixes. Essa abordagem é útil, mas não muda a exigência de desenho:
+os tratamentos ainda precisam de unidades experimentais replicadas. Nenhum modelo estatístico
+recupera uma fonte de variação que o experimento não observou.
+
+Subamostras continuam valiosas. Elas melhoram a média do tanque, permitem estudar heterogeneidade
+interna e protegem contra uma medição atípica. O erro está apenas em atribuir a elas o papel de
+réplicas independentes.
+
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Um estudo mede a salinidade em 3 pontos de cada um de 2 estuários e compara os estuários com
   6 medidas. Qual é a unidade experimental? Quantas réplicas existem por estuário?
 - Uma pesquisadora relata "n = 60" em um experimento com dois tanques. Que número ela deveria ter
   informado?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
-
 :::
 
 # Referências

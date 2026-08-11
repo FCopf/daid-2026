@@ -1,6 +1,6 @@
 ---
 title: "Tratamento e covariável no mesmo modelo"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 10"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -42,11 +42,14 @@ A ideia central é simples: em vez de comparar as médias brutas, comparar os me
 comprimento de concha**.
 
 ```{r}
-#| echo: false
-#| label: fig-covariavel-ajuste
+#| code-fold: true
+#| code-summary: "Ver dados e código do ajuste"
+#| label: fig-pread15-ajuste
 #| fig-cap: "Biomassa em função do comprimento em dois meses. As linhas verticais tracejadas marcam o comprimento médio de cada mês; a linha cheia marca um comprimento comum aos dois."
 #| fig-alt: "Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita."
 #| fig-height: 3.8
+
+library(tidyverse)
 
 fev <- tibble(mes = "fevereiro", comprimento = rnorm(60, 18, 2.5))
 abr <- tibble(mes = "abril",     comprimento = rnorm(60, 24, 2.5))
@@ -100,6 +103,237 @@ Se as retas divergirem, a distância entre elas muda ao longo do comprimento e n
 verifica-se se ela é necessária e, se não for, segue-se com o modelo aditivo.
 :::
 
+# Modelos aditivo e com interação
+
+Defina $G=0$ para fevereiro, $G=1$ para abril e $X$ como comprimento centralizado em um valor comum.
+O modelo aditivo de ANCOVA é
+
+$$
+Y=\beta_0+\beta_1X+\beta_2G+\varepsilon.
+$$
+
+$\beta_1$ é a inclinação compartilhada e $\beta_2$ é a diferença ajustada entre meses no valor em
+que $X=0$. A premissa de inclinações comuns pode ser examinada pelo modelo
+
+$$
+Y=\beta_0+\beta_1X+\beta_2G+\beta_3XG+\varepsilon.
+$$
+
+Aqui $\beta_3$ mede a diferença de inclinações. Comparar os modelos avalia se a interação reduz o
+resíduo o suficiente para justificar uma relação distinta em cada mês. A decisão não deve depender
+apenas de um limiar: gráfico, intervalo de $\beta_3$, precisão e consequência biológica também
+importam.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver o ajuste e as médias ajustadas no R"
+library(tidyverse)
+
+fev <- tibble(mes = "fevereiro", comprimento = rnorm(60, 18, 2.5))
+abr <- tibble(mes = "abril", comprimento = rnorm(60, 24, 2.5))
+
+moluscos_modelo <- bind_rows(fev, abr) |>
+  mutate(
+    biomassa = -1.2 + 0.11 * comprimento + if_else(mes == "abril", 0.20, 0) +
+      rnorm(n(), 0, 0.12),
+    mes = factor(mes, levels = c("fevereiro", "abril"))
+  )
+
+limites <- moluscos_modelo |>
+  summarise(minimo = min(comprimento), maximo = max(comprimento), .by = mes)
+comprimento_comum <- mean(c(max(limites$minimo), min(limites$maximo)))
+
+moluscos_modelo <- moluscos_modelo |>
+  mutate(comprimento_c = comprimento - comprimento_comum)
+
+modelo_aditivo <- lm(
+  biomassa ~ comprimento_c + mes,
+  data = moluscos_modelo
+)
+
+modelo_com_interacao <- lm(
+  biomassa ~ comprimento_c * mes,
+  data = moluscos_modelo
+)
+
+anova(modelo_aditivo, modelo_com_interacao)
+
+comparacao_comum <- tibble(
+  comprimento_c = 0,
+  mes = factor(c("fevereiro", "abril"),
+               levels = levels(moluscos_modelo$mes))
+)
+
+predict(modelo_aditivo, comparacao_comum, interval = "confidence")
+```
+
+As previsões no comprimento centralizado zero são as **médias ajustadas**. Elas representam médias
+modeladas em uma condição comum, não médias de uma população artificial em que todos os indivíduos
+tenham exatamente aquele comprimento. A diferença entre as duas previsões é o contraste ajustado.
+
+No modelo aditivo, as médias ajustadas em $x_0$ são
+
+$$
+\widehat\mu_{fev}(x_0)=\hat\beta_0+\hat\beta_1x_0,
+\qquad
+\widehat\mu_{abr}(x_0)=\hat\beta_0+\hat\beta_1x_0+\hat\beta_2.
+$$
+
+Sua diferença é $\hat\beta_2$ para qualquer $x_0$. No modelo com interação, a diferença se torna
+$\hat\beta_2+\hat\beta_3x_0$. O erro padrão de um contraste $L\hat\beta$ é
+
+$$
+EP(L\hat\beta)=\sqrt{L\widehat{\operatorname{Var}}(\hat\beta)L'},
+$$
+
+o que preserva as covariâncias entre os coeficientes. Subtrair limites de dois intervalos de
+confiança separados não produz o intervalo correto para a diferença.
+
+# Diferença bruta e diferença ajustada
+
+A diferença bruta responde quanto as médias observadas dos dois conjuntos diferem. A diferença
+ajustada responde quanto os grupos diferem no mesmo valor da covariável, sob o modelo. Elas coincidem
+aproximadamente quando a distribuição de $X$ é semelhante entre grupos ou quando $X$ quase não se
+relaciona com $Y$.
+
+Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada. Elas
+respondem a perguntas diferentes. O relatório deve mostrar a distribuição da covariável, as médias
+brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Comparar médias brutas e ajustadas"
+#| label: fig-pread15-bruta-ajustada
+#| fig-cap: "Diferenças bruta e ajustada entre meses. O ajuste compara os grupos em 21 mm, dentro da faixa comum."
+#| fig-alt: "Duas estimativas com intervalos. A diferença bruta é maior porque os meses têm comprimentos distintos; a ajustada é menor após comparar no mesmo comprimento."
+#| fig-height: 4
+library(tidyverse)
+
+dados <- bind_rows(
+  tibble(mes = "fevereiro", comprimento = rnorm(70, 18.5, 2.3)),
+  tibble(mes = "abril", comprimento = rnorm(70, 23.5, 2.3))
+) |>
+  mutate(
+    mes = factor(mes, levels = c("fevereiro", "abril")),
+    biomassa = -1.2 + 0.11 * comprimento + if_else(mes == "abril", 0.20, 0) +
+      rnorm(n(), 0, 0.16)
+  )
+
+modelo_bruto <- lm(biomassa ~ mes, data = dados)
+valor_comum <- 21
+dados <- mutate(dados, comprimento_c = comprimento - valor_comum)
+modelo_ajustado <- lm(biomassa ~ comprimento_c + mes, data = dados)
+
+extrair_mes <- function(modelo, rotulo) {
+  estimativa <- coef(modelo)["mesabril"]
+  erro <- sqrt(vcov(modelo)["mesabril", "mesabril"])
+  critico <- qt(0.975, df.residual(modelo))
+  tibble(
+    estimativa = estimativa,
+    inferior = estimativa - critico * erro,
+    superior = estimativa + critico * erro,
+    comparacao = rotulo
+  )
+}
+
+comparacoes <- bind_rows(
+  extrair_mes(modelo_bruto, "Diferença bruta"),
+  extrair_mes(modelo_ajustado, "Diferença ajustada em 21 mm")
+)
+
+ggplot(comparacoes, aes(x = estimativa, y = comparacao)) +
+  geom_vline(xintercept = 0, linetype = 2) +
+  geom_errorbarh(aes(xmin = inferior, xmax = superior), height = 0.12,
+                 colour = "#0072B2") +
+  geom_point(size = 3, colour = "#D55E00") +
+  labs(x = "Abril menos fevereiro (g)", y = NULL) +
+  theme_bw(base_size = 12)
+
+comparacoes
+```
+
+A diferença entre os dois resultados não é uma correção cosmética. A comparação bruta mistura a
+composição de tamanhos observada com mês; a ajustada condiciona a comparação ao comprimento de 21
+mm. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada
+mês, a diferença bruta continuaria relevante.
+
+# Pressupostos que sustentam o ajuste
+
+Além da independência das unidades, a ANCOVA requer relação aproximadamente linear dentro de cada
+grupo, variância residual comparável, resíduos adequados e suporte comum da covariável. O modelo
+aditivo exige ainda homogeneidade de inclinações. Esses pressupostos devem ser avaliados nos resíduos
+e na distribuição conjunta de $X$, grupo e resposta.
+
+Pouca sobreposição torna o efeito ajustado dependente de extrapolação. Colinearidade quase completa
+entre grupo e covariável aumenta os erros padrão e impede separar suas contribuições. A solução é um
+desenho que produza unidades comparáveis, não apenas uma fórmula mais complexa.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver diagnósticos e suporte comum da ANCOVA"
+#| label: fig-pread15-diagnosticos
+#| fig-cap: "Diagnósticos de uma ANCOVA: suporte da covariável por grupo, resíduos contra ajustados e gráfico quantil-quantil."
+#| fig-alt: "Três gráficos. O primeiro mostra sobreposição dos comprimentos; o segundo resíduos ao redor de zero; o terceiro resíduos próximos de uma linha normal."
+#| fig-height: 6
+library(tidyverse)
+
+dados <- bind_rows(
+  tibble(mes = "fevereiro", comprimento = rnorm(65, 19, 2.8)),
+  tibble(mes = "abril", comprimento = rnorm(65, 23, 2.8))
+) |>
+  mutate(
+    mes = factor(mes, levels = c("fevereiro", "abril")),
+    biomassa = -1.1 + 0.105 * comprimento + if_else(mes == "abril", 0.18, 0) +
+      rnorm(n(), 0, 0.16),
+    comprimento_c = comprimento - 21
+  )
+
+modelo <- lm(biomassa ~ comprimento_c + mes, data = dados)
+diag <- dados |>
+  mutate(ajustado = fitted(modelo), residuo = residuals(modelo))
+
+p_suporte <- ggplot(dados, aes(x = comprimento, fill = mes)) +
+  geom_density(alpha = 0.35) +
+  labs(title = "Suporte comum", x = "Comprimento", y = "Densidade", fill = NULL) +
+  theme_bw(base_size = 10)
+
+p_residuo <- ggplot(diag, aes(x = ajustado, y = residuo, colour = mes)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  geom_point(alpha = 0.65) +
+  labs(title = "Resíduos", x = "Ajustado", y = "Resíduo", colour = NULL) +
+  theme_bw(base_size = 10)
+
+p_qq <- ggplot(diag, aes(sample = residuo)) +
+  stat_qq() +
+  stat_qq_line(colour = "#D55E00") +
+  labs(title = "Normalidade", x = "Quantis normais", y = "Resíduos") +
+  theme_bw(base_size = 10)
+
+patchwork::wrap_plots(p_suporte, p_residuo, p_qq, ncol = 1)
+```
+
+Além desses gráficos, compare o modelo aditivo ao modelo com interação e inspecione observações
+influentes. Uma interação imprecisa não comprova homogeneidade; o intervalo para $\beta_3$ informa
+quais diferenças de inclinação ainda são compatíveis com os dados.
+
+## Quando o ajuste tenta criar uma comparação inexistente
+
+Se fevereiro contém apenas conchas de 12 a 17 mm e abril apenas de 25 a 30 mm, não há comprimento
+comum. Um modelo aditivo ainda imprime $\hat\beta_2$, mas ele é obtido estendendo as duas retas por
+uma região vazia. Nesse caso, mês e comprimento estão quase confundidos.
+
+::: {.callout-warning appearance="minimal" title="Sem suporte, não existe média ajustada observável"}
+Não escolha a média geral da covariável apenas porque o software a oferece. Primeiro calcule a
+interseção das faixas dos grupos. Se ela for vazia ou sustentada por pouquíssimas unidades, restrinja
+a população-alvo, colete dados adicionais ou reconheça que o contraste não é identificável com o
+desenho disponível.
+:::
+
+Escolher covariáveis depois de testar muitas opções pode alterar a estimativa e o valor de p de modo
+oportunista. A escolha deve vir da biologia, da temporalidade e do plano de análise. Covariáveis
+medidas antes do tratamento podem aumentar precisão; variáveis causadas pelo tratamento podem ser
+mediadoras e seu ajuste muda a pergunta para um efeito direto condicionado.
+
 # A mesma família de modelos
 
 Vale notar o que aconteceu ao longo do semestre. Comparar dois grupos, comparar quatro grupos,
@@ -135,10 +369,4 @@ Em estudos observacionais, o resultado é uma associação ajustada, não uma de
   seria muito diferente da diferença bruta entre as médias?
 - Um pesquisador ajusta por uma covariável que foi **medida depois** do tratamento e pode ter sido
   afetada por ele. Que problema isso cria?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD)
-
 :::

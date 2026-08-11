@@ -11,12 +11,12 @@ fim em uma sessão nova do R e produzir a sua própria entrega.
 
 ::: {.catalogo-materiais}
 
-| | Semana no [cronograma](../../index.qmd) |
-|:--|:--|
-| [Um processo, muitas amostras](assig-muitas-amostras.qmd) | Semana 3 |
-| [Redesenhar antes de analisar](assig-redesenho.qmd) | Semana 6 |
-| [Quando dois grupos se tornam três](assig-tres-grupos.qmd) | Semana 9 |
-| [Fator, bloco ou covariável?](assig-papeis.qmd) | Semana 12 |
-| [A relação é a mesma em todos os grupos?](assig-dois-meses.qmd) | Semana 14 |
+| Atividade extraclasse | Título | Semana no [cronograma](../../index.qmd) |
+|:--:|:--|:--:|
+| 01 | [Um processo, muitas amostras](assig-muitas-amostras.qmd) | Semana 3 |
+| 02 | [Redesenhar antes de analisar](assig-redesenho.qmd) | Semana 6 |
+| 03 | [Quando dois grupos se tornam três](assig-tres-grupos.qmd) | Semana 9 |
+| 04 | [Fator, bloco ou covariável?](assig-papeis.qmd) | Semana 12 |
+| 05 | [A relação é a mesma em todos os grupos?](assig-dois-meses.qmd) | Semana 14 |
 
 :::

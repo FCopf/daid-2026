@@ -1,6 +1,6 @@
 ---
 title: "As algas mudam a concentração de fosfato?"
-subtitle: "Prática em R"
+subtitle: "Prática em R 06"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

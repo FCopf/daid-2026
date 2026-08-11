@@ -1,6 +1,6 @@
 ---
 title: "Por que não comparar os grupos dois a dois?"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Atividade extraclasse 03"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -42,8 +42,9 @@ cerca de 5% das vezes. Esses 5% não são um defeito: são o preço combinado de
 decidir a partir de dados que variam.
 
 O problema é que esse preço é cobrado **por teste**. Fazendo três testes em grupos idênticos, há
-três oportunidades independentes de o acaso produzir um resultado chamativo, e basta que uma delas
-aconteça para alguém anunciar uma descoberta.
+três oportunidades de o acaso produzir um resultado chamativo, e basta que uma delas aconteça para
+alguém anunciar uma descoberta. Como os pares compartilham grupos, essas oportunidades são
+relacionadas, mas o risco do conjunto ainda cresce.
 
 E o número de testes cresce depressa. Com $k$ grupos, o número de pares é
 
@@ -57,11 +58,14 @@ A figura abaixo simula experimentos em que **todos os grupos são idênticos**, 
 entre pares e conta em que proporção das repetições pelo menos um deles acusou diferença.
 
 ```{r}
-#| echo: false
-#| label: fig-comparacoes-inflacao
+#| code-fold: true
+#| code-summary: "Ver a simulação da inflação do erro familiar"
+#| label: fig-pread09-inflacao
 #| fig-cap: "Proporção de experimentos em que pelo menos um teste entre pares acusa diferença, quando nenhum grupo difere de fato. A linha marca os 5% que cada teste isolado promete."
 #| fig-alt: "Curva crescente. Com 2 grupos a proporção fica próxima da linha de 5%; com 3 grupos passa de 10%; com 6 grupos ultrapassa 30%."
 #| fig-height: 3.4
+
+library(tidyverse)
 
 prop_alarme <- function(k, repeticoes = 1500) {
   mean(replicate(repeticoes, {
@@ -113,6 +117,37 @@ errada.
 Fazer muitos testes mantém a primeira e infla a segunda.
 :::
 
+# A probabilidade familiar sob independência
+
+Se $m$ testes fossem independentes e cada um tivesse risco $\alpha$ de alarme falso, a chance de
+nenhum alarme seria $(1-\alpha)^m$. Logo, a probabilidade de pelo menos um seria
+
+$$
+\operatorname{FWER}=1-(1-\alpha)^m.
+$$
+
+Com três testes a 5%, essa conta resulta em $1-0,95^3\approx0,143$, cerca de 14,3%. Comparações entre
+as mesmas médias não são independentes, porque cada grupo participa de vários pares. Por isso a
+fórmula não fornece o valor exato para todos os desenhos, mas mostra por que a taxa familiar cresce.
+A simulação preserva a dependência real entre os pares e estima diretamente essa taxa.
+
+Essa conta é um caso da probabilidade de uma união. Se $A_i$ é o evento "o teste $i$ produz alarme
+falso", queremos $P(A_1\cup\cdots\cup A_m)$. Para dois eventos,
+
+$$
+P(A\cup B)=P(A)+P(B)-P(A\cap B).
+$$
+
+Subtrair a interseção evita contar duas vezes experimentos em que os dois testes rejeitam. Sob
+independência, $P(A\cap B)=P(A)P(B)$ e chegamos à fórmula familiar. Em comparações que compartilham
+grupos, a interseção muda porque os eventos são dependentes. A desigualdade de Bonferroni,
+
+$$
+P\left(\bigcup_{i=1}^{m}A_i\right)\le\sum_{i=1}^{m}P(A_i),
+$$
+
+não exige independência e explica por que limitar cada teste a $\alpha/m$ controla a família.
+
 # Escolher o menor valor de p é escolher o extremo
 
 Vale entender o mecanismo, porque ele reaparece em muitas situações além desta.
@@ -123,6 +158,147 @@ vários sorteios se concentram perto de zero mesmo quando cada sorteio isolado �
 
 O mesmo raciocínio vale para quem testa vários nutrientes, várias espécies ou várias praias e
 relata só o que "deu certo". Quanto mais coisas se olha, mais fácil encontrar alguma.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver como o menor p muda com o número de testes"
+#| label: fig-pread09-minimo-p
+#| fig-cap: "Distribuição do menor valor de p em famílias de 1, 5 e 20 testes nulos independentes."
+#| fig-alt: "Três histogramas. Com um teste os valores são uniformes; com cinco e vinte testes o menor valor se concentra progressivamente perto de zero."
+#| fig-height: 4.6
+library(tidyverse)
+
+minimos <- bind_rows(lapply(c(1, 5, 20), function(m) {
+  tibble(
+    numero_testes = paste0("m = ", m),
+    menor_p = replicate(5000, min(runif(m)))
+  )
+})) |>
+  mutate(numero_testes = factor(numero_testes, levels = c("m = 1", "m = 5", "m = 20")))
+
+ggplot(minimos, aes(x = menor_p)) +
+  geom_histogram(binwidth = 0.025, boundary = 0, fill = "#0072B2", colour = "white") +
+  geom_vline(xintercept = 0.05, colour = "#D55E00") +
+  facet_wrap(~ numero_testes, ncol = 1) +
+  labs(x = "Menor valor de p na família", y = "Frequência") +
+  theme_bw(base_size = 11)
+```
+
+# Comparações planejadas e comparações descobertas depois
+
+Um **contraste planejado** traduz uma pergunta definida antes dos dados, como comparar o controle
+com a média dos três tratamentos. Seus coeficientes somam zero. Para médias
+$\bar{y}_1,\ldots,\bar{y}_k$, um contraste é
+
+$$
+C=\sum_{i=1}^{k}c_i\bar{y}_i,
+\qquad \sum_{i=1}^{k}c_i=0.
+$$
+
+Perguntas planejadas limitam o número de testes e costumam ter mais poder. Comparações escolhidas
+depois de olhar médias, gráficos ou valores de p pertencem a uma família exploratória maior e
+precisam de controle simultâneo. Chamar uma comparação de planejada depois de observar o resultado
+não desfaz a seleção.
+
+Por exemplo, para quatro médias $\bar y_C,\bar y_1,\bar y_2,\bar y_3$, comparar o controle com a
+média dos tratamentos usa coeficientes $(-1,1/3,1/3,1/3)$. O contraste é
+
+$$
+C=-\bar y_C+\frac{\bar y_1+\bar y_2+\bar y_3}{3}.
+$$
+
+Em desenho balanceado com $n_g$ unidades por grupo e quadrado médio residual $QM_e$, seu erro padrão
+é
+
+$$
+EP(C)=\sqrt{QM_e\sum_{i=1}^{k}\frac{c_i^2}{n_g}}.
+$$
+
+Os coeficientes expressam a pergunta antes de qualquer cálculo. Multiplicá-los todos pela mesma
+constante muda a escala do contraste, mas não sua estatística padronizada.
+
+# Duas correções para perguntas diferentes
+
+A correção de **Bonferroni** controla a taxa familiar para qualquer conjunto de $m$ testes. Podemos
+comparar cada valor de p com $\alpha/m$ ou usar $p_{ajustado}=\min(mp,1)$. Ela é simples e válida
+mesmo com dependência, mas pode ser conservadora quando há muitas comparações.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver o ajuste de Bonferroni em R"
+library(tidyverse)
+
+valores_p <- c(0.008, 0.031, 0.18)
+
+tibble(
+  comparacao = c("A - B", "A - C", "B - C"),
+  p_original = valores_p,
+  p_bonferroni = p.adjust(valores_p, method = "bonferroni")
+)
+```
+
+O procedimento de **Tukey** foi construído para todas as comparações entre pares de médias depois de
+uma ANOVA. Ele usa a amplitude studentizada $q$, que considera simultaneamente a maior separação
+entre médias. Em um desenho balanceado, a diferença mínima de Tukey é
+
+$$
+HSD=q_{1-\alpha;k,gl_e}\sqrt{\frac{QM_e}{n_g}},
+$$
+
+onde $k$ é o número de grupos, $gl_e$ e $QM_e$ são os graus de liberdade e o quadrado médio residual,
+e $n_g$ é o número de unidades por grupo. Um par é distinguido quando a diferença absoluta entre as
+médias ultrapassa esse valor. Intervalos simultâneos expressam a mesma decisão e mostram a incerteza
+e a magnitude de cada diferença.
+
+Bonferroni serve para famílias gerais definidas pelo pesquisador. Tukey costuma ser mais eficiente
+quando a família é exatamente o conjunto de todos os pares. Nenhum deles corrige a prática de testar
+muitas respostas e relatar apenas a família mais favorável; a família relevante precisa ser definida
+de acordo com a pergunta científica.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver ANOVA, Tukey e intervalos simultâneos"
+#| label: fig-pread09-tukey
+#| fig-cap: "Intervalos simultâneos de Tukey para todas as diferenças entre quatro médias. Intervalos que cruzam zero não distinguem o par ao nível familiar de 5%."
+#| fig-alt: "Gráfico horizontal de seis diferenças entre pares com pontos e intervalos. Uma linha vertical marca zero; alguns intervalos a cruzam e outros ficam inteiramente de um lado."
+#| fig-height: 4.6
+library(tidyverse)
+
+dados_nutrientes <- tibble(
+  tratamento = factor(rep(c("controle", "N", "P", "N+P"), each = 8),
+                      levels = c("controle", "N", "P", "N+P")),
+  clorofila = c(
+    4.1, 4.4, 4.0, 4.7, 4.2, 4.5, 4.3, 4.6,
+    5.0, 5.4, 4.9, 5.5, 5.1, 5.3, 5.2, 5.6,
+    4.5, 4.8, 4.4, 4.9, 4.7, 5.0, 4.6, 4.8,
+    6.1, 6.5, 6.0, 6.7, 6.3, 6.4, 6.2, 6.6
+  )
+)
+
+modelo <- aov(clorofila ~ tratamento, data = dados_nutrientes)
+tukey <- TukeyHSD(modelo, "tratamento")$tratamento |>
+  as.data.frame() |>
+  rownames_to_column("comparacao") |>
+  as_tibble()
+
+ggplot(tukey, aes(x = diff, y = fct_reorder(comparacao, diff))) +
+  geom_vline(xintercept = 0, linetype = 2) +
+  geom_errorbarh(aes(xmin = lwr, xmax = upr), height = 0.15, colour = "#0072B2") +
+  geom_point(size = 2.5, colour = "#D55E00") +
+  labs(x = "Diferença entre médias e IC simultâneo de 95%", y = NULL) +
+  theme_bw(base_size = 11)
+
+tukey
+```
+
+O código guarda a estimativa (`diff`), limites (`lwr`, `upr`) e valor de p ajustado (`p adj`) de
+cada par. O gráfico evita reduzir o resultado a letras ou a uma coleção de decisões: ele mostra
+direção, magnitude e incerteza simultânea.
+
+O procedimento de Holm também controla a taxa familiar e costuma ser menos conservador que
+Bonferroni para uma família geral. Ele ordena os valores de p e usa limites progressivos. A escolha
+do método deve seguir a família de perguntas, não o método que devolve mais resultados abaixo de
+0,05.
 
 # A saída é mudar a pergunta
 
@@ -137,16 +313,14 @@ feitas.
 
 A ordem importa: primeiro a pergunta global, depois as comparações específicas.
 
+O teste global e os testes entre pares não são logicamente idênticos. Em situações limítrofes, uma
+ANOVA pode não rejeitar a hipótese global enquanto um contraste planejado bem direcionado é preciso,
+ou o inverso. A sequência global seguida por Tukey é uma estratégia coerente para exploração de todos
+os pares, mas perguntas planejadas devem ser declaradas e analisadas como tais.
+
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Um estudo compara a riqueza de peixes entre cinco estuários, faz todos os testes entre pares e
   relata os dois que deram p menor que 0,05. Quantos testes foram feitos, e o que falta informar?
 - Se cada teste isolado continua com risco de 5%, por que dizer que o conjunto de testes "está
   errado"?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"} (MEAD)
-- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"} (MEAD)
-
 :::

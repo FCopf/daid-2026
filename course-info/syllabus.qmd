@@ -73,7 +73,7 @@ não há aula presencial.
 
 Cada semana do cronograma reúne exatamente dois materiais:
 
-- uma **[Leitura prévia](../content/pre-reading/index.qmd)**, curta e conceitual, para ler antes do
+- uma **[Leitura prévia](../content/pre-reading/index.qmd)**, completa e conceitual, para ler antes do
   encontro;
 - uma **[Prática em R](../content/computer-lab/index.qmd)**, onde a investigação acontece, nas
   semanas com aula presencial, ou uma

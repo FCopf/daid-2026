@@ -1,6 +1,6 @@
 ---
 title: "Entre grupos ou dentro dos grupos?"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 07"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -41,11 +41,14 @@ Esta leitura mostra como transformar essa frase em uma conta.
 Compare os dois cenários abaixo. Em ambos, as médias dos quatro grupos são exatamente as mesmas.
 
 ```{r}
-#| echo: false
-#| label: fig-anova-dois-cenarios
+#| code-fold: true
+#| code-summary: "Ver os dados dos dois cenários"
+#| label: fig-pread10-dois-cenarios
 #| fig-cap: "Dois experimentos com as mesmas quatro médias de grupo (linhas horizontais) e variações internas diferentes."
 #| fig-alt: "Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente."
 #| fig-height: 3.6
+
+library(tidyverse)
 
 medias_grupo <- c(2.0, 1.8, 1.5, 1.1)
 grupos <- c("controle", "baixo", "médio", "alto")
@@ -78,6 +81,33 @@ ele veio.
 A conclusão é que a diferença entre médias, sozinha, não diz nada. Ela só ganha sentido quando
 comparada à variação de fundo.
 
+# Um modelo para cada observação
+
+Para o canal $j$ no tratamento $i$, a ANOVA de um fator escreve
+
+$$
+Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
+$$
+
+$Y_{ij}$ é a diversidade observada, $\mu$ é a média geral, $\alpha_i$ é o desvio associado ao
+tratamento $i$ e $\varepsilon_{ij}$ é a variação individual não explicada pelo tratamento. Uma forma
+equivalente usa diretamente a média de cada grupo, $Y_{ij}=\mu_i+\varepsilon_{ij}$.
+
+As hipóteses globais são
+
+$$
+H_0:\mu_1=\mu_2=\cdots=\mu_k
+$$
+
+e
+
+$$
+H_A:\text{pelo menos uma média difere}.
+$$
+
+A alternativa não afirma que todas as médias diferem, nem especifica quais. Ela apenas nega a
+igualdade simultânea.
+
 # Duas fontes de variação
 
 Toda observação carrega duas contribuições, e a análise consiste em separá-las.
@@ -100,6 +130,82 @@ Cada uma dessas variações é medida somando desvios ao quadrado:
 As duas se somam exatamente na variação total: $SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}$.
 :::
 
+Em símbolos, com $n_i$ observações no grupo $i$ e $N=\sum_i n_i$,
+
+$$
+SQ_{\text{total}}=\sum_{i=1}^{k}\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y}_{..})^2,
+$$
+
+$$
+SQ_{\text{entre}}=\sum_{i=1}^{k}n_i(\bar{Y}_{i.}-\bar{Y}_{..})^2,
+$$
+
+$$
+SQ_{\text{dentro}}=\sum_{i=1}^{k}\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y}_{i.})^2.
+$$
+
+$\bar{Y}_{i.}$ é a média do grupo $i$ e $\bar{Y}_{..}$ é a média geral ponderada pelos tamanhos dos
+grupos. A identidade entre as três somas mostra que o modelo não cria nem perde variação: ele apenas
+atribui partes da variação total ao fator e ao resíduo.
+
+## A partição observação por observação
+
+Para cada canal existe uma identidade simples:
+
+$$
+Y_{ij}-\bar Y_{..}
+=
+(\bar Y_{i.}-\bar Y_{..})
++
+(Y_{ij}-\bar Y_{i.}).
+$$
+
+O desvio total é a soma do desvio explicado pelo grupo e do resíduo. Quando somamos os quadrados de
+todas as observações, o termo cruzado desaparece e obtemos a partição das somas de quadrados. Esse é
+o mesmo princípio usado na regressão: comparar um modelo que prevê apenas a média geral com outro
+que permite previsões diferentes para os grupos.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver o cálculo manual completo da ANOVA"
+#| label: tbl-pread10-anova-manual
+#| tbl-cap: "Tabela ANOVA calculada a partir das definições das somas de quadrados."
+library(tidyverse)
+
+dados_exemplo <- tibble(
+  grupo = factor(rep(c("controle", "baixo", "alto"), each = 4)),
+  diversidade = c(8, 9, 7, 8, 7, 6, 8, 7, 4, 5, 3, 4)
+)
+
+media_geral <- mean(dados_exemplo$diversidade)
+resumo_grupos <- dados_exemplo |>
+  summarise(n = n(), media = mean(diversidade), .by = grupo)
+
+sq_total <- sum((dados_exemplo$diversidade - media_geral)^2)
+sq_entre <- sum(resumo_grupos$n * (resumo_grupos$media - media_geral)^2)
+sq_dentro <- dados_exemplo |>
+  left_join(resumo_grupos, by = "grupo") |>
+  summarise(sq = sum((diversidade - media)^2)) |>
+  pull(sq)
+
+k <- n_distinct(dados_exemplo$grupo)
+N <- nrow(dados_exemplo)
+
+tabela_anova <- tibble(
+  fonte = c("Tratamentos", "Resíduo", "Total"),
+  soma_quadrados = c(sq_entre, sq_dentro, sq_total),
+  graus_liberdade = c(k - 1, N - k, N - 1),
+  quadrado_medio = c(sq_entre / (k - 1), sq_dentro / (N - k), NA_real_),
+  F = c((sq_entre / (k - 1)) / (sq_dentro / (N - k)), NA_real_, NA_real_)
+)
+
+knitr::kable(tabela_anova, digits = 3)
+```
+
+Neste exemplo, as médias são 8, 7 e 4. A média geral é $19/3\approx6{,}33$. O cálculo manual permite
+verificar $SQ_{total}=SQ_{entre}+SQ_{dentro}$ e que os graus de liberdade também se somam. Se alguma
+identidade falhar, há erro na definição dos grupos, nos pesos ou nas contas.
+
 # Por que não comparar as somas diretamente
 
 Porque somas dependem de quantas parcelas foram somadas. $SQ_{\text{dentro}}$ acumula uma parcela
@@ -115,6 +221,16 @@ QM_{\text{dentro}} = \frac{SQ_{\text{dentro}}}{n - k}$$
 O resultado, chamado **quadrado médio**, é uma variação média por grau de liberdade. Agora as
 duas quantidades são comparáveis.
 
+A tabela completa tem esta estrutura:
+
+| Fonte | Soma de quadrados | Graus de liberdade | Quadrado médio | Razão |
+|---|---:|---:|---:|---:|
+| Tratamentos | $SQ_{\text{entre}}$ | $k-1$ | $QM_{\text{entre}}$ | $F=QM_{\text{entre}}/QM_{\text{dentro}}$ |
+| Resíduo | $SQ_{\text{dentro}}$ | $N-k$ | $QM_{\text{dentro}}$ |  |
+| Total | $SQ_{\text{total}}$ | $N-1$ |  |  |
+
+Os graus de liberdade também se particionam: $(N-1)=(k-1)+(N-k)$.
+
 # A razão F
 
 Comparáveis, elas podem ser postas em uma razão:
@@ -126,11 +242,14 @@ residual) e $F$ fica em torno de 1. Se o tratamento separa os grupos além do ru
 cresce e $F$ fica maior que 1.
 
 ```{r}
-#| echo: false
-#| label: fig-anova-distribuicao-f
+#| code-fold: true
+#| code-summary: "Ver a simulação da distribuição F"
+#| label: fig-pread10-distribuicao-f
 #| fig-cap: "Valores de F obtidos em 3000 experimentos simulados sem nenhum efeito de tratamento (quatro grupos, oito canais por grupo)."
 #| fig-alt: "Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F."
 #| fig-height: 3.2
+
+library(tidyverse)
 
 f_nulos <- replicate(3000, {
   d <- tibble(grupo = rep(letters[1:4], each = 8), valor = rnorm(32, 1.6, 0.5))
@@ -156,6 +275,31 @@ prop_txt   <- formatC(100 * prop_acima, format = "f", digits = 1, decimal.mark =
 A linha marca `r limiar_txt`, o valor acima do qual ficam os 5% maiores $F$ quando não há efeito
 nenhum. Nesta simulação, `r prop_txt`% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.
 
+A distribuição F depende de dois graus de liberdade: $k-1$ no numerador e $N-k$ no denominador. Ela
+assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição
+a partir do F observado. Sob $H_0$, numerador e denominador estimam a mesma variância residual;
+quando as médias diferem, o numerador incorpora também a separação entre grupos.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver a ANOVA no R"
+library(tidyverse)
+
+medias_grupo <- c(2.0, 1.8, 1.5, 1.1)
+grupos <- c("controle", "baixo", "médio", "alto")
+
+dados_precisos <- tibble(
+  grupo = factor(rep(grupos, each = 8), levels = grupos),
+  valor = rnorm(32, mean = rep(medias_grupo, each = 8), sd = 0.15)
+)
+
+modelo_anova <- aov(valor ~ grupo, data = dados_precisos)
+summary(modelo_anova)
+```
+
+`aov()` e `lm()` ajustam o mesmo modelo linear. A diferença está na forma de apresentar os
+coeficientes e a partição de variação, não em uma família estatística separada.
+
 ::: {.callout-warning appearance="minimal" title="Um F grande não conserta o delineamento"}
 A razão F compara duas fontes de variação. Se a variação "dentro dos grupos" foi calculada sobre
 subamostras em vez de unidades experimentais, o denominador fica pequeno demais e $F$ fica inflado.
@@ -176,15 +320,85 @@ Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o te
 à mesma conclusão: são duas formas de escrever a mesma comparação. A análise de variância apenas
 generaliza a ideia para qualquer número de grupos.
 
+# Quanto da variação o fator representa?
+
+Uma medida de tamanho de efeito é
+
+$$
+\eta^2=\frac{SQ_{\text{entre}}}{SQ_{\text{total}}}.
+$$
+
+Na ANOVA de um fator, esse valor coincide com o $R^2$ do modelo linear. Ele informa a fração da
+variação observada associada às diferenças entre as médias dos grupos. Não informa causalidade e
+pode mudar quando a composição da amostra ou a variação residual muda. Deve ser interpretado junto
+com as diferenças na unidade original e seus intervalos.
+
+No exemplo manual, $\eta^2=SQ_{entre}/SQ_{total}$. Uma proporção alta indica que conhecer o grupo
+reduz bastante o erro quadrático de previsão em comparação com usar a média geral. Ela não afirma
+que o fator causou a variação, não corrige viés e tende a ser otimista em amostras pequenas.
+
+# O que precisa ser verificado
+
+A ANOVA pressupõe independência entre unidades, variância residual aproximadamente constante entre
+grupos e resíduos aproximadamente normais. A independência vem do delineamento, não de um gráfico.
+Normalidade e constância de variância são avaliadas nos **resíduos**, isto é, nas diferenças entre
+cada observação e a média ajustada do seu grupo.
+
+Um gráfico de resíduos contra valores ajustados revela aumento de dispersão, curvaturas ou grupos
+com comportamento distinto. Um gráfico quantil-quantil ajuda a reconhecer caudas e valores extremos.
+Com grupos balanceados e amostras moderadas, a razão F é robusta a desvios leves de normalidade, mas
+variâncias muito diferentes, grupos muito desbalanceados ou observações influentes exigem cautela.
+
+Transformações podem estabilizar a variância quando têm interpretação científica. Elas não devem ser
+escolhidas apenas para obter significância e não corrigem pseudorreplicação ou confundimento.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver diagnóstico de resíduos da ANOVA"
+#| label: fig-pread10-diagnosticos
+#| fig-cap: "Diagnósticos do modelo de um fator: resíduos contra valores ajustados e gráfico quantil-quantil."
+#| fig-alt: "O primeiro painel mostra resíduos distribuídos ao redor de zero em quatro valores ajustados; o segundo compara resíduos ordenados com uma linha normal."
+#| fig-height: 4.4
+library(tidyverse)
+
+dados <- tibble(
+  grupo = factor(rep(c("controle", "baixo", "médio", "alto"), each = 8)),
+  valor = c(
+    2.12, 1.91, 2.05, 2.18, 1.86, 2.03, 1.95, 2.08,
+    1.74, 1.91, 1.82, 1.69, 1.88, 1.77, 1.84, 1.79,
+    1.41, 1.62, 1.55, 1.48, 1.71, 1.44, 1.59, 1.52,
+    1.02, 1.21, 1.13, 0.96, 1.18, 1.07, 1.26, 1.11
+  )
+)
+
+modelo <- aov(valor ~ grupo, data = dados)
+diagnostico <- tibble(
+  ajustado = fitted(modelo),
+  residuo = residuals(modelo),
+  grupo = dados$grupo
+)
+
+ggplot(diagnostico, aes(x = ajustado, y = residuo, colour = grupo)) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  geom_point(size = 2) +
+  labs(x = "Valor ajustado", y = "Resíduo", colour = "Grupo") +
+  theme_bw(base_size = 11)
+
+ggplot(diagnostico, aes(sample = residuo)) +
+  stat_qq() +
+  stat_qq_line(colour = "#D55E00") +
+  labs(x = "Quantis normais", y = "Resíduos ordenados") +
+  theme_bw(base_size = 11)
+```
+
+O teste de razão de variâncias é sensível à normalidade e não substitui esses gráficos. Em desenho
+balanceado, F costuma tolerar diferenças moderadas de variância; quando grupos pequenos possuem
+maior dispersão, a distorção pode ser relevante. A resposta deve combinar conhecimento do processo,
+figuras e análise de sensibilidade, não uma sequência automática de testes preliminares.
+
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Dois experimentos têm as mesmas médias de tratamento, mas um usa canais muito homogêneos e o
   outro canais heterogêneos. Qual terá o maior $F$? Por quê?
 - Se um pesquisador aumenta o número de canais por tratamento sem mudar mais nada, o que acontece
   com $QM_{\text{dentro}}$ e com os graus de liberdade do denominador?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"} (MEAD)
-
 :::

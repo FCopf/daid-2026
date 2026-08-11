@@ -1,6 +1,6 @@
 ---
 title: "Uma reta para dados costeiros"
-subtitle: "Prática em R"
+subtitle: "Prática em R 09"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

@@ -1,6 +1,6 @@
 ---
 title: "Um fator, quatro níveis"
-subtitle: "Prática em R"
+subtitle: "Prática em R 07"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

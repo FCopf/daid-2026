@@ -1,6 +1,6 @@
 ---
 title: "Controlar um gradiente, combinar dois fatores"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 08"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -53,11 +53,14 @@ sorteando as posições. Cada faixa é um **bloco**: um conjunto de unidades par
 todos os tratamentos aparecem.
 
 ```{r}
-#| echo: false
-#| label: fig-blocos-alocacao
+#| code-fold: true
+#| code-summary: "Ver o código da alocação em blocos"
+#| label: fig-pread11-alocacao-blocos
 #| fig-cap: "Alocação em três blocos de altura. Dentro de cada faixa, os três tipos de placa aparecem uma vez, em posições sorteadas."
 #| fig-alt: "Diagrama com três faixas horizontais empilhadas, representando as alturas inferior, média e superior do costão. Em cada faixa há três quadrados coloridos, um para cada tipo de placa, em ordem diferente entre as faixas."
 #| fig-height: 3
+
+library(tidyverse)
 
 aloc <- tibble(
   bloco = rep(c("superior", "média", "inferior"), each = 3),
@@ -97,6 +100,73 @@ Blocos precisam ser definidos **no planejamento**, antes de alocar os tratamento
 Agrupar unidades depois de ver os dados não é controle local: é seleção de resultado.
 :::
 
+# O modelo de blocos completos
+
+Com $t$ tratamentos e $b$ blocos, uma observação do tratamento $i$ no bloco $j$ pode ser escrita
+
+$$
+Y_{ij}=\mu+\tau_i+\beta_j+\varepsilon_{ij}.
+$$
+
+$\tau_i$ representa o tratamento, $\beta_j$ representa a diferença sistemática do bloco e
+$\varepsilon_{ij}$ é o que resta. Em um delineamento em blocos completos aleatorizados, todos os
+tratamentos aparecem uma vez em cada bloco e são sorteados dentro dele.
+
+A variação total se divide em tratamento, bloco e resíduo. Os graus de liberdade são $t-1$ para
+tratamentos, $b-1$ para blocos e $(t-1)(b-1)$ para o resíduo, totalizando $tb-1$. Com uma observação
+por combinação, tratamento e bloco não podem ter interação estimada separadamente: essa variação
+fica no resíduo. Se uma interação entre tratamento e bloco for cientificamente esperada, é necessário
+replicar as combinações ou escolher outro desenho.
+
+O bloqueamento ganha precisão quando a variação entre blocos é grande e unidades do mesmo bloco são
+parecidas. Se os blocos quase não diferem, o ganho é pequeno e alguns graus de liberdade foram usados
+sem reduzir muito o resíduo. Isso não introduz viés quando o desenho e o modelo estão corretos, mas
+mostra por que o critério de bloqueamento precisa de justificativa prévia.
+
+## Um exemplo completo de blocos
+
+Considere quatro faixas do costão e três tipos de placa. Cada linha da tabela analítica é uma placa,
+e cada bloco contém os três tratamentos. As médias mudam com altura, mas a comparação entre placas é
+feita dentro de cada faixa.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver dados, modelo e tabela ANOVA em blocos"
+#| label: tbl-pread11-anova-blocos
+#| tbl-cap: "ANOVA do delineamento em blocos completos aleatorizados."
+library(tidyverse)
+
+experimento_blocos <- crossing(
+  bloco = factor(c("muito baixo", "baixo", "alto", "muito alto"),
+                 levels = c("muito baixo", "baixo", "alto", "muito alto")),
+  placa = factor(c("A", "B", "C"))
+) |>
+  mutate(
+    efeito_bloco = rep(c(2.0, 1.2, 0.2, -0.8), each = 3),
+    efeito_placa = recode(placa, A = 0, B = 0.7, C = 1.3),
+    recrutamento = 8 + efeito_bloco + efeito_placa + rnorm(n(), 0, 0.35)
+  )
+
+modelo_blocos <- aov(recrutamento ~ placa + bloco, data = experimento_blocos)
+
+knitr::kable(
+  as.data.frame(anova(modelo_blocos)) |>
+    rownames_to_column("fonte"),
+  digits = 3
+)
+```
+
+O modelo usa $t-1=2$ graus de liberdade para placa, $b-1=3$ para bloco e
+$(t-1)(b-1)=6$ para o resíduo. Se ignorássemos o bloco, a diferença sistemática entre alturas seria
+misturada ao resíduo. Incluí-lo não muda as comparações observadas dentro de cada faixa; muda a
+estimativa do ruído contra a qual elas são avaliadas.
+
+::: {.callout-warning appearance="minimal" title="Completo não significa replicado por célula"}
+"Bloco completo" significa que todos os tratamentos aparecem em cada bloco. Com uma observação por
+tratamento e bloco, não existe replicação para estimar separadamente interação placa por bloco. Se
+essa interação for importante, o desenho precisa de mais de uma unidade em cada combinação.
+:::
+
 # Quando há dois fatores de interesse
 
 O segundo problema é diferente. Agora você não tem um fator e um incômodo: você tem **dois fatores
@@ -116,11 +186,14 @@ Com 2 níveis de algas e 3 de nutriente, há $2 \times 3 = 6$ combinações. Um 
 # Efeitos principais e interação
 
 ```{r}
-#| echo: false
-#| label: fig-blocos-interacao
+#| code-fold: true
+#| code-summary: "Ver os três cenários fatoriais"
+#| label: fig-pread11-interacao
 #| fig-cap: "Três resultados possíveis em um experimento fatorial. Cada ponto é a média de uma combinação; as linhas ligam as médias de um mesmo nutriente."
 #| fig-alt: "Três painéis lado a lado. No primeiro as linhas são horizontais e sobrepostas; no segundo são paralelas e deslocadas; no terceiro se cruzam."
 #| fig-height: 3.4
+
+library(tidyverse)
 
 cenarios <- bind_rows(
   tibble(cenario = "Sem efeito de algas",
@@ -164,6 +237,124 @@ Dizer "algas quase não afetam a concentração" seria falso para todos os nutri
 Quando há interação, é o padrão combinado que precisa ser descrito, não a média dos efeitos.
 :::
 
+# O modelo fatorial e sua partição
+
+Para fatores $A$ e $B$, com observação $k$ na combinação dos níveis $i$ e $j$, o modelo é
+
+$$
+Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
+$$
+
+$\alpha_i$ e $\beta_j$ são efeitos principais; $(\alpha\beta)_{ij}$ é a interação, isto é, o desvio
+da combinação em relação ao que seria esperado pela simples soma dos dois efeitos. Em um desenho
+balanceado com $a$ níveis de $A$, $b$ níveis de $B$ e $r$ réplicas por combinação, os graus de
+liberdade são:
+
+- $a-1$ para $A$;
+- $b-1$ para $B$;
+- $(a-1)(b-1)$ para a interação;
+- $ab(r-1)$ para o resíduo;
+- $abr-1$ no total.
+
+Replicação em cada célula é o que permite distinguir interação de variação residual. Uma única
+unidade por combinação produz médias, mas não fornece uma estimativa independente do erro dentro da
+célula.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver um modelo fatorial em R"
+library(tidyverse)
+
+experimento_fatorial <- expand_grid(
+  algas = c("sem", "com"),
+  nutriente = c("NH4", "NO3", "PO3"),
+  replica = 1:5
+) |>
+  mutate(
+    resposta = 2 +
+      if_else(algas == "com", 1.0, 0) +
+      case_when(nutriente == "NO3" ~ 0.4,
+                nutriente == "PO3" ~ -0.2,
+                TRUE ~ 0) +
+      if_else(algas == "com" & nutriente == "NH4", 1.2, 0) +
+      rnorm(n(), 0, 0.35)
+  )
+
+modelo_fatorial <- aov(resposta ~ algas * nutriente,
+                       data = experimento_fatorial)
+summary(modelo_fatorial)
+```
+
+O operador `*` inclui `algas`, `nutriente` e `algas:nutriente`. Se a interação permanece no modelo,
+os efeitos principais devem ser lidos como médias condicionais ou acompanhados pelas combinações.
+O princípio de hierarquia recomenda não remover os termos principais enquanto a interação que os
+contém estiver sendo interpretada.
+
+## O que exatamente a interação compara
+
+Com dois níveis em cada fator, a interação é uma diferença de diferenças. Se $\mu_{ij}$ é a média
+na combinação dos níveis $i$ e $j$, podemos escrevê-la como
+
+$$
+I=(\mu_{22}-\mu_{12})-(\mu_{21}-\mu_{11}).
+$$
+
+O primeiro parêntese é o efeito de $A$ em um nível de $B$; o segundo é o efeito de $A$ no outro
+nível. Se esses efeitos são iguais, $I=0$ e as linhas esperadas são paralelas. A interação não exige
+que as linhas se cruzem: qualquer mudança de inclinação entre os níveis já representa dependência.
+
+Quando a interação é relevante, descrevemos **efeitos simples**, como o efeito de algas dentro de
+cada nutriente, ou o efeito de nutriente separadamente na presença e na ausência de algas.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver médias de célula e efeitos simples"
+#| label: tbl-pread11-efeitos-simples
+#| tbl-cap: "Médias por combinação e efeito de algas dentro de cada nutriente."
+library(tidyverse)
+
+experimento <- expand_grid(
+  algas = factor(c("sem", "com"), levels = c("sem", "com")),
+  nutriente = factor(c("NH4", "NO3", "PO3")),
+  replica = 1:6
+) |>
+  mutate(
+    media = case_when(
+      algas == "sem" & nutriente == "NH4" ~ 2.0,
+      algas == "com" & nutriente == "NH4" ~ 4.5,
+      algas == "sem" & nutriente == "NO3" ~ 2.4,
+      algas == "com" & nutriente == "NO3" ~ 1.9,
+      algas == "sem" & nutriente == "PO3" ~ 1.8,
+      TRUE ~ 2.6
+    ),
+    resposta = rnorm(n(), media, 0.30)
+  )
+
+medias_celula <- experimento |>
+  summarise(media = mean(resposta), .by = c(nutriente, algas))
+
+efeitos_simples <- medias_celula |>
+  pivot_wider(names_from = algas, values_from = media) |>
+  mutate(efeito_algas = com - sem)
+
+knitr::kable(efeitos_simples, digits = 2)
+```
+
+Os efeitos simples devem vir com erros padrão ou intervalos, e a família de comparações precisa ser
+declarada. A tabela acima mostra a estimativa bruta para tornar a operação visível; a inferência usa
+o quadrado médio residual do modelo fatorial.
+
+## Balanceamento, células vazias e ordem dos termos
+
+Em desenho balanceado e completo, os efeitos principais e a interação são separados de forma limpa.
+Com tamanhos diferentes, as médias marginais passam a depender dos pesos atribuídos às células. Uma
+célula vazia pode tornar certos efeitos não estimáveis e confundir fator com interação. Nessa
+situção, a ordem dos termos e o tipo de soma de quadrados deixam de ser detalhes de software.
+
+O melhor reparo ocorre no delineamento: preencher todas as combinações, manter replicação suficiente
+e registrar perdas. Modelos podem acomodar desequilíbrio moderado, mas não inventam a comparação que
+uma combinação ausente impossibilitou.
+
 # Duas estruturas, uma mesma ideia
 
 Bloco e fatorial resolvem problemas diferentes, mas fazem a mesma coisa com a variação dos dados.
@@ -181,10 +372,4 @@ detectável.
   com a sensibilidade do experimento em relação a simplesmente ter aleatorizado?
 - Em um fatorial 2 × 3, o gráfico de linhas mostra retas quase paralelas. O que isso sugere sobre
   a necessidade do termo de interação no modelo?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"} (MEAD)
-
 :::

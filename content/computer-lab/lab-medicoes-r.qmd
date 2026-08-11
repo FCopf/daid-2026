@@ -1,6 +1,6 @@
 ---
 title: "Primeiras medições em R"
-subtitle: "Prática em R"
+subtitle: "Prática em R 01"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

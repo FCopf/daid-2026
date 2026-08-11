@@ -1,6 +1,6 @@
 ---
 title: "Fator, bloco ou covariável?"
-subtitle: "Atividade extraclasse"
+subtitle: "Atividade extraclasse 04"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

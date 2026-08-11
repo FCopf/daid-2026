@@ -1,6 +1,6 @@
 ---
 title: "Por que duas medidas nunca são iguais?"
-subtitle: "Leitura prévia"
+subtitle: "Leitura prévia - Aula 01"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -84,6 +84,7 @@ Para as poças de maré, ficaria assim:
 
 ```{r}
 #| echo: false
+#| label: tbl-pread01-pocas
 tibble(
   poca = c(1, 2, 3, 4, 5),
   temperatura = c(25.4, 25.9, 24.8, 26.3, 25.1),
@@ -102,6 +103,18 @@ outras três colunas são características dessa unidade: duas numéricas e uma 
 Guardar os dados nesse formato não é preciosismo de organização. É ele que permite responder
 perguntas como "as poças mais fundas são mais frias?" sem reescrever nada.
 
+## Ausência de informação não é um valor zero
+
+Uma célula vazia pode significar que a profundidade não foi medida, que o instrumento falhou ou que
+a anotação se perdeu. Em R, essa ausência é representada por `NA`. Ela não deve ser substituída por
+zero: profundidade igual a zero é uma medida possível e tem significado científico; profundidade
+desconhecida é falta de informação.
+
+Antes de resumir uma coluna, convém contar quantos valores estão ausentes e perguntar por quê. Se a
+ausência ocorrer sobretudo nas poças mais profundas ou nos dias de mar agitado, remover essas linhas
+pode alterar a distribuição observada. Assim, até um procedimento aparentemente simples, como
+calcular uma média com `na.rm = TRUE`, precisa de justificativa.
+
 # O que a variação parece quando a vemos?
 
 Cinco números são poucos para enxergar um padrão. Com trinta poças, a figura abaixo mostra o que
@@ -109,11 +122,14 @@ costuma acontecer: os valores se espalham em torno de um centro, a maioria perto
 bem longe.
 
 ```{r}
-#| echo: false
-#| label: fig-variacao-espalhamento
+#| code-fold: true
+#| code-summary: "Ver dados e código da figura"
+#| label: fig-pread01-variacao-espalhamento
 #| fig-cap: "Temperatura medida em trinta poças de maré. A linha marca a média das trinta medidas."
 #| fig-alt: "Gráfico de pontos mostrando trinta valores de temperatura espalhados ao longo do eixo, com uma linha vertical marcando a média das trinta medidas. A maioria dos pontos fica próxima da linha e poucos ficam nas extremidades."
 #| fig-height: 3.2
+
+library(tidyverse)
 
 pocas <- tibble(
   poca = 1:30,
@@ -140,16 +156,262 @@ Descrever essas duas coisas é a primeira tarefa de quem analisa dados, e é por
 curricular começa. Antes de comparar, testar ou modelar qualquer coisa, é preciso saber dizer onde
 está o centro das medidas e o quanto elas se afastam dele.
 
+# Que tipo de característica foi registrada?
+
+Uma coluna pode guardar números sem representar uma quantidade. O código da poça, por exemplo,
+poderia ser 1, 2 ou 3, mas calcular sua média não teria sentido. Antes de escolher um resumo ou um
+gráfico, precisamos identificar o tipo da variável.
+
+Variáveis **qualitativas** registram categorias. Elas podem ser **nominais**, quando não existe uma
+ordem natural, como o tipo de substrato, ou **ordinais**, quando os níveis têm ordem, como
+sombreamento baixo, médio e alto. Variáveis **quantitativas** registram quantidades. Uma contagem de
+espécies é discreta, pois assume valores inteiros; temperatura e profundidade são contínuas, pois
+podem assumir qualquer valor dentro da precisão do instrumento.
+
+A escala também limita as operações válidas. Em uma escala de razão, como comprimento em
+centímetros, o zero representa ausência da quantidade e faz sentido dizer que 20 cm é o dobro de
+10 cm. Em temperatura Celsius, o zero é convencional: 20 °C não é duas vezes mais quente que
+10 °C. A média continua válida, mas a razão entre os valores não tem essa interpretação.
+
+As quatro escalas usuais organizam as operações que fazem sentido:
+
+| Escala | O que é preservado | Exemplo | Resumos compatíveis |
+|---|---|---|---|
+| Nominal | igualdade ou diferença | tipo de substrato | contagens, proporções, moda |
+| Ordinal | igualdade e ordem | sombra baixa, média, alta | contagens, proporções, mediana, quantis |
+| Intervalar | igualdade, ordem e diferenças | temperatura em °C | média, desvio-padrão, diferenças |
+| Razão | igualdade, ordem, diferenças e razões | comprimento, massa, contagem | todos os anteriores e razões como o CV |
+
+A classificação não depende de como a coluna foi armazenada. Uma categoria ordinal salva como
+`1`, `2` e `3` continua sendo categórica; um comprimento digitado com vírgula e importado como texto
+continua sendo uma quantidade que precisa ser corrigida antes da análise.
+
+::: {.callout-warning appearance="minimal" title="O tipo da variável vem antes do comando"}
+Um programa calcula a média de qualquer coluna numérica. Isso não torna a conta cientificamente
+válida. Identificadores, códigos de categoria e datas convertidas em números exigem interpretação
+antes de qualquer resumo.
+:::
+
+# Centro, posição e espalhamento
+
+Considere valores $x_1,x_2,\ldots,x_n$. A **média amostral** é
+
+$$
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+$$
+
+Ela funciona como o ponto de equilíbrio dos valores e usa todas as observações. Por isso também é
+sensível a valores extremos. A **mediana** é o valor central depois de ordenar os dados e costuma
+representar melhor o centro de distribuições muito assimétricas. A **moda** é o valor ou categoria
+mais frequente e pode ser usada tanto com variáveis quantitativas quanto qualitativas.
+
+Os **quartis** dividem os valores ordenados em quatro partes. O primeiro quartil, $Q_1$, deixa cerca
+de 25% das observações abaixo dele; a mediana, $Q_2$, deixa 50%; e $Q_3$, 75%. A distância
+$AIQ=Q_3-Q_1$ é a amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor
+a extremos que a amplitude total, calculada por máximo menos mínimo.
+
+A variância amostral mede a média dos desvios quadráticos em relação a $\bar{x}$:
+
+$$
+s^2=\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}.
+$$
+
+Os desvios são elevados ao quadrado para que afastamentos positivos e negativos não se cancelem.
+O divisor $n-1$ corrige a tendência de subestimar a variância populacional quando o centro também
+foi estimado pela amostra. Como $s^2$ fica em unidades ao quadrado, usamos com frequência o
+**desvio-padrão**, $s=\sqrt{s^2}$, que volta à unidade original. Se $s=1,1$ °C, interpretamos que as
+temperaturas costumam se afastar da média por uma ordem de grandeza próxima de 1,1 °C.
+
+Quando duas variáveis positivas usam escalas muito diferentes, o **coeficiente de variação**
+$CV=100s/\bar{x}$ expressa o desvio-padrão como porcentagem da média. Ele não é adequado quando a
+média está perto de zero ou quando o zero da escala é arbitrário, como em graus Celsius.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver os resumos em R"
+library(tidyverse)
+
+temperaturas_exemplo <- c(25.4, 25.9, 24.8, 26.3, 25.1)
+
+moda <- function(x) {
+  frequencias <- table(x)
+  as.numeric(names(frequencias)[frequencias == max(frequencias)])
+}
+
+tibble(
+  media = mean(temperaturas_exemplo),
+  mediana = median(temperaturas_exemplo),
+  moda = paste(moda(temperaturas_exemplo), collapse = ", "),
+  variancia = var(temperaturas_exemplo),
+  desvio_padrao = sd(temperaturas_exemplo),
+  coeficiente_variacao = 100 * sd(temperaturas_exemplo) / mean(temperaturas_exemplo),
+  minimo = min(temperaturas_exemplo),
+  q1 = quantile(temperaturas_exemplo, 0.25),
+  q3 = quantile(temperaturas_exemplo, 0.75),
+  maximo = max(temperaturas_exemplo)
+)
+```
+
+Neste conjunto todos os valores ocorrem uma vez, portanto não existe uma moda única. Isso mostra por
+que a moda é especialmente natural para categorias e valores discretos, mas pode ser pouco útil para
+medidas contínuas registradas com alta precisão.
+
+## Uma conta completa de variância
+
+Para $25{,}4$, $25{,}9$, $24{,}8$, $26{,}3$ e $25{,}1$ °C, a média é 25,5 °C. Os desvios em relação à
+média são $-0{,}1$, $0{,}4$, $-0{,}7$, $0{,}8$ e $-0{,}4$ °C. A soma dos desvios é zero, por isso não
+podemos usá-la como medida de variação. Elevando-os ao quadrado, obtemos soma igual a 1,46 °C². Ao
+dividir por $n-1=4$, a variância é 0,365 °C² e o desvio-padrão é aproximadamente 0,604 °C.
+
+O cálculo separa três ideias: um centro estimado, os afastamentos de cada unidade e um resumo desses
+afastamentos. Ele também deixa explícitas as unidades. A variância está em °C²; o desvio-padrão volta
+a °C e pode ser comparado diretamente aos valores medidos.
+
+# Frequências transformam uma lista em distribuição
+
+Para uma variável qualitativa, a distribuição é descrita contando os níveis. A frequência absoluta
+$f_j$ é o número de unidades na categoria $j$; a frequência relativa é
+
+$$
+p_j=\frac{f_j}{n},
+$$
+
+em que $n$ é o total de unidades. A soma de todos os $f_j$ é $n$, e a soma dos $p_j$ é 1, ou 100%.
+Em variáveis ordinais também podemos acumular as frequências seguindo a ordem dos níveis. Em uma
+variável nominal, acumular categorias não tem interpretação porque não existe uma ordem científica.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver tabela de frequências e gráfico de barras"
+#| label: fig-pread01-frequencias-sombra
+#| fig-cap: "Frequências do sombreamento em trinta poças. Barras representam categorias, por isso ficam separadas."
+#| fig-alt: "Gráfico de barras com as categorias baixo, médio e alto no eixo horizontal e a frequência de poças no vertical."
+library(tidyverse)
+
+poças_sombra <- tibble(
+  sombra = factor(
+    c(rep("baixo", 13), rep("médio", 10), rep("alto", 7)),
+    levels = c("baixo", "médio", "alto"),
+    ordered = TRUE
+  )
+)
+
+tabela_sombra <- poças_sombra |>
+  count(sombra, name = "frequencia") |>
+  mutate(
+    proporcao = frequencia / sum(frequencia),
+    proporcao_acumulada = cumsum(proporcao)
+  )
+
+tabela_sombra
+
+ggplot(tabela_sombra, aes(x = sombra, y = frequencia)) +
+  geom_col(fill = "#0072B2", width = 0.7) +
+  labs(x = "Sombreamento", y = "Número de poças") +
+  theme_bw(base_size = 12)
+```
+
+As barras não se encostam porque baixo, médio e alto são categorias. A ordem é informativa, mas a
+distância visual entre baixo e médio não representa uma diferença numérica conhecida.
+
+Para uma variável quantitativa contínua, agrupamos valores em classes. Se a classe $j$ tem limites
+$a_j$ e $a_{j+1}$, contamos observações com $a_j\le x<a_{j+1}$. A escolha da largura modifica a
+aparência: classes largas escondem detalhes; classes estreitas deixam o ruído amostral dominar.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver histogramas, frequência acumulada e boxplot"
+#| label: fig-pread01-formas-distribuicao
+#| fig-cap: "Três representações dos mesmos comprimentos: histogramas com duas larguras de classe, frequência acumulada e boxplot."
+#| fig-alt: "Painéis mostram dois histogramas com resoluções diferentes, uma curva crescente de frequência acumulada e um boxplot horizontal dos mesmos valores."
+#| fig-height: 6
+library(tidyverse)
+
+comprimentos <- tibble(
+  valor = c(3.8, 4.0, 4.1, 4.2, 4.3, 4.4, 4.4, 4.5, 4.5, 4.6,
+            4.7, 4.8, 4.8, 4.9, 5.0, 5.1, 5.1, 5.2, 5.3, 5.5,
+            5.6, 5.8, 6.0, 6.4, 7.2)
+)
+
+histogramas <- bind_rows(
+  comprimentos |> mutate(painel = "Histograma: classe de 0,5 cm"),
+  comprimentos |> mutate(painel = "Histograma: classe de 1,0 cm")
+)
+
+ggplot(histogramas, aes(x = valor)) +
+  geom_histogram(
+    data = filter(histogramas, painel == "Histograma: classe de 0,5 cm"),
+    binwidth = 0.5, boundary = 0, fill = "#0072B2", colour = "white"
+  ) +
+  geom_histogram(
+    data = filter(histogramas, painel == "Histograma: classe de 1,0 cm"),
+    binwidth = 1, boundary = 0, fill = "#D55E00", colour = "white"
+  ) +
+  facet_wrap(~ painel, ncol = 1) +
+  labs(x = "Comprimento (cm)", y = "Frequência") +
+  theme_bw(base_size = 12)
+
+ggplot(comprimentos, aes(x = valor)) +
+  stat_ecdf(geom = "step", linewidth = 1, colour = "#0072B2") +
+  labs(x = "Comprimento (cm)", y = "Proporção acumulada") +
+  theme_bw(base_size = 12)
+
+ggplot(comprimentos, aes(x = valor, y = "")) +
+  geom_boxplot(fill = "#56B4E9", width = 0.5) +
+  labs(x = "Comprimento (cm)", y = NULL) +
+  theme_bw(base_size = 12)
+```
+
+No gráfico acumulado, a altura em 5 cm informa a proporção de unidades com comprimento menor ou
+igual a 5 cm. No boxplot, a caixa vai de $Q_1$ a $Q_3$, a linha interna é a mediana e os bigodes
+avançam até os valores observados dentro das cercas
+
+$$
+Q_1-1{,}5\,AIQ \qquad\text{e}\qquad Q_3+1{,}5\,AIQ.
+$$
+
+Pontos além das cercas são sinalizados como candidatos a valores atípicos. Eles não são erros por
+definição. Podem representar falha de digitação, uma unidade biologicamente incomum ou a cauda
+legítima da distribuição, e por isso devem ser investigados, não apagados automaticamente.
+
+# A distribuição reúne centro, forma e variação
+
+Uma lista de resumos nunca substitui a distribuição. Um histograma divide o eixo numérico em
+intervalos e conta quantas observações caem em cada um. Um gráfico de pontos preserva cada valor e
+é especialmente informativo para amostras pequenas. Um boxplot compacta mediana, quartis e valores
+afastados, sendo útil para comparar grupos, mas esconde detalhes da forma.
+
+Distribuições podem ser aproximadamente simétricas, assimétricas ou ter mais de um agrupamento.
+Em uma distribuição simétrica e unimodal, média e mediana tendem a ficar próximas. Uma cauda longa
+para valores altos puxa a média nessa direção, enquanto a mediana muda menos. Dois conjuntos podem
+ter a mesma média e o mesmo desvio-padrão, mas formas inteiramente diferentes. Por isso a sequência
+segura é olhar os dados, descrever a forma e então escolher resumos compatíveis.
+
+Para localizar uma observação em relação ao conjunto, podemos padronizá-la:
+
+$$
+z_i=\frac{x_i-\bar{x}}{s}.
+$$
+
+Um escore $z=1,5$ informa que a observação está 1,5 desvio-padrão acima da média. O escore não diz
+que o valor é raro por si só. Essa conclusão também depende da forma da distribuição e do número
+de observações.
+
+Como a transformação apenas muda origem e unidade, o conjunto dos escores tem média zero e
+desvio-padrão um. Ela permite comparar posições relativas em escalas diferentes. Um organismo com
+$z=1{,}2$ para massa e $z=-0{,}4$ para comprimento está relativamente mais pesado que comprido em
+relação aos respectivos grupos, sem que massa e comprimento tenham sido convertidos para a mesma
+unidade física.
+
+::: {.callout-warning appearance="minimal" title="Resumos não escolhem a pergunta"}
+Média, mediana, desvio-padrão, AIQ e escore z descrevem aspectos diferentes. Nenhum deles é
+automaticamente o "melhor". A variável, a forma da distribuição, a presença de limites e o objetivo
+científico determinam qual combinação de tabela, figura e medida é informativa.
+:::
+
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Se você medisse a temperatura de outras trinta poças no mesmo costão, esperaria obter exatamente
   a mesma média? E um valor muito diferente?
 - Um pesquisador mede vinte vezes a mesma poça e conclui que "a variação entre poças é muito
   pequena". Onde está o problema?
-:::
-
-::: {.callout-tip appearance="minimal" title="Para saber mais"}
-
-- [Estrutura e tipos de dados](https://fcopf.github.io/mead/content/estrutura-dados/estrutura-tipo.html){target="_blank"} (MEAD)
-- [Gráficos em camadas com ggplot2](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html){target="_blank"} (MEAD)
-
 :::

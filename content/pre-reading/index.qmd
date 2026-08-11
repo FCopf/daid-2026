@@ -12,22 +12,22 @@ já foi compreendido.
 
 ::: {.catalogo-materiais}
 
-| | Semana no [cronograma](../../index.qmd) |
-|:--|:--|
-| [Por que duas medidas nunca são iguais?](pread-dados-unidades-variacao.qmd) | Semana 1 |
-| [O que 45 estações dizem sobre a região?](pread-populacao-amostra.qmd) | Semana 2 |
-| [Por que a média muda de uma amostra para outra?](pread-variabilidade-amostral.qmd) | Semana 3 |
-| [Quanta confiança cabe numa única amostra?](pread-erro-padrao-intervalo.qmd) | Semana 4 |
-| [O que conta como réplica?](pread-replicacao-unidades.qmd) | Semana 5 |
-| [Como montar um experimento que responde à pergunta?](pread-aleatorizacao-controle.qmd) | Semana 6 |
-| [Uma diferença poderia surgir só por acaso?](pread-modelo-nulo-evidencia.qmd) | Semana 7 |
-| [Quando o teste erra, e quanto ele enxerga](pread-erros-poder.qmd) | Semana 8 |
-| [Por que não comparar os grupos dois a dois?](pread-comparacoes-multiplas.qmd) | Semana 9 |
-| [Entre grupos ou dentro dos grupos?](pread-fontes-variacao-anova.qmd) | Semana 10 |
-| [Controlar um gradiente, combinar dois fatores](pread-blocos-interacao.qmd) | Semana 11 |
-| [Você sorteia, agrupa ou mede?](pread-papeis-fator-bloco-covariavel.qmd) | Semana 12 |
-| [Uma reta como processo gerador](pread-relacao-linear.qmd) | Semana 13 |
-| [A mesma reta serve para os dois grupos?](pread-retas-paralelas.qmd) | Semana 14 |
-| [Tratamento e covariável no mesmo modelo](pread-tratamento-covariavel.qmd) | Semana 15 |
+| Encontro | Título | Semana no [cronograma](../../index.qmd) |
+|:--|:--|:--:|
+| Aula 01 | [Por que duas medidas nunca são iguais?](pread-dados-unidades-variacao.qmd) | Semana 1 |
+| Aula 02 | [O que 45 estações dizem sobre a região?](pread-populacao-amostra.qmd) | Semana 2 |
+| Atividade extraclasse 01 | [Por que a média muda de uma amostra para outra?](pread-variabilidade-amostral.qmd) | Semana 3 |
+| Aula 03 | [Quanta confiança cabe numa única amostra?](pread-erro-padrao-intervalo.qmd) | Semana 4 |
+| Aula 04 | [O que conta como réplica?](pread-replicacao-unidades.qmd) | Semana 5 |
+| Atividade extraclasse 02 | [Como montar um experimento que responde à pergunta?](pread-aleatorizacao-controle.qmd) | Semana 6 |
+| Aula 05 | [Uma diferença poderia surgir só por acaso?](pread-modelo-nulo-evidencia.qmd) | Semana 7 |
+| Aula 06 | [Quando o teste erra, e quanto ele enxerga](pread-erros-poder.qmd) | Semana 8 |
+| Atividade extraclasse 03 | [Por que não comparar os grupos dois a dois?](pread-comparacoes-multiplas.qmd) | Semana 9 |
+| Aula 07 | [Entre grupos ou dentro dos grupos?](pread-fontes-variacao-anova.qmd) | Semana 10 |
+| Aula 08 | [Controlar um gradiente, combinar dois fatores](pread-blocos-interacao.qmd) | Semana 11 |
+| Atividade extraclasse 04 | [Fator, bloco ou covariável?](pread-papeis-fator-bloco-covariavel.qmd) | Semana 12 |
+| Aula 09 | [Uma reta como processo gerador](pread-relacao-linear.qmd) | Semana 13 |
+| Atividade extraclasse 05 | [A mesma reta serve para os dois grupos?](pread-retas-paralelas.qmd) | Semana 14 |
+| Aula 10 | [Tratamento e covariável no mesmo modelo](pread-tratamento-covariavel.qmd) | Semana 15 |
 
 :::

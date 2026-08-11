@@ -1,6 +1,6 @@
 ---
 title: "A amostra representa a praia?"
-subtitle: "Prática em R"
+subtitle: "Prática em R 02"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

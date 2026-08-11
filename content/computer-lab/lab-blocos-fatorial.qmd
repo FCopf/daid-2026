@@ -1,6 +1,6 @@
 ---
 title: "Blocos e dois fatores"
-subtitle: "Prática em R"
+subtitle: "Prática em R 08"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"

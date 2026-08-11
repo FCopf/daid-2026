@@ -1,6 +1,6 @@
 ---
 title: "Médias que variam e intervalos que cobrem"
-subtitle: "Prática em R"
+subtitle: "Prática em R 03"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
