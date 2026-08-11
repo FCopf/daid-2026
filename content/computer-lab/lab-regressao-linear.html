@@ -368,15 +368,14 @@ window.Quarto = {
     <h2 id="toc-title">Conteúdo</h2>
    
   <ul class="collapse">
-  <li><a href="#quanto-pesa-um-molusco-de-20-mm" id="toc-quanto-pesa-um-molusco-de-20-mm" class="nav-link active" data-scroll-target="#quanto-pesa-um-molusco-de-20-mm"><span class="header-section-number">1</span> Quanto pesa um molusco de 20 mm?</a></li>
-  <li><a href="#vamos-abrir-os-dados" id="toc-vamos-abrir-os-dados" class="nav-link" data-scroll-target="#vamos-abrir-os-dados"><span class="header-section-number">2</span> Vamos abrir os dados</a></li>
-  <li><a href="#como-as-duas-variáveis-se-relacionam" id="toc-como-as-duas-variáveis-se-relacionam" class="nav-link" data-scroll-target="#como-as-duas-variáveis-se-relacionam"><span class="header-section-number">3</span> Como as duas variáveis se relacionam?</a></li>
-  <li><a href="#ajustando-uma-reta-assim-mesmo" id="toc-ajustando-uma-reta-assim-mesmo" class="nav-link" data-scroll-target="#ajustando-uma-reta-assim-mesmo"><span class="header-section-number">4</span> Ajustando uma reta assim mesmo</a></li>
-  <li><a href="#o-que-os-resíduos-dizem" id="toc-o-que-os-resíduos-dizem" class="nav-link" data-scroll-target="#o-que-os-resíduos-dizem"><span class="header-section-number">5</span> O que os resíduos dizem?</a></li>
-  <li><a href="#e-se-mudarmos-a-escala" id="toc-e-se-mudarmos-a-escala" class="nav-link" data-scroll-target="#e-se-mudarmos-a-escala"><span class="header-section-number">6</span> E se mudarmos a escala?</a></li>
-  <li><a href="#prevendo-a-biomassa-de-um-novo-molusco" id="toc-prevendo-a-biomassa-de-um-novo-molusco" class="nav-link" data-scroll-target="#prevendo-a-biomassa-de-um-novo-molusco"><span class="header-section-number">7</span> Prevendo a biomassa de um novo molusco</a></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">8</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">9</span> Para saber mais</a></li>
+  <li><a href="#objetivo-desta-prática" id="toc-objetivo-desta-prática" class="nav-link active" data-scroll-target="#objetivo-desta-prática"><span class="header-section-number">1</span> Objetivo desta prática</a></li>
+  <li><a href="#preparação" id="toc-preparação" class="nav-link" data-scroll-target="#preparação"><span class="header-section-number">2</span> Preparação</a></li>
+  <li><a href="#uma-reta-que-você-escreve" id="toc-uma-reta-que-você-escreve" class="nav-link" data-scroll-target="#uma-reta-que-você-escreve"><span class="header-section-number">3</span> Uma reta que você escreve</a></li>
+  <li><a href="#sua-vez-parte-1-parâmetro-e-estimativa" id="toc-sua-vez-parte-1-parâmetro-e-estimativa" class="nav-link" data-scroll-target="#sua-vez-parte-1-parâmetro-e-estimativa"><span class="header-section-number">4</span> Sua vez, parte 1: parâmetro e estimativa</a></li>
+  <li><a href="#os-dados-reais-moluscos-de-abril" id="toc-os-dados-reais-moluscos-de-abril" class="nav-link" data-scroll-target="#os-dados-reais-moluscos-de-abril"><span class="header-section-number">5</span> Os dados reais: moluscos de abril</a></li>
+  <li><a href="#sua-vez-parte-2-o-mesmo-molusco-em-outro-mês" id="toc-sua-vez-parte-2-o-mesmo-molusco-em-outro-mês" class="nav-link" data-scroll-target="#sua-vez-parte-2-o-mesmo-molusco-em-outro-mês"><span class="header-section-number">6</span> Sua vez, parte 2: o mesmo molusco em outro mês</a></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">7</span> Entrega</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -417,196 +416,183 @@ window.Quarto = {
 </header>
 
 
-<section id="quanto-pesa-um-molusco-de-20-mm" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Quanto pesa um molusco de 20 mm?</h1>
-<p>Moluscos maiores pesam mais, e isso ninguém duvida. A pergunta útil é outra: <strong>quanto</strong> a biomassa aumenta por milímetro de concha, e com que precisão conseguimos prever a biomassa de um indivíduo a partir do seu comprimento.</p>
-<p>Nesta prática o preditor é contínuo: não há grupos a comparar, e sim uma relação a descrever.</p>
+<section id="objetivo-desta-prática" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
+<p>A <a href="../../content/pre-reading/pread-relacao-linear.html">leitura desta semana</a> apresentou a reta como <strong>processo gerador</strong>: uma parte sistemática, <span class="math inline">\(\beta_0 + \beta_1 X\)</span>, mais uma variação em torno dela.</p>
+<p>Hoje você vai usar esse processo nos dois sentidos. Primeiro no sentido fácil: você escolhe <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span> e o tamanho da variação, gera os dados e vê o que <code>lm()</code> consegue recuperar — sabendo a resposta, dá para julgar a estimativa. Depois no sentido difícil: dados reais de moluscos, em que os parâmetros são desconhecidos e a única forma de julgar o ajuste é olhar os resíduos.</p>
+<p>O objetivo em R é ajustar modelos com <code>lm()</code>, ler <code>confint()</code> e escrever um gráfico de diagnóstico sem receber o código pronto.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Como a hora será usada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>5 min</strong> abrir o RStudio, criar o script e ler a proposta;</li>
+<li><strong>40 a 45 min</strong> percorrer as seções guiadas e fazer o bloco <em>Sua vez</em>;</li>
+<li><strong>10 a 15 min</strong> escrever as respostas, rodar o script do início ao fim e enviar.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="preparação" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Preparação</h1>
+<p>Crie um script <code>pr-regressao.R</code> com o cabeçalho de identificação e comece por:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="vamos-abrir-os-dados" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Vamos abrir os dados</h1>
+<section id="uma-reta-que-você-escreve" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Uma reta que você escreve</h1>
+<p>Vamos inventar uma população de moluscos em que a biomassa cresce linearmente com o comprimento da concha. Os três parâmetros do processo gerador ficam explícitos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Clams.txt"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>moluscos <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(moluscos)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 398
-Columns: 5
-$ MONTH    &lt;dbl&gt; 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 1…
-$ LENGTH   &lt;dbl&gt; 28.38, 16.57, 13.69, 17.44, 11.83, 28.13, 32.58, 15.70, 18.73…
-$ AFD      &lt;dbl&gt; 0.248, 0.052, 0.028, 0.070, 0.022, 0.187, 0.361, 0.050, 0.087…
-$ LNLENGTH &lt;dbl&gt; 3.346, 2.808, 2.617, 2.859, 2.471, 3.337, 3.484, 2.754, 2.930…
-$ LNAFD    &lt;dbl&gt; -1.394, -2.955, -3.572, -2.655, -3.826, -1.679, -1.020, -3.00…</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.8</span>     <span class="co"># intercepto</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fl">0.09</span>     <span class="co"># quanto a biomassa esperada cresce por milímetro</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.2</span>      <span class="co"># variação em torno da reta</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>moluscos_sim <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">14</span>, <span class="at">max =</span> <span class="dv">30</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">biomassa =</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> comprimento <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><code>runif()</code> sorteia comprimentos espalhados entre 14 e 30 mm; a segunda linha calcula o centro previsto pela reta e soma a variação individual.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(moluscos_sim, <span class="fu">aes</span>(<span class="at">x =</span> comprimento, <span class="at">y =</span> biomassa)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta0, <span class="at">slope =</span> beta1, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento da concha (mm)"</span>, <span class="at">y =</span> <span class="st">"Biomassa (g)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-regressao-simulado" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-regressao-simulado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lab-regressao-linear_files/figure-html/fig-regressao-simulado-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regressao-simulado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Sessenta moluscos gerados por uma reta conhecida. A linha preta é a reta verdadeira, e não a estimada.
+</figcaption>
+</figure>
 </div>
 </div>
-<p>As colunas que interessam são <code>LENGTH</code> (comprimento da concha, em mm) e <code>AFD</code> (biomassa livre de cinzas, em gramas). <code>MONTH</code> indica o mês de coleta.</p>
-<p>Para começar com uma pergunta simples, vamos ficar em um mês só:</p>
+</div>
+<p>Nenhum ponto cai exatamente sobre a reta: ela descreve o <strong>centro</strong> da resposta, não as observações.</p>
+<p>Agora o caminho de volta. <code>lm()</code> estima os coeficientes a partir dos dados, sem saber quais foram os valores usados para gerá-los:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> moluscos <span class="sc">|&gt;</span> <span class="fu">filter</span>(MONTH <span class="sc">==</span> <span class="dv">4</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>modelo_sim <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento, <span class="at">data =</span> moluscos_sim)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(abril)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo_sim)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) comprimento 
+-0.68736674  0.08376162 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo_sim)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %      97.5 %
+(Intercept) -0.89878953 -0.47594395
+comprimento  0.07425466  0.09326857</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Observe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare o valor estimado para <code>comprimento</code> com o <code>beta1</code> que <strong>você</strong> escreveu. Eles não são iguais: o primeiro é uma estimativa obtida de 60 moluscos sorteados; o segundo é o parâmetro do processo.</p>
+<p>Olhe agora a linha <code>comprimento</code> de <code>confint()</code>. O intervalo contém o valor verdadeiro?</p>
+</div>
+</div>
+<p>O gráfico de resíduos é a ferramenta mais barata de toda a modelagem. Como aqui os dados foram gerados por uma reta de verdade, ele mostra o aspecto que um ajuste <strong>adequado</strong> produz:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diagnostico_sim <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo_sim),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuo =</span> <span class="fu">residuals</span>(modelo_sim)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostico_sim, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residuo)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Biomassa ajustada (g)"</span>, <span class="at">y =</span> <span class="st">"Resíduo (g)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-regressao-residuos-sim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-regressao-residuos-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lab-regressao-linear_files/figure-html/fig-regressao-residuos-sim-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regressao-residuos-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Resíduos do modelo ajustado aos dados simulados, em função dos valores ajustados.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Uma nuvem sem padrão, com espalhamento parecido da esquerda para a direita. Guarde esta imagem: é contra ela que você vai comparar o próximo gráfico.</p>
+</section>
+<section id="sua-vez-parte-1-parâmetro-e-estimativa" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Sua vez, parte 1: parâmetro e estimativa</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja e conte">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Preveja e conte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Execute o bloco da simulação, o <code>lm()</code> e o <code>confint()</code> <strong>três vezes seguidas</strong>, anotando a cada vez a inclinação estimada e se o intervalo conteve o seu <code>beta1</code>.</p>
+<p>Antes de começar, escreva no script: em quantas das três você espera que o intervalo contenha o valor verdadeiro?</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Escolha um parâmetro e mude">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Escolha um parâmetro e mude
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agora escolha <strong>um</strong> dos três parâmetros do processo (<code>beta1</code>, <code>sigma</code> ou <code>n</code>), mude o seu valor e repita o ajuste.</p>
+<p>Registre no script o parâmetro escolhido, o valor antigo, o novo e a <strong>largura</strong> do intervalo de confiança da inclinação antes e depois. A largura é <code>upr - lwr</code> na linha <code>comprimento</code>.</p>
+</div>
+</div>
+</section>
+<section id="os-dados-reais-moluscos-de-abril" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Os dados reais: moluscos de abril</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Clams.txt"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>moluscos <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> moluscos <span class="sc">|&gt;</span> <span class="fu">filter</span>(MONTH <span class="sc">==</span> <span class="dv">4</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(abril)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 154</code></pre>
 </div>
 </div>
-</section>
-<section id="como-as-duas-variáveis-se-relacionam" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Como as duas variáveis se relacionam?</h1>
+<p>As colunas que interessam são <code>LENGTH</code> (comprimento da concha, em mm) e <code>AFD</code> (biomassa livre de cinzas, em gramas); <code>MONTH</code> indica o mês de coleta.</p>
+<p>Relações entre tamanho e massa em organismos raramente são retas: a massa acompanha o volume, que cresce com uma <strong>potência</strong> do comprimento. Tomar o logaritmo dos dois lados transforma essa relação em uma reta.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(abril, <span class="fu">aes</span>(<span class="at">x =</span> LENGTH, <span class="at">y =</span> AFD)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento da concha (mm)"</span>, <span class="at">y =</span> <span class="st">"Biomassa (g)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-regressao-dispersao" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-regressao-dispersao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-regressao-linear_files/figure-html/fig-regressao-dispersao-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regressao-dispersao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Biomassa em função do comprimento da concha, em abril.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Observe
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A relação é claramente crescente. Mas ela é <strong>reta</strong>?</p>
-<p>Olhe os extremos: nos moluscos pequenos os pontos ficam quase colados no eixo; nos grandes, eles disparam. E o espalhamento vertical cresce da esquerda para a direita.</p>
-</div>
-</div>
-</section>
-<section id="ajustando-uma-reta-assim-mesmo" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Ajustando uma reta assim mesmo</h1>
-<p>A função <code>lm()</code> ajusta um modelo linear. A fórmula tem a resposta à esquerda e o preditor à direita:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(AFD <span class="sc">~</span> LENGTH, <span class="at">data =</span> abril)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = AFD ~ LENGTH, data = abril)
-
-Residuals:
-      Min        1Q    Median        3Q       Max 
--0.035981 -0.009953 -0.003696  0.005244  0.082692 
-
-Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) -0.0945348  0.0038839  -24.34   &lt;2e-16 ***
-LENGTH       0.0094493  0.0002544   37.14   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.01624 on 152 degrees of freedom
-Multiple R-squared:  0.9007,    Adjusted R-squared:  0.9001 
-F-statistic:  1379 on 1 and 152 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Na tabela de coeficientes, <code>(Intercept)</code> é o valor esperado quando o comprimento é zero e <code>LENGTH</code> é a <strong>inclinação</strong>: quanto a biomassa esperada muda a cada milímetro a mais de concha.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> (Intercept)       LENGTH 
--0.094534750  0.009449337 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                   2.5 %      97.5 %
-(Intercept) -0.102208205 -0.08686130
-LENGTH       0.008946654  0.00995202</code></pre>
-</div>
-</div>
-<p>O <code>R-squared</code> da saída indica a proporção da variação da biomassa que acompanha a variação do comprimento. Aqui ele é alto.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Interprete
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Um <span class="math inline">\(R^2\)</span> alto convida a parar por aqui. Não pare: ele mede o quanto os pontos estão perto da reta, não se a <strong>reta</strong> é a forma certa.</p>
-<p>O intercepto, aliás, é negativo: um molusco de comprimento zero teria biomassa negativa. Sinal de que o modelo está sendo forçado fora da faixa em que faz sentido.</p>
-</div>
-</div>
-</section>
-<section id="o-que-os-resíduos-dizem" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> O que os resíduos dizem?</h1>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>diagnostico <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuo =</span> <span class="fu">residuals</span>(modelo)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostico, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residuo)) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Biomassa ajustada (g)"</span>, <span class="at">y =</span> <span class="st">"Resíduo (g)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-regressao-residuos-bruto" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-regressao-residuos-bruto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-regressao-linear_files/figure-html/fig-regressao-residuos-bruto-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regressao-residuos-bruto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Resíduos do modelo ajustado na escala original, em função dos valores ajustados.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Observe
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Dois problemas aparecem de uma vez:</p>
-<ul>
-<li>os resíduos formam uma <strong>curva</strong>, e não uma nuvem sem padrão: a relação não é reta;</li>
-<li>o espalhamento <strong>cresce</strong> da esquerda para a direita, em forma de funil: a variação não é constante.</li>
-</ul>
-<p>Nenhum dos dois seria detectável olhando apenas o <span class="math inline">\(R^2\)</span>.</p>
-</div>
-</div>
-</section>
-<section id="e-se-mudarmos-a-escala" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> E se mudarmos a escala?</h1>
-<p>Relações entre tamanho e massa em organismos costumam ser multiplicativas: a massa cresce aproximadamente com uma potência do comprimento. Tomar o logaritmo dos dois lados transforma essa relação em uma reta.</p>
-<p>Os dados já trazem as colunas transformadas, <code>LNLENGTH</code> e <code>LNAFD</code>, mas podemos criá-las para deixar claro o que está sendo feito:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> abril <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_comprimento =</span> <span class="fu">log</span>(LENGTH),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_biomassa =</span> <span class="fu">log</span>(AFD)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> abril <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_comprimento =</span> <span class="fu">log</span>(LENGTH), <span class="at">log_biomassa =</span> <span class="fu">log</span>(AFD))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(abril, <span class="fu">aes</span>(<span class="at">x =</span> log_comprimento, <span class="at">y =</span> log_biomassa)) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log do comprimento (mm)"</span>, <span class="at">y =</span> <span class="st">"log da biomassa (g)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(abril, <span class="fu">aes</span>(<span class="at">x =</span> log_comprimento, <span class="at">y =</span> log_biomassa)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log do comprimento (mm)"</span>, <span class="at">y =</span> <span class="st">"log da biomassa (g)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-regressao-log" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -614,16 +600,30 @@ Figura&nbsp;2: Resíduos do modelo ajustado na escala original, em função dos 
 <img src="lab-regressao-linear_files/figure-html/fig-regressao-log-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regressao-log-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: As mesmas observações na escala logarítmica, com a reta ajustada.
+Figura&nbsp;3: Biomassa e comprimento na escala logarítmica, com a reta ajustada.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Preveja
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Massa acompanha volume, e volume cresce com o <strong>cubo</strong> de uma dimensão linear.</p>
+<p>Antes de ajustar, escreva no script que valor você espera para a inclinação nesta escala.</p>
+</div>
+</div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>modelo_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_biomassa <span class="sc">~</span> log_comprimento, <span class="at">data =</span> abril)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_log)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>modelo_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_biomassa <span class="sc">~</span> log_comprimento, <span class="at">data =</span> abril)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_log)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -644,107 +644,80 @@ Residual standard error: 0.1076 on 152 degrees of freedom
 Multiple R-squared:  0.9881,    Adjusted R-squared:  0.988 
 F-statistic: 1.257e+04 on 1 and 152 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>diagnostico_log <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo_log),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuo =</span> <span class="fu">residuals</span>(modelo_log)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostico_log, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residuo)) <span class="sc">+</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log da biomassa ajustada"</span>, <span class="at">y =</span> <span class="st">"Resíduo"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-regressao-residuos-log" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-regressao-residuos-log-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-regressao-linear_files/figure-html/fig-regressao-residuos-log-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regressao-residuos-log-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4: Resíduos do modelo ajustado na escala logarítmica.
-</figcaption>
-</figure>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo_log)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     2.5 %     97.5 %
+(Intercept)     -11.582795 -11.307904
+log_comprimento   2.913417   3.017946</code></pre>
 </div>
 </div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Compare">
+<p>Na escala logarítmica, a inclinação tem leitura direta: ela é o <strong>expoente</strong> da relação entre comprimento e biomassa. Compare-a com a sua previsão.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Agora é com você">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Compare
+<span class="screen-reader-only">Dica</span>Agora é com você
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Coloque os dois gráficos de resíduos lado a lado. A curvatura sumiu? E o funil?</p>
-<p>Compare também os dois <span class="math inline">\(R^2\)</span>. O ganho no ajuste é grande, mas o argumento mais forte a favor da escala logarítmica está nos resíduos, não no <span class="math inline">\(R^2\)</span>.</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Interprete
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Na escala logarítmica, a inclinação tem uma leitura direta: ela é o <strong>expoente</strong> da relação entre comprimento e biomassa.</p>
-<p>Um valor próximo de 3 é o que se espera de uma relação em que a massa acompanha o volume. O valor estimado aqui está perto disso?</p>
+<p>Escreva o gráfico de resíduos de <code>modelo_log</code>, seguindo a estrutura usada nos dados simulados: <code>fitted()</code> e <code>residuals()</code> dentro de um <code>tibble()</code>, depois o <code>ggplot()</code> com <code>geom_hline()</code> e <code>geom_point()</code>. Troque os rótulos dos eixos para a escala logarítmica.</p>
+<p>Compare-o com o gráfico dos dados simulados. Procure duas coisas: <strong>curvatura</strong> (os pontos desenham um arco?) e <strong>funil</strong> (o espalhamento cresce da esquerda para a direita?).</p>
 </div>
 </div>
 </section>
-<section id="prevendo-a-biomassa-de-um-novo-molusco" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Prevendo a biomassa de um novo molusco</h1>
-<p>Com o modelo ajustado, <code>predict()</code> calcula o valor esperado para comprimentos escolhidos por você:</p>
+<section id="sua-vez-parte-2-o-mesmo-molusco-em-outro-mês" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Sua vez, parte 2: o mesmo molusco em outro mês</h1>
+<p>O conjunto tem seis meses de coleta, com números de indivíduos bem diferentes:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>novos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">log_comprimento =</span> <span class="fu">log</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)))</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>previsao <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_log, <span class="at">newdata =</span> novos, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>previsao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>moluscos <span class="sc">|&gt;</span> <span class="fu">count</span>(MONTH)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        fit       lwr       upr
-1 -4.616616 -4.640081 -4.593151
-2 -2.560963 -2.587450 -2.534475
-3 -1.358482 -1.403279 -1.313686</code></pre>
+<pre><code># A tibble: 6 × 2
+  MONTH     n
+  &lt;dbl&gt; &lt;int&gt;
+1     2   133
+2     3    16
+3     4   154
+4     9    15
+5    11    22
+6    12    58</code></pre>
 </div>
 </div>
-<p>Os valores estão na escala logarítmica. Para voltar à escala original, aplique <code>exp()</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(previsao)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          fit         lwr        upr
-1 0.009886192 0.009656911 0.01012092
-2 0.077230355 0.075211563 0.07930333
-3 0.257050562 0.245789797 0.26882723</code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Não peça previsões fora da faixa observada">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Escolha">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Não peça previsões fora da faixa observada
+<span class="screen-reader-only">Dica</span>Escolha
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(abril<span class="sc">$</span>LENGTH)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  5.66 30.25</code></pre>
+<p>Escolha <strong>um</strong> segundo mês com pelo menos 20 indivíduos e registre a escolha no script. Refaça para ele o ajuste na escala logarítmica e obtenha <code>confint()</code>.</p>
+<p>Antes de comparar as inclinações, execute também <code>range()</code> do comprimento observado nesse mês:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(____<span class="sc">$</span>LENGTH)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Uma inclinação estimada sobre uma faixa estreita de comprimentos é muito menos confiável do que uma estimada sobre uma faixa ampla, mesmo quando o número de indivíduos é parecido.</p>
 </div>
 </div>
-<p>Prever a biomassa de um molusco de 60 mm seria supor que a mesma relação continua onde nenhum indivíduo foi medido. Os dados não sustentam essa suposição.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Decida">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Decida
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Com os dois intervalos de confiança em mãos, decida: os dados distinguem os dois meses quanto ao expoente, ou os intervalos se cobrem folgadamente?</p>
+<p>Lembre da leitura: duas estimativas diferentes no sentido aritmético não são necessariamente diferentes no sentido estatístico.</p>
 </div>
 </div>
 </section>
-<section id="entrega" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Entrega</h1>
+<section id="entrega" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Entrega</h1>
+<p>Salve o script <code>pr-regressao.R</code> com o cabeçalho preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>.</p>
 <div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -755,21 +728,41 @@ Figura&nbsp;4: Resíduos do modelo ajustado na escala logarítmica.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Um script <code>pr-regressao.R</code> que rode em sessão nova e contenha:</p>
 <ol type="1">
-<li>o gráfico de dispersão e o modelo na escala original, com o respectivo gráfico de resíduos;</li>
-<li>o modelo na escala logarítmica, com gráfico e resíduos;</li>
-<li>a previsão da biomassa para comprimentos de 10, 20 e 30 mm, na escala original;</li>
-<li>em comentários, quatro a cinco frases respondendo: <strong>o que o gráfico de resíduos revelou que o <span class="math inline">\(R^2\)</span> escondia, e como se interpreta a inclinação estimada na escala logarítmica.</strong></li>
+<li><strong>o seu processo gerador</strong>: os três parâmetros, o gráfico e, das três repetições, quantas vezes o intervalo conteve o seu <code>beta1</code> — com a previsão registrada antes;</li>
+<li><strong>o parâmetro que você mudou</strong>, com as duas larguras do intervalo da inclinação, antes e depois;</li>
+<li>o ajuste log-log de abril, com a previsão sobre a inclinação registrada antes, e o <strong>gráfico de resíduos escrito por você</strong>;</li>
+<li><strong>o segundo mês escolhido</strong>: a inclinação, o intervalo de confiança e a faixa de comprimentos observada;</li>
+<li>em comentários, 3 a 4 frases respondendo, <strong>com os seus números</strong>: os dois meses têm o mesmo expoente? O que a faixa de comprimentos do seu mês permite ou impede afirmar? E o que o gráfico de resíduos mostrou que o <span class="math inline">\(R^2\)</span> sozinho não mostraria?</li>
 </ol>
 </div>
 </div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="O que será avaliado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>O que será avaliado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox">o script roda em sessão nova, do início ao fim, sem erro;</label></li>
+<li><label><input type="checkbox">as previsões aparecem <strong>antes</strong> dos resultados correspondentes;</label></li>
+<li><label><input type="checkbox">o parâmetro alterado no item 2 está identificado, com as duas larguras;</label></li>
+<li><label><input type="checkbox">o gráfico de resíduos do item 3 foi escrito por você e tem eixos com nome;</label></li>
+<li><label><input type="checkbox">a escolha do segundo mês está registrada, com <code>n</code> e faixa de comprimentos;</label></li>
+<li><label><input type="checkbox">a comparação entre meses usa os <strong>intervalos</strong>, e não apenas os dois números estimados.</label></li>
+</ul>
+</div>
+</div>
 </section>
-<section id="para-saber-mais" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Para saber mais</h1>
+<section id="para-saber-mais" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
 <ul>
-<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html" target="_blank">Regressão linear simples</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html" target="_blank">Partição da soma dos quadrados e <span class="math inline">\(R^2\)</span></a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html" target="_blank">Regressão linear simples</a> (MEAD) — procure a seção sobre o erro padrão da inclinação, para entender por que uma faixa estreita de <span class="math inline">\(X\)</span> produz um intervalo largo.</li>
+<li><a href="https://fcopf.github.io/mead/content/funcoes-modelos/funcoes-potencia.html" target="_blank">Funções de potência</a> (MEAD) — para rever por que o logaritmo transforma <span class="math inline">\(Y = aX^b\)</span> em uma reta.</li>
 </ul>
 
 
@@ -1242,243 +1235,268 @@ Figura&nbsp;4: Resíduos do modelo ajustado na escala logarítmica.
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Uma reta para dados costeiros"</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 09"</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Quanto pesa um molusco de 20 mm?</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>Moluscos maiores pesam mais, e isso ninguém duvida. A pergunta útil é outra: **quanto** a biomassa</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>aumenta por milímetro de concha, e com que precisão conseguimos prever a biomassa de um indivíduo</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>a partir do seu comprimento.</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>Nesta prática o preditor é contínuo: não há grupos a comparar, e sim uma relação a descrever.</span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a><span class="fu"># Vamos abrir os dados</span></span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Clams.txt"</span></span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>moluscos <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(moluscos)</span>
-<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>As colunas que interessam são <span class="in">`LENGTH`</span> (comprimento da concha, em mm) e <span class="in">`AFD`</span> (biomassa livre de</span>
-<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>cinzas, em gramas). <span class="in">`MONTH`</span> indica o mês de coleta.</span>
-<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>Para começar com uma pergunta simples, vamos ficar em um mês só:</span>
-<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> moluscos <span class="sc">|&gt;</span> <span class="fu">filter</span>(MONTH <span class="sc">==</span> <span class="dv">4</span>)</span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(abril)</span>
-<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a><span class="fu"># Como as duas variáveis se relacionam?</span></span>
-<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-64"><a href="#cb25-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-65"><a href="#cb25-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-dispersao</span></span>
-<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Biomassa em função do comprimento da concha, em abril."</span></span>
-<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(abril, <span class="fu">aes</span>(<span class="at">x =</span> LENGTH, <span class="at">y =</span> AFD)) <span class="sc">+</span></span>
-<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento da concha (mm)"</span>, <span class="at">y =</span> <span class="st">"Biomassa (g)"</span>)</span>
-<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a>A relação é claramente crescente. Mas ela é **reta**?</span>
-<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a>Olhe os extremos: nos moluscos pequenos os pontos ficam quase colados no eixo; nos grandes, eles</span>
-<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a>disparam. E o espalhamento vertical cresce da esquerda para a direita.</span>
-<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a><span class="fu"># Ajustando uma reta assim mesmo</span></span>
-<span id="cb25-82"><a href="#cb25-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-83"><a href="#cb25-83" aria-hidden="true" tabindex="-1"></a>A função <span class="in">`lm()`</span> ajusta um modelo linear. A fórmula tem a resposta à esquerda e o preditor à direita:</span>
-<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(AFD <span class="sc">~</span> LENGTH, <span class="at">data =</span> abril)</span>
-<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span>
-<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a>Na tabela de coeficientes, <span class="in">`(Intercept)`</span> é o valor esperado quando o comprimento é zero e <span class="in">`LENGTH`</span></span>
-<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a>é a **inclinação**: quanto a biomassa esperada muda a cada milímetro a mais de concha.</span>
-<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo)</span>
-<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo)</span>
-<span id="cb25-101"><a href="#cb25-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a>O <span class="in">`R-squared`</span> da saída indica a proporção da variação da biomassa que acompanha a variação do</span>
-<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a>comprimento. Aqui ele é alto.</span>
-<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a>Um $R^2$ alto convida a parar por aqui. Não pare: ele mede o quanto os pontos estão perto da reta,</span>
-<span id="cb25-108"><a href="#cb25-108" aria-hidden="true" tabindex="-1"></a>não se a **reta** é a forma certa.</span>
-<span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a>O intercepto, aliás, é negativo: um molusco de comprimento zero teria biomassa negativa. Sinal de</span>
-<span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a>que o modelo está sendo forçado fora da faixa em que faz sentido.</span>
-<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a><span class="fu"># O que os resíduos dizem?</span></span>
-<span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-118"><a href="#cb25-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-119"><a href="#cb25-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-residuos-bruto</span></span>
-<span id="cb25-120"><a href="#cb25-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Resíduos do modelo ajustado na escala original, em função dos valores ajustados."</span></span>
-<span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.2</span></span>
-<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a>diagnostico <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a>  <span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo),</span>
-<span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuo =</span> <span class="fu">residuals</span>(modelo)</span>
-<span id="cb25-126"><a href="#cb25-126" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-127"><a href="#cb25-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-128"><a href="#cb25-128" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostico, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residuo)) <span class="sc">+</span></span>
-<span id="cb25-129"><a href="#cb25-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb25-130"><a href="#cb25-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Biomassa ajustada (g)"</span>, <span class="at">y =</span> <span class="st">"Resíduo (g)"</span>)</span>
-<span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb25-135"><a href="#cb25-135" aria-hidden="true" tabindex="-1"></a>Dois problemas aparecem de uma vez:</span>
-<span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>os resíduos formam uma **curva**, e não uma nuvem sem padrão: a relação não é reta;</span>
-<span id="cb25-138"><a href="#cb25-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o espalhamento **cresce** da esquerda para a direita, em forma de funil: a variação não é</span>
-<span id="cb25-139"><a href="#cb25-139" aria-hidden="true" tabindex="-1"></a>  constante.</span>
-<span id="cb25-140"><a href="#cb25-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-141"><a href="#cb25-141" aria-hidden="true" tabindex="-1"></a>Nenhum dos dois seria detectável olhando apenas o $R^2$.</span>
-<span id="cb25-142"><a href="#cb25-142" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-143"><a href="#cb25-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-144"><a href="#cb25-144" aria-hidden="true" tabindex="-1"></a><span class="fu"># E se mudarmos a escala?</span></span>
-<span id="cb25-145"><a href="#cb25-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-146"><a href="#cb25-146" aria-hidden="true" tabindex="-1"></a>Relações entre tamanho e massa em organismos costumam ser multiplicativas: a massa cresce</span>
-<span id="cb25-147"><a href="#cb25-147" aria-hidden="true" tabindex="-1"></a>aproximadamente com uma potência do comprimento. Tomar o logaritmo dos dois lados transforma essa</span>
-<span id="cb25-148"><a href="#cb25-148" aria-hidden="true" tabindex="-1"></a>relação em uma reta.</span>
-<span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a>Os dados já trazem as colunas transformadas, <span class="in">`LNLENGTH`</span> e <span class="in">`LNAFD`</span>, mas podemos criá-las para</span>
-<span id="cb25-151"><a href="#cb25-151" aria-hidden="true" tabindex="-1"></a>deixar claro o que está sendo feito:</span>
-<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-155"><a href="#cb25-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-156"><a href="#cb25-156" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> abril <span class="sc">|&gt;</span></span>
-<span id="cb25-157"><a href="#cb25-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb25-158"><a href="#cb25-158" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_comprimento =</span> <span class="fu">log</span>(LENGTH),</span>
-<span id="cb25-159"><a href="#cb25-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_biomassa =</span> <span class="fu">log</span>(AFD)</span>
-<span id="cb25-160"><a href="#cb25-160" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-161"><a href="#cb25-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-162"><a href="#cb25-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-165"><a href="#cb25-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-166"><a href="#cb25-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-log</span></span>
-<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "As mesmas observações na escala logarítmica, com a reta ajustada."</span></span>
-<span id="cb25-168"><a href="#cb25-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb25-169"><a href="#cb25-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-170"><a href="#cb25-170" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(abril, <span class="fu">aes</span>(<span class="at">x =</span> log_comprimento, <span class="at">y =</span> log_biomassa)) <span class="sc">+</span></span>
-<span id="cb25-171"><a href="#cb25-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb25-172"><a href="#cb25-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb25-173"><a href="#cb25-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log do comprimento (mm)"</span>, <span class="at">y =</span> <span class="st">"log da biomassa (g)"</span>)</span>
-<span id="cb25-174"><a href="#cb25-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-175"><a href="#cb25-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-178"><a href="#cb25-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-179"><a href="#cb25-179" aria-hidden="true" tabindex="-1"></a>modelo_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_biomassa <span class="sc">~</span> log_comprimento, <span class="at">data =</span> abril)</span>
-<span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_log)</span>
-<span id="cb25-182"><a href="#cb25-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-183"><a href="#cb25-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-187"><a href="#cb25-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-residuos-log</span></span>
-<span id="cb25-188"><a href="#cb25-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Resíduos do modelo ajustado na escala logarítmica."</span></span>
-<span id="cb25-189"><a href="#cb25-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.2</span></span>
-<span id="cb25-190"><a href="#cb25-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-191"><a href="#cb25-191" aria-hidden="true" tabindex="-1"></a>diagnostico_log <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb25-192"><a href="#cb25-192" aria-hidden="true" tabindex="-1"></a>  <span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo_log),</span>
-<span id="cb25-193"><a href="#cb25-193" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuo =</span> <span class="fu">residuals</span>(modelo_log)</span>
-<span id="cb25-194"><a href="#cb25-194" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-195"><a href="#cb25-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-196"><a href="#cb25-196" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostico_log, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residuo)) <span class="sc">+</span></span>
-<span id="cb25-197"><a href="#cb25-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb25-198"><a href="#cb25-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log da biomassa ajustada"</span>, <span class="at">y =</span> <span class="st">"Resíduo"</span>)</span>
-<span id="cb25-200"><a href="#cb25-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-201"><a href="#cb25-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-202"><a href="#cb25-202" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Compare"}</span>
-<span id="cb25-203"><a href="#cb25-203" aria-hidden="true" tabindex="-1"></a>Coloque os dois gráficos de resíduos lado a lado. A curvatura sumiu? E o funil?</span>
-<span id="cb25-204"><a href="#cb25-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-205"><a href="#cb25-205" aria-hidden="true" tabindex="-1"></a>Compare também os dois $R^2$. O ganho no ajuste é grande, mas o argumento mais forte a favor da</span>
-<span id="cb25-206"><a href="#cb25-206" aria-hidden="true" tabindex="-1"></a>escala logarítmica está nos resíduos, não no $R^2$.</span>
-<span id="cb25-207"><a href="#cb25-207" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-208"><a href="#cb25-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-209"><a href="#cb25-209" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb25-210"><a href="#cb25-210" aria-hidden="true" tabindex="-1"></a>Na escala logarítmica, a inclinação tem uma leitura direta: ela é o **expoente** da relação entre</span>
-<span id="cb25-211"><a href="#cb25-211" aria-hidden="true" tabindex="-1"></a>comprimento e biomassa.</span>
-<span id="cb25-212"><a href="#cb25-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-213"><a href="#cb25-213" aria-hidden="true" tabindex="-1"></a>Um valor próximo de 3 é o que se espera de uma relação em que a massa acompanha o volume. O valor</span>
-<span id="cb25-214"><a href="#cb25-214" aria-hidden="true" tabindex="-1"></a>estimado aqui está perto disso?</span>
-<span id="cb25-215"><a href="#cb25-215" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-216"><a href="#cb25-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-217"><a href="#cb25-217" aria-hidden="true" tabindex="-1"></a><span class="fu"># Prevendo a biomassa de um novo molusco</span></span>
-<span id="cb25-218"><a href="#cb25-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-219"><a href="#cb25-219" aria-hidden="true" tabindex="-1"></a>Com o modelo ajustado, <span class="in">`predict()`</span> calcula o valor esperado para comprimentos escolhidos por você:</span>
-<span id="cb25-220"><a href="#cb25-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-223"><a href="#cb25-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-224"><a href="#cb25-224" aria-hidden="true" tabindex="-1"></a>novos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">log_comprimento =</span> <span class="fu">log</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)))</span>
-<span id="cb25-225"><a href="#cb25-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-226"><a href="#cb25-226" aria-hidden="true" tabindex="-1"></a>previsao <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_log, <span class="at">newdata =</span> novos, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
-<span id="cb25-227"><a href="#cb25-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-228"><a href="#cb25-228" aria-hidden="true" tabindex="-1"></a>previsao</span>
-<span id="cb25-229"><a href="#cb25-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-230"><a href="#cb25-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-231"><a href="#cb25-231" aria-hidden="true" tabindex="-1"></a>Os valores estão na escala logarítmica. Para voltar à escala original, aplique <span class="in">`exp()`</span>:</span>
-<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-235"><a href="#cb25-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-236"><a href="#cb25-236" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(previsao)</span>
-<span id="cb25-237"><a href="#cb25-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-238"><a href="#cb25-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-239"><a href="#cb25-239" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Não peça previsões fora da faixa observada"}</span>
-<span id="cb25-242"><a href="#cb25-242" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-243"><a href="#cb25-243" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(abril<span class="sc">$</span>LENGTH)</span>
-<span id="cb25-244"><a href="#cb25-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-245"><a href="#cb25-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-246"><a href="#cb25-246" aria-hidden="true" tabindex="-1"></a>Prever a biomassa de um molusco de 60 mm seria supor que a mesma relação continua onde nenhum</span>
-<span id="cb25-247"><a href="#cb25-247" aria-hidden="true" tabindex="-1"></a>indivíduo foi medido. Os dados não sustentam essa suposição.</span>
-<span id="cb25-248"><a href="#cb25-248" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-249"><a href="#cb25-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-250"><a href="#cb25-250" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb25-251"><a href="#cb25-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-252"><a href="#cb25-252" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb25-253"><a href="#cb25-253" aria-hidden="true" tabindex="-1"></a>Um script <span class="in">`pr-regressao.R`</span> que rode em sessão nova e contenha:</span>
-<span id="cb25-254"><a href="#cb25-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-255"><a href="#cb25-255" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>o gráfico de dispersão e o modelo na escala original, com o respectivo gráfico de resíduos;</span>
-<span id="cb25-256"><a href="#cb25-256" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>o modelo na escala logarítmica, com gráfico e resíduos;</span>
-<span id="cb25-257"><a href="#cb25-257" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a previsão da biomassa para comprimentos de 10, 20 e 30 mm, na escala original;</span>
-<span id="cb25-258"><a href="#cb25-258" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, quatro a cinco frases respondendo: **o que o gráfico de resíduos revelou que o</span>
-<span id="cb25-259"><a href="#cb25-259" aria-hidden="true" tabindex="-1"></a>   $R^2$ escondia, e como se interpreta a inclinação estimada na escala logarítmica.**</span>
-<span id="cb25-260"><a href="#cb25-260" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-261"><a href="#cb25-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-262"><a href="#cb25-262" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb25-263"><a href="#cb25-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-264"><a href="#cb25-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regressão linear simples</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html)</span>{target="_blank"} (MEAD)</span>
-<span id="cb25-265"><a href="#cb25-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Partição da soma dos quadrados e $R^2$</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/particao-soma-quadrados-r2.html)</span>{target="_blank"} (MEAD)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Uma reta para dados costeiros"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 09"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-relacao-linear.qmd)</span> apresentou a reta como **processo</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>gerador**: uma parte sistemática, $\beta_0 + \beta_1 X$, mais uma variação em torno dela.</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>Hoje você vai usar esse processo nos dois sentidos. Primeiro no sentido fácil: você escolhe</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>$\beta_0$, $\beta_1$ e o tamanho da variação, gera os dados e vê o que <span class="in">`lm()`</span> consegue recuperar —</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>sabendo a resposta, dá para julgar a estimativa. Depois no sentido difícil: dados reais de moluscos,</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>em que os parâmetros são desconhecidos e a única forma de julgar o ajuste é olhar os resíduos.</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>O objetivo em R é ajustar modelos com <span class="in">`lm()`</span>, ler <span class="in">`confint()`</span> e escrever um gráfico de diagnóstico</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>sem receber o código pronto.</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-regressao.R`</span> com o cabeçalho de identificação e comece por:</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma reta que você escreve</span></span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>Vamos inventar uma população de moluscos em que a biomassa cresce linearmente com o comprimento da</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>concha. Os três parâmetros do processo gerador ficam explícitos:</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.8</span>     <span class="co"># intercepto</span></span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fl">0.09</span>     <span class="co"># quanto a biomassa esperada cresce por milímetro</span></span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fl">0.2</span>      <span class="co"># variação em torno da reta</span></span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>moluscos_sim <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">14</span>, <span class="at">max =</span> <span class="dv">30</span>),</span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">biomassa =</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> comprimento <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="in">`runif()`</span> sorteia comprimentos espalhados entre 14 e 30 mm; a segunda linha calcula o centro previsto</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>pela reta e soma a variação individual.</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-simulado</span></span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Sessenta moluscos gerados por uma reta conhecida. A linha preta é a reta verdadeira, e não a estimada."</span></span>
+<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
+<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(moluscos_sim, <span class="fu">aes</span>(<span class="at">x =</span> comprimento, <span class="at">y =</span> biomassa)) <span class="sc">+</span></span>
+<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> beta0, <span class="at">slope =</span> beta1, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento da concha (mm)"</span>, <span class="at">y =</span> <span class="st">"Biomassa (g)"</span>)</span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>Nenhum ponto cai exatamente sobre a reta: ela descreve o **centro** da resposta, não as observações.</span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a>Agora o caminho de volta. <span class="in">`lm()`</span> estima os coeficientes a partir dos dados, sem saber quais foram os</span>
+<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a>valores usados para gerá-los:</span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a>modelo_sim <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento, <span class="at">data =</span> moluscos_sim)</span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo_sim)</span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo_sim)</span>
+<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a>Compare o valor estimado para <span class="in">`comprimento`</span> com o <span class="in">`beta1`</span> que **você** escreveu. Eles não são iguais:</span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a>o primeiro é uma estimativa obtida de 60 moluscos sorteados; o segundo é o parâmetro do processo.</span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a>Olhe agora a linha <span class="in">`comprimento`</span> de <span class="in">`confint()`</span>. O intervalo contém o valor verdadeiro?</span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a>O gráfico de resíduos é a ferramenta mais barata de toda a modelagem. Como aqui os dados foram</span>
+<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a>gerados por uma reta de verdade, ele mostra o aspecto que um ajuste **adequado** produz:</span>
+<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-residuos-sim</span></span>
+<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Resíduos do modelo ajustado aos dados simulados, em função dos valores ajustados."</span></span>
+<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.2</span></span>
+<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a>diagnostico_sim <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a>  <span class="at">ajustado =</span> <span class="fu">fitted</span>(modelo_sim),</span>
+<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuo =</span> <span class="fu">residuals</span>(modelo_sim)</span>
+<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diagnostico_sim, <span class="fu">aes</span>(<span class="at">x =</span> ajustado, <span class="at">y =</span> residuo)) <span class="sc">+</span></span>
+<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
+<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Biomassa ajustada (g)"</span>, <span class="at">y =</span> <span class="st">"Resíduo (g)"</span>)</span>
+<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a>Uma nuvem sem padrão, com espalhamento parecido da esquerda para a direita. Guarde esta imagem: é</span>
+<span id="cb20-128"><a href="#cb20-128" aria-hidden="true" tabindex="-1"></a>contra ela que você vai comparar o próximo gráfico.</span>
+<span id="cb20-129"><a href="#cb20-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 1: parâmetro e estimativa</span></span>
+<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja e conte"}</span>
+<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a>Execute o bloco da simulação, o <span class="in">`lm()`</span> e o <span class="in">`confint()`</span> **três vezes seguidas**, anotando a cada vez a</span>
+<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a>inclinação estimada e se o intervalo conteve o seu <span class="in">`beta1`</span>.</span>
+<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a>Antes de começar, escreva no script: em quantas das três você espera que o intervalo contenha o valor</span>
+<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a>verdadeiro?</span>
+<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha um parâmetro e mude"}</span>
+<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>Agora escolha **um** dos três parâmetros do processo (<span class="in">`beta1`</span>, <span class="in">`sigma`</span> ou <span class="in">`n`</span>), mude o seu valor e</span>
+<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a>repita o ajuste.</span>
+<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a>Registre no script o parâmetro escolhido, o valor antigo, o novo e a **largura** do intervalo de</span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a>confiança da inclinação antes e depois. A largura é <span class="in">`upr - lwr`</span> na linha <span class="in">`comprimento`</span>.</span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a><span class="fu"># Os dados reais: moluscos de abril</span></span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Clams.txt"</span></span>
+<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a>moluscos <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> moluscos <span class="sc">|&gt;</span> <span class="fu">filter</span>(MONTH <span class="sc">==</span> <span class="dv">4</span>)</span>
+<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(abril)</span>
+<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a>As colunas que interessam são <span class="in">`LENGTH`</span> (comprimento da concha, em mm) e <span class="in">`AFD`</span> (biomassa livre de</span>
+<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a>cinzas, em gramas); <span class="in">`MONTH`</span> indica o mês de coleta.</span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a>Relações entre tamanho e massa em organismos raramente são retas: a massa acompanha o volume, que</span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>cresce com uma **potência** do comprimento. Tomar o logaritmo dos dois lados transforma essa relação</span>
+<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>em uma reta.</span>
+<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>abril <span class="ot">&lt;-</span> abril <span class="sc">|&gt;</span></span>
+<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_comprimento =</span> <span class="fu">log</span>(LENGTH), <span class="at">log_biomassa =</span> <span class="fu">log</span>(AFD))</span>
+<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-regressao-log</span></span>
+<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Biomassa e comprimento na escala logarítmica, com a reta ajustada."</span></span>
+<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
+<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(abril, <span class="fu">aes</span>(<span class="at">x =</span> log_comprimento, <span class="at">y =</span> log_biomassa)) <span class="sc">+</span></span>
+<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log do comprimento (mm)"</span>, <span class="at">y =</span> <span class="st">"log da biomassa (g)"</span>)</span>
+<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja"}</span>
+<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a>Massa acompanha volume, e volume cresce com o **cubo** de uma dimensão linear.</span>
+<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a>Antes de ajustar, escreva no script que valor você espera para a inclinação nesta escala.</span>
+<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a>modelo_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_biomassa <span class="sc">~</span> log_comprimento, <span class="at">data =</span> abril)</span>
+<span id="cb20-199"><a href="#cb20-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_log)</span>
+<span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo_log)</span>
+<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-203"><a href="#cb20-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a>Na escala logarítmica, a inclinação tem leitura direta: ela é o **expoente** da relação entre</span>
+<span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a>comprimento e biomassa. Compare-a com a sua previsão.</span>
+<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Agora é com você"}</span>
+<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a>Escreva o gráfico de resíduos de <span class="in">`modelo_log`</span>, seguindo a estrutura usada nos dados simulados:</span>
+<span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a><span class="in">`fitted()`</span> e <span class="in">`residuals()`</span> dentro de um <span class="in">`tibble()`</span>, depois o <span class="in">`ggplot()`</span> com <span class="in">`geom_hline()`</span> e</span>
+<span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a><span class="in">`geom_point()`</span>. Troque os rótulos dos eixos para a escala logarítmica.</span>
+<span id="cb20-211"><a href="#cb20-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a>Compare-o com o gráfico dos dados simulados. Procure duas coisas: **curvatura** (os pontos desenham</span>
+<span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a>um arco?) e **funil** (o espalhamento cresce da esquerda para a direita?).</span>
+<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 2: o mesmo molusco em outro mês</span></span>
+<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a>O conjunto tem seis meses de coleta, com números de indivíduos bem diferentes:</span>
+<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a>moluscos <span class="sc">|&gt;</span> <span class="fu">count</span>(MONTH)</span>
+<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-225"><a href="#cb20-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-226"><a href="#cb20-226" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha"}</span>
+<span id="cb20-227"><a href="#cb20-227" aria-hidden="true" tabindex="-1"></a>Escolha **um** segundo mês com pelo menos 20 indivíduos e registre a escolha no script. Refaça para</span>
+<span id="cb20-228"><a href="#cb20-228" aria-hidden="true" tabindex="-1"></a>ele o ajuste na escala logarítmica e obtenha <span class="in">`confint()`</span>.</span>
+<span id="cb20-229"><a href="#cb20-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-230"><a href="#cb20-230" aria-hidden="true" tabindex="-1"></a>Antes de comparar as inclinações, execute também <span class="in">`range()`</span> do comprimento observado nesse mês:</span>
+<span id="cb20-231"><a href="#cb20-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-232"><a href="#cb20-232" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb20-233"><a href="#cb20-233" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(____<span class="sc">$</span>LENGTH)</span>
+<span id="cb20-234"><a href="#cb20-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-235"><a href="#cb20-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-236"><a href="#cb20-236" aria-hidden="true" tabindex="-1"></a>Uma inclinação estimada sobre uma faixa estreita de comprimentos é muito menos confiável do que uma</span>
+<span id="cb20-237"><a href="#cb20-237" aria-hidden="true" tabindex="-1"></a>estimada sobre uma faixa ampla, mesmo quando o número de indivíduos é parecido.</span>
+<span id="cb20-238"><a href="#cb20-238" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-239"><a href="#cb20-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-240"><a href="#cb20-240" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Decida"}</span>
+<span id="cb20-241"><a href="#cb20-241" aria-hidden="true" tabindex="-1"></a>Com os dois intervalos de confiança em mãos, decida: os dados distinguem os dois meses quanto ao</span>
+<span id="cb20-242"><a href="#cb20-242" aria-hidden="true" tabindex="-1"></a>expoente, ou os intervalos se cobrem folgadamente?</span>
+<span id="cb20-243"><a href="#cb20-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-244"><a href="#cb20-244" aria-hidden="true" tabindex="-1"></a>Lembre da leitura: duas estimativas diferentes no sentido aritmético não são necessariamente</span>
+<span id="cb20-245"><a href="#cb20-245" aria-hidden="true" tabindex="-1"></a>diferentes no sentido estatístico.</span>
+<span id="cb20-246"><a href="#cb20-246" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-247"><a href="#cb20-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-248"><a href="#cb20-248" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb20-249"><a href="#cb20-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-250"><a href="#cb20-250" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-regressao.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
+<span id="cb20-251"><a href="#cb20-251" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
+<span id="cb20-252"><a href="#cb20-252" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
+<span id="cb20-253"><a href="#cb20-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-254"><a href="#cb20-254" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb20-255"><a href="#cb20-255" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**o seu processo gerador**: os três parâmetros, o gráfico e, das três repetições, quantas vezes o</span>
+<span id="cb20-256"><a href="#cb20-256" aria-hidden="true" tabindex="-1"></a>   intervalo conteve o seu <span class="in">`beta1`</span> — com a previsão registrada antes;</span>
+<span id="cb20-257"><a href="#cb20-257" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o parâmetro que você mudou**, com as duas larguras do intervalo da inclinação, antes e depois;</span>
+<span id="cb20-258"><a href="#cb20-258" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>o ajuste log-log de abril, com a previsão sobre a inclinação registrada antes, e o **gráfico de</span>
+<span id="cb20-259"><a href="#cb20-259" aria-hidden="true" tabindex="-1"></a>   resíduos escrito por você**;</span>
+<span id="cb20-260"><a href="#cb20-260" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**o segundo mês escolhido**: a inclinação, o intervalo de confiança e a faixa de comprimentos</span>
+<span id="cb20-261"><a href="#cb20-261" aria-hidden="true" tabindex="-1"></a>   observada;</span>
+<span id="cb20-262"><a href="#cb20-262" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, 3 a 4 frases respondendo, **com os seus números**: os dois meses têm o mesmo</span>
+<span id="cb20-263"><a href="#cb20-263" aria-hidden="true" tabindex="-1"></a>   expoente? O que a faixa de comprimentos do seu mês permite ou impede afirmar? E o que o gráfico de</span>
+<span id="cb20-264"><a href="#cb20-264" aria-hidden="true" tabindex="-1"></a>   resíduos mostrou que o $R^2$ sozinho não mostraria?</span>
+<span id="cb20-265"><a href="#cb20-265" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as previsões aparecem **antes** dos resultados correspondentes;</span>
+<span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o parâmetro alterado no item 2 está identificado, com as duas larguras;</span>
+<span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o gráfico de resíduos do item 3 foi escrito por você e tem eixos com nome;</span>
+<span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do segundo mês está registrada, com <span class="in">`n`</span> e faixa de comprimentos;</span>
+<span id="cb20-273"><a href="#cb20-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a comparação entre meses usa os **intervalos**, e não apenas os dois números estimados.</span>
+<span id="cb20-274"><a href="#cb20-274" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-275"><a href="#cb20-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-276"><a href="#cb20-276" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
+<span id="cb20-277"><a href="#cb20-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-278"><a href="#cb20-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regressão linear simples</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html)</span>{target="_blank"}</span>
+<span id="cb20-279"><a href="#cb20-279" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre o erro padrão da inclinação, para entender por que uma faixa estreita</span>
+<span id="cb20-280"><a href="#cb20-280" aria-hidden="true" tabindex="-1"></a>  de $X$ produz um intervalo largo.</span>
+<span id="cb20-281"><a href="#cb20-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Funções de potência</span><span class="co">](https://fcopf.github.io/mead/content/funcoes-modelos/funcoes-potencia.html)</span>{target="_blank"}</span>
+<span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a>  (MEAD) — para rever por que o logaritmo transforma $Y = aX^b$ em uma reta.</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

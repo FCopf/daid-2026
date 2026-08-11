@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Fabio Cop (fcferreira@unifesp.br)">
 <meta name="author" content="Instituto do Mar - Unifesp">
 
-<title>Tanques, subamostras e o que conta como réplica – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
+<title>Quantas vezes a dieta foi sorteada? – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -63,7 +63,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -339,16 +358,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Conteúdo</h2>
    
   <ul class="collapse">
-  <li><a href="#um-experimento-que-parece-bom" id="toc-um-experimento-que-parece-bom" class="nav-link active" data-scroll-target="#um-experimento-que-parece-bom"><span class="header-section-number">1</span> Um experimento que parece bom</a></li>
-  <li><a href="#como-se-monta-um-experimento-com-tanques" id="toc-como-se-monta-um-experimento-com-tanques" class="nav-link" data-scroll-target="#como-se-monta-um-experimento-com-tanques"><span class="header-section-number">2</span> Como se monta um experimento com tanques?</a></li>
-  <li><a href="#como-fica-o-experimento" id="toc-como-fica-o-experimento" class="nav-link" data-scroll-target="#como-fica-o-experimento"><span class="header-section-number">3</span> Como fica o experimento?</a></li>
-  <li><a href="#a-análise-errada-60-peixes-por-dieta" id="toc-a-análise-errada-60-peixes-por-dieta" class="nav-link" data-scroll-target="#a-análise-errada-60-peixes-por-dieta"><span class="header-section-number">4</span> A análise errada: 60 peixes por dieta</a></li>
-  <li><a href="#a-análise-certa-8-tanques" id="toc-a-análise-certa-8-tanques" class="nav-link" data-scroll-target="#a-análise-certa-8-tanques"><span class="header-section-number">5</span> A análise certa: 8 tanques</a></li>
-  <li><a href="#uma-execução-não-decide-nada.-e-se-repetíssemos-300-vezes" id="toc-uma-execução-não-decide-nada.-e-se-repetíssemos-300-vezes" class="nav-link" data-scroll-target="#uma-execução-não-decide-nada.-e-se-repetíssemos-300-vezes"><span class="header-section-number">6</span> Uma execução não decide nada. E se repetíssemos 300 vezes?</a></li>
-  <li><a href="#e-se-a-dieta-realmente-funcionasse" id="toc-e-se-a-dieta-realmente-funcionasse" class="nav-link" data-scroll-target="#e-se-a-dieta-realmente-funcionasse"><span class="header-section-number">7</span> E se a dieta realmente funcionasse?</a></li>
-  <li><a href="#o-mesmo-problema-em-dados-reais" id="toc-o-mesmo-problema-em-dados-reais" class="nav-link" data-scroll-target="#o-mesmo-problema-em-dados-reais"><span class="header-section-number">8</span> O mesmo problema em dados reais</a></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">9</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">10</span> Para saber mais</a></li>
+  <li><a href="#objetivo-desta-prática" id="toc-objetivo-desta-prática" class="nav-link active" data-scroll-target="#objetivo-desta-prática"><span class="header-section-number">1</span> Objetivo desta prática</a></li>
+  <li><a href="#preparação" id="toc-preparação" class="nav-link" data-scroll-target="#preparação"><span class="header-section-number">2</span> Preparação</a></li>
+  <li><a href="#duas-análises-dos-mesmos-peixes" id="toc-duas-análises-dos-mesmos-peixes" class="nav-link" data-scroll-target="#duas-análises-dos-mesmos-peixes"><span class="header-section-number">3</span> Duas análises dos mesmos peixes</a></li>
+  <li><a href="#com-que-frequência-cada-análise-dá-um-alarme-falso" id="toc-com-que-frequência-cada-análise-dá-um-alarme-falso" class="nav-link" data-scroll-target="#com-que-frequência-cada-análise-dá-um-alarme-falso"><span class="header-section-number">4</span> Com que frequência cada análise dá um alarme falso?</a></li>
+  <li><a href="#de-que-depende-o-erro-padrão-de-cada-análise" id="toc-de-que-depende-o-erro-padrão-de-cada-análise" class="nav-link" data-scroll-target="#de-que-depende-o-erro-padrão-de-cada-análise"><span class="header-section-number">5</span> De que depende o erro padrão de cada análise?</a></li>
+  <li><a href="#sua-vez" id="toc-sua-vez" class="nav-link" data-scroll-target="#sua-vez"><span class="header-section-number">6</span> Sua vez</a></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">7</span> Entrega</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">9</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -358,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Tanques, subamostras e o que conta como réplica</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Quantas vezes a dieta foi sorteada?</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
 <p class="subtitle lead">Prática em R 04</p>
 </div>
 
@@ -389,22 +407,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="um-experimento-que-parece-bom" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Um experimento que parece bom</h1>
-<p>Duas dietas para juvenis de robalo. Dois tanques: no tanque 1, dieta comum; no tanque 2, dieta enriquecida. Trinta peixes em cada. Sessenta medidas de comprimento.</p>
-<p>Nesta prática vamos <strong>construir</strong> esse experimento no computador, de modo que saibamos exatamente qual é a verdade, e depois analisá-lo de duas maneiras: uma errada e uma certa.</p>
+<section id="objetivo-desta-prática" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
+<p>A <a href="../../content/pre-reading/pread-replicacao-unidades.html">leitura desta semana</a> mostrou que peixes do mesmo tanque não são réplicas e que a análise deve ser feita no nível da unidade experimental. Você viu a estrutura do problema.</p>
+<p>O que a leitura não mediu é o <strong>preço</strong> de errar esse nível. Hoje você vai medir duas coisas: com que frequência a análise errada anuncia um efeito que não existe, e de que depende, afinal, o erro padrão da análise correta.</p>
+<p>O objetivo em R é escrever uma <strong>função</strong> e repetir um experimento inteiro centenas de vezes.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Como a hora será usada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>5 min</strong> abrir o RStudio, criar o script e ler a proposta;</li>
+<li><strong>40 a 45 min</strong> percorrer as seções guiadas e fazer o bloco <em>Sua vez</em>;</li>
+<li><strong>10 a 15 min</strong> escrever as respostas, rodar o script do início ao fim e enviar.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="preparação" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Preparação</h1>
+<p>Crie um script <code>pr-replicacao.R</code> com o cabeçalho de identificação e comece por:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="como-se-monta-um-experimento-com-tanques" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Como se monta um experimento com tanques?</h1>
-<p>O ponto que decide tudo é este: peixes do mesmo tanque <strong>compartilham</strong> as condições daquele tanque. Se o tanque 1 está meio grau mais quente, todos os seus peixes sentem isso.</p>
-<p>Vamos escrever isso em duas etapas.</p>
-<p>Primeiro, cada tanque recebe o seu próprio desvio em relação ao que a dieta prevê:</p>
+<p>Duas dietas para juvenis de robalo. Oito tanques: quatro recebem a dieta comum, quatro a enriquecida. Quinze peixes em cada tanque. Cento e vinte medidas de comprimento, e a dieta sorteada <strong>oito vezes</strong>.</p>
+<p>Vamos construir esse experimento no computador, em dois passos, para saber exatamente qual é a verdade. Primeiro cada tanque recebe o seu próprio desvio:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="dv">0</span>        <span class="co"># nenhuma diferença entre as dietas</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="dv">0</span>             <span class="co"># nenhuma diferença entre as dietas</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>variacao_entre_tanques <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>variacao_entre_peixes <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -420,42 +456,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 8 × 3
   tanque dieta       media_tanque
    &lt;int&gt; &lt;chr&gt;              &lt;dbl&gt;
-1      1 comum               9.52
-2      2 comum               9.39
+1      1 comum               8.16
+2      2 comum               9.28
 3      3 comum               9.97
-4      4 comum              10.0 
-5      5 enriquecida        10.8 
-6      6 enriquecida         8.98
-7      7 enriquecida        10.7 
-8      8 enriquecida        10.6 </code></pre>
+4      4 comum              10.5 
+5      5 enriquecida        11.7 
+6      6 enriquecida        10.2 
+7      7 enriquecida        10.5 
+8      8 enriquecida        10.9 </code></pre>
 </div>
 </div>
-<p>Repare no que acabamos de fazer: <strong><code>efeito_dieta</code> vale zero</strong>. As duas dietas são idênticas. Toda diferença entre tanques vem do <code>rnorm()</code> da última linha, ou seja, do acaso de cada tanque.</p>
+<p>Repare que <strong><code>efeito_dieta</code> vale zero</strong>: as duas dietas são idênticas. Toda diferença entre tanques vem do <code>rnorm()</code> da última linha, ou seja, do acaso de cada tanque.</p>
 <p>Agora os peixes, sorteados em torno da média do seu tanque:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>peixes <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">120</span>, <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(peixes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 120
-Columns: 4
-$ tanque       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, …
-$ dieta        &lt;chr&gt; "comum", "comum", "comum", "comum", "comum", "comum", "co…
-$ media_tanque &lt;dbl&gt; 9.520488, 9.520488, 9.520488, 9.520488, 9.520488, 9.52048…
-$ comprimento  &lt;dbl&gt; 9.093522, 9.388692, 9.869318, 9.326446, 9.471734, 9.79757…</code></pre>
-</div>
-</div>
-<p><code>slice(rep(1:8, each = 15))</code> repete cada linha de tanque 15 vezes, criando 15 peixes por tanque.</p>
-</section>
-<section id="como-fica-o-experimento" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Como fica o experimento?</h1>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peixes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(tanque), <span class="at">y =</span> comprimento, <span class="at">colour =</span> dieta)) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"crossbar"</span>, <span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tanque"</span>, <span class="at">y =</span> <span class="st">"Comprimento (cm)"</span>, <span class="at">colour =</span> <span class="st">"Dieta"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peixes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(tanque), <span class="at">y =</span> comprimento, <span class="at">colour =</span> dieta)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"crossbar"</span>, <span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tanque"</span>, <span class="at">y =</span> <span class="st">"Comprimento (cm)"</span>, <span class="at">colour =</span> <span class="st">"Dieta"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-replicacao-tanques" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -469,6 +490,55 @@ Figura&nbsp;1: Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a
 </div>
 </div>
 </div>
+<p><code>slice(rep(1:8, each = 15))</code> repete cada linha de tanque 15 vezes, criando 15 peixes por tanque, e <code>n()</code> devolve o número de linhas da tabela naquele momento — aqui, 120.</p>
+</section>
+<section id="duas-análises-dos-mesmos-peixes" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Duas análises dos mesmos peixes</h1>
+<p>A tentação é resumir cada dieta com todos os seus peixes. A alternativa é primeiro reduzir cada tanque a um valor, porque é o tanque que recebeu a dieta.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Complete">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Complete
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No bloco abaixo falta, dentro de <code>group_by()</code>, a coluna que corresponde a <strong>uma atribuição independente de dieta</strong>.</p>
+<p>Escreva o bloco no seu script com a coluna que você escolheu. Se a tabela resultante não tiver <strong>oito</strong> linhas, a coluna não foi a certa.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>medias_tanque <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(____, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>Com as duas tabelas em mãos, aplicamos a <strong>mesma</strong> conta da Prática 03 — erro padrão e intervalo de 95% — em cada uma delas:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>por_peixe <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(comprimento),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">ep =</span> <span class="fu">sd</span>(comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">analise =</span> <span class="st">"120 peixes"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>por_tanque <span class="ot">&lt;-</span> medias_tanque <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(media),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">ep =</span> <span class="fu">sd</span>(media) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">analise =</span> <span class="st">"8 tanques"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(por_peixe, por_tanque) <span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">inferior =</span> media <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> ep,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">superior =</span> media <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> ep)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+  dieta           n media     ep analise    inferior superior
+  &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+1 comum          60  9.41  0.152 120 peixes     9.11     9.71
+2 enriquecida    60 10.9   0.103 120 peixes    10.7     11.1 
+3 comum           4  9.41 NA     8 tanques     NA       NA   
+4 enriquecida     4 10.9  NA     8 tanques     NA       NA   </code></pre>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -479,42 +549,52 @@ Figura&nbsp;1: Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dentro de cada tanque, os peixes formam nuvens compactas.</p>
-<p>Entre tanques que receberam <strong>a mesma dieta</strong>, as médias já não coincidem. Como sabemos que <code>efeito_dieta</code> é zero, essa diferença entre tanques vem apenas do acaso, e é exatamente a régua que precisamos para julgar a dieta.</p>
+<p>As duas análises descrevem exatamente os mesmos peixes e prometem precisões muito diferentes. Compare a coluna <code>ep</code> das duas.</p>
+<p>E lembre que <code>efeito_dieta</code> é zero: qualquer separação entre as dietas, aqui, é acaso.</p>
 </div>
 </div>
 </section>
-<section id="a-análise-errada-60-peixes-por-dieta" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> A análise errada: 60 peixes por dieta</h1>
-<p>A tentação é comparar as duas dietas usando todos os peixes:</p>
+<section id="com-que-frequência-cada-análise-dá-um-alarme-falso" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Com que frequência cada análise dá um alarme falso?</h1>
+<p>Um experimento só não decide nada: cada execução sorteia tanques diferentes. A pergunta certa é sobre o comportamento <strong>a longo prazo</strong> de cada análise.</p>
+<p>Como a dieta não faz nada, sempre que os dois intervalos de uma análise <strong>não se sobrepõem</strong> nós anunciaríamos uma diferença que não existe. Vamos medir com que frequência isso acontece.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>peixes <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">desvio =</span> <span class="fu">sd</span>(comprimento))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  dieta           n media desvio
-  &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1 comum          60  9.78  0.431
-2 enriquecida    60 10.2   0.904</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>limites <span class="ot">&lt;-</span> <span class="cf">function</span>(valores) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  ep <span class="ot">&lt;-</span> <span class="fu">sd</span>(valores) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(valores))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(valores) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="fu">length</span>(valores) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> ep</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>separados <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) <span class="fu">limites</span>(a)[<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fu">limites</span>(b)[<span class="dv">2</span>] <span class="sc">||</span> <span class="fu">limites</span>(b)[<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fu">limites</span>(a)[<span class="dv">2</span>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
+<p><code>function()</code> cria um comando novo: os nomes entre parênteses são os valores que ele recebe e a última linha é o que ele devolve. <code>limites()</code> guarda a conta da Prática 03; <code>separados()</code> responde <code>TRUE</code> quando os dois intervalos não se tocam.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>teste_errado <span class="ot">&lt;-</span> <span class="fu">t.test</span>(comprimento <span class="sc">~</span> dieta, <span class="at">data =</span> peixes)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>teste_errado</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>alarmes <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">300</span>, {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  tq <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  px <span class="ot">&lt;-</span> tq <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  mt <span class="ot">&lt;-</span> px <span class="sc">|&gt;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">peixes  =</span> <span class="fu">separados</span>(px<span class="sc">$</span>comprimento[px<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"comum"</span>],</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                        px<span class="sc">$</span>comprimento[px<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>]),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanques =</span> <span class="fu">separados</span>(mt<span class="sc">$</span>media[mt<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"comum"</span>],</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                        mt<span class="sc">$</span>media[mt<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>])</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">peixes =</span> <span class="fu">mean</span>(alarmes[<span class="st">"peixes"</span>, ]), <span class="at">tanques =</span> <span class="fu">mean</span>(alarmes[<span class="st">"tanques"</span>, ]))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-    Welch Two Sample t-test
-
-data:  comprimento by dieta
-t = -3.4944, df = 84.524, p-value = 0.0007589
-alternative hypothesis: true difference in means between group comum and group enriquecida is not equal to 0
-95 percent confidence interval:
- -0.7087601 -0.1946786
-sample estimates:
-      mean in group comum mean in group enriquecida 
-                 9.784558                 10.236277 </code></pre>
+<pre><code>   peixes   tanques 
+0.4266667 0.0100000 </code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -527,132 +607,39 @@ sample estimates:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nesta execução o valor de p foi menor que 0,001.</p>
-<p>Qualquer que seja ele, guarde o essencial: este teste supôs <strong>120 observações independentes</strong>, quando o sorteio da dieta aconteceu apenas 8 vezes. Ele está medindo a variação entre peixes do mesmo tanque, e não a variação entre tanques.</p>
-<p>Execute o script novamente algumas vezes e observe como esse valor de p muda de uma execução para outra.</p>
+<p>Anote as duas proporções da sua execução. São 300 experimentos <strong>sem efeito nenhum</strong>: tudo o que aparece ali é alarme falso.</p>
+<p>Uma das duas análises se comporta como um procedimento de 95% de confiança deveria se comportar. A outra, não.</p>
 </div>
 </div>
 </section>
-<section id="a-análise-certa-8-tanques" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> A análise certa: 8 tanques</h1>
-<p>A unidade experimental é o tanque. Então primeiro resumimos cada tanque a um valor, e só depois comparamos as dietas:</p>
+<section id="de-que-depende-o-erro-padrão-de-cada-análise" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> De que depende o erro padrão de cada análise?</h1>
+<p>Se medir mais peixes por tanque resolvesse o problema, bastaria trabalhar mais. Vamos verificar, repetindo o experimento com três quantidades de peixes por tanque e olhando os dois erros padrão. Como cada execução varia, cada valor é a média de 100 experimentos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>medias_tanque <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>medias_tanque</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ep_medio <span class="ot">&lt;-</span> <span class="cf">function</span>(m) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    px <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> m)) <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    mt <span class="ot">&lt;-</span> px <span class="sc">|&gt;</span> <span class="fu">group_by</span>(tanque) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="fu">sd</span>(px<span class="sc">$</span>comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">nrow</span>(px)), <span class="fu">sd</span>(mt<span class="sc">$</span>media) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">8</span>))</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">peixes_por_tanque =</span> m, <span class="at">ep_peixes =</span> <span class="fu">mean</span>(vals[<span class="dv">1</span>, ]), <span class="at">ep_tanques =</span> <span class="fu">mean</span>(vals[<span class="dv">2</span>, ]))</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(<span class="fu">ep_medio</span>(<span class="dv">15</span>), <span class="fu">ep_medio</span>(<span class="dv">50</span>), <span class="fu">ep_medio</span>(<span class="dv">150</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 3
-  tanque dieta       media
-   &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
-1      1 comum        9.61
-2      2 comum        9.54
-3      3 comum        9.89
-4      4 comum       10.1 
-5      5 enriquecida 10.6 
-6      6 enriquecida  8.98
-7      7 enriquecida 10.8 
-8      8 enriquecida 10.5 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>teste_certo <span class="ot">&lt;-</span> <span class="fu">t.test</span>(media <span class="sc">~</span> dieta, <span class="at">data =</span> medias_tanque)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>teste_certo</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Welch Two Sample t-test
-
-data:  media by dieta
-t = -1.0159, df = 3.5537, p-value = 0.3738
-alternative hypothesis: true difference in means between group comum and group enriquecida is not equal to 0
-95 percent confidence interval:
- -1.7498919  0.8464532
-sample estimates:
-      mean in group comum mean in group enriquecida 
-                 9.784558                 10.236277 </code></pre>
-</div>
-</div>
-<p>Agora são 4 valores por dieta, e a variação usada como referência é a variação <strong>entre tanques</strong>, que é a variação relevante.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Compare">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Compare
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Coloque os dois resultados lado a lado:</p>
-<ul>
-<li>quantos “n” cada análise usou?</li>
-<li>qual das duas produziu o intervalo de confiança mais estreito?</li>
-<li>nesta execução, o valor de p foi menor que 0,001 na análise com 120 peixes e 0,374 na análise com 8 tanques.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="uma-execução-não-decide-nada.-e-se-repetíssemos-300-vezes" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Uma execução não decide nada. E se repetíssemos 300 vezes?</h1>
-<p>Comparar as duas análises em um experimento só é frágil: cada execução sorteia tanques diferentes e pode dar qualquer resultado. A pergunta certa é sobre o <strong>comportamento a longo prazo</strong> de cada análise.</p>
-<p>Como sabemos que a dieta não faz nada, qualquer conclusão de “há efeito” é um alarme falso. Um teste bem calibrado a 5% deveria dar alarme falso em cerca de 5% dos experimentos. Vamos medir isso nas duas análises.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">300</span>, {</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  peixes <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">120</span>, <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  medias <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">errada =</span> <span class="fu">t.test</span>(comprimento <span class="sc">~</span> dieta, <span class="at">data =</span> peixes)<span class="sc">$</span>p.value,</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">certa  =</span> <span class="fu">t.test</span>(media <span class="sc">~</span> dieta, <span class="at">data =</span> medias)<span class="sc">$</span>p.value</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Cada repetição monta um experimento novo, do zero, e devolve os dois valores de p.&nbsp;O objeto <code>resultados</code> guarda uma linha para cada análise:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>taxa_errada <span class="ot">&lt;-</span> <span class="fu">mean</span>(resultados[<span class="st">"errada"</span>, ] <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>taxa_certa <span class="ot">&lt;-</span> <span class="fu">mean</span>(resultados[<span class="st">"certa"</span>, ] <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">errada =</span> taxa_errada, <span class="at">certa =</span> taxa_certa)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    errada      certa 
-0.63666667 0.04666667 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>valores_p <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">analise =</span> <span class="st">"120 peixes"</span>, <span class="at">p =</span> resultados[<span class="st">"errada"</span>, ]),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">analise =</span> <span class="st">"8 tanques"</span>,  <span class="at">p =</span> resultados[<span class="st">"certa"</span>, ])</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(valores_p, <span class="fu">aes</span>(<span class="at">x =</span> p)) <span class="sc">+</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.05</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> analise) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor de p"</span>, <span class="at">y =</span> <span class="st">"Número de experimentos"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-replicacao-taxas" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-replicacao-taxas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-replicacao-pseudorreplicacao_files/figure-html/fig-replicacao-taxas-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-replicacao-taxas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experimentos sem nenhum efeito de dieta. A linha marca o limiar de 0,05.
-</figcaption>
-</figure>
-</div>
+<pre><code># A tibble: 3 × 3
+  peixes_por_tanque ep_peixes ep_tanques
+              &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1                15    0.0815      0.279
+2                50    0.0440      0.271
+3               150    0.0253      0.269</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -665,108 +652,50 @@ Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experi
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nestes 300 experimentos <strong>sem efeito nenhum</strong>, a análise com 120 peixes acusou diferença em 64% das vezes, e a análise com 8 tanques em 5%.</p>
-<p>A segunda taxa é a que se espera de um teste a 5%. A primeira é muitas vezes maior, e isso é pseudorreplicação em números: um procedimento que erra a unidade experimental transforma variação entre tanques em “evidência” de efeito da dieta.</p>
-<p>Repare também na forma dos histogramas. Na análise correta os valores de p se espalham por igual entre 0 e 1, como deve acontecer quando a hipótese nula é verdadeira. Na análise errada eles se amontoam perto de zero.</p>
+<p>Leia a tabela coluna a coluna. <code>ep_peixes</code> cai quando se mede mais peixes por tanque. <code>ep_tanques</code> praticamente não se move.</p>
+<p>Ou seja: <code>ep_tanques</code> <strong>não depende</strong> de quantos peixes foram medidos. De que ele depende, então? O bloco seguinte pede que você descubra.</p>
 </div>
 </div>
 </section>
-<section id="e-se-a-dieta-realmente-funcionasse" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> E se a dieta realmente funcionasse?</h1>
-<p>Volte ao primeiro bloco e troque uma linha:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="fl">1.2</span>   <span class="co"># a dieta enriquecida aumenta 1,2 cm</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Modifique">
+<section id="sua-vez" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Sua vez</h1>
+<p>Em toda a função <code>ep_medio()</code>, o número de tanques está fixo em <strong>8</strong>. Ele aparece em quatro lugares: duas vezes como <code>1:8</code>, uma vez dentro de <code>rnorm(8, ...)</code> e uma vez em <code>sqrt(8)</code>.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Adapte a função">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Modifique
+<span class="screen-reader-only">Dica</span>Adapte a função
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Com <code>efeito_dieta &lt;- 1.2</code>, execute o script inteiro novamente e responda:</p>
-<ol type="1">
-<li>a análise por tanques detecta o efeito?</li>
-<li>e se você também aumentar <code>variacao_entre_tanques</code> para <code>2</code>?</li>
-<li>e se, em vez disso, aumentar o número de peixes por tanque de 15 para 50, mantendo 8 tanques?</li>
-</ol>
-<p>O item 3 é o mais importante: medir mais peixes por tanque <strong>resolve</strong> o problema?</p>
+<p>Reescreva a função para que ela receba <strong>dois</strong> valores: o número de peixes por tanque e o número de tanques.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ep_medio2 <span class="ot">&lt;-</span> <span class="cf">function</span>(m, k) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># troque os quatro lugares onde aparece o 8 pelo novo argumento</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Confira se funcionou: <code>ep_medio2(15, 8)</code> deve devolver números parecidos com os da linha de 15 peixes da tabela anterior. Acrescente também <code>k</code> ao vetor de saída, para que a tabela mostre quantos tanques foram usados.</p>
 </div>
 </div>
-</section>
-<section id="o-mesmo-problema-em-dados-reais" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> O mesmo problema em dados reais</h1>
-<p>Isso não é um artefato de simulação. Um levantamento no litoral holandês registrou o número de espécies em 45 estações distribuídas por 9 praias:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>rikz <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">count</span>(Beach)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 2
-  Beach     n
-  &lt;dbl&gt; &lt;int&gt;
-1     1     5
-2     2     5
-3     3     5
-4     4     5
-5     5     5
-6     6     5
-7     7     5
-8     8     5
-9     9     5</code></pre>
-</div>
-</div>
-<p>Cinco estações por praia. Se a pergunta for sobre <strong>estações</strong>, as 45 linhas são 45 unidades. Se for sobre <strong>praias</strong>, há apenas 9, e as cinco estações de uma praia são subamostras dela.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>por_praia <span class="ot">&lt;-</span> rikz <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Beach) <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">riqueza_media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>por_praia</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 2
-  Beach riqueza_media
-  &lt;dbl&gt;         &lt;dbl&gt;
-1     1          11  
-2     2          12.2
-3     3           3.4
-4     4           2.4
-5     5           7.4
-6     6           4  
-7     7           2.2
-8     8           4  
-9     9           4.6</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(rikz<span class="sc">$</span>Richness) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">45</span>)          <span class="co"># tratando as 45 estações como réplicas</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7459129</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(por_praia<span class="sc">$</span>riqueza_media) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">9</span>) <span class="co"># tratando as 9 praias como réplicas</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.228419</code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja antes de rodar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Interprete
+<span class="screen-reader-only">Dica</span>Preveja antes de rodar
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Os dois erros padrão descrevem coisas diferentes. O primeiro responde “quanto varia a média de 45 estações da mesma região?”; o segundo, “quanto varia a média de 9 praias?”.</p>
-<p>Qual dos dois é o certo depende inteiramente da pergunta, e a pergunta precisa ser decidida antes de abrir o R.</p>
+<p>Você vai comparar <strong>8 tanques</strong> com <strong>16 tanques</strong>, mantendo 15 peixes em cada um.</p>
+<p>Antes de executar, escreva no script, como comentário, o que espera que aconteça com <strong>cada uma das duas colunas</strong> de erro padrão. Elas se movem juntas? Só uma se move? Nenhuma?</p>
 </div>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(<span class="fu">ep_medio2</span>(<span class="dv">15</span>, <span class="dv">8</span>), <span class="fu">ep_medio2</span>(<span class="dv">15</span>, <span class="dv">16</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="entrega" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Entrega</h1>
+<section id="entrega" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Entrega</h1>
+<p>Salve o script <code>pr-replicacao.R</code> com o cabeçalho preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>.</p>
 <div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -777,29 +706,56 @@ Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experi
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Um script <code>pr-replicacao.R</code> que rode em sessão nova e contenha:</p>
 <ol type="1">
-<li>a simulação dos 8 tanques com <code>efeito_dieta &lt;- 0</code>, o gráfico por tanque e as duas análises (120 peixes e 8 médias de tanque);</li>
-<li>a repetição do experimento 300 vezes, com as duas taxas de alarme falso e o gráfico dos valores de p;</li>
-<li>a mesma simulação com <code>efeito_dieta &lt;- 1.2</code>;</li>
-<li>os dois erros padrão calculados a partir dos dados do RIKZ;</li>
-<li>em comentários, quatro a cinco frases respondendo: <strong>por que a análise com 120 peixes acusa efeito muito mais do que os 5% esperados, e por que aumentar o número de peixes por tanque não corrige isso?</strong></li>
+<li>a base da aula: a simulação com <code>efeito_dieta &lt;- 0</code>, o gráfico por tanque, a tabela com as duas análises e as duas proporções de alarme falso;</li>
+<li><strong>a função <code>ep_medio2()</code> escrita por você</strong> e a tabela comparando 8 e 16 tanques com 15 peixes, precedida da sua previsão sobre as duas colunas;</li>
+<li>em comentários, uma recomendação de delineamento: uma colega vai repetir este experimento e pode escolher entre <strong>dobrar o número de tanques</strong> ou <strong>dobrar o número de peixes por tanque</strong>. O que você recomenda, e de quanto foi a redução do erro padrão relevante nos <strong>seus</strong> números?</li>
+<li>em comentários, 2 a 3 frases explicando por que a análise com 120 peixes deu tantos alarmes falsos num experimento em que a dieta não fazia nada. Cite os <strong>dois valores da coluna <code>ep</code></strong> que você obteve na tabela das duas análises e diga qual variação cada um deles mediu.</li>
 </ol>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Para saber mais</h1>
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/amostragem/pop-amostra.html" target="_blank">Descrevendo populações e amostras</a> (MEAD)</li>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="O que será avaliado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>O que será avaliado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox">o script roda em sessão nova, do início ao fim, sem erro;</label></li>
+<li><label><input type="checkbox">a função <code>ep_medio2()</code> aceita os dois argumentos e roda para 8 e 16 tanques;</label></li>
+<li><label><input type="checkbox">a previsão sobre as duas colunas aparece <strong>antes</strong> da tabela;</label></li>
+<li><label><input type="checkbox">a recomendação do item 3 cita os erros padrão que <strong>você</strong> obteve;</label></li>
+<li><label><input type="checkbox">a explicação do item 4 menciona qual variação cada análise usou como régua;</label></li>
+<li><label><input type="checkbox">cada gráfico tem eixos com nome e unidade.</label></li>
 </ul>
+</div>
+</div>
+</section>
+<section id="para-saber-mais" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/amostragem/pop-amostra.html" target="_blank">Descrevendo populações e amostras</a> (MEAD) — para rever a diferença entre unidade amostral e unidade de medição.</li>
+<li>O artigo de Hurlbert <span class="citation" data-cites="hurlbert1984">(<a href="#ref-hurlbert1984" role="doc-biblioref">Hurlbert 1984</a>)</span> é a referência clássica sobre pseudorreplicação, com dezenas de exemplos de delineamentos ecológicos publicados.</li>
+</ul>
+</section>
+<section id="referências" class="level1" data-number="9">
+
 
 
 <!-- -->
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">9 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-hurlbert1984" class="csl-entry" role="listitem">
+Hurlbert, Stuart H. 1984. <span>“Pseudoreplication and the Design of Ecological Field Experiments”</span>. <em>Ecological Monographs</em> 54 (2): 187–211. <a href="https://doi.org/10.2307/1942661">https://doi.org/10.2307/1942661</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1264,313 +1220,307 @@ Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experi
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tanques, subamostras e o que conta como réplica"</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 04"</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um experimento que parece bom</span></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>Duas dietas para juvenis de robalo. Dois tanques: no tanque 1, dieta comum; no tanque 2, dieta</span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>enriquecida. Trinta peixes em cada. Sessenta medidas de comprimento.</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>Nesta prática vamos **construir** esse experimento no computador, de modo que saibamos exatamente</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>qual é a verdade, e depois analisá-lo de duas maneiras: uma errada e uma certa.</span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="fu"># Como se monta um experimento com tanques?</span></span>
-<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>O ponto que decide tudo é este: peixes do mesmo tanque **compartilham** as condições daquele</span>
-<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>tanque. Se o tanque 1 está meio grau mais quente, todos os seus peixes sentem isso.</span>
-<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>Vamos escrever isso em duas etapas.</span>
-<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>Primeiro, cada tanque recebe o seu próprio desvio em relação ao que a dieta prevê:</span>
-<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="dv">0</span>        <span class="co"># nenhuma diferença entre as dietas</span></span>
-<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>variacao_entre_tanques <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
-<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>variacao_entre_peixes <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
-<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
-<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">if_else</span>(dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>, efeito_dieta, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
-<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>tanques</span>
-<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>Repare no que acabamos de fazer: **`efeito_dieta` vale zero**. As duas dietas são idênticas. Toda</span>
-<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>diferença entre tanques vem do <span class="in">`rnorm()`</span> da última linha, ou seja, do acaso de cada tanque.</span>
-<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>Agora os peixes, sorteados em torno da média do seu tanque:</span>
-<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>peixes <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
-<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">120</span>, <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
-<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(peixes)</span>
-<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="in">`slice(rep(1:8, each = 15))`</span> repete cada linha de tanque 15 vezes, criando 15 peixes por tanque.</span>
-<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="fu"># Como fica o experimento?</span></span>
-<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-replicacao-tanques</span></span>
-<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a barra é a média do tanque."</span></span>
-<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.6</span></span>
-<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peixes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(tanque), <span class="at">y =</span> comprimento, <span class="at">colour =</span> dieta)) <span class="sc">+</span></span>
-<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"crossbar"</span>, <span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tanque"</span>, <span class="at">y =</span> <span class="st">"Comprimento (cm)"</span>, <span class="at">colour =</span> <span class="st">"Dieta"</span>)</span>
-<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a>Dentro de cada tanque, os peixes formam nuvens compactas.</span>
-<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a>Entre tanques que receberam **a mesma dieta**, as médias já não coincidem. Como sabemos que</span>
-<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a><span class="in">`efeito_dieta`</span> é zero, essa diferença entre tanques vem apenas do acaso, e é exatamente a régua que</span>
-<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>precisamos para julgar a dieta.</span>
-<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a><span class="fu"># A análise errada: 60 peixes por dieta</span></span>
-<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a>A tentação é comparar as duas dietas usando todos os peixes:</span>
-<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a>peixes <span class="sc">|&gt;</span></span>
-<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
-<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">desvio =</span> <span class="fu">sd</span>(comprimento))</span>
-<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>teste_errado <span class="ot">&lt;-</span> <span class="fu">t.test</span>(comprimento <span class="sc">~</span> dieta, <span class="at">data =</span> peixes)</span>
-<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>teste_errado</span>
-<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a>p_errado_txt <span class="ot">&lt;-</span> <span class="cf">if</span> (teste_errado<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>) <span class="st">"menor que 0,001"</span> <span class="cf">else</span> <span class="fu">formatC</span>(teste_errado<span class="sc">$</span>p.value, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
-<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a>Nesta execução o valor de p foi <span class="in">`r p_errado_txt`</span>.</span>
-<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a>Qualquer que seja ele, guarde o essencial: este teste supôs **120 observações independentes**,</span>
-<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>quando o sorteio da dieta aconteceu apenas 8 vezes. Ele está medindo a variação entre peixes do</span>
-<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a>mesmo tanque, e não a variação entre tanques.</span>
-<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a>Execute o script novamente algumas vezes e observe como esse valor de p muda de uma execução para</span>
-<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a>outra.</span>
-<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a><span class="fu"># A análise certa: 8 tanques</span></span>
-<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a>A unidade experimental é o tanque. Então primeiro resumimos cada tanque a um valor, e só depois</span>
-<span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a>comparamos as dietas:</span>
-<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a>medias_tanque <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
-<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
-<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a>medias_tanque</span>
-<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a>teste_certo <span class="ot">&lt;-</span> <span class="fu">t.test</span>(media <span class="sc">~</span> dieta, <span class="at">data =</span> medias_tanque)</span>
-<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a>teste_certo</span>
-<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a>p_certo_txt <span class="ot">&lt;-</span> <span class="cf">if</span> (teste_certo<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>) <span class="st">"menor que 0,001"</span> <span class="cf">else</span> <span class="fu">formatC</span>(teste_certo<span class="sc">$</span>p.value, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
-<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a>Agora são 4 valores por dieta, e a variação usada como referência é a variação **entre tanques**,</span>
-<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a>que é a variação relevante.</span>
-<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Compare"}</span>
-<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a>Coloque os dois resultados lado a lado:</span>
-<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>quantos "n" cada análise usou?</span>
-<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>qual das duas produziu o intervalo de confiança mais estreito?</span>
-<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>nesta execução, o valor de p foi <span class="in">`r p_errado_txt`</span> na análise com 120 peixes e <span class="in">`r p_certo_txt`</span></span>
-<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a>  na análise com 8 tanques.</span>
-<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma execução não decide nada. E se repetíssemos 300 vezes?</span></span>
-<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a>Comparar as duas análises em um experimento só é frágil: cada execução sorteia tanques diferentes e</span>
-<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a>pode dar qualquer resultado. A pergunta certa é sobre o **comportamento a longo prazo** de cada</span>
-<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a>análise.</span>
-<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a>Como sabemos que a dieta não faz nada, qualquer conclusão de "há efeito" é um alarme falso. Um</span>
-<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a>teste bem calibrado a 5% deveria dar alarme falso em cerca de 5% dos experimentos. Vamos medir isso</span>
-<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a>nas duas análises.</span>
-<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a>resultados <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">300</span>, {</span>
-<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a>  tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
-<span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a>    <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
-<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
-<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a>  peixes <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
-<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">120</span>, <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
-<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a>  medias <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
-<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
-<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
-<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a>    <span class="at">errada =</span> <span class="fu">t.test</span>(comprimento <span class="sc">~</span> dieta, <span class="at">data =</span> peixes)<span class="sc">$</span>p.value,</span>
-<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a>    <span class="at">certa  =</span> <span class="fu">t.test</span>(media <span class="sc">~</span> dieta, <span class="at">data =</span> medias)<span class="sc">$</span>p.value</span>
-<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a>Cada repetição monta um experimento novo, do zero, e devolve os dois valores de p. O objeto</span>
-<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a><span class="in">`resultados`</span> guarda uma linha para cada análise:</span>
-<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a>taxa_errada <span class="ot">&lt;-</span> <span class="fu">mean</span>(resultados[<span class="st">"errada"</span>, ] <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
-<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a>taxa_certa <span class="ot">&lt;-</span> <span class="fu">mean</span>(resultados[<span class="st">"certa"</span>, ] <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
-<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">errada =</span> taxa_errada, <span class="at">certa =</span> taxa_certa)</span>
-<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-replicacao-taxas</span></span>
-<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribuição dos valores de p nas duas análises, em 300 experimentos sem nenhum efeito de dieta. A linha marca o limiar de 0,05."</span></span>
-<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a>valores_p <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">analise =</span> <span class="st">"120 peixes"</span>, <span class="at">p =</span> resultados[<span class="st">"errada"</span>, ]),</span>
-<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">analise =</span> <span class="st">"8 tanques"</span>,  <span class="at">p =</span> resultados[<span class="st">"certa"</span>, ])</span>
-<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(valores_p, <span class="fu">aes</span>(<span class="at">x =</span> p)) <span class="sc">+</span></span>
-<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.05</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> analise) <span class="sc">+</span></span>
-<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor de p"</span>, <span class="at">y =</span> <span class="st">"Número de experimentos"</span>)</span>
-<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a>Nestes 300 experimentos **sem efeito nenhum**, a análise com 120 peixes acusou diferença em</span>
-<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(100 * taxa_errada)`</span>% das vezes, e a análise com 8 tanques em</span>
-<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="in">`r round(100 * taxa_certa)`</span>%.</span>
-<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a>A segunda taxa é a que se espera de um teste a 5%. A primeira é muitas vezes maior, e isso é</span>
-<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a>pseudorreplicação em números: um procedimento que erra a unidade experimental transforma variação</span>
-<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a>entre tanques em "evidência" de efeito da dieta.</span>
-<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a>Repare também na forma dos histogramas. Na análise correta os valores de p se espalham por igual</span>
-<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a>entre 0 e 1, como deve acontecer quando a hipótese nula é verdadeira. Na análise errada eles se</span>
-<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a>amontoam perto de zero.</span>
-<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a><span class="fu"># E se a dieta realmente funcionasse?</span></span>
-<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a>Volte ao primeiro bloco e troque uma linha:</span>
-<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="fl">1.2</span>   <span class="co"># a dieta enriquecida aumenta 1,2 cm</span></span>
-<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Modifique"}</span>
-<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a>Com <span class="in">`efeito_dieta &lt;- 1.2`</span>, execute o script inteiro novamente e responda:</span>
-<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-272"><a href="#cb28-272" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a análise por tanques detecta o efeito?</span>
-<span id="cb28-273"><a href="#cb28-273" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>e se você também aumentar <span class="in">`variacao_entre_tanques`</span> para <span class="in">`2`</span>?</span>
-<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>e se, em vez disso, aumentar o número de peixes por tanque de 15 para 50, mantendo 8 tanques?</span>
-<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a>O item 3 é o mais importante: medir mais peixes por tanque **resolve** o problema?</span>
-<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a><span class="fu"># O mesmo problema em dados reais</span></span>
-<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a>Isso não é um artefato de simulação. Um levantamento no litoral holandês registrou o número de</span>
-<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a>espécies em 45 estações distribuídas por 9 praias:</span>
-<span id="cb28-283"><a href="#cb28-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-286"><a href="#cb28-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"</span></span>
-<span id="cb28-288"><a href="#cb28-288" aria-hidden="true" tabindex="-1"></a>rikz <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-289"><a href="#cb28-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">count</span>(Beach)</span>
-<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a>Cinco estações por praia. Se a pergunta for sobre **estações**, as 45 linhas são 45 unidades. Se</span>
-<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a>for sobre **praias**, há apenas 9, e as cinco estações de uma praia são subamostras dela.</span>
-<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-298"><a href="#cb28-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a>por_praia <span class="ot">&lt;-</span> rikz <span class="sc">|&gt;</span></span>
-<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Beach) <span class="sc">|&gt;</span></span>
-<span id="cb28-301"><a href="#cb28-301" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">riqueza_media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb28-302"><a href="#cb28-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a>por_praia</span>
-<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-308"><a href="#cb28-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(rikz<span class="sc">$</span>Richness) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">45</span>)          <span class="co"># tratando as 45 estações como réplicas</span></span>
-<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(por_praia<span class="sc">$</span>riqueza_media) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">9</span>) <span class="co"># tratando as 9 praias como réplicas</span></span>
-<span id="cb28-311"><a href="#cb28-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-312"><a href="#cb28-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a>Os dois erros padrão descrevem coisas diferentes. O primeiro responde "quanto varia a média de 45</span>
-<span id="cb28-315"><a href="#cb28-315" aria-hidden="true" tabindex="-1"></a>estações da mesma região?"; o segundo, "quanto varia a média de 9 praias?".</span>
-<span id="cb28-316"><a href="#cb28-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a>Qual dos dois é o certo depende inteiramente da pergunta, e a pergunta precisa ser decidida antes</span>
-<span id="cb28-318"><a href="#cb28-318" aria-hidden="true" tabindex="-1"></a>de abrir o R.</span>
-<span id="cb28-319"><a href="#cb28-319" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb28-322"><a href="#cb28-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-323"><a href="#cb28-323" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb28-324"><a href="#cb28-324" aria-hidden="true" tabindex="-1"></a>Um script <span class="in">`pr-replicacao.R`</span> que rode em sessão nova e contenha:</span>
-<span id="cb28-325"><a href="#cb28-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a simulação dos 8 tanques com <span class="in">`efeito_dieta &lt;- 0`</span>, o gráfico por tanque e as duas análises</span>
-<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a>   (120 peixes e 8 médias de tanque);</span>
-<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>a repetição do experimento 300 vezes, com as duas taxas de alarme falso e o gráfico dos</span>
-<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a>   valores de p;</span>
-<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a mesma simulação com <span class="in">`efeito_dieta &lt;- 1.2`</span>;</span>
-<span id="cb28-331"><a href="#cb28-331" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>os dois erros padrão calculados a partir dos dados do RIKZ;</span>
-<span id="cb28-332"><a href="#cb28-332" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, quatro a cinco frases respondendo: **por que a análise com 120 peixes acusa</span>
-<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a>   efeito muito mais do que os 5% esperados, e por que aumentar o número de peixes por tanque não</span>
-<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a>   corrige isso?**</span>
-<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Descrevendo populações e amostras</span><span class="co">](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html)</span>{target="_blank"} (MEAD)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Quantas vezes a dieta foi sorteada?"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 04"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-replicacao-unidades.qmd)</span> mostrou que peixes do mesmo</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>tanque não são réplicas e que a análise deve ser feita no nível da unidade experimental. Você viu a</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>estrutura do problema.</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>O que a leitura não mediu é o **preço** de errar esse nível. Hoje você vai medir duas coisas: com que</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>frequência a análise errada anuncia um efeito que não existe, e de que depende, afinal, o erro padrão</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>da análise correta.</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>O objetivo em R é escrever uma **função** e repetir um experimento inteiro centenas de vezes.</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-replicacao.R`</span> com o cabeçalho de identificação e comece por:</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>Duas dietas para juvenis de robalo. Oito tanques: quatro recebem a dieta comum, quatro a enriquecida.</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>Quinze peixes em cada tanque. Cento e vinte medidas de comprimento, e a dieta sorteada **oito vezes**.</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>Vamos construir esse experimento no computador, em dois passos, para saber exatamente qual é a</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>verdade. Primeiro cada tanque recebe o seu próprio desvio:</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="dv">0</span>             <span class="co"># nenhuma diferença entre as dietas</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>variacao_entre_tanques <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>variacao_entre_peixes <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">if_else</span>(dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>, efeito_dieta, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>tanques</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>Repare que **`efeito_dieta` vale zero**: as duas dietas são idênticas. Toda diferença entre tanques</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>vem do <span class="in">`rnorm()`</span> da última linha, ou seja, do acaso de cada tanque.</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>Agora os peixes, sorteados em torno da média do seu tanque:</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-replicacao-tanques</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a barra é a média do tanque."</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.6</span></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>peixes <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peixes, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(tanque), <span class="at">y =</span> comprimento, <span class="at">colour =</span> dieta)) <span class="sc">+</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"crossbar"</span>, <span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tanque"</span>, <span class="at">y =</span> <span class="st">"Comprimento (cm)"</span>, <span class="at">colour =</span> <span class="st">"Dieta"</span>)</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a><span class="in">`slice(rep(1:8, each = 15))`</span> repete cada linha de tanque 15 vezes, criando 15 peixes por tanque, e</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="in">`n()`</span> devolve o número de linhas da tabela naquele momento — aqui, 120.</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a><span class="fu"># Duas análises dos mesmos peixes</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>A tentação é resumir cada dieta com todos os seus peixes. A alternativa é primeiro reduzir cada</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>tanque a um valor, porque é o tanque que recebeu a dieta.</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>No bloco abaixo falta, dentro de <span class="in">`group_by()`</span>, a coluna que corresponde a **uma atribuição</span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>independente de dieta**.</span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>Escreva o bloco no seu script com a coluna que você escolheu. Se a tabela resultante não tiver</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>**oito** linhas, a coluna não foi a certa.</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>medias_tanque <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(____, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>medias_tanque <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a>Com as duas tabelas em mãos, aplicamos a **mesma** conta da Prática 03 — erro padrão e intervalo de</span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a>95% — em cada uma delas:</span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>por_peixe <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(comprimento),</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>            <span class="at">ep =</span> <span class="fu">sd</span>(comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">analise =</span> <span class="st">"120 peixes"</span>)</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a>por_tanque <span class="ot">&lt;-</span> medias_tanque <span class="sc">|&gt;</span></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(media),</span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>            <span class="at">ep =</span> <span class="fu">sd</span>(media) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">analise =</span> <span class="st">"8 tanques"</span>)</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(por_peixe, por_tanque) <span class="sc">|&gt;</span></span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">inferior =</span> media <span class="sc">-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> ep,</span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a>         <span class="at">superior =</span> media <span class="sc">+</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> ep)</span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a>As duas análises descrevem exatamente os mesmos peixes e prometem precisões muito diferentes. Compare</span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>a coluna <span class="in">`ep`</span> das duas.</span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>E lembre que <span class="in">`efeito_dieta`</span> é zero: qualquer separação entre as dietas, aqui, é acaso.</span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="fu"># Com que frequência cada análise dá um alarme falso?</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>Um experimento só não decide nada: cada execução sorteia tanques diferentes. A pergunta certa é sobre</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>o comportamento **a longo prazo** de cada análise.</span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>Como a dieta não faz nada, sempre que os dois intervalos de uma análise **não se sobrepõem** nós</span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>anunciaríamos uma diferença que não existe. Vamos medir com que frequência isso acontece.</span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a>limites <span class="ot">&lt;-</span> <span class="cf">function</span>(valores) {</span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>  ep <span class="ot">&lt;-</span> <span class="fu">sd</span>(valores) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(valores))</span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(valores) <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="fu">length</span>(valores) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> ep</span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a>separados <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) <span class="fu">limites</span>(a)[<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fu">limites</span>(b)[<span class="dv">2</span>] <span class="sc">||</span> <span class="fu">limites</span>(b)[<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fu">limites</span>(a)[<span class="dv">2</span>]</span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a><span class="in">`function()`</span> cria um comando novo: os nomes entre parênteses são os valores que ele recebe e a última</span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>linha é o que ele devolve. <span class="in">`limites()`</span> guarda a conta da Prática 03; <span class="in">`separados()`</span> responde <span class="in">`TRUE`</span></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a>quando os dois intervalos não se tocam.</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>alarmes <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">300</span>, {</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>  tq <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a>    <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>  px <span class="ot">&lt;-</span> tq <span class="sc">|&gt;</span></span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>  mt <span class="ot">&lt;-</span> px <span class="sc">|&gt;</span></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>    <span class="at">peixes  =</span> <span class="fu">separados</span>(px<span class="sc">$</span>comprimento[px<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"comum"</span>],</span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>                        px<span class="sc">$</span>comprimento[px<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>]),</span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanques =</span> <span class="fu">separados</span>(mt<span class="sc">$</span>media[mt<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"comum"</span>],</span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>                        mt<span class="sc">$</span>media[mt<span class="sc">$</span>dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>])</span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">peixes =</span> <span class="fu">mean</span>(alarmes[<span class="st">"peixes"</span>, ]), <span class="at">tanques =</span> <span class="fu">mean</span>(alarmes[<span class="st">"tanques"</span>, ]))</span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>Anote as duas proporções da sua execução. São 300 experimentos **sem efeito nenhum**: tudo o que</span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>aparece ali é alarme falso.</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>Uma das duas análises se comporta como um procedimento de 95% de confiança deveria se comportar. A</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>outra, não.</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a><span class="fu"># De que depende o erro padrão de cada análise?</span></span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>Se medir mais peixes por tanque resolvesse o problema, bastaria trabalhar mais. Vamos verificar,</span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>repetindo o experimento com três quantidades de peixes por tanque e olhando os dois erros padrão.</span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a>Como cada execução varia, cada valor é a média de 100 experimentos.</span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a>ep_medio <span class="ot">&lt;-</span> <span class="cf">function</span>(m) {</span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100</span>, {</span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>    px <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>      <span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,</span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a>      <span class="at">media_tanque =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> variacao_entre_tanques)</span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a>      <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> m)) <span class="sc">|&gt;</span></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> media_tanque, <span class="at">sd =</span> variacao_entre_peixes))</span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a>    mt <span class="ot">&lt;-</span> px <span class="sc">|&gt;</span> <span class="fu">group_by</span>(tanque) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="fu">sd</span>(px<span class="sc">$</span>comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">nrow</span>(px)), <span class="fu">sd</span>(mt<span class="sc">$</span>media) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">8</span>))</span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">peixes_por_tanque =</span> m, <span class="at">ep_peixes =</span> <span class="fu">mean</span>(vals[<span class="dv">1</span>, ]), <span class="at">ep_tanques =</span> <span class="fu">mean</span>(vals[<span class="dv">2</span>, ]))</span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(<span class="fu">ep_medio</span>(<span class="dv">15</span>), <span class="fu">ep_medio</span>(<span class="dv">50</span>), <span class="fu">ep_medio</span>(<span class="dv">150</span>))</span>
+<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a>Leia a tabela coluna a coluna. <span class="in">`ep_peixes`</span> cai quando se mede mais peixes por tanque. <span class="in">`ep_tanques`</span></span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a>praticamente não se move.</span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a>Ou seja: <span class="in">`ep_tanques`</span> **não depende** de quantos peixes foram medidos. De que ele depende, então? O</span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>bloco seguinte pede que você descubra.</span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a>Em toda a função <span class="in">`ep_medio()`</span>, o número de tanques está fixo em **8**. Ele aparece em quatro lugares:</span>
+<span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a>duas vezes como <span class="in">`1:8`</span>, uma vez dentro de <span class="in">`rnorm(8, ...)`</span> e uma vez em <span class="in">`sqrt(8)`</span>.</span>
+<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Adapte a função"}</span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>Reescreva a função para que ela receba **dois** valores: o número de peixes por tanque e o número de</span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>tanques.</span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a>ep_medio2 <span class="ot">&lt;-</span> <span class="cf">function</span>(m, k) {</span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>  <span class="co"># troque os quatro lugares onde aparece o 8 pelo novo argumento</span></span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a>Confira se funcionou: <span class="in">`ep_medio2(15, 8)`</span> deve devolver números parecidos com os da linha de 15 peixes</span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a>da tabela anterior. Acrescente também <span class="in">`k`</span> ao vetor de saída, para que a tabela mostre quantos tanques</span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>foram usados.</span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}</span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>Você vai comparar **8 tanques** com **16 tanques**, mantendo 15 peixes em cada um.</span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>Antes de executar, escreva no script, como comentário, o que espera que aconteça com **cada uma das</span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a>duas colunas** de erro padrão. Elas se movem juntas? Só uma se move? Nenhuma?</span>
+<span id="cb15-276"><a href="#cb15-276" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-277"><a href="#cb15-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(<span class="fu">ep_medio2</span>(<span class="dv">15</span>, <span class="dv">8</span>), <span class="fu">ep_medio2</span>(<span class="dv">15</span>, <span class="dv">16</span>))</span>
+<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-replicacao.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
+<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
+<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
+<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: a simulação com <span class="in">`efeito_dieta &lt;- 0`</span>, o gráfico por tanque, a tabela com as duas</span>
+<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a>   análises e as duas proporções de alarme falso;</span>
+<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a função `ep_medio2()` escrita por você** e a tabela comparando 8 e 16 tanques com 15 peixes,</span>
+<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a>   precedida da sua previsão sobre as duas colunas;</span>
+<span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>em comentários, uma recomendação de delineamento: uma colega vai repetir este experimento e pode</span>
+<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a>   escolher entre **dobrar o número de tanques** ou **dobrar o número de peixes por tanque**. O que</span>
+<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a>   você recomenda, e de quanto foi a redução do erro padrão relevante nos **seus** números?</span>
+<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 2 a 3 frases explicando por que a análise com 120 peixes deu tantos alarmes falsos</span>
+<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a>   num experimento em que a dieta não fazia nada. Cite os **dois valores da coluna `ep`** que você</span>
+<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a>   obteve na tabela das duas análises e diga qual variação cada um deles mediu.</span>
+<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb15-303"><a href="#cb15-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a função <span class="in">`ep_medio2()`</span> aceita os dois argumentos e roda para 8 e 16 tanques;</span>
+<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a previsão sobre as duas colunas aparece **antes** da tabela;</span>
+<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a recomendação do item 3 cita os erros padrão que **você** obteve;</span>
+<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a explicação do item 4 menciona qual variação cada análise usou como régua;</span>
+<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade.</span>
+<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
+<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Descrevendo populações e amostras</span><span class="co">](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html)</span>{target="_blank"}</span>
+<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a>  (MEAD) — para rever a diferença entre unidade amostral e unidade de medição.</span>
+<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>O artigo de Hurlbert <span class="co">[</span><span class="ot">@hurlbert1984</span><span class="co">]</span> é a referência clássica sobre pseudorreplicação, com dezenas</span>
+<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a>  de exemplos de delineamentos ecológicos publicados.</span>
+<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-317"><a href="#cb15-317" aria-hidden="true" tabindex="-1"></a><span class="fu"># Referências</span></span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

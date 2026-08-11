@@ -552,15 +552,15 @@ Y_i=\beta_0+\beta_1X_i+\alpha_{g(i)}+\varepsilon_i.
    modelo     termo            estimativa
    &lt;chr&gt;      &lt;chr&gt;                 &lt;dbl&gt;
  1 bloco      (Intercept)           24.5 
- 2 bloco      grupotratado           2.78
- 3 bloco      factor(bandeja)2       3.98
- 4 bloco      factor(bandeja)3       6.96
- 5 bloco      factor(bandeja)4      12.4 
- 6 bloco      factor(bandeja)5      16.0 
- 7 bloco      factor(bandeja)6      19.0 
- 8 covariável (Intercept)            5.38
- 9 covariável grupotratado           2.95
-10 covariável peso_inicial           1.09</code></pre>
+ 2 bloco      grupotratado           1.90
+ 3 bloco      factor(bandeja)2       4.43
+ 4 bloco      factor(bandeja)3       8.21
+ 5 bloco      factor(bandeja)4      12.5 
+ 6 bloco      factor(bandeja)5      15.9 
+ 7 bloco      factor(bandeja)6      18.6 
+ 8 covariável (Intercept)            5.94
+ 9 covariável grupotratado           2.58
+10 covariável peso_inicial           1.06</code></pre>
 </div>
 </div>
 <p>No modelo com bloco, cada bandeja recebe seu próprio coeficiente, e são cinco deles para seis bandejas. No modelo com covariável, uma única inclinação descreve o efeito do peso inicial em toda a faixa medida. Em ambos, o coeficiente de <code>grupo</code> é o que responde à pergunta do estudo, e vale cerca de 3 unidades, como esperado pela construção dos dados.</p>
@@ -607,7 +607,7 @@ Figura&nbsp;2: Relação parcial entre temperatura e crescimento depois de retir
 </div>
 </div>
 </div>
-<p>A inclinação da reta da figura é 0,511, e o coeficiente de <code>temperatura</code> no modelo múltiplo é 0,511. As duas coincidem, e essa coincidência é o conteúdo da expressão “controlar por”: comparar a parte de <span class="math inline">\(X_1\)</span> que ainda varia depois do ajuste, e não apagar magicamente diferenças entre unidades.</p>
+<p>A inclinação da reta da figura é 0,460, e o coeficiente de <code>temperatura</code> no modelo múltiplo é 0,460. As duas coincidem, e essa coincidência é o conteúdo da expressão “controlar por”: comparar a parte de <span class="math inline">\(X_1\)</span> que ainda varia depois do ajuste, e não apagar magicamente diferenças entre unidades.</p>
 </section>
 </section>
 <section id="quando-uma-covariável-não-serve-para-ajustar" class="level1" data-number="5">

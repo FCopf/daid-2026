@@ -673,7 +673,7 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 </div>
 </div>
 </div>
-<p>A linha marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 5,5% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
+<p>A linha marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 4,9% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
 <p>A distribuição F depende de dois graus de liberdade: <span class="math inline">\(k-1\)</span> no numerador e <span class="math inline">\(N-k\)</span> no denominador. Ela assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição a partir do F observado. Sob <span class="math inline">\(H_0\)</span>, numerador e denominador estimam a mesma variância residual; quando as médias diferem, o numerador incorpora também a separação entre grupos.</p>
 <p>Na prática, uma única função reúne toda a tabela:</p>
 <div class="cell">
@@ -689,8 +689,8 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-grupo        3  4.272  1.4239   81.67 5.87e-14 ***
-Residuals   28  0.488  0.0174                     
+grupo        3  4.165   1.388   44.75 8.25e-11 ***
+Residuals   28  0.869   0.031                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>

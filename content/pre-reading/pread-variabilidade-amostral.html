@@ -476,7 +476,7 @@ Figura&nbsp;1: Frequência acumulada do evento comprimento maior que 6 cm. A lin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><code>rnorm()</code> representa o modelo da população, <code>replicate()</code> representa estudos independentes e <code>mean()</code> transforma cada amostra em uma estatística. O conjunto dos dois mil resultados é uma aproximação da <strong>distribuição amostral da média</strong>: nesta execução, as médias simuladas ficaram centradas em 5,00 cm, com desvio-padrão de 0,23 cm entre estudos. Comparar 4,9 com 5,3 cm, como fizeram as duas equipes, deixa de ser um problema quando se conhece essa dispersão.</p>
+<p><code>rnorm()</code> representa o modelo da população, <code>replicate()</code> representa estudos independentes e <code>mean()</code> transforma cada amostra em uma estatística. O conjunto dos dois mil resultados é uma aproximação da <strong>distribuição amostral da média</strong>: nesta execução, as médias simuladas ficaram centradas em 5,00 cm, com desvio-padrão de 0,22 cm entre estudos. Comparar 4,9 com 5,3 cm, como fizeram as duas equipes, deixa de ser um problema quando se conhece essa dispersão.</p>
 </section>
 </section>
 <section id="duas-distribuições-que-não-devem-ser-confundidas" class="level1" data-number="3">
@@ -496,7 +496,7 @@ Figura&nbsp;2: À esquerda, os comprimentos de 2000 mexilhões individuais. À d
 </div>
 </div>
 </div>
-<p>O gráfico da esquerda mostra o que você veria se medisse mexilhões um a um: nesta simulação, os comprimentos foram de 1,5 a 8,2 cm. O da direita mostra as <strong>médias</strong> de amostras de 20, que ficaram entre 4,4 e 5,7 cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.</p>
+<p>O gráfico da esquerda mostra o que você veria se medisse mexilhões um a um: nesta simulação, os comprimentos foram de 1,5 a 8,6 cm. O da direita mostra as <strong>médias</strong> de amostras de 20, que ficaram entre 4,2 e 5,7 cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Duas distribuições diferentes">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -530,7 +530,7 @@ Figura&nbsp;3: Distribuição das médias amostrais para três tamanhos de amost
 </div>
 </div>
 </div>
-<p>Com 5 mexilhões por amostra, as médias desta simulação foram de 3,4 a 6,4 cm: duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre 4,6 e 5,3 cm.</p>
+<p>Com 5 mexilhões por amostra, as médias desta simulação foram de 3,4 a 6,7 cm: duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre 4,7 e 5,4 cm.</p>
 <p>Ou seja: <strong>amostras maiores não mudam a população, mudam a nossa incerteza sobre ela.</strong></p>
 </section>
 <section id="um-resultado-que-não-depende-dos-mexilhões" class="level1" data-number="5">

@@ -492,7 +492,7 @@ Figura&nbsp;1: Valores das unidades da população e médias obtidas ao repetir 
 </div>
 </div>
 </div>
-<p>A média populacional desta simulação é 7,87 espécies. A amostra de 45 estações que sorteamos produziu a estimativa 7,56, próxima mas não idêntica. O histograma estreito das médias não afirma que as estações se tornaram homogêneas: ele mostra que uma média de 45 unidades é bem mais estável que uma unidade isolada, com desvio-padrão de 0,52 espécies entre as repetições. É essa nuvem de estimativas que permite dizer se o estimador está centrado no parâmetro e quão preciso é o procedimento.</p>
+<p>A média populacional desta simulação é 8,01 espécies. A amostra de 45 estações que sorteamos produziu a estimativa 8,27, próxima mas não idêntica. O histograma estreito das médias não afirma que as estações se tornaram homogêneas: ele mostra que uma média de 45 unidades é bem mais estável que uma unidade isolada, com desvio-padrão de 0,54 espécies entre as repetições. É essa nuvem de estimativas que permite dizer se o estimador está centrado no parâmetro e quão preciso é o procedimento.</p>
 </section>
 </section>
 <section id="quatro-maneiras-de-construir-uma-amostra-probabilística" class="level1" data-number="3">
@@ -518,21 +518,21 @@ Figura&nbsp;1: Valores das unidades da população e médias obtidas ao repetir 
 <pre><code># A tibble: 15 × 2
    estacao setor        
      &lt;int&gt; &lt;chr&gt;        
- 1      34 abrigado     
- 2       5 exposto      
- 3      24 intermediário
- 4      44 abrigado     
- 5      23 intermediário
- 6      22 intermediário
- 7      26 intermediário
- 8       9 exposto      
- 9      14 exposto      
-10      43 abrigado     
-11      36 abrigado     
-12      35 abrigado     
-13      13 exposto      
-14      30 intermediário
-15       4 exposto      </code></pre>
+ 1       1 exposto      
+ 2      44 abrigado     
+ 3      30 intermediário
+ 4      29 intermediário
+ 5       7 exposto      
+ 6      34 abrigado     
+ 7      35 abrigado     
+ 8      11 exposto      
+ 9      23 intermediário
+10      24 intermediário
+11      45 abrigado     
+12      17 intermediário
+13      26 intermediário
+14      18 intermediário
+15      40 abrigado     </code></pre>
 </div>
 </div>
 <p>O argumento <code>replace = FALSE</code> representa amostragem <strong>sem reposição</strong>: uma estação sorteada não pode entrar de novo. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma vez. A reposição simplifica modelos probabilísticos, mas sem reposição descreve melhor muitos levantamentos de campo. Quando <span class="math inline">\(n\)</span> é uma fração pequena de <span class="math inline">\(N\)</span>, a diferença entre os dois planos é pequena; quando a fração é grande, amostrar sem reposição reduz a incerteza.</p>
@@ -615,7 +615,7 @@ Figura&nbsp;3: Estimativas da riqueza média da região obtidas por duas estrat�
 </div>
 </div>
 </div>
-<p>As duas estratégias acertam <strong>em média</strong>: os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de 0,72 espécies, e as por praias inteiras, de 1,52.</p>
+<p>As duas estratégias acertam <strong>em média</strong>: os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de 0,68 espécies, e as por praias inteiras, de 1,45.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

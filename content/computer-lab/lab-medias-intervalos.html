@@ -368,15 +368,13 @@ window.Quarto = {
     <h2 id="toc-title">Conteúdo</h2>
    
   <ul class="collapse">
-  <li><a href="#um-costão-inventado-para-poder-conferir-a-resposta" id="toc-um-costão-inventado-para-poder-conferir-a-resposta" class="nav-link active" data-scroll-target="#um-costão-inventado-para-poder-conferir-a-resposta"><span class="header-section-number">1</span> Um costão inventado, para poder conferir a resposta</a></li>
-  <li><a href="#uma-equipe-vai-ao-costão" id="toc-uma-equipe-vai-ao-costão" class="nav-link" data-scroll-target="#uma-equipe-vai-ao-costão"><span class="header-section-number">2</span> Uma equipe vai ao costão</a></li>
-  <li><a href="#uma-equipe-é-pouco.-vamos-mandar-duas-mil" id="toc-uma-equipe-é-pouco.-vamos-mandar-duas-mil" class="nav-link" data-scroll-target="#uma-equipe-é-pouco.-vamos-mandar-duas-mil"><span class="header-section-number">3</span> Uma equipe é pouco. Vamos mandar duas mil</a></li>
-  <li><a href="#o-que-muda-quando-a-amostra-cresce" id="toc-o-que-muda-quando-a-amostra-cresce" class="nav-link" data-scroll-target="#o-que-muda-quando-a-amostra-cresce"><span class="header-section-number">4</span> O que muda quando a amostra cresce?</a></li>
-  <li><a href="#o-erro-padrão-a-partir-de-uma-única-amostra" id="toc-o-erro-padrão-a-partir-de-uma-única-amostra" class="nav-link" data-scroll-target="#o-erro-padrão-a-partir-de-uma-única-amostra"><span class="header-section-number">5</span> O erro padrão a partir de uma única amostra</a></li>
-  <li><a href="#de-um-número-para-um-intervalo" id="toc-de-um-número-para-um-intervalo" class="nav-link" data-scroll-target="#de-um-número-para-um-intervalo"><span class="header-section-number">6</span> De um número para um intervalo</a></li>
-  <li><a href="#o-intervalo-acerta-com-que-frequência" id="toc-o-intervalo-acerta-com-que-frequência" class="nav-link" data-scroll-target="#o-intervalo-acerta-com-que-frequência"><span class="header-section-number">7</span> O intervalo acerta com que frequência?</a></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">8</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">9</span> Para saber mais</a></li>
+  <li><a href="#objetivo-desta-prática" id="toc-objetivo-desta-prática" class="nav-link active" data-scroll-target="#objetivo-desta-prática"><span class="header-section-number">1</span> Objetivo desta prática</a></li>
+  <li><a href="#preparação" id="toc-preparação" class="nav-link" data-scroll-target="#preparação"><span class="header-section-number">2</span> Preparação</a></li>
+  <li><a href="#uma-equipe-vai-ao-costão" id="toc-uma-equipe-vai-ao-costão" class="nav-link" data-scroll-target="#uma-equipe-vai-ao-costão"><span class="header-section-number">3</span> Uma equipe vai ao costão</a></li>
+  <li><a href="#duas-propriedades-do-procedimento" id="toc-duas-propriedades-do-procedimento" class="nav-link" data-scroll-target="#duas-propriedades-do-procedimento"><span class="header-section-number">4</span> Duas propriedades do procedimento</a></li>
+  <li><a href="#sua-vez" id="toc-sua-vez" class="nav-link" data-scroll-target="#sua-vez"><span class="header-section-number">5</span> Sua vez</a></li>
+  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6</span> Entrega</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -417,102 +415,135 @@ window.Quarto = {
 </header>
 
 
-<section id="um-costão-inventado-para-poder-conferir-a-resposta" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Um costão inventado, para poder conferir a resposta</h1>
-<p>Com dados reais nunca sabemos o valor verdadeiro que estamos estimando. Aqui vamos fazer o contrário: <strong>inventar</strong> um costão cujo comprimento médio dos mexilhões é exatamente 5 cm, com desvio-padrão de 1 cm.</p>
-<p>Sabendo a resposta de antemão, podemos verificar se os métodos que usamos com dados reais acertam, e com que frequência.</p>
+<section id="objetivo-desta-prática" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
+<p>A <a href="../../content/pre-reading/pread-erro-padrao-intervalo.html">leitura desta semana</a> mostrou cem intervalos de confiança e contou quantos continham o valor real. Você viu que o procedimento acerta cerca de 95% das vezes.</p>
+<p>Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de <strong>acertar com certa frequência</strong>, ele tem uma <strong>largura</strong> — e é a largura que diz se o estudo estabeleceu alguma coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das duas muda.</p>
+<p>O objetivo em R é construir um experimento de verificação: gerar muitas coletas, calcular um intervalo para cada uma e resumir o desempenho do procedimento.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Como a hora será usada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>5 min</strong> abrir o RStudio, criar o script e ler a proposta;</li>
+<li><strong>40 a 45 min</strong> percorrer as seções guiadas e fazer o bloco <em>Sua vez</em>;</li>
+<li><strong>10 a 15 min</strong> escrever as respostas, rodar o script do início ao fim e enviar.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="preparação" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Preparação</h1>
+<p>Crie um script <code>pr-medias-intervalos.R</code> com o cabeçalho de identificação e comece por:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Os parâmetros do costão ficam explícitos no início do script, para serem fáceis de mudar depois:</p>
+<p>Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário: <strong>inventar</strong> um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de antemão, podemos verificar se o método acerta, e com que frequência.</p>
+<p>Os parâmetros ficam no início do script, para serem fáceis de mudar depois:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>media_real <span class="ot">&lt;-</span> <span class="dv">5</span>     <span class="co"># comprimento médio no costão, em cm</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>desvio_real <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># desvio-padrão entre mexilhões, em cm</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>             <span class="co"># mexilhões por amostra</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="uma-equipe-vai-ao-costão" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Uma equipe vai ao costão</h1>
+<section id="uma-equipe-vai-ao-costão" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Uma equipe vai ao costão</h1>
 <p>Coletar 20 mexilhões e medi-los é uma linha de código:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>amostra <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(amostra, <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(amostra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 5.96 2.33 5.57 6.26 5.12 5.72 4.96 6.36 5.79 3.96 4.76 7.41 5.70 4.46 5.69
-[16] 5.78 4.98 7.43 4.28 4.88</code></pre>
+<pre><code>[1] 5.457936</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>media_amostra <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>media_amostra</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(amostra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.370625</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(amostra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.159744</code></pre>
+<pre><code>[1] 1.036808</code></pre>
 </div>
 </div>
-<p>Nesta coleta, a média observada foi 5,37 cm, não exatamente 5. E não deveria ser: são 20 mexilhões sorteados, não o costão inteiro.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Modifique">
+<p>A média observada não é exatamente 5, e não deveria ser: são 20 mexilhões sorteados, não o costão inteiro.</p>
+<p>A leitura mostrou que o espalhamento dessas médias, entre coletas repetidas, pode ser estimado a partir de <strong>uma única amostra</strong>, pela fórmula do erro padrão:</p>
+<p><span class="math display">\[EP = \frac{s}{\sqrt{n}}\]</span></p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Complete">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Modifique
+<span class="screen-reader-only">Dica</span>Complete
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Execute as linhas acima cinco vezes seguidas. Anote as médias.</p>
-<p>Elas caem todas do mesmo lado de 5, ou se distribuem em volta?</p>
+<p>Traduza a fórmula para o R. <code>sd(amostra)</code> é o <span class="math inline">\(s\)</span>; falta o denominador.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(amostra) <span class="sc">/</span> <span class="fu">sqrt</span>(____)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>erro_padrao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2318374</code></pre>
+</div>
+</div>
+<p>Com a média e o erro padrão, construímos o <strong>intervalo de confiança de 95%</strong>. A função <code>qt()</code> fornece o multiplicador da distribuição t, que depende dos graus de liberdade (<span class="math inline">\(n - 1\)</span>):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>multiplicador <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>inferior <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra) <span class="sc">-</span> multiplicador <span class="sc">*</span> erro_padrao</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>superior <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra) <span class="sc">+</span> multiplicador <span class="sc">*</span> erro_padrao</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(inferior, superior)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.972694 5.943177</code></pre>
+</div>
+</div>
+<p>Este é o intervalo <strong>desta</strong> coleta. Ele contém 5 cm, ou não contém; e com uma amostra só você nunca saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.</p>
 </section>
-<section id="uma-equipe-é-pouco.-vamos-mandar-duas-mil" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Uma equipe é pouco. Vamos mandar duas mil</h1>
-<p>Repetir a coleta mil vezes na mão seria inviável. <code>replicate()</code> faz isso:</p>
+<section id="duas-propriedades-do-procedimento" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Duas propriedades do procedimento</h1>
+<p>Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas medidas: a <strong>proporção que contém o valor real</strong> e a <strong>largura média</strong> dos intervalos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(medias)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>coletas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">each =</span> n),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">200</span> <span class="sc">*</span> n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>intervalos <span class="ot">&lt;-</span> coletas <span class="sc">|&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(comprimento),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">erro =</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">inferior =</span> media <span class="sc">-</span> erro,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">superior =</span> media <span class="sc">+</span> erro,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobre =</span> inferior <span class="sc">&lt;=</span> media_real <span class="sc">&amp;</span> superior <span class="sc">&gt;=</span> media_real,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">largura =</span> superior <span class="sc">-</span> inferior</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>resumo_20 <span class="ot">&lt;-</span> intervalos <span class="sc">|&gt;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">mexilhoes_por_amostra =</span> n,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobertura =</span> <span class="fu">mean</span>(cobre),</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">largura_media =</span> <span class="fu">mean</span>(largura)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>resumo_20</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2000</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(medias, <span class="dv">5</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.797912 5.203688 5.047157 4.760672 5.003608</code></pre>
-</div>
-</div>
-<p>O objeto <code>medias</code> guarda duas mil médias, cada uma vinda de uma coleta independente de 20 mexilhões.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="at">media =</span> medias), <span class="fu">aes</span>(<span class="at">x =</span> media)) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Média amostral (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-medias-distribuicao-amostral" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-medias-distribuicao-amostral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-medias-intervalos_files/figure-html/fig-medias-distribuicao-amostral-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-medias-distribuicao-amostral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Duas mil médias amostrais, cada uma calculada a partir de 20 mexilhões. A linha marca o valor real de 5 cm.
-</figcaption>
-</figure>
+<pre><code># A tibble: 1 × 3
+  mexilhoes_por_amostra cobertura largura_media
+                  &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+1                    20      0.94         0.914</code></pre>
 </div>
 </div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.005563</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2260694</code></pre>
-</div>
-</div>
+<p>Duas observações sobre o código. A coluna <code>cobre</code> guarda <code>TRUE</code> ou <code>FALSE</code> para cada intervalo, e a média de um vetor lógico é a proporção de <code>TRUE</code>. A coluna <code>largura</code> é simplesmente a distância entre os dois limites.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -523,204 +554,75 @@ Figura&nbsp;1: Duas mil médias amostrais, cada uma calculada a partir de 20 mex
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Duas coisas ao mesmo tempo:</p>
+<p>A cobertura obtida não será exatamente 95%: são 200 coletas sorteadas, e essa proporção também varia de execução para execução. Rode o bloco mais uma vez para ver o número oscilar.</p>
+</div>
+</div>
+</section>
+<section id="sua-vez" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Sua vez</h1>
+<p>Você tem o desempenho do procedimento para amostras de 20 mexilhões. Falta saber o que acontece quando a amostra muda de tamanho.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Escolha">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Escolha
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escolha um segundo tamanho de amostra, diferente de 20: pode ser <strong>5</strong>, <strong>10</strong>, <strong>50</strong> ou <strong>100</strong>. Registre a escolha no script.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja antes de rodar">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Preveja antes de rodar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O resumo tem duas colunas. Antes de executar qualquer coisa, escreva no script, como comentário, o que você espera que aconteça com <strong>cada uma delas</strong> quando o tamanho da amostra mudar:</p>
 <ul>
-<li>o <strong>centro</strong> das médias fica praticamente em 5: em média, o método acerta;</li>
-<li>o <strong>espalhamento</strong> delas é bem menor que 1 cm, que é como os mexilhões variam entre si.</li>
+<li>a <strong>cobertura</strong> vai subir, descer ou ficar parecida?</li>
+<li>a <strong>largura média</strong> vai subir, descer ou ficar parecida?</li>
 </ul>
-<p>Não confunda os dois: um descreve mexilhões, o outro descreve médias de 20 mexilhões.</p>
+<p>As duas respostas não são iguais. Registre as duas antes de olhar.</p>
 </div>
 </div>
-</section>
-<section id="o-que-muda-quando-a-amostra-cresce" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> O que muda quando a amostra cresce?</h1>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>comparacao <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">tamanho =</span> <span class="st">"n = 5"</span>,   <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">5</span>,   media_real, desvio_real)))),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">tamanho =</span> <span class="st">"n = 20"</span>,  <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>,  media_real, desvio_real)))),</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">tamanho =</span> <span class="st">"n = 100"</span>, <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>, media_real, desvio_real))))</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tamanho =</span> <span class="fu">fct_relevel</span>(tamanho, <span class="st">"n = 5"</span>, <span class="st">"n = 20"</span>, <span class="st">"n = 100"</span>))</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(comparacao, <span class="fu">aes</span>(<span class="at">x =</span> media)) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">45</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> tamanho, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Média amostral (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-medias-tamanhos" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-medias-tamanhos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-medias-intervalos_files/figure-html/fig-medias-tamanhos-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-medias-tamanhos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Distribuição das médias amostrais para três tamanhos de amostra, no mesmo costão.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>comparacao <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tamanho) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">centro =</span> <span class="fu">mean</span>(media),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">espalhamento =</span> <span class="fu">sd</span>(media)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  tamanho centro espalhamento
-  &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;
-1 n = 5     5.00       0.448 
-2 n = 20    5.00       0.229 
-3 n = 100   5.00       0.1000</code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
+<p>Para produzir o segundo resultado, <strong>duplique no seu script</strong> o bloco dos 200 intervalos, trocando o valor de <code>n</code> no início e guardando o resumo com outro nome:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> ____            <span class="co"># o tamanho que você escolheu</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ... cole aqui o bloco dos 200 intervalos ...</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>resumo_meu <span class="ot">&lt;-</span> intervalos <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mexilhoes_por_amostra =</span> n,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobertura =</span> <span class="fu">mean</span>(cobre),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">largura_media =</span> <span class="fu">mean</span>(largura)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Por fim, junte os dois resumos em uma tabela só, para poder comparar as linhas:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(resumo_20, resumo_meu)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Cuidado com a ordem">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Interprete
+<span class="screen-reader-only">Aviso</span>Cuidado com a ordem
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O centro é o mesmo nos três casos; só o espalhamento muda.</p>
-<p>Compare os valores de <code>espalhamento</code> da tabela com <span class="math inline">\(1/\sqrt{5}\)</span>, <span class="math inline">\(1/\sqrt{20}\)</span> e <span class="math inline">\(1/\sqrt{100}\)</span>. O que você conclui?</p>
+<p>Todo o bloco usa o objeto <code>n</code>. Se você mudar <code>n</code> e não reexecutar as linhas que vêm depois, a tabela sairá com números misturados de dois tamanhos diferentes.</p>
+<p>Por isso o script precisa rodar <strong>do início ao fim em sessão nova</strong> antes de ser enviado: é assim que você garante que cada resumo corresponde ao <code>n</code> que está escrito ao lado dele.</p>
 </div>
 </div>
 </section>
-<section id="o-erro-padrão-a-partir-de-uma-única-amostra" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> O erro padrão a partir de uma única amostra</h1>
-<p>O problema é que, na vida real, você não roda 2000 coletas. Tem uma só.</p>
-<p>A saída é estimar o espalhamento das médias a partir da própria amostra, com a fórmula do <strong>erro padrão</strong>. Reaproveitamos a mesma <code>amostra</code> criada no começo, sem sortear outra:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(amostra) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>erro_padrao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2593267</code></pre>
-</div>
-</div>
-<p>Compare esse valor com o <code>sd(medias)</code> calculado lá atrás, que veio de duas mil coletas. Uma amostra só conseguiu estimar razoavelmente bem a variação de um procedimento que nunca foi repetido.</p>
-</section>
-<section id="de-um-número-para-um-intervalo" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> De um número para um intervalo</h1>
-<p>Com a média e o erro padrão, construímos um <strong>intervalo de confiança de 95%</strong>. A função <code>qt()</code> fornece o multiplicador da distribuição t, que depende dos graus de liberdade (<span class="math inline">\(n - 1\)</span>):</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>multiplicador <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>multiplicador</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.093024</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>inferior <span class="ot">&lt;-</span> media_amostra <span class="sc">-</span> multiplicador <span class="sc">*</span> erro_padrao</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>superior <span class="ot">&lt;-</span> media_amostra <span class="sc">+</span> multiplicador <span class="sc">*</span> erro_padrao</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(inferior, superior)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.827848 5.913402</code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Observe
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>O intervalo desta amostra vai de 4,83 a 5,91 cm, e <strong>contém</strong> o valor real de 5 cm.</p>
-<p>Isso não prova nada sobre o método: diz apenas o que aconteceu desta vez. Para julgar o método, é preciso repeti-lo muitas vezes.</p>
-</div>
-</div>
-</section>
-<section id="o-intervalo-acerta-com-que-frequência" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> O intervalo acerta com que frequência?</h1>
-<p>Vamos construir 200 amostras, calcular um intervalo para cada uma e contar quantos contêm o valor real.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>coletas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">each =</span> n),</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">200</span> <span class="sc">*</span> n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>intervalos <span class="ot">&lt;-</span> coletas <span class="sc">|&gt;</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(comprimento),</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">erro =</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">inferior =</span> media <span class="sc">-</span> erro,</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">superior =</span> media <span class="sc">+</span> erro,</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobre =</span> <span class="fu">factor</span>(</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(inferior <span class="sc">&lt;=</span> media_real <span class="sc">&amp;</span> superior <span class="sc">&gt;=</span> media_real, <span class="st">"sim"</span>, <span class="st">"não"</span>),</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"sim"</span>, <span class="st">"não"</span>)</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>intervalos <span class="sc">|&gt;</span> <span class="fu">count</span>(cobre)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  cobre     n
-  &lt;fct&gt; &lt;int&gt;
-1 sim     192
-2 não       8</code></pre>
-</div>
-</div>
-<p>Nesta execução, 96,0% dos 200 intervalos contêm o valor real. Os demais, não. O valor oscila em torno de 95% a cada nova execução, e é essa a taxa de acerto que o “95%” do nome promete.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">head</span>(intervalos, <span class="dv">50</span>), <span class="fu">aes</span>(<span class="at">y =</span> id, <span class="at">x =</span> media, <span class="at">colour =</span> cobre)) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> inferior, <span class="at">xmax =</span> superior), <span class="at">height =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">sim =</span> <span class="st">"#0072B2"</span>, <span class="st">`</span><span class="at">não</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>), <span class="at">drop =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento médio (cm)"</span>, <span class="at">y =</span> <span class="st">"Coleta"</span>, <span class="at">colour =</span> <span class="st">"Contém 5 cm"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-medias-cobertura" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-medias-cobertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-medias-intervalos_files/figure-html/fig-medias-cobertura-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-medias-cobertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3: Os primeiros 50 intervalos de confiança. A linha vertical é o valor real de 5 cm; em laranja, os intervalos que não o contêm.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Interprete
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Os intervalos em laranja, quando aparecem, foram calculados exatamente com o mesmo procedimento dos azuis, sem nenhum erro de quem coletou.</p>
-<p>Com uma amostra só, você não tem como saber em qual cor está. O que a estatística oferece é a <strong>taxa de acerto do procedimento</strong>, não uma garantia sobre o seu caso.</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Modifique">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Modifique
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Troque <code>n &lt;- 20</code> por <code>n &lt;- 5</code> no início do script e execute tudo novamente. Como todo o resto do script usa o objeto <code>n</code>, basta essa única alteração.</p>
-<p>A proporção de intervalos que cobrem o valor real muda? E a <strong>largura</strong> deles?</p>
-</div>
-</div>
-</section>
-<section id="entrega" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Entrega</h1>
+<section id="entrega" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Entrega</h1>
+<p>Salve o script <code>pr-medias-intervalos.R</code> com o cabeçalho preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>.</p>
 <div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -731,21 +633,42 @@ Figura&nbsp;3: Os primeiros 50 intervalos de confiança. A linha vertical é o v
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Um script <code>pr-medias-intervalos.R</code> que rode em sessão nova e contenha:</p>
 <ol type="1">
-<li>a distribuição de 2000 médias amostrais para <code>n = 5</code>, <code>n = 20</code> e <code>n = 100</code>, com o desvio-padrão de cada conjunto;</li>
-<li>o cálculo do erro padrão a partir de uma única amostra e o intervalo de 95% correspondente;</li>
-<li>a verificação de cobertura com 200 intervalos;</li>
-<li>em comentários, quatro a cinco frases respondendo: <strong>por que o desvio-padrão das médias cai com a raiz de n, e o que significa dizer que um intervalo tem 95% de confiança?</strong></li>
+<li>a base da aula: uma amostra, o erro padrão completado por você e o intervalo de 95% dessa coleta;</li>
+<li><strong>a tabela com as duas linhas</strong>, uma para <code>n = 20</code> e outra para o tamanho que você escolheu, com as duas previsões registradas em comentário <strong>antes</strong> dela;</li>
+<li>em comentários, uma frase dizendo <strong>qual das duas colunas mudou e qual não mudou</strong>, e por quê;</li>
+<li>em comentários, 3 a 4 frases respondendo, <strong>com os seus dois pares de números</strong>: dois estudos informam intervalos de 95% para a mesma população, um com amostra grande e outro com amostra pequena. Os dois acertam com a mesma frequência? Então o que exatamente o estudo maior comprou com o esforço extra de coleta?</li>
+<li>em comentários, uma conta: partindo do <code>n = 20</code>, quantos mexilhões seriam necessários para obter um intervalo com <strong>metade</strong> da largura obtida ali? Use as suas duas larguras para conferir se a sua resposta é coerente com o que você observou.</li>
 </ol>
 </div>
 </div>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="O que será avaliado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>O que será avaliado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox">o script roda em sessão nova, do início ao fim, sem erro;</label></li>
+<li><label><input type="checkbox">as duas previsões (cobertura e largura) aparecem <strong>antes</strong> da tabela;</label></li>
+<li><label><input type="checkbox">a tabela tem as duas linhas e as três colunas, e cada linha corresponde ao <code>n</code> indicado;</label></li>
+<li><label><input type="checkbox">a escolha do segundo tamanho de amostra está registrada;</label></li>
+<li><label><input type="checkbox">a resposta do item 3 distingue explicitamente cobertura de largura;</label></li>
+<li><label><input type="checkbox">a conclusão final cita os seus próprios valores, e não uma frase genérica;</label></li>
+<li><label><input type="checkbox">a conta do item 5 aparece e é coerente com as duas larguras que você mediu.</label></li>
+</ul>
+</div>
+</div>
 </section>
-<section id="para-saber-mais" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Para saber mais</h1>
+<section id="para-saber-mais" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
 <ul>
-<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html" target="_blank">Distribuição das médias amostrais</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html" target="_blank">Estimando a média populacional</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html" target="_blank">Estimando a média populacional</a> (MEAD) — procure a seção sobre a margem de erro, se quiser rever de onde sai o multiplicador <code>qt()</code>.</li>
+<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html" target="_blank">Distribuição das médias amostrais</a> (MEAD) — para rever por que o erro padrão cai com a raiz de <span class="math inline">\(n\)</span>.</li>
 </ul>
 
 
@@ -1218,282 +1141,247 @@ Figura&nbsp;3: Os primeiros 50 intervalos de confiança. A linha vertical é o v
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Médias que variam e intervalos que cobrem"</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 03"</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um costão inventado, para poder conferir a resposta</span></span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>Com dados reais nunca sabemos o valor verdadeiro que estamos estimando. Aqui vamos fazer o</span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>contrário: **inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm, com</span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>desvio-padrão de 1 cm.</span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>Sabendo a resposta de antemão, podemos verificar se os métodos que usamos com dados reais acertam,</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>e com que frequência.</span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>Os parâmetros do costão ficam explícitos no início do script, para serem fáceis de mudar depois:</span>
-<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a>media_real <span class="ot">&lt;-</span> <span class="dv">5</span>     <span class="co"># comprimento médio no costão, em cm</span></span>
-<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a>desvio_real <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># desvio-padrão entre mexilhões, em cm</span></span>
-<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>             <span class="co"># mexilhões por amostra</span></span>
-<span id="cb30-44"><a href="#cb30-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-45"><a href="#cb30-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-46"><a href="#cb30-46" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma equipe vai ao costão</span></span>
-<span id="cb30-47"><a href="#cb30-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-48"><a href="#cb30-48" aria-hidden="true" tabindex="-1"></a>Coletar 20 mexilhões e medi-los é uma linha de código:</span>
-<span id="cb30-49"><a href="#cb30-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-53"><a href="#cb30-53" aria-hidden="true" tabindex="-1"></a>amostra <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
-<span id="cb30-54"><a href="#cb30-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-55"><a href="#cb30-55" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(amostra, <span class="dv">2</span>)</span>
-<span id="cb30-56"><a href="#cb30-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a>media_amostra <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra)</span>
-<span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a>media_amostra</span>
-<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(amostra)</span>
-<span id="cb30-61"><a href="#cb30-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-62"><a href="#cb30-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-65"><a href="#cb30-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-66"><a href="#cb30-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb30-67"><a href="#cb30-67" aria-hidden="true" tabindex="-1"></a>media_txt <span class="ot">&lt;-</span> <span class="fu">formatC</span>(media_amostra, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
-<span id="cb30-68"><a href="#cb30-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-69"><a href="#cb30-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-70"><a href="#cb30-70" aria-hidden="true" tabindex="-1"></a>Nesta coleta, a média observada foi <span class="in">`r media_txt`</span> cm, não exatamente 5. E não deveria ser:</span>
-<span id="cb30-71"><a href="#cb30-71" aria-hidden="true" tabindex="-1"></a>são 20 mexilhões sorteados, não o costão inteiro.</span>
-<span id="cb30-72"><a href="#cb30-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-73"><a href="#cb30-73" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Modifique"}</span>
-<span id="cb30-74"><a href="#cb30-74" aria-hidden="true" tabindex="-1"></a>Execute as linhas acima cinco vezes seguidas. Anote as médias.</span>
-<span id="cb30-75"><a href="#cb30-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-76"><a href="#cb30-76" aria-hidden="true" tabindex="-1"></a>Elas caem todas do mesmo lado de 5, ou se distribuem em volta?</span>
-<span id="cb30-77"><a href="#cb30-77" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-78"><a href="#cb30-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-79"><a href="#cb30-79" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma equipe é pouco. Vamos mandar duas mil</span></span>
-<span id="cb30-80"><a href="#cb30-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-81"><a href="#cb30-81" aria-hidden="true" tabindex="-1"></a>Repetir a coleta mil vezes na mão seria inviável. <span class="in">`replicate()`</span> faz isso:</span>
-<span id="cb30-82"><a href="#cb30-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-85"><a href="#cb30-85" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-86"><a href="#cb30-86" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)))</span>
-<span id="cb30-87"><a href="#cb30-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-88"><a href="#cb30-88" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(medias)</span>
-<span id="cb30-89"><a href="#cb30-89" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(medias, <span class="dv">5</span>)</span>
-<span id="cb30-90"><a href="#cb30-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-91"><a href="#cb30-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-92"><a href="#cb30-92" aria-hidden="true" tabindex="-1"></a>O objeto <span class="in">`medias`</span> guarda duas mil médias, cada uma vinda de uma coleta independente de 20</span>
-<span id="cb30-93"><a href="#cb30-93" aria-hidden="true" tabindex="-1"></a>mexilhões.</span>
-<span id="cb30-94"><a href="#cb30-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-97"><a href="#cb30-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-98"><a href="#cb30-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medias-distribuicao-amostral</span></span>
-<span id="cb30-99"><a href="#cb30-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Duas mil médias amostrais, cada uma calculada a partir de 20 mexilhões. A linha marca o valor real de 5 cm."</span></span>
-<span id="cb30-100"><a href="#cb30-100" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.2</span></span>
-<span id="cb30-101"><a href="#cb30-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-102"><a href="#cb30-102" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="at">media =</span> medias), <span class="fu">aes</span>(<span class="at">x =</span> media)) <span class="sc">+</span></span>
-<span id="cb30-103"><a href="#cb30-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb30-104"><a href="#cb30-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb30-105"><a href="#cb30-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Média amostral (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span>
-<span id="cb30-106"><a href="#cb30-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-107"><a href="#cb30-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-110"><a href="#cb30-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-111"><a href="#cb30-111" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias)</span>
-<span id="cb30-112"><a href="#cb30-112" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)</span>
-<span id="cb30-113"><a href="#cb30-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-114"><a href="#cb30-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-115"><a href="#cb30-115" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb30-116"><a href="#cb30-116" aria-hidden="true" tabindex="-1"></a>Duas coisas ao mesmo tempo:</span>
-<span id="cb30-117"><a href="#cb30-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-118"><a href="#cb30-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o **centro** das médias fica praticamente em 5: em média, o método acerta;</span>
-<span id="cb30-119"><a href="#cb30-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o **espalhamento** delas é bem menor que 1 cm, que é como os mexilhões variam entre si.</span>
-<span id="cb30-120"><a href="#cb30-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-121"><a href="#cb30-121" aria-hidden="true" tabindex="-1"></a>Não confunda os dois: um descreve mexilhões, o outro descreve médias de 20 mexilhões.</span>
-<span id="cb30-122"><a href="#cb30-122" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-123"><a href="#cb30-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-124"><a href="#cb30-124" aria-hidden="true" tabindex="-1"></a><span class="fu"># O que muda quando a amostra cresce?</span></span>
-<span id="cb30-125"><a href="#cb30-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-128"><a href="#cb30-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-129"><a href="#cb30-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medias-tamanhos</span></span>
-<span id="cb30-130"><a href="#cb30-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribuição das médias amostrais para três tamanhos de amostra, no mesmo costão."</span></span>
-<span id="cb30-131"><a href="#cb30-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb30-132"><a href="#cb30-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-133"><a href="#cb30-133" aria-hidden="true" tabindex="-1"></a>comparacao <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb30-134"><a href="#cb30-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">tamanho =</span> <span class="st">"n = 5"</span>,   <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">5</span>,   media_real, desvio_real)))),</span>
-<span id="cb30-135"><a href="#cb30-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">tamanho =</span> <span class="st">"n = 20"</span>,  <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>,  media_real, desvio_real)))),</span>
-<span id="cb30-136"><a href="#cb30-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">tamanho =</span> <span class="st">"n = 100"</span>, <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>, media_real, desvio_real))))</span>
-<span id="cb30-137"><a href="#cb30-137" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb30-138"><a href="#cb30-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tamanho =</span> <span class="fu">fct_relevel</span>(tamanho, <span class="st">"n = 5"</span>, <span class="st">"n = 20"</span>, <span class="st">"n = 100"</span>))</span>
-<span id="cb30-139"><a href="#cb30-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-140"><a href="#cb30-140" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(comparacao, <span class="fu">aes</span>(<span class="at">x =</span> media)) <span class="sc">+</span></span>
-<span id="cb30-141"><a href="#cb30-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">45</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb30-142"><a href="#cb30-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb30-143"><a href="#cb30-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> tamanho, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb30-144"><a href="#cb30-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Média amostral (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span>
-<span id="cb30-145"><a href="#cb30-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-146"><a href="#cb30-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-149"><a href="#cb30-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-150"><a href="#cb30-150" aria-hidden="true" tabindex="-1"></a>comparacao <span class="sc">|&gt;</span></span>
-<span id="cb30-151"><a href="#cb30-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tamanho) <span class="sc">|&gt;</span></span>
-<span id="cb30-152"><a href="#cb30-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb30-153"><a href="#cb30-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">centro =</span> <span class="fu">mean</span>(media),</span>
-<span id="cb30-154"><a href="#cb30-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">espalhamento =</span> <span class="fu">sd</span>(media)</span>
-<span id="cb30-155"><a href="#cb30-155" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb30-156"><a href="#cb30-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-157"><a href="#cb30-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-158"><a href="#cb30-158" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb30-159"><a href="#cb30-159" aria-hidden="true" tabindex="-1"></a>O centro é o mesmo nos três casos; só o espalhamento muda.</span>
-<span id="cb30-160"><a href="#cb30-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-161"><a href="#cb30-161" aria-hidden="true" tabindex="-1"></a>Compare os valores de <span class="in">`espalhamento`</span> da tabela com $1/\sqrt{5}$, $1/\sqrt{20}$ e $1/\sqrt{100}$.</span>
-<span id="cb30-162"><a href="#cb30-162" aria-hidden="true" tabindex="-1"></a>O que você conclui?</span>
-<span id="cb30-163"><a href="#cb30-163" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-164"><a href="#cb30-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-165"><a href="#cb30-165" aria-hidden="true" tabindex="-1"></a><span class="fu"># O erro padrão a partir de uma única amostra</span></span>
-<span id="cb30-166"><a href="#cb30-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-167"><a href="#cb30-167" aria-hidden="true" tabindex="-1"></a>O problema é que, na vida real, você não roda 2000 coletas. Tem uma só.</span>
-<span id="cb30-168"><a href="#cb30-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-169"><a href="#cb30-169" aria-hidden="true" tabindex="-1"></a>A saída é estimar o espalhamento das médias a partir da própria amostra, com a fórmula do</span>
-<span id="cb30-170"><a href="#cb30-170" aria-hidden="true" tabindex="-1"></a>**erro padrão**. Reaproveitamos a mesma <span class="in">`amostra`</span> criada no começo, sem sortear outra:</span>
-<span id="cb30-171"><a href="#cb30-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-174"><a href="#cb30-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-175"><a href="#cb30-175" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(amostra) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb30-176"><a href="#cb30-176" aria-hidden="true" tabindex="-1"></a>erro_padrao</span>
-<span id="cb30-177"><a href="#cb30-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-178"><a href="#cb30-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-179"><a href="#cb30-179" aria-hidden="true" tabindex="-1"></a>Compare esse valor com o <span class="in">`sd(medias)`</span> calculado lá atrás, que veio de duas mil coletas. Uma</span>
-<span id="cb30-180"><a href="#cb30-180" aria-hidden="true" tabindex="-1"></a>amostra só conseguiu estimar razoavelmente bem a variação de um procedimento que nunca foi</span>
-<span id="cb30-181"><a href="#cb30-181" aria-hidden="true" tabindex="-1"></a>repetido.</span>
-<span id="cb30-182"><a href="#cb30-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-183"><a href="#cb30-183" aria-hidden="true" tabindex="-1"></a><span class="fu"># De um número para um intervalo</span></span>
-<span id="cb30-184"><a href="#cb30-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-185"><a href="#cb30-185" aria-hidden="true" tabindex="-1"></a>Com a média e o erro padrão, construímos um **intervalo de confiança de 95%**. A função <span class="in">`qt()`</span> fornece</span>
-<span id="cb30-186"><a href="#cb30-186" aria-hidden="true" tabindex="-1"></a>o multiplicador da distribuição t, que depende dos graus de liberdade ($n - 1$):</span>
-<span id="cb30-187"><a href="#cb30-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-190"><a href="#cb30-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-191"><a href="#cb30-191" aria-hidden="true" tabindex="-1"></a>multiplicador <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb30-192"><a href="#cb30-192" aria-hidden="true" tabindex="-1"></a>multiplicador</span>
-<span id="cb30-193"><a href="#cb30-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-194"><a href="#cb30-194" aria-hidden="true" tabindex="-1"></a>inferior <span class="ot">&lt;-</span> media_amostra <span class="sc">-</span> multiplicador <span class="sc">*</span> erro_padrao</span>
-<span id="cb30-195"><a href="#cb30-195" aria-hidden="true" tabindex="-1"></a>superior <span class="ot">&lt;-</span> media_amostra <span class="sc">+</span> multiplicador <span class="sc">*</span> erro_padrao</span>
-<span id="cb30-196"><a href="#cb30-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-197"><a href="#cb30-197" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(inferior, superior)</span>
-<span id="cb30-198"><a href="#cb30-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-199"><a href="#cb30-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-202"><a href="#cb30-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-203"><a href="#cb30-203" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb30-204"><a href="#cb30-204" aria-hidden="true" tabindex="-1"></a>contem <span class="ot">&lt;-</span> inferior <span class="sc">&lt;=</span> media_real <span class="sc">&amp;</span> superior <span class="sc">&gt;=</span> media_real</span>
-<span id="cb30-205"><a href="#cb30-205" aria-hidden="true" tabindex="-1"></a>inf_txt <span class="ot">&lt;-</span> <span class="fu">formatC</span>(inferior, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
-<span id="cb30-206"><a href="#cb30-206" aria-hidden="true" tabindex="-1"></a>sup_txt <span class="ot">&lt;-</span> <span class="fu">formatC</span>(superior, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
-<span id="cb30-207"><a href="#cb30-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-208"><a href="#cb30-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-209"><a href="#cb30-209" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb30-210"><a href="#cb30-210" aria-hidden="true" tabindex="-1"></a>O intervalo desta amostra vai de <span class="in">`r inf_txt`</span> a <span class="in">`r sup_txt`</span> cm, e</span>
-<span id="cb30-211"><a href="#cb30-211" aria-hidden="true" tabindex="-1"></a>**`r if (contem) "contém" else "não contém"`** o valor real de 5 cm.</span>
-<span id="cb30-212"><a href="#cb30-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-213"><a href="#cb30-213" aria-hidden="true" tabindex="-1"></a>Isso não prova nada sobre o método: diz apenas o que aconteceu desta vez. Para julgar o método, é</span>
-<span id="cb30-214"><a href="#cb30-214" aria-hidden="true" tabindex="-1"></a>preciso repeti-lo muitas vezes.</span>
-<span id="cb30-215"><a href="#cb30-215" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-216"><a href="#cb30-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-217"><a href="#cb30-217" aria-hidden="true" tabindex="-1"></a><span class="fu"># O intervalo acerta com que frequência?</span></span>
-<span id="cb30-218"><a href="#cb30-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-219"><a href="#cb30-219" aria-hidden="true" tabindex="-1"></a>Vamos construir 200 amostras, calcular um intervalo para cada uma e contar quantos contêm o valor</span>
-<span id="cb30-220"><a href="#cb30-220" aria-hidden="true" tabindex="-1"></a>real.</span>
-<span id="cb30-221"><a href="#cb30-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-224"><a href="#cb30-224" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-225"><a href="#cb30-225" aria-hidden="true" tabindex="-1"></a>coletas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb30-226"><a href="#cb30-226" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">each =</span> n),</span>
-<span id="cb30-227"><a href="#cb30-227" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">200</span> <span class="sc">*</span> n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
-<span id="cb30-228"><a href="#cb30-228" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-229"><a href="#cb30-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-230"><a href="#cb30-230" aria-hidden="true" tabindex="-1"></a>intervalos <span class="ot">&lt;-</span> coletas <span class="sc">|&gt;</span></span>
-<span id="cb30-231"><a href="#cb30-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
-<span id="cb30-232"><a href="#cb30-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb30-233"><a href="#cb30-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(comprimento),</span>
-<span id="cb30-234"><a href="#cb30-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">erro =</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
-<span id="cb30-235"><a href="#cb30-235" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb30-236"><a href="#cb30-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb30-237"><a href="#cb30-237" aria-hidden="true" tabindex="-1"></a>    <span class="at">inferior =</span> media <span class="sc">-</span> erro,</span>
-<span id="cb30-238"><a href="#cb30-238" aria-hidden="true" tabindex="-1"></a>    <span class="at">superior =</span> media <span class="sc">+</span> erro,</span>
-<span id="cb30-239"><a href="#cb30-239" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobre =</span> <span class="fu">factor</span>(</span>
-<span id="cb30-240"><a href="#cb30-240" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(inferior <span class="sc">&lt;=</span> media_real <span class="sc">&amp;</span> superior <span class="sc">&gt;=</span> media_real, <span class="st">"sim"</span>, <span class="st">"não"</span>),</span>
-<span id="cb30-241"><a href="#cb30-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"sim"</span>, <span class="st">"não"</span>)</span>
-<span id="cb30-242"><a href="#cb30-242" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb30-243"><a href="#cb30-243" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb30-244"><a href="#cb30-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-245"><a href="#cb30-245" aria-hidden="true" tabindex="-1"></a>intervalos <span class="sc">|&gt;</span> <span class="fu">count</span>(cobre)</span>
-<span id="cb30-246"><a href="#cb30-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-247"><a href="#cb30-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-250"><a href="#cb30-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-251"><a href="#cb30-251" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb30-252"><a href="#cb30-252" aria-hidden="true" tabindex="-1"></a>cobertura <span class="ot">&lt;-</span> <span class="fu">mean</span>(intervalos<span class="sc">$</span>cobre <span class="sc">==</span> <span class="st">"sim"</span>)</span>
-<span id="cb30-253"><a href="#cb30-253" aria-hidden="true" tabindex="-1"></a>cobertura_txt <span class="ot">&lt;-</span> <span class="fu">formatC</span>(<span class="dv">100</span> <span class="sc">*</span> cobertura, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">1</span>, <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
-<span id="cb30-254"><a href="#cb30-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-255"><a href="#cb30-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-256"><a href="#cb30-256" aria-hidden="true" tabindex="-1"></a>Nesta execução, <span class="in">`r cobertura_txt`</span>% dos 200 intervalos contêm o valor real. Os demais,</span>
-<span id="cb30-257"><a href="#cb30-257" aria-hidden="true" tabindex="-1"></a>não. O valor oscila em torno de 95% a cada nova execução, e é essa a taxa de acerto que o "95%" do</span>
-<span id="cb30-258"><a href="#cb30-258" aria-hidden="true" tabindex="-1"></a>nome promete.</span>
-<span id="cb30-259"><a href="#cb30-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-262"><a href="#cb30-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-263"><a href="#cb30-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medias-cobertura</span></span>
-<span id="cb30-264"><a href="#cb30-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Os primeiros 50 intervalos de confiança. A linha vertical é o valor real de 5 cm; em laranja, os intervalos que não o contêm."</span></span>
-<span id="cb30-265"><a href="#cb30-265" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4.5</span></span>
-<span id="cb30-266"><a href="#cb30-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-267"><a href="#cb30-267" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">head</span>(intervalos, <span class="dv">50</span>), <span class="fu">aes</span>(<span class="at">y =</span> id, <span class="at">x =</span> media, <span class="at">colour =</span> cobre)) <span class="sc">+</span></span>
-<span id="cb30-268"><a href="#cb30-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb30-269"><a href="#cb30-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> inferior, <span class="at">xmax =</span> superior), <span class="at">height =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb30-270"><a href="#cb30-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb30-271"><a href="#cb30-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">sim =</span> <span class="st">"#0072B2"</span>, <span class="st">`</span><span class="at">não</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>), <span class="at">drop =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb30-272"><a href="#cb30-272" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento médio (cm)"</span>, <span class="at">y =</span> <span class="st">"Coleta"</span>, <span class="at">colour =</span> <span class="st">"Contém 5 cm"</span>)</span>
-<span id="cb30-273"><a href="#cb30-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-274"><a href="#cb30-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-275"><a href="#cb30-275" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Interprete"}</span>
-<span id="cb30-276"><a href="#cb30-276" aria-hidden="true" tabindex="-1"></a>Os intervalos em laranja, quando aparecem, foram calculados exatamente com o mesmo procedimento</span>
-<span id="cb30-277"><a href="#cb30-277" aria-hidden="true" tabindex="-1"></a>dos azuis, sem nenhum erro de quem coletou.</span>
-<span id="cb30-278"><a href="#cb30-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-279"><a href="#cb30-279" aria-hidden="true" tabindex="-1"></a>Com uma amostra só, você não tem como saber em qual cor está. O que a estatística oferece é a</span>
-<span id="cb30-280"><a href="#cb30-280" aria-hidden="true" tabindex="-1"></a>**taxa de acerto do procedimento**, não uma garantia sobre o seu caso.</span>
-<span id="cb30-281"><a href="#cb30-281" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-282"><a href="#cb30-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-283"><a href="#cb30-283" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Modifique"}</span>
-<span id="cb30-284"><a href="#cb30-284" aria-hidden="true" tabindex="-1"></a>Troque <span class="in">`n &lt;- 20`</span> por <span class="in">`n &lt;- 5`</span> no início do script e execute tudo novamente. Como todo o resto do</span>
-<span id="cb30-285"><a href="#cb30-285" aria-hidden="true" tabindex="-1"></a>script usa o objeto <span class="in">`n`</span>, basta essa única alteração.</span>
-<span id="cb30-286"><a href="#cb30-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-287"><a href="#cb30-287" aria-hidden="true" tabindex="-1"></a>A proporção de intervalos que cobrem o valor real muda? E a **largura** deles?</span>
-<span id="cb30-288"><a href="#cb30-288" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-289"><a href="#cb30-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-290"><a href="#cb30-290" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb30-291"><a href="#cb30-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-292"><a href="#cb30-292" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb30-293"><a href="#cb30-293" aria-hidden="true" tabindex="-1"></a>Um script <span class="in">`pr-medias-intervalos.R`</span> que rode em sessão nova e contenha:</span>
-<span id="cb30-294"><a href="#cb30-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-295"><a href="#cb30-295" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a distribuição de 2000 médias amostrais para <span class="in">`n = 5`</span>, <span class="in">`n = 20`</span> e <span class="in">`n = 100`</span>, com o desvio-padrão</span>
-<span id="cb30-296"><a href="#cb30-296" aria-hidden="true" tabindex="-1"></a>   de cada conjunto;</span>
-<span id="cb30-297"><a href="#cb30-297" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>o cálculo do erro padrão a partir de uma única amostra e o intervalo de 95% correspondente;</span>
-<span id="cb30-298"><a href="#cb30-298" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a verificação de cobertura com 200 intervalos;</span>
-<span id="cb30-299"><a href="#cb30-299" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, quatro a cinco frases respondendo: **por que o desvio-padrão das médias cai com</span>
-<span id="cb30-300"><a href="#cb30-300" aria-hidden="true" tabindex="-1"></a>   a raiz de n, e o que significa dizer que um intervalo tem 95% de confiança?**</span>
-<span id="cb30-301"><a href="#cb30-301" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb30-302"><a href="#cb30-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-303"><a href="#cb30-303" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb30-304"><a href="#cb30-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-305"><a href="#cb30-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Distribuição das médias amostrais</span><span class="co">](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html)</span>{target="_blank"} (MEAD)</span>
-<span id="cb30-306"><a href="#cb30-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Estimando a média populacional</span><span class="co">](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html)</span>{target="_blank"} (MEAD)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Médias que variam e intervalos que cobrem"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 03"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-erro-padrao-intervalo.qmd)</span> mostrou cem intervalos de</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>confiança e contou quantos continham o valor real. Você viu que o procedimento acerta cerca de 95%</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>das vezes.</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de **acertar com</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>certa frequência**, ele tem uma **largura** — e é a largura que diz se o estudo estabeleceu alguma</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>duas muda.</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>O objetivo em R é construir um experimento de verificação: gerar muitas coletas, calcular um</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>intervalo para cada uma e resumir o desempenho do procedimento.</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-medias-intervalos.R`</span> com o cabeçalho de identificação e comece por:</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário:</span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>**inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de</span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>antemão, podemos verificar se o método acerta, e com que frequência.</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>Os parâmetros ficam no início do script, para serem fáceis de mudar depois:</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>media_real <span class="ot">&lt;-</span> <span class="dv">5</span>     <span class="co"># comprimento médio no costão, em cm</span></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>desvio_real <span class="ot">&lt;-</span> <span class="dv">1</span>    <span class="co"># desvio-padrão entre mexilhões, em cm</span></span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>             <span class="co"># mexilhões por amostra</span></span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma equipe vai ao costão</span></span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>Coletar 20 mexilhões e medi-los é uma linha de código:</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>amostra <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(amostra)</span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(amostra)</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>A média observada não é exatamente 5, e não deveria ser: são 20 mexilhões sorteados, não o costão</span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>inteiro.</span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>A leitura mostrou que o espalhamento dessas médias, entre coletas repetidas, pode ser estimado a</span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>partir de **uma única amostra**, pela fórmula do erro padrão:</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>$$EP = \frac{s}{\sqrt{n}}$$</span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>Traduza a fórmula para o R. <span class="in">`sd(amostra)`</span> é o $s$; falta o denominador.</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(amostra) <span class="sc">/</span> <span class="fu">sqrt</span>(____)</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(amostra) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a>erro_padrao</span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>Com a média e o erro padrão, construímos o **intervalo de confiança de 95%**. A função <span class="in">`qt()`</span> fornece</span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>o multiplicador da distribuição t, que depende dos graus de liberdade ($n - 1$):</span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>multiplicador <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>inferior <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra) <span class="sc">-</span> multiplicador <span class="sc">*</span> erro_padrao</span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>superior <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra) <span class="sc">+</span> multiplicador <span class="sc">*</span> erro_padrao</span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(inferior, superior)</span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a>Este é o intervalo **desta** coleta. Ele contém 5 cm, ou não contém; e com uma amostra só você nunca</span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.</span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a><span class="fu"># Duas propriedades do procedimento</span></span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>medidas: a **proporção que contém o valor real** e a **largura média** dos intervalos.</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a>coletas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">each =</span> n),</span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">200</span> <span class="sc">*</span> n, <span class="at">mean =</span> media_real, <span class="at">sd =</span> desvio_real)</span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>intervalos <span class="ot">&lt;-</span> coletas <span class="sc">|&gt;</span></span>
+<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">|&gt;</span></span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(comprimento),</span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>    <span class="at">erro =</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(comprimento) <span class="sc">/</span> <span class="fu">sqrt</span>(n),</span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a>    <span class="at">inferior =</span> media <span class="sc">-</span> erro,</span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a>    <span class="at">superior =</span> media <span class="sc">+</span> erro,</span>
+<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobre =</span> inferior <span class="sc">&lt;=</span> media_real <span class="sc">&amp;</span> superior <span class="sc">&gt;=</span> media_real,</span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">largura =</span> superior <span class="sc">-</span> inferior</span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a>resumo_20 <span class="ot">&lt;-</span> intervalos <span class="sc">|&gt;</span></span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">mexilhoes_por_amostra =</span> n,</span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobertura =</span> <span class="fu">mean</span>(cobre),</span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a>    <span class="at">largura_media =</span> <span class="fu">mean</span>(largura)</span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a>resumo_20</span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a>Duas observações sobre o código. A coluna <span class="in">`cobre`</span> guarda <span class="in">`TRUE`</span> ou <span class="in">`FALSE`</span> para cada intervalo, e a</span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a>média de um vetor lógico é a proporção de <span class="in">`TRUE`</span>. A coluna <span class="in">`largura`</span> é simplesmente a distância entre</span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a>os dois limites.</span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>A cobertura obtida não será exatamente 95%: são 200 coletas sorteadas, e essa proporção também varia</span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>de execução para execução. Rode o bloco mais uma vez para ver o número oscilar.</span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>Você tem o desempenho do procedimento para amostras de 20 mexilhões. Falta saber o que acontece</span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a>quando a amostra muda de tamanho.</span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha"}</span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>Escolha um segundo tamanho de amostra, diferente de 20: pode ser **5**, **10**, **50** ou **100**.</span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a>Registre a escolha no script.</span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}</span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a>O resumo tem duas colunas. Antes de executar qualquer coisa, escreva no script, como comentário, o</span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a>que você espera que aconteça com **cada uma delas** quando o tamanho da amostra mudar:</span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a **cobertura** vai subir, descer ou ficar parecida?</span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a **largura média** vai subir, descer ou ficar parecida?</span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a>As duas respostas não são iguais. Registre as duas antes de olhar.</span>
+<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a>Para produzir o segundo resultado, **duplique no seu script** o bloco dos 200 intervalos, trocando o</span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>valor de <span class="in">`n`</span> no início e guardando o resumo com outro nome:</span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> ____            <span class="co"># o tamanho que você escolheu</span></span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="co"># ... cole aqui o bloco dos 200 intervalos ...</span></span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>resumo_meu <span class="ot">&lt;-</span> intervalos <span class="sc">|&gt;</span></span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a>    <span class="at">mexilhoes_por_amostra =</span> n,</span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a>    <span class="at">cobertura =</span> <span class="fu">mean</span>(cobre),</span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a>    <span class="at">largura_media =</span> <span class="fu">mean</span>(largura)</span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a>Por fim, junte os dois resumos em uma tabela só, para poder comparar as linhas:</span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(resumo_20, resumo_meu)</span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Cuidado com a ordem"}</span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a>Todo o bloco usa o objeto <span class="in">`n`</span>. Se você mudar <span class="in">`n`</span> e não reexecutar as linhas que vêm depois, a tabela</span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a>sairá com números misturados de dois tamanhos diferentes.</span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a>Por isso o script precisa rodar **do início ao fim em sessão nova** antes de ser enviado: é assim que</span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a>você garante que cada resumo corresponde ao <span class="in">`n`</span> que está escrito ao lado dele.</span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-medias-intervalos.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
+<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: uma amostra, o erro padrão completado por você e o intervalo de 95% dessa coleta;</span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a tabela com as duas linhas**, uma para <span class="in">`n = 20`</span> e outra para o tamanho que você escolheu, com</span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>   as duas previsões registradas em comentário **antes** dela;</span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>em comentários, uma frase dizendo **qual das duas colunas mudou e qual não mudou**, e por quê;</span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 3 a 4 frases respondendo, **com os seus dois pares de números**: dois estudos</span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>   informam intervalos de 95% para a mesma população, um com amostra grande e outro com amostra</span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>   pequena. Os dois acertam com a mesma frequência? Então o que exatamente o estudo maior comprou com</span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>   o esforço extra de coleta?</span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, uma conta: partindo do <span class="in">`n = 20`</span>, quantos mexilhões seriam necessários para obter</span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>   um intervalo com **metade** da largura obtida ali? Use as suas duas larguras para conferir se a</span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>   sua resposta é coerente com o que você observou.</span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões (cobertura e largura) aparecem **antes** da tabela;</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a tabela tem as duas linhas e as três colunas, e cada linha corresponde ao <span class="in">`n`</span> indicado;</span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do segundo tamanho de amostra está registrada;</span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a resposta do item 3 distingue explicitamente cobertura de largura;</span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão final cita os seus próprios valores, e não uma frase genérica;</span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conta do item 5 aparece e é coerente com as duas larguras que você mediu.</span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Estimando a média populacional</span><span class="co">](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html)</span>{target="_blank"}</span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre a margem de erro, se quiser rever de onde sai o multiplicador <span class="in">`qt()`</span>.</span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Distribuição das médias amostrais</span><span class="co">](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html)</span>{target="_blank"}</span>
+<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>  (MEAD) — para rever por que o erro padrão cai com a raiz de $n$.</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

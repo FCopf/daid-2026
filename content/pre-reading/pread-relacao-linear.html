@@ -542,18 +542,18 @@ lm(formula = riqueza ~ altura, data = dados_precisos)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--2.2472 -0.8080 -0.1448  0.6051  2.2766 
+-2.7414 -0.5057  0.1130  0.4876  2.3751 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   6.6923     0.1473   45.45   &lt;2e-16 ***
-altura       -2.8322     0.1184  -23.93   &lt;2e-16 ***
+(Intercept)  6.77340    0.12778   53.01   &lt;2e-16 ***
+altura      -2.88120    0.09817  -29.35   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.037 on 58 degrees of freedom
-Multiple R-squared:  0.908, Adjusted R-squared:  0.9064 
-F-statistic: 572.4 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.9171 on 58 degrees of freedom
+Multiple R-squared:  0.9369,    Adjusted R-squared:  0.9358 
+F-statistic: 861.4 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste da reta em R</summary>
@@ -561,8 +561,8 @@ F-statistic: 572.4 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
-(Intercept)  6.397490  6.987038
-altura      -3.069201 -2.595287</code></pre>
+(Intercept)  6.517615  7.029177
+altura      -3.077704 -2.684688</code></pre>
 </div>
 </div>
 <p><code>lm()</code> estima os coeficientes; <code>summary()</code> informa erros padrão, testes e <span class="math inline">\(R^2\)</span>; e <code>confint()</code> fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.</p>
@@ -751,7 +751,7 @@ Figura&nbsp;5: Relação espécie-área em escala original e logarítmica. A cur
 </div>
 </div>
 </div>
-<p>A inclinação estimada na escala logarítmica foi 0,33, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta: <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
+<p>A inclinação estimada na escala logarítmica foi 0,30, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta: <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
 </section>
 </section>
 <section id="duas-incertezas-de-previsão" class="level1" data-number="5">
