@@ -1,6 +1,6 @@
 ---
 title: "A mesma reta serve para os dois grupos?"
-subtitle: "Leitura prévia - Atividade extraclasse 05"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -41,15 +41,11 @@ Duas retas podem se relacionar de três maneiras, e vale saber reconhecê-las an
 qualquer saída de modelo.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver os dados dos três modelos"
-#| label: fig-pread14-tres-cenarios
+#| echo: false
+#| label: fig-tres-cenarios
 #| fig-cap: "Três relações possíveis entre dois grupos. Em todos os painéis os dados foram gerados com a mesma variação em torno das retas."
 #| fig-alt: "Três painéis lado a lado. No primeiro as duas retas se sobrepõem; no segundo são paralelas e deslocadas verticalmente; no terceiro partem do mesmo lugar e divergem, com uma subindo mais rápido que a outra."
 #| fig-height: 3.4
-
-library(tidyverse)
-
 x <- runif(160, 14, 30)
 grupo <- rep(c("fevereiro", "abril"), each = 80)
 
@@ -86,9 +82,9 @@ em um número: é o **efeito do mês**.
 mês, e a distância entre as retas muda ao longo do eixo. Isso é uma **interação** entre a
 covariável e o grupo.
 
-# Por que o terceiro caso é diferente dos outros
+## Por que o terceiro caso é diferente dos outros
 
-Nos dois primeiros cenários existe uma frase única e verdadeira sobre o mês. No terceiro, não.
+Os dois primeiros cenários admitem uma frase única e verdadeira sobre o mês. O terceiro não.
 
 Olhe o painel da direita. Nos indivíduos pequenos as duas retas quase se tocam; nos grandes, estão
 bem separadas. Dizer "abril tem biomassa maior" é verdade em uma parte da faixa e quase falso na
@@ -101,6 +97,27 @@ completa sem dizer **em qual valor da covariável** ela vale.
 "A biomassa de abril é 0,4 g maior" não é uma frase interpretável. "Em uma concha de 25 mm, a
 biomassa de abril é 0,4 g maior" é.
 :::
+
+# Distinguir os três casos não é comparar números
+
+Reconhecer os cenários em um gráfico feito para ilustrá-los é fácil. Com dados reais, o caminho mais
+direto parece ser ajustar uma reta em cada grupo e comparar os coeficientes: dois interceptos e duas
+inclinações, quatro números.
+
+Só que dois números estimados quase nunca são exatamente iguais, mesmo quando as retas verdadeiras
+são as mesmas. A comparação, portanto, não é entre os valores, e sim entre a diferença observada e
+a incerteza de cada estimativa.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Duas inclinações de 0,110 e 0,118 são "diferentes" no sentido aritmético.
+
+Se cada uma vier com um intervalo de confiança que cobre folgadamente a outra, os dados não
+distinguem os dois meses, e insistir em duas retas é descrever o ruído.
+:::
+
+Comparar quatro coeficientes de dois ajustes separados também desperdiça informação, porque cada
+ajuste estima sua própria variação residual a partir de metade dos dados. A solução é escrever um
+único modelo que contenha os três cenários como casos particulares.
 
 # Uma equação contém as duas retas
 
@@ -129,18 +146,26 @@ Portanto:
 - $\beta_2$ é a diferença entre meses quando $X=0$;
 - $\beta_3$ é a diferença entre as inclinações.
 
-O produto $XG$ é a interação. Testar $H_0:\beta_3=0$ pergunta se as retas podem ser consideradas
-paralelas. Se também $\beta_2=0$, uma reta comum basta.
+O produto $XG$ é a interação, e os três cenários correspondem a três configurações desses
+coeficientes: uma reta só quando $\beta_2=\beta_3=0$; retas paralelas quando apenas $\beta_3=0$;
+inclinações diferentes quando $\beta_3\ne0$. Testar $H_0:\beta_3=0$ pergunta, então, se as retas
+podem ser consideradas paralelas.
 
-Quando $X=0$ está fora dos dados, $\beta_2$ compara grupos em um ponto sem apoio empírico. Podemos
-centralizar o comprimento em um valor relevante $c$, usando $X_c=X-c$. A inclinação e os valores
-ajustados não mudam, mas $\beta_2$ passa a representar a diferença entre meses em $X=c$.
+Um detalhe da parametrização merece cuidado. Quando $X=0$ está fora dos dados, $\beta_2$ compara
+grupos em um ponto sem apoio empírico, e nas conchas medidas entre 14 e 30 mm um comprimento zero
+não existe. Podemos centralizar o comprimento em um valor relevante $c$, usando $X_c=X-c$. A
+inclinação e os valores ajustados não mudam, mas $\beta_2$ passa a representar a diferença entre
+meses em $X=c$.
+
+## Comparar dois modelos aninhados
+
+Escrito assim, o modelo de retas paralelas é o modelo completo com $\beta_3=0$. Os dois são
+**aninhados**, e a comparação entre eles avalia se permitir outra inclinação reduz a variação
+residual mais do que seria esperado pela incerteza. No R, a diferença está no operador da fórmula.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver os modelos de uma e duas inclinações"
-library(tidyverse)
-
 dados_interacao <- tibble(
   mes = factor(rep(c("fevereiro", "abril"), each = 80),
                levels = c("fevereiro", "abril")),
@@ -152,19 +177,24 @@ dados_interacao <- tibble(
     comprimento_c = comprimento - 22
   )
 
-modelo_paralelo <- lm(
-  biomassa ~ comprimento_c + mes,
-  data = dados_interacao
-)
-
-modelo_interacao <- lm(
-  biomassa ~ comprimento_c * mes,
-  data = dados_interacao
-)
+modelo_paralelo <- lm(biomassa ~ comprimento_c + mes, data = dados_interacao)
+modelo_interacao <- lm(biomassa ~ comprimento_c * mes, data = dados_interacao)
 
 anova(modelo_paralelo, modelo_interacao)
-coef(modelo_interacao)
 ```
+
+```{r}
+#| echo: false
+coeficientes <- coef(modelo_interacao)
+formata <- function(x) formatC(x, format = "f", digits = 3, decimal.mark = ",")
+b3_txt <- formata(coeficientes[[4]])
+p_interacao <- anova(modelo_paralelo, modelo_interacao)$`Pr(>F)`[2]
+p_txt <- format.pval(p_interacao, digits = 2, eps = 0.001)
+```
+
+Como os dados foram gerados com inclinações realmente diferentes, a comparação favorece o modelo com
+interação: nesta execução a diferença de inclinações estimada foi `r b3_txt` g por milímetro, com
+valor de p igual a `r p_txt` na comparação entre os dois modelos.
 
 Centralizar em 22 mm permite ler os quatro coeficientes diretamente:
 
@@ -179,50 +209,33 @@ Mudar o centro para 25 mm altera $\beta_0$ e $\beta_2$, mas não altera inclina�
 previsões ou resíduos. Interceptos são coordenadas dependentes da origem; a geometria ajustada é a
 mesma.
 
-Os modelos são **aninhados**: o paralelo é o modelo completo com $\beta_3=0$. A comparação F avalia
-se permitir outra inclinação reduz a variação residual mais do que seria esperado pela incerteza.
-Também devem ser examinados o intervalo de $\beta_3$, os resíduos e a relevância biológica da
-diferença de inclinações.
-
-# Como distinguir os três casos
-
-O caminho mais direto é ajustar uma reta em cada grupo e comparar os coeficientes: dois interceptos
-e duas inclinações, quatro números.
-
-Só que dois números estimados quase nunca são exatamente iguais, mesmo quando as retas verdadeiras
-são as mesmas. A comparação, portanto, não é entre os valores, e sim entre a diferença observada e
-a incerteza de cada estimativa.
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-Duas inclinações de 0,110 e 0,118 são "diferentes" no sentido aritmético.
-
-Se cada uma vier com um intervalo de confiança que cobre folgadamente a outra, os dados não
-distinguem os dois meses, e insistir em duas retas é descrever o ruído.
-:::
+Vale ainda uma ressalva sobre a leitura do teste. Não rejeitar a interação não prova inclinações
+idênticas: significa que a precisão disponível não justifica a complexidade adicional. Por isso
+convém examinar também o intervalo de $\beta_3$, os resíduos e a relevância biológica da diferença
+de inclinações. Se diferenças pequenas de inclinação forem importantes, o estudo precisa de faixa
+adequada de $X$ e replicação suficiente para distingui-las.
 
 # A diferença entre grupos é uma função
 
-Subtraindo as duas retas, obtemos
+Quando há interação, a pergunta "qual é a diferença entre os meses?" não tem resposta única, e a
+equação mostra por quê. Subtraindo as duas retas, obtemos
 
 $$
 \Delta(X)=E(Y\mid X,G=1)-E(Y\mid X,G=0)=\beta_2+\beta_3X.
 $$
 
-Com retas paralelas, $\beta_3=0$ e a diferença é constante. Com interação, estimativas e intervalos
-devem ser apresentados em valores de $X$ cientificamente relevantes e sustentados pelos dois grupos.
-Uma figura da diferença estimada ao longo de $X$ costuma ser mais informativa que quatro coeficientes
-isolados.
+Com retas paralelas, $\beta_3=0$ e a diferença é constante, o que devolve o número único do segundo
+cenário. Com interação, $\Delta$ é uma função do comprimento, e estimativas e intervalos devem ser
+apresentados em valores de $X$ cientificamente relevantes e sustentados pelos dois grupos. Uma figura
+da diferença estimada ao longo de $X$ costuma ser mais informativa que quatro coeficientes isolados.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver previsões e diferenças condicionais"
-#| label: fig-pread14-diferenca-condicional
+#| echo: false
+#| label: fig-diferenca-condicional
 #| fig-cap: "Diferença estimada entre abril e fevereiro ao longo do comprimento. A faixa é o intervalo de confiança de 95%, calculado apenas no suporte comum."
 #| fig-alt: "Curva crescente da diferença entre meses com faixa de incerteza. Uma linha horizontal em zero permite ver em quais comprimentos os dados distinguem os grupos."
 #| fig-height: 4.2
-library(tidyverse)
-
-dados <- tibble(
+moluscos <- tibble(
   mes = factor(rep(c("fevereiro", "abril"), each = 70),
                levels = c("fevereiro", "abril")),
   comprimento = c(runif(70, 15, 29), runif(70, 16, 30))
@@ -234,26 +247,26 @@ dados <- tibble(
       rnorm(n(), 0, 0.18)
   )
 
-modelo <- lm(biomassa ~ comprimento_c * mes, data = dados)
-faixa_comum <- c(max(tapply(dados$comprimento, dados$mes, min)),
-                 min(tapply(dados$comprimento, dados$mes, max)))
+modelo_moluscos <- lm(biomassa ~ comprimento_c * mes, data = moluscos)
+faixa_comum <- c(max(tapply(moluscos$comprimento, moluscos$mes, min)),
+                 min(tapply(moluscos$comprimento, moluscos$mes, max)))
 grade <- seq(faixa_comum[1], faixa_comum[2], length.out = 120)
 
 matriz_fev <- model.matrix(
   ~ comprimento_c * mes,
   data = tibble(comprimento_c = grade - 22,
-                mes = factor("fevereiro", levels = levels(dados$mes)))
+                mes = factor("fevereiro", levels = levels(moluscos$mes)))
 )
 matriz_abr <- model.matrix(
   ~ comprimento_c * mes,
   data = tibble(comprimento_c = grade - 22,
-                mes = factor("abril", levels = levels(dados$mes)))
+                mes = factor("abril", levels = levels(moluscos$mes)))
 )
 
-L <- matriz_abr - matriz_fev
-diferenca <- as.vector(L %*% coef(modelo))
-erro <- sqrt(diag(L %*% vcov(modelo) %*% t(L)))
-critico <- qt(0.975, df.residual(modelo))
+contraste <- matriz_abr - matriz_fev
+diferenca <- as.vector(contraste %*% coef(modelo_moluscos))
+erro <- sqrt(diag(contraste %*% vcov(modelo_moluscos) %*% t(contraste)))
+critico <- qt(0.975, df.residual(modelo_moluscos))
 
 curva_diferenca <- tibble(
   comprimento = grade,
@@ -264,29 +277,22 @@ curva_diferenca <- tibble(
 
 ggplot(curva_diferenca, aes(x = comprimento, y = diferenca)) +
   geom_hline(yintercept = 0, linetype = 2) +
-  geom_ribbon(aes(ymin = inferior, ymax = superior), fill = "#56B4E9", alpha = 0.35) +
+  geom_ribbon(aes(ymin = inferior, ymax = superior), fill = "#0072B2", alpha = 0.25) +
   geom_line(colour = "#0072B2", linewidth = 1) +
-  labs(x = "Comprimento da concha (mm)", y = "Abril menos fevereiro (g)") +
-  theme_bw(base_size = 12)
-
-predict(modelo,
-        newdata = crossing(
-          comprimento_c = c(18, 22, 26) - 22,
-          mes = factor(c("fevereiro", "abril"), levels = levels(dados$mes))
-        ),
-        interval = "confidence")
+  labs(x = "Comprimento da concha (mm)", y = "Abril menos fevereiro (g)")
 ```
 
-O cálculo usa uma matriz de contrastes $L$: em cada comprimento, subtrai a linha de previsão de
-fevereiro da linha de abril. A variância da diferença é $L\widehat{\operatorname{Var}}(\hat\beta)L'$. Assim
-o intervalo incorpora simultaneamente incerteza de interceptos, inclinações e covariâncias entre os
-coeficientes.
-
-Não rejeitar a interação não prova inclinações idênticas. Significa que a precisão disponível não
-justifica a complexidade adicional. Se diferenças pequenas de inclinação forem importantes, o estudo
-precisa de faixa adequada de $X$ e replicação suficiente para distingui-las.
+A linha central é $\hat\Delta(X)$ e a faixa é o seu intervalo de confiança, calculado apenas na
+região de comprimentos observada nos dois meses. Onde a faixa cruza a linha do zero, os dados não
+distinguem os meses; onde ela fica inteiramente acima, distinguem. Uma única frase sobre "a
+diferença entre os meses" perderia justamente essa informação. O intervalo apresentado incorpora
+simultaneamente a incerteza dos interceptos, das inclinações e a covariância entre os coeficientes,
+o que é diferente de somar intervalos calculados separadamente para cada reta.
 
 # Dois cuidados ao olhar o gráfico
+
+Duas situações produzem gráficos que parecem indicar interação sem que ela exista, e ambas dizem
+respeito a onde os dados foram coletados, não a como foram analisados.
 
 **Faixas que não se sobrepõem.** Se um mês só tem conchas pequenas e o outro só grandes, as duas
 retas se apoiam em regiões diferentes do eixo. Elas podem parecer muito distintas sem que exista
@@ -296,35 +302,48 @@ nenhuma diferença real na faixa em que ambos foram observados.
 Alguns indivíduos isolados no extremo direito podem girar a reta inteira e criar uma divergência
 que some ao coletar mais dados.
 
+A figura seguinte mostra a primeira situação em sua forma mais enganosa: todos os indivíduos seguem
+uma única relação curva, mas cada mês ocupa um trecho diferente dela.
+
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver como falta de suporte imita interação"
-#| label: fig-pread14-suporte
+#| echo: false
+#| label: fig-suporte
 #| fig-cap: "Dois grupos seguem a mesma curva, mas ocupam faixas diferentes. Retas separadas sugerem interação porque extrapolam partes distintas de uma relação não linear."
 #| fig-alt: "Pontos de um grupo aparecem no início de uma curva e os do outro no final. Retas ajustadas separadamente têm inclinações diferentes, embora todos os pontos pertençam à mesma curva."
 #| fig-height: 4
-library(tidyverse)
-
 sem_suporte <- bind_rows(
   tibble(mes = "fevereiro", comprimento = runif(55, 12, 20)),
   tibble(mes = "abril", comprimento = runif(55, 23, 31))
 ) |>
   mutate(
-    mes = factor(mes),
+    mes = factor(mes, levels = c("fevereiro", "abril")),
     biomassa = 0.0025 * comprimento^2 + rnorm(n(), 0, 0.08)
   )
 
 ggplot(sem_suporte, aes(x = comprimento, y = biomassa, colour = mes)) +
   geom_point(alpha = 0.65) +
   geom_smooth(method = "lm", se = TRUE) +
-  scale_colour_manual(values = c(abril = "#D55E00", fevereiro = "#0072B2")) +
-  labs(x = "Comprimento", y = "Biomassa", colour = "Mês") +
-  theme_bw(base_size = 12)
+  scale_colour_manual(values = c(fevereiro = "#0072B2", abril = "#D55E00")) +
+  labs(x = "Comprimento", y = "Biomassa", colour = "Mês")
 ```
 
-O problema não é resolvido por um valor de p para a interação. Sem suporte comum, diferença de
-inclinações, curvatura e diferença entre grupos competem como explicações. Coletar os dois meses ao
-longo da mesma faixa é parte do delineamento necessário para responder à pergunta.
+As duas retas têm inclinações claramente diferentes, e nenhum molusco se comportou de maneira
+distinta por ter sido coletado em abril. O problema não é resolvido por um valor de p para a
+interação: sem suporte comum, diferença de inclinações, curvatura e diferença entre grupos competem
+como explicações do mesmo padrão. Coletar os dois meses ao longo da mesma faixa de comprimento é
+parte do delineamento necessário para responder à pergunta.
+
+A pergunta inicial admitia apenas três respostas, e todas elas cabem em uma única equação com quatro
+coeficientes. O que decide entre elas não é a aparência do gráfico, e sim a comparação entre a
+diferença estimada e a incerteza que a acompanha, avaliada na faixa em que os dois grupos foram
+efetivamente observados. Quando as retas são paralelas, o efeito do grupo vira um número; quando não
+são, ele vira uma função, e informá-lo sem endereço deixa de ser uma simplificação para se tornar um
+erro.
+
+# Para saber mais
+
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD),
+  para modelos com mais de um preditor e combinações de termos aditivos e de interação.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Se as duas retas forem paralelas, a distância vertical entre elas é a mesma em qualquer

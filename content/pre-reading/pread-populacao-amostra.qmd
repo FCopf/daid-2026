@@ -1,6 +1,6 @@
 ---
 title: "O que 45 estações dizem sobre a região?"
-subtitle: "Leitura prévia - Aula 02"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -34,7 +34,7 @@ padrão observado justifica voltar lá.
 É aí que aparece a pergunta que separa a planilha da conclusão: **o que 45 estações permitem
 dizer sobre um litoral que tem milhares delas?**
 
-# Duas coisas com nomes diferentes
+## População e amostra
 
 ::: {.callout-note appearance="minimal" title="População e amostra"}
 A **população** é o conjunto de todas as unidades sobre as quais queremos concluir alguma coisa.
@@ -51,25 +51,25 @@ população encolhe, e as 5 estações daquela praia passam a ser a amostra.
 Definir a população antes de coletar evita a situação mais desconfortável da análise de dados:
 descobrir, no fim, que os dados respondem a uma pergunta diferente da que se queria fazer.
 
-# Estimar é aceitar uma margem
-
-Se todas as estações do litoral fossem idênticas, uma única medida bastaria e não haveria
-incerteza nenhuma. Como elas variam, cada amostra produz uma resposta um pouco diferente.
-
-Isso não é um defeito do levantamento. É a consequência inevitável de medir uma parte para falar
-do todo, e é por isso que uma estimativa sempre vem acompanhada de uma margem.
+Definida a população, a incerteza passa a ser inevitável. Se todas as estações do litoral fossem
+idênticas, uma única medida bastaria. Como elas variam, cada amostra produz uma resposta um pouco
+diferente. Isso não é um defeito do levantamento: é a consequência de medir uma parte para falar do
+todo, e é por isso que uma estimativa sempre vem acompanhada de uma margem.
 
 # Da população-alvo à lista que pode ser sorteada
 
-A **população-alvo** é o conjunto sobre o qual desejamos concluir. A **população acessível** é a
-parte que o plano de campo consegue alcançar. Para sortear unidades, ainda precisamos de um
-**cadastro amostral**, isto é, uma lista ou mapa que represente essas unidades. Se costões remotos
-não aparecem no cadastro, eles têm probabilidade zero de entrar na coleta, mesmo que pertençam à
-população-alvo.
+Entre a população que interessa e as unidades que efetivamente podem ser sorteadas há uma distância
+que convém tornar explícita. A **população-alvo** é o conjunto sobre o qual desejamos concluir. A
+**população acessível** é a parte que o plano de campo consegue alcançar. Para sortear unidades,
+ainda precisamos de um **cadastro amostral**, isto é, uma lista ou mapa que represente essas
+unidades. Se costões remotos não aparecem no cadastro, eles têm probabilidade zero de entrar na
+coleta, mesmo que pertençam à população-alvo.
 
 Usamos $N$ para o tamanho da população e $n$ para o tamanho da amostra. Medir todas as $N$ unidades
 é realizar um **censo**. Um censo elimina o erro de selecionar apenas parte da população, mas não
 elimina erros de medição, unidades não localizadas ou uma definição inadequada da população.
+
+## Parâmetros, estimadores e estimativas
 
 Uma característica numérica da população é um **parâmetro**. A média populacional, por exemplo, é
 
@@ -87,19 +87,8 @@ A regra que transforma uma amostra em $\bar{x}$ é um **estimador**; o número o
 específica é a **estimativa**. Um estimador é não enviesado quando, ao repetir o plano muitas vezes,
 suas estimativas ficam centradas no parâmetro. Isso não significa que cada estimativa acerte.
 
-## Três distribuições que não devem ser confundidas
-
-A **distribuição populacional** descreve os valores de todas as unidades da população. Se a riqueza
-das 45 estações fosse conhecida, uma tabela de frequências ou um histograma descreveria essa
-população finita. Dividindo a frequência de cada valor por $N$, obtemos a probabilidade de selecionar
-ao acaso uma unidade com aquele valor.
-
-A **distribuição da amostra** descreve apenas os valores que entraram em uma coleta. Ela muda quando
-o sorteio muda. Finalmente, uma **distribuição amostral** descreve os resultados de uma estatística,
-como $\bar X$, em todos os sorteios possíveis ou em muitas repetições do plano. A primeira fala das
-unidades; a segunda, das unidades observadas; a terceira, do desempenho de um procedimento.
-
-Para uma população finita com valores $X_1,\ldots,X_N$, a variância populacional é
+A mesma distinção vale para a variabilidade. Para uma população finita com valores
+$X_1,\ldots,X_N$, a variância populacional é
 
 $$
 \sigma^2=\frac{1}{N}\sum_{i=1}^{N}(X_i-\mu)^2.
@@ -115,15 +104,24 @@ O divisor $n-1$ faz com que $s^2$ seja não enviesado para $\sigma^2$ sob amostr
 simples. A versão com divisor $n$ tende a subestimar a variabilidade populacional, porque a própria
 amostra foi usada para localizar o centro.
 
-```{r}
-#| code-fold: true
-#| code-summary: "Ver população, uma amostra e estimadores repetidos"
-#| label: fig-pread02-populacao-estimadores
-#| fig-cap: "Distribuição populacional e distribuição de médias obtida ao repetir amostras aleatórias simples. A linha laranja marca a média populacional."
-#| fig-alt: "Dois histogramas. O primeiro mostra os valores de uma população finita; o segundo mostra muitas médias amostrais concentradas ao redor da média populacional."
-#| fig-height: 4.2
-library(tidyverse)
+Vale insistir na diferença entre três conjuntos de valores que costumam ser confundidos. A
+**distribuição populacional** descreve os valores de todas as unidades da população. A **distribuição
+da amostra** descreve apenas os valores que entraram em uma coleta, e muda quando o sorteio muda.
+Uma **distribuição amostral**, por sua vez, não descreve unidades: descreve os resultados de uma
+estatística, como $\bar{x}$, quando o plano de coleta é repetido muitas vezes. A primeira fala das
+unidades, a segunda das unidades observadas e a terceira do desempenho de um procedimento.
 
+É essa terceira distribuição que permite avaliar um estimador, porque ela mostra onde as estimativas
+se concentram e o quanto se espalham. A figura abaixo simula uma região com 450 estações e põe lado
+a lado a distribuição populacional, no painel de cima, e a distribuição amostral da média para
+amostras de 45 unidades, no painel de baixo.
+
+```{r}
+#| echo: false
+#| label: fig-populacao-estimadores
+#| fig-cap: "Valores das unidades da população e médias obtidas ao repetir amostras aleatórias simples de 45 estações. A linha laranja marca a média populacional."
+#| fig-alt: "Dois histogramas. O primeiro mostra os valores de uma população finita, bastante espalhados; o segundo mostra muitas médias amostrais concentradas ao redor da média populacional."
+#| fig-height: 4.2
 populacao <- tibble(
   estacao = 1:450,
   setor = rep(c("exposto", "intermediário", "abrigado"), each = 150),
@@ -134,64 +132,168 @@ populacao <- tibble(
   )
 )
 
-parametros <- populacao |>
-  summarise(media = mean(riqueza), variancia = mean((riqueza - media)^2))
+media_populacional <- mean(populacao$riqueza)
 
 uma_amostra <- populacao |>
   slice_sample(n = 45)
 
 estimadores <- tibble(
-  repeticao = 1:2000,
-  media = replicate(2000, mean(sample(populacao$riqueza, size = 45))),
-  variancia = replicate(2000, var(sample(populacao$riqueza, size = 45)))
+  media = replicate(2000, mean(sample(populacao$riqueza, size = 45)))
 )
 
 bind_rows(
   transmute(populacao, valor = riqueza, painel = "Unidades da população"),
   transmute(estimadores, valor = media, painel = "Médias de amostras com n = 45")
 ) |>
+  mutate(painel = fct_relevel(painel, "Unidades da população")) |>
   ggplot(aes(x = valor)) +
   geom_histogram(bins = 35, fill = "#0072B2", colour = "white") +
-  geom_vline(xintercept = parametros$media, colour = "#D55E00", linewidth = 1) +
+  geom_vline(xintercept = media_populacional, colour = "#D55E00", linewidth = 1) +
   facet_wrap(~ painel, scales = "free_y", ncol = 1) +
-  labs(x = "Riqueza ou riqueza média", y = "Frequência") +
-  theme_bw(base_size = 12)
-
-uma_amostra |>
-  summarise(
-    estimativa_media = mean(riqueza),
-    estimativa_variancia = var(riqueza)
-  )
+  labs(x = "Riqueza ou riqueza média", y = "Frequência")
 ```
 
-O histograma estreito das médias não afirma que as estações se tornaram homogêneas. Ele mostra que
-uma média de 45 unidades é mais estável que uma única unidade. A nuvem de estimativas permite avaliar
-se o estimador está centrado no parâmetro e quão preciso é o procedimento.
+```{r}
+#| echo: false
+formata <- function(x) formatC(x, format = "f", digits = 2, decimal.mark = ",")
+mu_txt <- formata(media_populacional)
+estimativa_txt <- formata(mean(uma_amostra$riqueza))
+sd_estimativas <- formata(sd(estimadores$media))
+```
+
+A média populacional desta simulação é `r mu_txt` espécies. A amostra de 45 estações que sorteamos
+produziu a estimativa `r estimativa_txt`, próxima mas não idêntica. O histograma estreito das médias
+não afirma que as estações se tornaram homogêneas: ele mostra que uma média de 45 unidades é bem
+mais estável que uma unidade isolada, com desvio-padrão de `r sd_estimativas` espécies entre as
+repetições. É essa nuvem de estimativas que permite dizer se o estimador está centrado no parâmetro
+e quão preciso é o procedimento.
+
+# Quatro maneiras de construir uma amostra probabilística
+
+Saber o que é um bom estimador não diz ainda como escolher as unidades. Em todos os planos a seguir
+a seleção envolve sorteio, e é o sorteio que sustenta a inferência; o que muda é a estrutura imposta
+a ele.
+
+Na **amostragem aleatória simples**, todas as unidades têm a mesma chance de seleção e cada sorteio
+é feito diretamente no cadastro. É o plano mais simples para justificar, mas pode espalhar o campo
+por uma área cara de percorrer.
+
+Na **amostragem sistemática**, sorteamos um ponto inicial e seguimos um intervalo regular, como
+visitar uma estação a cada 500 m. Ela distribui bem o esforço, desde que a periodicidade do ambiente
+não coincida com o intervalo escolhido.
+
+Na **amostragem estratificada**, dividimos a população em estratos conhecidos, como setores
+expostos e abrigados, e sorteamos unidades dentro de cada um. Isso garante representação e pode
+aumentar a precisão quando unidades do mesmo estrato se parecem. Para estimar toda a região, as
+médias dos estratos devem ser ponderadas por seus tamanhos.
+
+Na **amostragem por conglomerados**, sorteamos grupos naturais, como praias, e medimos várias
+unidades dentro deles. Ela reduz custos, mas unidades do mesmo conglomerado tendem a trazer
+informação repetida, e adiante veremos quanto isso custa em precisão.
+
+O sorteio propriamente dito é uma operação curta:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver um sorteio simples em R"
+cadastro_estacoes <- tibble(
+  estacao = 1:45,
+  setor = rep(c("exposto", "intermediário", "abrigado"), each = 15)
+)
+
+cadastro_estacoes |>
+  slice_sample(n = 15, replace = FALSE)
+```
+
+O argumento `replace = FALSE` representa amostragem **sem reposição**: uma estação sorteada não
+pode entrar de novo. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma
+vez. A reposição simplifica modelos probabilísticos, mas sem reposição descreve melhor muitos
+levantamentos de campo. Quando $n$ é uma fração pequena de $N$, a diferença entre os dois planos é
+pequena; quando a fração é grande, amostrar sem reposição reduz a incerteza.
+
+## O algoritmo revela o desenho
+
+Cada plano corresponde a um procedimento explícito, e é o procedimento, não o nome, que determina
+como a análise deve tratar os dados.
+
+Na amostragem sistemática, se $N=45$ e queremos $n=9$, o intervalo é $k=N/n=5$. Sorteamos um início
+entre 1 e 5 e selecionamos início, início + 5, início + 10, e assim por diante. O sorteio do início é
+indispensável; começar sempre na primeira estação pode favorecer uma posição recorrente do cadastro.
+
+Na estratificação proporcional, se o estrato $h$ possui $N_h$ unidades, selecionamos
+
+$$
+n_h=n\frac{N_h}{N}.
+$$
+
+Uma média regional é então a soma ponderada $\bar{x}_{est}=\sum_h(N_h/N)\bar{x}_h$. Alocar o mesmo
+número em estratos de tamanhos diferentes é possível, mas a análise precisa restaurar os pesos da
+população. No desenho por conglomerados, a unidade sorteada na primeira etapa é o grupo. Medir todas
+as estações de uma praia não transforma cada estação em um sorteio independente de praia.
+
+Aplicados ao mesmo cadastro, os quatro planos produzem padrões espaciais visivelmente distintos.
+
+```{r}
+#| echo: false
+#| label: fig-desenhos
+#| fig-cap: "Unidades selecionadas por quatro desenhos em um cadastro espacial. Cores de fundo representam três estratos."
+#| fig-alt: "Quatro painéis com uma grade de unidades. A amostra simples é dispersa ao acaso, a sistemática segue intervalo regular, a estratificada inclui unidades de todas as faixas e a amostra por conglomerados concentra unidades em poucos grupos."
+#| fig-height: 5.2
+cadastro <- expand_grid(linha = 1:9, coluna = 1:15) |>
+  mutate(
+    id = row_number(),
+    estrato = case_when(coluna <= 5 ~ "exposto",
+                        coluna <= 10 ~ "intermediário",
+                        TRUE ~ "abrigado"),
+    conglomerado = linha
+  )
+
+inicio <- sample(1:9, 1)
+conglomerados <- sample(unique(cadastro$conglomerado), 3)
+
+selecoes <- bind_rows(
+  cadastro |> mutate(desenho = "Aleatória simples", selecionada = id %in% sample(id, 27)),
+  cadastro |> mutate(desenho = "Sistemática", selecionada = id %in% seq(inicio, n(), by = 5)),
+  cadastro |>
+    group_by(estrato) |>
+    mutate(selecionada = id %in% sample(id, 9)) |>
+    ungroup() |>
+    mutate(desenho = "Estratificada"),
+  cadastro |>
+    mutate(desenho = "Conglomerados", selecionada = conglomerado %in% conglomerados)
+)
+
+ggplot(selecoes, aes(x = coluna, y = linha)) +
+  geom_tile(aes(fill = estrato), alpha = 0.18, colour = "white") +
+  geom_point(aes(alpha = selecionada), size = 2.2, colour = "#0072B2") +
+  scale_alpha_manual(values = c(`TRUE` = 1, `FALSE` = 0.08), guide = "none") +
+  facet_wrap(~ desenho, ncol = 2) +
+  coord_equal() +
+  labs(x = "Posição ao longo da costa", y = "Praia", fill = "Estrato") +
+  theme_bw(base_size = 11)
+```
 
 # Sortear estações soltas ou praias inteiras?
 
-Aqui entra a decisão que mais influencia a qualidade de uma estimativa, e que quase nunca recebe
-a atenção que merece: **como as unidades entram na amostra**.
+Os quatro desenhos custam quantias diferentes e produzem estimativas de qualidade diferente. Vale
+medir essa diferença em um caso concreto, comparando o plano aleatório simples com o plano por
+conglomerados.
 
-Suponha que o orçamento permita visitar 15 estações. Há pelo menos dois jeitos de escolhê-las.
-
-Sortear **15 estações soltas** por toda a região, ou sortear **3 praias inteiras** e medir as 5
-estações de cada uma. Nos dois casos são 15 estações, o mesmo esforço de campo, e a segunda opção
-é bem mais barata: menos deslocamento, menos dias de viagem.
+Suponha que o orçamento permita visitar 15 estações. Podemos sortear **15 estações soltas** por toda
+a região, ou sortear **3 praias inteiras** e medir as 5 estações de cada uma. Nos dois casos são 15
+estações e o mesmo esforço de medição, mas a segunda opção é bem mais barata: menos deslocamento,
+menos dias de viagem.
 
 A figura abaixo repete as duas estratégias duas mil vezes em uma região onde as praias diferem
-bastante entre si.
+bastante entre si. Como o código descreve a comparação inteira, ele fica disponível para leitura.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver a simulação das duas estratégias"
-#| label: fig-pread02-estrategias
+#| label: fig-estrategias
 #| fig-cap: "Estimativas da riqueza média da região obtidas por duas estratégias de amostragem, ambas com 15 estações. A linha marca a riqueza média real da região."
 #| fig-alt: "Dois histogramas empilhados na mesma escala. O das estações soltas é estreito e concentrado em torno da linha do valor real. O das praias inteiras é muito mais largo, com estimativas que vão de valores baixos a valores altos."
 #| fig-height: 4
-
-library(tidyverse)
-
 praias <- tibble(
   praia = 1:9,
   media_praia = c(11, 10, 4, 3, 6, 3, 4, 4, 6)
@@ -231,8 +333,8 @@ espalhamento <- estimativas |>
   group_by(estrategia) |>
   summarise(desvio = sd(media))
 
-sd_soltas <- formatC(espalhamento$desvio[1], format = "f", digits = 2, decimal.mark = ",")
-sd_praias <- formatC(espalhamento$desvio[2], format = "f", digits = 2, decimal.mark = ",")
+sd_soltas <- formata(espalhamento$desvio[1])
+sd_praias <- formata(espalhamento$desvio[2])
 ```
 
 As duas estratégias acertam **em média**: os dois histogramas estão centrados no valor real. O que
@@ -248,13 +350,16 @@ cinco estações ricas de uma vez; ao sortear uma pobre, cinco pobres. A estimat
 muito mais da sorte do sorteio.
 :::
 
-# Amostra maior não conserta amostra torta
+Vale notar o que a simulação não mostra. O plano por conglomerados perde precisão, mas continua
+centrado no valor certo, porque as praias entraram por sorteio. Um plano que escolhesse as praias por
+conveniência erraria de outra maneira, e é essa segunda maneira que examinamos agora.
 
-As duas estratégias acima diferem em **precisão**, e a precisão melhora ao coletar mais.
+# Precisão e viés são falhas diferentes
 
-Existe um problema diferente, que coletar mais não resolve. Se a equipe visitar apenas as praias
-de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra deixa de representar a
-região, e as estimativas passam a errar sistematicamente para o mesmo lado.
+A escolha entre estações soltas e praias inteiras afeta a **precisão**, e a precisão melhora ao
+coletar mais unidades. Existe um problema diferente, que coletar mais não resolve. Se a equipe
+visitar apenas as praias de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra
+deixa de representar a região, e as estimativas passam a errar sistematicamente para o mesmo lado.
 
 ::: {.callout-warning appearance="minimal" title="Duas falhas que não se corrigem do mesmo jeito"}
 Uma amostra **imprecisa** produz estimativas espalhadas em torno do valor certo. Mais unidades
@@ -269,128 +374,17 @@ O sorteio é o que protege contra a segunda falha. Ele não garante uma boa amos
 levantamento específico, mas garante que nenhuma característica da região seja sistematicamente
 favorecida ou excluída.
 
-# Quatro maneiras de construir uma amostra probabilística
-
-Na **amostragem aleatória simples**, todas as unidades têm a mesma chance de seleção e cada sorteio
-é feito diretamente no cadastro. É o plano mais simples para justificar, mas pode espalhar o campo
-por uma área cara de percorrer.
-
-Na **amostragem sistemática**, sorteamos um ponto inicial e seguimos um intervalo regular, como
-visitar uma estação a cada 500 m. Ela distribui bem o esforço, desde que a periodicidade do ambiente
-não coincida com o intervalo escolhido.
-
-Na **amostragem estratificada**, dividimos a população em estratos conhecidos, como setores
-expostos e abrigados, e sorteamos unidades dentro de cada um. Isso garante representação e pode
-aumentar a precisão quando unidades do mesmo estrato se parecem. Para estimar toda a região, as
-médias dos estratos devem ser ponderadas por seus tamanhos.
-
-Na **amostragem por conglomerados**, sorteamos grupos naturais, como praias, e medimos várias
-unidades dentro deles. Ela reduz custos, mas unidades do mesmo conglomerado tendem a trazer
-informação repetida. A simulação das praias inteiras mostra exatamente esse custo estatístico.
+As duas falhas recebem nomes próprios. **Precisão** descreve o espalhamento das estimativas
+repetidas; **acurácia** descreve a proximidade entre elas e o parâmetro. Uma estimativa pode ser
+muito precisa e pouco acurada quando o plano repete de modo consistente uma seleção enviesada, e as
+quatro combinações possíveis aparecem na figura seguinte.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver um sorteio simples em R"
-library(tidyverse)
-
-cadastro <- tibble(
-  estacao = 1:45,
-  setor = rep(c("exposto", "intermediário", "abrigado"), each = 15)
-)
-
-amostra_sorteada <- cadastro |>
-  slice_sample(n = 15, replace = FALSE)
-
-amostra_sorteada
-```
-
-O argumento `replace = FALSE` representa amostragem **sem reposição**: uma estação sorteada não
-pode entrar de novo. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma
-vez. A reposição simplifica modelos probabilísticos, mas sem reposição descreve melhor muitos
-levantamentos de campo. Quando $n$ é uma fração pequena de $N$, a diferença entre os dois planos é
-pequena; quando a fração é grande, amostrar sem reposição reduz a incerteza.
-
-## O algoritmo revela o desenho
-
-Na amostragem sistemática, se $N=45$ e queremos $n=9$, o intervalo é $k=N/n=5$. Sorteamos um início
-entre 1 e 5 e selecionamos início, início + 5, início + 10, e assim por diante. O sorteio do início é
-indispensável; começar sempre na primeira estação pode favorecer uma posição recorrente do cadastro.
-
-Na estratificação proporcional, se o estrato $h$ possui $N_h$ unidades, selecionamos
-
-$$
-n_h=n\frac{N_h}{N}.
-$$
-
-Uma média regional é então a soma ponderada $\bar{x}_{est}=\sum_h(N_h/N)\bar{x}_h$. Alocar o mesmo
-número em estratos de tamanhos diferentes é possível, mas a análise precisa restaurar os pesos da
-população. No desenho por conglomerados, a unidade sorteada na primeira etapa é o grupo. Medir todas
-as estações de uma praia não transforma cada estação em um sorteio independente de praia.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Ver quatro desenhos no mesmo cadastro"
-#| label: fig-pread02-desenhos
-#| fig-cap: "Unidades selecionadas por quatro desenhos em um cadastro espacial. Cores de fundo representam três estratos."
-#| fig-alt: "Quatro painéis com uma grade de unidades. A amostra simples é dispersa ao acaso, a sistemática segue intervalo regular, a estratificada inclui unidades de todas as faixas e a amostra por conglomerados concentra unidades em poucos grupos."
-#| fig-height: 5.2
-library(tidyverse)
-
-cadastro <- expand_grid(linha = 1:9, coluna = 1:15) |>
-  mutate(
-    id = row_number(),
-    estrato = case_when(coluna <= 5 ~ "exposto",
-                        coluna <= 10 ~ "intermediário",
-                        TRUE ~ "abrigado"),
-    conglomerado = linha
-  )
-
-inicio <- sample(1:9, 1)
-conglomerados <- sample(unique(cadastro$conglomerado), 3)
-
-selecoes <- bind_rows(
-  cadastro |> mutate(desenho = "Aleatória simples", selecionada = id %in% sample(id, 27)),
-  cadastro |> mutate(desenho = "Sistemática", selecionada = id %in% seq(inicio, n(), by = 5)),
-  cadastro |>
-    group_by(estrato) |>
-    mutate(selecionada = id %in% sample(id, 9)) |>
-    ungroup() |>
-    mutate(desenho = "Estratificada"),
-  cadastro |>
-    mutate(desenho = "Conglomerados", selecionada = conglomerado %in% conglomerados)
-)
-
-ggplot(selecoes, aes(x = coluna, y = linha)) +
-  geom_tile(aes(fill = estrato), alpha = 0.18, colour = "white") +
-  geom_point(aes(alpha = selecionada), size = 2.2, colour = "#0072B2") +
-  scale_alpha_manual(values = c(`TRUE` = 1, `FALSE` = 0.08), guide = "none") +
-  facet_wrap(~ desenho, ncol = 2) +
-  coord_equal() +
-  labs(x = "Posição ao longo da costa", y = "Praia", fill = "Estrato") +
-  theme_bw(base_size = 11)
-```
-
-# Erro amostral e erro não amostral
-
-O **erro amostral** é a diferença que surge porque observamos uma amostra, não a população inteira.
-Ele varia de sorteio para sorteio e pode ser quantificado pelo erro padrão. O **erro não amostral**
-inclui cadastro incompleto, não resposta, perda de unidades, protocolo desigual e erro de medição.
-Ele pode produzir viés e não desaparece automaticamente quando $n$ cresce.
-
-**Precisão** descreve o espalhamento das estimativas repetidas. **Acurácia** descreve a proximidade
-entre elas e o parâmetro. Uma estimativa pode ser muito precisa e pouco acurada quando o plano
-repete de modo consistente uma seleção enviesada. O desenho amostral define sobre qual população a
-inferência é defensável; a fórmula calculada depois não amplia esse alcance.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Ver acurácia e precisão em quatro cenários"
-#| label: fig-pread02-acuracia-precisao
-#| fig-cap: "Acurácia e precisão são propriedades diferentes. O alvo vertical é o parâmetro populacional."
+#| echo: false
+#| label: fig-acuracia-precisao
+#| fig-cap: "Acurácia e precisão são propriedades diferentes. A linha vertical marca o parâmetro populacional."
 #| fig-alt: "Quatro painéis de pontos em torno de uma linha vertical. Eles representam combinações de alta ou baixa precisão com alta ou baixa acurácia."
 #| fig-height: 4.2
-library(tidyverse)
-
 alvo <- 8
 cenarios <- tribble(
   ~cenario, ~centro, ~desvio,
@@ -412,17 +406,39 @@ ggplot(resultados, aes(x = estimativa, y = repeticao)) +
   theme_bw(base_size = 11)
 ```
 
-Uma medida simples do erro de uma estimativa é $e=\hat\theta-\theta$, em que $\hat\theta$ é a
-estimativa e $\theta$ o parâmetro. O viés é $E(\hat\theta)-\theta$, a média dos erros em repetições.
-A precisão pode ser expressa pela variância de $\hat\theta$. O erro quadrático médio reúne as duas
-fontes:
+O painel inferior esquerdo é o mais perigoso na prática: estimativas muito concentradas, e
+concentradas no lugar errado. Nenhuma medida interna aos dados denuncia essa situação, porque a
+amostra é coerente consigo mesma. Só o conhecimento do plano de coleta revela o problema.
+
+## Erro amostral e erro não amostral
+
+Convém separar as duas origens do erro. O **erro amostral** é a diferença que surge porque
+observamos uma amostra, e não a população inteira. Ele varia de sorteio para sorteio e diminui à
+medida que $n$ cresce. O **erro não amostral** inclui cadastro incompleto, unidades não localizadas,
+protocolo desigual e erro de medição. Ele pode produzir viés e não desaparece quando $n$ cresce.
+
+Formalmente, o erro de uma estimativa é $e=\hat\theta-\theta$, em que $\hat\theta$ é a estimativa e
+$\theta$ o parâmetro. O viés é $E(\hat\theta)-\theta$, isto é, a média dos erros em muitas
+repetições do plano, e a precisão pode ser expressa pela variância de $\hat\theta$. O erro quadrático
+médio reúne as duas fontes em um único número:
 
 $$
 EQM(\hat\theta)=\operatorname{Var}(\hat\theta)+\operatorname{Viés}(\hat\theta)^2.
 $$
 
-Uma estimativa pode melhorar em uma dimensão e piorar em outra. Por isso tamanho amostral, desenho e
-qualidade do cadastro precisam ser avaliados conjuntamente.
+A equação torna explícito por que as duas falhas não são intercambiáveis. Aumentar $n$ reduz o
+primeiro termo e deixa o segundo intacto. Um desenho que reduza o viés à custa de alguma precisão
+pode, portanto, diminuir o erro total.
+
+A pergunta do início tinha uma resposta condicional. As 45 estações dizem muito sobre a região se
+tiverem sido sorteadas de um cadastro que representa essa região, e dizem pouco, por mais numerosas
+que sejam, se a seleção tiver seguido a conveniência. O desenho amostral define sobre qual população
+a inferência é defensável, e nenhuma fórmula aplicada depois amplia esse alcance.
+
+# Para saber mais
+
+- [Espaço amostral e eventos](https://fcopf.github.io/mead/content/fundamentos-probabilidade/espaco-amostral.html){target="_blank"} (MEAD)
+- [Importação e exportação de dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html){target="_blank"} (MEAD)
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Uma equipe mede 200 estações, todas na mesma praia. Sobre qual população essas 200 estações

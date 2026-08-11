@@ -1,6 +1,6 @@
 ---
 title: "Fator, bloco ou covariável?"
-subtitle: "Leitura prévia - Atividade extraclasse 04"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -48,9 +48,9 @@ aconteceu antes da coleta.
 | **Covariável** | medida contínua de cada unidade | mediu, sem interferir | como ajuste, não como resultado |
 
 Repare que a coluna do meio é a que decide. Não é o tipo da variável (categórica ou contínua) nem a
-posição dela na fórmula: é o verbo.
+posição dela na fórmula: é o verbo. Vale examinar os três casos separadamente.
 
-# Fator
+## Fator
 
 O fator é aquilo que o estudo existe para comparar. Seus níveis foram atribuídos às unidades por
 sorteio, e é sobre ele que a conclusão vai falar.
@@ -62,7 +62,7 @@ parte mais informativa do resultado.
 No R, essas duas perguntas podem ser escritas como `resposta ~ racao` e
 `resposta ~ racao * temperatura`. A segunda inclui os dois efeitos principais e sua interação.
 
-# Bloco
+## Bloco
 
 O bloco é uma fonte de variação **conhecida e indesejada**, que você não consegue eliminar mas
 consegue organizar.
@@ -73,18 +73,15 @@ diferença entre bandejas engordar o resíduo, você garante que **cada bandeja 
 tratamentos**, sorteando as posições dentro dela.
 
 A variação entre bandejas passa a ser atribuída ao bloco e sai do resíduo. O efeito do tratamento
-fica mais fácil de detectar, sem coletar um dado a mais.
+fica mais fácil de detectar, sem coletar um dado a mais. O modelo correspondente pode ser escrito
+como `resposta ~ racao + bandeja`, mantendo os dois papéis científicos distintos apesar de ambos
+aparecerem na parte sistemática.
 
-O modelo correspondente pode ser escrito como `resposta ~ racao + bandeja`, mantendo os dois papéis
-científicos distintos apesar de ambos aparecerem na parte sistemática.
+Como o agrupamento organiza a alocação, ele precisa existir antes dela. Blocos definidos no
+planejamento são controle local; grupos formados depois de ver os dados são seleção de resultado, e
+retiram do teste a interpretação que ele teria.
 
-::: {.callout-warning appearance="minimal" title="Bloco se decide antes"}
-Blocos precisam ser definidos **no planejamento**, antes de alocar os tratamentos.
-
-Agrupar unidades depois de ver os dados não é controle local: é seleção de resultado.
-:::
-
-# Covariável
+## Covariável
 
 A covariável é uma medida contínua registrada em cada unidade, que afeta a resposta e não é o que
 você quer comparar.
@@ -97,34 +94,31 @@ O ajuste é escrito como `resposta ~ racao + peso_inicial`: a ração representa
 inicial define a condição na qual ela é feita.
 
 A lógica é a mesma do bloco, retirar do resíduo uma variação conhecida, mas o instrumento é
-diferente: em vez de agrupar unidades parecidas, mede-se a característica de cada uma.
+diferente: em vez de agrupar unidades parecidas, mede-se a característica de cada uma. A figura
+abaixo põe as duas estratégias lado a lado.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver dados e código dos dois ajustes"
-#| label: fig-pread12-bloco-covariavel
+#| echo: false
+#| label: fig-bloco-covariavel
 #| fig-cap: "Duas maneiras de descontar uma variação conhecida. À esquerda, unidades agrupadas em bandejas; à direita, uma medida contínua registrada em cada unidade."
 #| fig-alt: "Dois painéis. No da esquerda, seis colunas de pontos com médias crescentes, e em cada coluna o ponto do grupo tratado fica acima do controle. No da direita, uma nuvem de pontos ascendente com duas retas paralelas, a do grupo tratado acima da do controle."
 #| fig-height: 3.6
-
-library(tidyverse)
-
 bandejas <- tibble(
   bandeja = rep(1:6, each = 2),
   grupo = rep(c("controle", "tratado"), times = 6)
 ) |>
   mutate(resposta = 20 + 4 * bandeja + if_else(grupo == "tratado", 3, 0) + rnorm(12, 0, 1))
 
-p_bloco <- ggplot(bandejas, aes(x = factor(bandeja), y = resposta, colour = grupo)) +
-  geom_point(size = 3) +
-  scale_colour_manual(values = c(controle = "#0072B2", tratado = "#D55E00")) +
-  labs(title = "Bloco", x = "Bandeja", y = "Resposta", colour = NULL)
-
 inicial <- tibble(
   peso_inicial = runif(40, 10, 30),
   grupo = rep(c("controle", "tratado"), length.out = 40)
 ) |>
   mutate(resposta = 5 + 1.1 * peso_inicial + if_else(grupo == "tratado", 3, 0) + rnorm(40, 0, 1.5))
+
+p_bloco <- ggplot(bandejas, aes(x = factor(bandeja), y = resposta, colour = grupo)) +
+  geom_point(size = 3) +
+  scale_colour_manual(values = c(controle = "#0072B2", tratado = "#D55E00")) +
+  labs(title = "Bloco", x = "Bandeja", y = "Resposta", colour = NULL)
 
 p_cov <- ggplot(inicial, aes(x = peso_inicial, y = resposta, colour = grupo)) +
   geom_point(size = 2, alpha = 0.8) +
@@ -140,19 +134,18 @@ escondido se a variação de fundo, entre bandejas ou entre pesos iniciais, tive
 
 # A fórmula não decide nada
 
-Este é o ponto que costuma confundir. Compare:
+Este é o ponto que costuma confundir. As fórmulas `resposta ~ racao + bandeja` e
+`resposta ~ racao + peso_inicial` têm exatamente a mesma forma algébrica, embora uma use um
+agrupamento planejado e a outra uma medida contínua.
 
-As fórmulas `resposta ~ racao + bandeja` e `resposta ~ racao + peso_inicial` têm a mesma forma
-algébrica, embora uma use agrupamento planejado e a outra uma medida contínua.
-
-As duas linhas têm a mesma forma, e o R as ajusta pelo mesmo procedimento. A tabela de saída também
-se parece. Nada nelas informa qual variável foi sorteada, qual foi agrupada e qual foi medida.
-
-Essa informação existe apenas no delineamento, e é você quem a carrega até a interpretação.
+O R as ajusta pelo mesmo procedimento, e a tabela de saída também se parece. Nada nelas informa qual
+variável foi sorteada, qual foi agrupada e qual foi medida. Essa informação existe apenas no
+delineamento, e é você quem a carrega até a interpretação.
 
 # Três modelos parecidos, três perguntas diferentes
 
-Para um fator com níveis $i$, o modelo mais simples é
+Escrever os modelos lado a lado deixa a semelhança formal ainda mais evidente. Para um fator com
+níveis $i$, o modelo mais simples é
 
 $$
 Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
@@ -181,47 +174,34 @@ $\beta_1$ descreve a mudança esperada em $Y$ por unidade de $X$, mantendo o gru
 $\alpha_{g(i)}$ compara grupos em um mesmo valor de $X$. Esses são **efeitos parciais**: cada
 coeficiente é interpretado depois de considerar os outros termos do modelo.
 
+Ajustados aos dois conjuntos da figura anterior, os modelos com bloco e com covariável produzem
+tabelas de coeficientes com estrutura diferente, embora o comando seja quase o mesmo.
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver os dois ajustes em R"
-library(tidyverse)
+modelo_com_bloco <- lm(resposta ~ grupo + factor(bandeja), data = bandejas)
+modelo_com_covariavel <- lm(resposta ~ grupo + peso_inicial, data = inicial)
 
-bandejas <- tibble(
-  bandeja = rep(1:6, each = 2),
-  grupo = rep(c("controle", "tratado"), times = 6)
-) |>
-  mutate(resposta = 20 + 4 * bandeja + if_else(grupo == "tratado", 3, 0) +
-           rnorm(12, 0, 1))
-
-inicial <- tibble(
-  peso_inicial = runif(40, 10, 30),
-  grupo = rep(c("controle", "tratado"), length.out = 40)
-) |>
-  mutate(resposta = 5 + 1.1 * peso_inicial + if_else(grupo == "tratado", 3, 0) +
-           rnorm(40, 0, 1.5))
-
-modelo_com_bloco <- lm(
-  resposta ~ grupo + factor(bandeja),
-  data = bandejas
-)
-
-modelo_com_covariavel <- lm(
-  resposta ~ grupo + peso_inicial,
-  data = inicial
-)
-
-list(
-  bloco = coef(modelo_com_bloco),
-  covariavel = coef(modelo_com_covariavel)
+bind_rows(
+  tibble(modelo = "bloco",
+         termo = names(coef(modelo_com_bloco)),
+         estimativa = coef(modelo_com_bloco)),
+  tibble(modelo = "covariável",
+         termo = names(coef(modelo_com_covariavel)),
+         estimativa = coef(modelo_com_covariavel))
 )
 ```
 
-Os comandos são semelhantes porque ANOVA, regressão e ANCOVA pertencem à família dos modelos
-lineares. O desenho determina o significado científico dos coeficientes.
+No modelo com bloco, cada bandeja recebe seu próprio coeficiente, e são cinco deles para seis
+bandejas. No modelo com covariável, uma única inclinação descreve o efeito do peso inicial em toda a
+faixa medida. Em ambos, o coeficiente de `grupo` é o que responde à pergunta do estudo, e vale cerca
+de 3 unidades, como esperado pela construção dos dados.
 
-# Como ler um coeficiente parcial
+## Como ler um coeficiente parcial
 
-Em regressão múltipla,
+A expressão "mantendo constante" merece um exame mais cuidadoso, porque ela sugere uma operação que
+não é a que o modelo realiza. Em regressão múltipla,
 
 $$
 Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\varepsilon_i,
@@ -231,46 +211,57 @@ $\beta_1$ descreve a diferença esperada em $Y$ para uma unidade adicional de $X
 $X_2$ constante**. Essa frase não significa que o programa encontrou pares perfeitamente iguais em
 $X_2$; significa que o modelo usa a variação de $X_1$ que não é explicada linearmente por $X_2$.
 
-Uma forma escalar de visualizar isso é retirar de $X_1$ sua previsão por $X_2$, retirar de $Y$ sua
+Uma forma de tornar isso visível é retirar de $X_1$ sua previsão por $X_2$, retirar de $Y$ sua
 previsão por $X_2$ e relacionar os dois conjuntos de resíduos. A inclinação resultante é a mesma
-$\hat\beta_1$ do modelo múltiplo. Assim, "controlar" significa comparar a parte de $X_1$ disponível
-depois do ajuste, e não apagar magicamente diferenças entre unidades.
+$\hat\beta_1$ do modelo múltiplo.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver um coeficiente parcial por resíduos"
-#| label: fig-pread12-coeficiente-parcial
+#| label: fig-coeficiente-parcial
 #| fig-cap: "Relação parcial entre temperatura e crescimento depois de retirar linearmente o peso inicial de ambas as variáveis."
 #| fig-alt: "Nuvem de resíduos centrada em zero com uma reta ascendente; os eixos representam partes de temperatura e crescimento não explicadas pelo peso inicial."
 #| fig-height: 3.8
-library(tidyverse)
-
-dados <- tibble(
+ostras <- tibble(
   peso_inicial = runif(80, 8, 25),
   temperatura = 20 + 0.25 * peso_inicial + rnorm(80, 0, 1.8)
 ) |>
   mutate(crescimento = 3 + 0.7 * peso_inicial + 0.45 * temperatura + rnorm(80, 0, 2))
 
-modelo_multiplo <- lm(crescimento ~ temperatura + peso_inicial, data = dados)
+modelo_multiplo <- lm(crescimento ~ temperatura + peso_inicial, data = ostras)
 
 parcial <- tibble(
-  temperatura_residual = residuals(lm(temperatura ~ peso_inicial, data = dados)),
-  crescimento_residual = residuals(lm(crescimento ~ peso_inicial, data = dados))
+  temperatura_residual = residuals(lm(temperatura ~ peso_inicial, data = ostras)),
+  crescimento_residual = residuals(lm(crescimento ~ peso_inicial, data = ostras))
 )
 
 ggplot(parcial, aes(x = temperatura_residual, y = crescimento_residual)) +
   geom_point(alpha = 0.65, colour = "#0072B2") +
   geom_smooth(method = "lm", se = TRUE, colour = "#D55E00") +
   labs(x = "Temperatura não explicada pelo peso inicial",
-       y = "Crescimento não explicado pelo peso inicial") +
-  theme_bw(base_size = 11)
-
-c(inclinacao_multipla = coef(modelo_multiplo)["temperatura"],
-  inclinacao_residuos = coef(lm(crescimento_residual ~ temperatura_residual,
-                                data = parcial))["temperatura_residual"])
+       y = "Crescimento não explicado pelo peso inicial")
 ```
 
-# A variável precisa existir antes do tratamento
+```{r}
+#| echo: false
+formata <- function(x) formatC(x, format = "f", digits = 3, decimal.mark = ",")
+inclinacao_multipla <- formata(coef(modelo_multiplo)[["temperatura"]])
+inclinacao_residuos <- formata(
+  coef(lm(crescimento_residual ~ temperatura_residual, data = parcial))[["temperatura_residual"]]
+)
+```
+
+A inclinação da reta da figura é `r inclinacao_residuos`, e o coeficiente de `temperatura` no modelo
+múltiplo é `r inclinacao_multipla`. As duas coincidem, e essa coincidência é o conteúdo da expressão
+"controlar por": comparar a parte de $X_1$ que ainda varia depois do ajuste, e não apagar
+magicamente diferenças entre unidades.
+
+# Quando uma covariável não serve para ajustar
+
+Nem toda variável medida pode entrar no modelo como covariável. Três condições costumam decidir a
+questão, e nenhuma delas é verificada automaticamente pelo programa.
+
+## A variável precisa existir antes do tratamento
 
 Uma boa covariável de ajuste é medida antes da intervenção, prevê a resposta e não é consequência
 do tratamento. Peso inicial satisfaz esses critérios; ganho de peso medido durante o experimento pode
@@ -278,9 +269,10 @@ estar no caminho pelo qual a ração atua. Ajustar por uma consequência remove 
 associação artificial.
 
 Se $T$ é tratamento, $M$ uma medida causada por $T$ e $Y$ a resposta, o caminho $T\to M\to Y$ faz
-parte do efeito total. Condicionar em $M$ bloqueia esse caminho e responde a uma pergunta sobre efeito
-direto. Se $M$ também recebe causas não medidas de $Y$, o condicionamento pode abrir uma associação
-artificial. A temporalidade da variável precisa ser conhecida antes de incluí-la por conveniência.
+parte do efeito total. Condicionar em $M$ bloqueia esse caminho e responde a uma pergunta sobre
+efeito direto, que é uma pergunta diferente da original. Se $M$ também recebe causas não medidas de
+$Y$, o condicionamento pode até abrir uma associação artificial. A temporalidade da variável precisa
+ser conhecida antes de incluí-la por conveniência.
 
 ::: {.callout-tip appearance="minimal" title="Árvore de decisão científica"}
 1. A condição foi atribuída para responder à pergunta? Trate-a como fator.
@@ -290,19 +282,18 @@ artificial. A temporalidade da variável precisa ser conhecida antes de incluí-
    o efeito que deseja estimar.
 :::
 
-Também é necessário haver **sobreposição**. Se apenas indivíduos leves recebem a ração A e apenas
-indivíduos pesados recebem B, o modelo precisa extrapolar para comparar rações no mesmo peso. Uma
-equação ajustada não cria a informação que falta nessa região.
+## Os grupos precisam se sobrepor na covariável
+
+A segunda condição diz respeito à faixa de valores observada em cada grupo. Se apenas indivíduos
+leves recebem a ração A e apenas indivíduos pesados recebem B, o modelo precisa extrapolar para
+comparar rações no mesmo peso. Uma equação ajustada não cria a informação que falta nessa região.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver sobreposição suficiente e insuficiente"
-#| label: fig-pread12-sobreposicao
+#| echo: false
+#| label: fig-sobreposicao
 #| fig-cap: "Distribuições da covariável em dois desenhos. No primeiro há suporte comum; no segundo, grupo e peso inicial estão quase confundidos."
 #| fig-alt: "Dois painéis de pontos ao longo do peso inicial. No painel com suporte comum as cores se misturam; no painel sem suporte uma cor ocupa valores baixos e outra valores altos."
 #| fig-height: 3.8
-library(tidyverse)
-
 suporte <- bind_rows(
   tibble(cenario = "Suporte comum", grupo = "A", peso = rnorm(35, 18, 4)),
   tibble(cenario = "Suporte comum", grupo = "B", peso = rnorm(35, 20, 4)),
@@ -320,25 +311,25 @@ ggplot(suporte, aes(x = peso, y = linha, colour = grupo)) +
   theme_bw(base_size = 11)
 ```
 
-Com pouco suporte, "manter peso constante" depende principalmente da forma linear assumida. Erros
-padrão crescem e pequenas mudanças de modelo podem alterar muito o contraste. Restringir a análise à
-região comum muda a população-alvo, mas costuma ser mais transparente que extrapolar.
+No painel da esquerda os dois grupos ocupam faixas semelhantes de peso inicial, e a comparação a um
+peso fixo se apoia em unidades realmente observadas. No painel da direita, grupo e peso inicial
+estão quase confundidos: "manter peso constante" passa a depender principalmente da forma linear
+assumida. Erros padrão crescem e pequenas mudanças de modelo podem alterar muito o contraste.
+Restringir a análise à região comum muda a população-alvo, mas costuma ser mais transparente que
+extrapolar.
 
-Quando duas covariáveis são fortemente relacionadas, há **multicolinearidade**. O modelo pode prever
-bem a resposta, mas separar seus coeficientes parciais se torna instável: erros padrão aumentam e os
+## Colinearidade e forma da relação
+
+A terceira condição diz respeito à relação entre as próprias variáveis explicativas. Quando duas
+covariáveis são fortemente relacionadas, há **multicolinearidade**. O modelo pode prever bem a
+resposta, mas separar seus coeficientes parciais se torna instável: erros padrão aumentam e os
 sinais podem mudar com pequenas alterações da amostra. Isso não é corrigido escolhendo a variável
 com menor valor de p; é preciso perguntar quais efeitos parciais têm apoio e significado científico.
 
-A relação entre covariável e resposta deve ser aproximadamente linear na escala usada, com variação
-residual comparável entre grupos. Se a inclinação difere entre tratamentos, aparece uma interação e
-o efeito do fator passa a depender do valor da covariável.
-
-::: {.callout-note appearance="minimal" title="Papel científico não é tipo de coluna"}
-Um fator costuma ser categórico, mas uma dose controlada também pode ser representada continuamente.
-Um bloco costuma ser categórico, mas pode nascer de faixas de uma medida contínua. Uma covariável
-costuma ser contínua, mas outras variáveis prévias também podem funcionar como ajustes. O papel vem
-da pergunta, da temporalidade e da forma de alocação.
-:::
+Por fim, a relação entre covariável e resposta deve ser aproximadamente linear na escala usada, com
+variação residual comparável entre grupos. Se a inclinação difere entre tratamentos, aparece uma
+interação e o efeito do fator passa a depender do valor da covariável, situação em que um único
+número deixa de descrever a comparação.
 
 ::: {.callout-warning appearance="minimal" title="O que não se faz com bloco e covariável"}
 Não se relata o efeito de bloco como resultado do estudo. Dizer "a bandeja 6 difere da bandeja 1"
@@ -347,6 +338,22 @@ descreve o berçário, não o experimento.
 Não se ajusta por uma covariável **medida depois** do tratamento e que pode ter sido afetada por
 ele. Nesse caso o ajuste remove parte do próprio efeito que se quer estimar.
 :::
+
+A temperatura do início desta leitura continua sendo a mesma medida, registrada com o mesmo
+instrumento, guardada na mesma coluna. O que decide seu papel é uma informação que não está na
+planilha: se ela foi sorteada, agrupada ou apenas observada. Vale insistir que essa informação não é
+recuperável depois. Um fator costuma ser categórico, mas uma dose controlada também pode ser
+representada continuamente; um bloco costuma ser categórico, mas pode nascer de faixas de uma medida
+contínua; uma covariável costuma ser contínua, mas outras variáveis prévias também podem funcionar
+como ajustes. O papel vem da pergunta, da temporalidade e da forma de alocação, e é ele que
+determina se um coeficiente pode ser lido como resultado, como controle ou como condição de
+comparação.
+
+# Para saber mais
+
+- [Introdução a matrizes](https://fcopf.github.io/mead/content/multivariada-numerica/intro-matrizes.html){target="_blank"} (MEAD),
+  onde a formulação matricial mostra fator, bloco e covariável ocupando colunas da mesma matriz de
+  delineamento.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Um estudo compara duas dietas em tanques instalados em dois galpões. Se o pesquisador sorteou os

@@ -1,6 +1,6 @@
 ---
 title: "Como montar um experimento que responde à pergunta?"
-subtitle: "Leitura prévia - Atividade extraclasse 02"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -43,15 +43,11 @@ que **as duas dietas são idênticas**, variando apenas a distribuição dos 120
 diferença estimada entre as dietas em cada repetição.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver a simulação das quatro alocações"
-#| label: fig-pread06-alocacao
+#| echo: false
+#| label: fig-alocacao
 #| fig-cap: "Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero."
 #| fig-alt: "Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero."
 #| fig-height: 4.6
-
-library(tidyverse)
-
 variacao_entre_tanques <- 0.8
 variacao_entre_peixes <- 0.5
 orcamento <- 120
@@ -125,6 +121,14 @@ forma. Segundo, faz com que uma ocorrência particular, como a falha de uma bomb
 inteiramente o efeito estimado. Réplicas precisam ser genuinamente independentes e cobrir a
 variabilidade sobre a qual se pretende concluir.
 
+## Quantas unidades em cada tratamento
+
+Definido o número total de unidades, resta distribuí-las entre os tratamentos. Um desenho
+**balanceado** atribui o mesmo número de unidades a cada um. O balanceamento não é obrigatório para
+todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças de variância.
+Também evita que a perda de poucas unidades deixe um tratamento quase sem replicação, situação em
+que o experimento inteiro passa a depender de duas ou três observações.
+
 # Segunda decisão: quem recebe qual tratamento?
 
 Definidos os tanques, resta atribuir as dietas. E essa atribuição precisa ser **sorteada**.
@@ -137,10 +141,11 @@ O sorteio também cobre o que ninguém pensou em medir: a posição na sala, a i
 aeração, a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha
 entre os tratamentos, em vez de deixá-las acumular de um lado.
 
-Se $Y_i(0)$ representa o resultado que o tanque $i$ teria sob a dieta comum e $Y_i(1)$ o resultado
-sob a dieta enriquecida, o efeito individual seria $Y_i(1)-Y_i(0)$. Nunca observamos os dois
-resultados no mesmo tanque. A alocação aleatória cria grupos comparáveis para estimar o efeito médio
-por
+Vale escrever isso com um pouco mais de precisão. Se $Y_i(0)$ representa o resultado que o tanque
+$i$ teria sob a dieta comum e $Y_i(1)$ o resultado sob a dieta enriquecida, o efeito individual seria
+$Y_i(1)-Y_i(0)$. Nunca observamos os dois resultados no mesmo tanque, porque cada tanque recebe uma
+única dieta. A alocação aleatória contorna esse impasse ao criar grupos comparáveis, de modo que o
+efeito médio pode ser estimado por
 
 $$
 \widehat\Delta=\bar Y_{enriquecida}-\bar Y_{comum}.
@@ -151,6 +156,23 @@ interferência entre unidades, ela é centrada no efeito médio. A aleatorizaç�
 característica fique exatamente balanceada em uma realização; garante que desequilíbrios não sejam
 sistematicamente produzidos pelo pesquisador e fornece base probabilística para a comparação.
 
+Na prática, o sorteio balanceado é uma linha de código, e convém que seja registrada:
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver uma alocação balanceada em R"
+tanques <- tibble(tanque = 1:20)
+
+alocacao <- tanques |>
+  mutate(dieta = sample(rep(c("comum", "enriquecida"), each = 10)))
+
+alocacao
+```
+
+O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido
+acima; a função `sample()` apenas embaralha a ordem em que eles são distribuídos pelos tanques.
+Registrar a sequência produzida torna o processo auditável.
+
 ::: {.callout-warning appearance="minimal" title="Aleatorizar não é escolher sem critério"}
 "Distribuir de qualquer jeito" e "sortear" não são a mesma coisa. Uma escolha informal tende a
 seguir padrões que quem escolhe nem percebe.
@@ -159,108 +181,35 @@ O sorteio precisa ser feito com um mecanismo explícito, e vale registrar no cad
 foi.
 :::
 
-# Terceira decisão: o que manter constante?
-
-A última decisão é sobre tudo aquilo que **não** é o tratamento.
-
-Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial,
-horário de alimentação, origem dos juvenis) é o que se chama de **controle local**. Cada uma dessas
-fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a
-qual o efeito do tratamento é julgado.
-
-O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.
-
-::: {.callout-note appearance="minimal" title="Três decisões, três funções"}
-**Quantas unidades experimentais**: define quantas repetições independentes do tratamento existem.
-
-**Aleatorização**: impede que diferenças pré-existentes se confundam com o tratamento.
-
-**Controle local**: reduz a variação residual e torna o efeito mais fácil de detectar.
-
-As três são decisões de delineamento. Nenhuma delas pode ser tomada depois, na análise.
-:::
-
-# Balancear, controlar e medir sem favorecer um grupo
-
-Um desenho **balanceado** atribui o mesmo número de unidades a cada tratamento. O balanceamento não
-é obrigatório para todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças
-de variância. Também evita que a perda de poucas unidades deixe um tratamento quase sem replicação.
-
-Um **grupo controle** representa o que aconteceria sem a intervenção de interesse. Para uma dieta,
-pode ser a formulação convencional; para um contaminante, concentração zero; para um procedimento,
-um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas
-mesmas etapas dos outros grupos, pois qualquer diferença de manejo passa a competir com a explicação
-do tratamento.
-
-Controle local excessivo também tem custo. Se todos os tanques usam indivíduos de uma única origem,
-a experiência mede o efeito naquela origem com precisão, mas pode representar mal outras populações.
-O objetivo não é eliminar toda variação biológica; é controlar fontes que obscurecem a comparação e
-replicar sobre as fontes às quais a conclusão pretende se estender.
-
-Quando possível, quem mede a resposta não deve saber qual tratamento cada unidade recebeu. Esse
-**mascaramento** não altera a biologia, mas reduz a chance de expectativas influenciarem a medição,
-a exclusão de observações ou o registro de resultados ambíguos.
-
-# Amostragem aleatória e alocação aleatória respondem a perguntas diferentes
-
-A **amostragem aleatória** seleciona unidades de uma população e sustenta a generalização para essa
-população. A **alocação aleatória** distribui tratamentos entre unidades já selecionadas e sustenta
-a comparação causal entre tratamentos. Um estudo pode ter uma sem a outra.
-
-Peixes comprados de um único viveiro podem receber dietas por sorteio. A comparação causal dentro
-desse conjunto é forte, mas generalizar para todas as populações de robalo exige cautela. Em sentido
-oposto, uma amostra aleatória de estuários descreve bem a região, mas comparar estuários poluídos e
-não poluídos continua sendo observacional se a poluição não foi atribuída.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Ver uma alocação balanceada em R"
-library(tidyverse)
-
-tanques <- tibble(tanque = 1:20)
-
-alocacao <- tanques |>
-  mutate(
-    dieta = sample(rep(c("comum", "enriquecida"), each = 10))
-  )
-
-alocacao
-```
-
-O vetor contém dez rótulos de cada dieta antes do sorteio, garantindo balanceamento. Registrar a
-sequência produzida torna o processo auditável.
-
 ## Confundimento visto como falta de comparação
 
-Suponha que todos os tanques da dieta comum fiquem na prateleira superior e todos os da dieta
-enriquecida, na inferior. A tabela do desenho não contém nenhuma unidade que separe dieta de posição:
+O que exatamente se perde quando o sorteio não acontece? A resposta fica clara ao olhar a tabela do
+desenho. Suponha que todos os tanques da dieta comum fiquem na prateleira superior e todos os da
+dieta enriquecida, na inferior:
 
 | Prateleira | Dieta comum | Dieta enriquecida |
 |---|---:|---:|
 | Superior | 10 | 0 |
 | Inferior | 0 | 10 |
 
-Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas.
-Não é um problema de tamanho amostral: vinte, duzentos ou dois mil tanques com esse mesmo padrão
-continuariam confundidos.
+Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída
+igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral:
+vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver alocação confundida e alocação balanceada"
-#| label: fig-pread06-confundimento
+#| echo: false
+#| label: fig-confundimento
 #| fig-cap: "Dois desenhos com vinte tanques. No primeiro, dieta e prateleira coincidem; no segundo, cada prateleira contém as duas dietas."
 #| fig-alt: "Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira."
 #| fig-height: 4.2
-library(tidyverse)
-
-tanques <- crossing(prateleira = c("superior", "inferior"), posicao = 1:10) |>
+grade_tanques <- crossing(prateleira = c("superior", "inferior"), posicao = 1:10) |>
   mutate(tanque = row_number())
 
-confundido <- tanques |>
+confundido <- grade_tanques |>
   mutate(dieta = if_else(prateleira == "superior", "comum", "enriquecida"),
          desenho = "Confundido")
 
-balanceado <- tanques |>
+balanceado <- grade_tanques |>
   group_by(prateleira) |>
   mutate(dieta = sample(rep(c("comum", "enriquecida"), each = 5))) |>
   ungroup() |>
@@ -271,26 +220,27 @@ bind_rows(confundido, balanceado) |>
   geom_tile(colour = "white", width = 0.9, height = 0.65) +
   geom_text(aes(label = tanque), size = 3) +
   facet_wrap(~ desenho, ncol = 1) +
-  scale_fill_manual(values = c(comum = "#56B4E9", enriquecida = "#E69F00")) +
+  scale_fill_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00")) +
   labs(x = "Posição", y = "Prateleira", fill = "Dieta") +
   theme_bw(base_size = 11)
 ```
 
-# Quando o sorteio precisa respeitar a estrutura
+No painel de baixo, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode
+ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.
 
-Aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um
-lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar
-grupos homogêneos e sortear **dentro** deles. Por exemplo, em cada prateleira da sala metade dos
-tanques recebe cada dieta. Essa aleatorização restrita preserva o sorteio e impede que a posição se
-alinhe com o tratamento.
+## Quando o sorteio precisa respeitar a estrutura
 
-Uma implementação completa cria os blocos primeiro e sorteia os rótulos separadamente em cada um:
+O painel inferior da figura sugere um refinamento do sorteio. Aleatorização irrestrita pode, por
+acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte
+importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear
+**dentro** deles. Por exemplo, em cada prateleira da sala metade dos tanques recebe cada dieta. Essa
+aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.
+
+Uma implementação completa cria os grupos primeiro e sorteia os rótulos separadamente em cada um:
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver a aleatorização restrita por blocos"
-library(tidyverse)
-
 unidades <- crossing(
   prateleira = paste("prateleira", 1:4),
   posicao = 1:6
@@ -304,19 +254,68 @@ plano <- unidades |>
 count(plano, prateleira, tratamento)
 ```
 
-Mudar `each = 3` altera a replicação por tratamento dentro de cada bloco. Se o número de unidades
-for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.
+A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar `each = 3`
+altera a replicação por tratamento dentro de cada grupo; se o número de unidades for ímpar, o plano
+precisa definir previamente como o desequilíbrio será distribuído.
 
 Esses grupos são blocos. O bloqueamento não transforma posição em tratamento de interesse; apenas
 retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar
 a resposta e cada bloco deve permitir comparação entre os tratamentos.
 
+## Sortear unidades e sortear tratamentos
+
+Duas operações levam o nome de sorteio e respondem a perguntas diferentes. A **amostragem
+aleatória** seleciona unidades de uma população e sustenta a generalização para essa população. A
+**alocação aleatória** distribui tratamentos entre unidades já selecionadas e sustenta a comparação
+causal entre tratamentos. Um estudo pode ter uma sem a outra.
+
+Peixes comprados de um único viveiro podem receber dietas por sorteio. A comparação causal dentro
+desse conjunto é forte, mas generalizar para todas as populações de robalo exige cautela. Em sentido
+oposto, uma amostra aleatória de estuários descreve bem a região, mas comparar estuários poluídos e
+não poluídos continua sendo observacional se a poluição não foi atribuída.
+
+# Terceira decisão: o que manter constante?
+
+A última decisão é sobre tudo aquilo que **não** é o tratamento.
+
+Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial,
+horário de alimentação, origem dos juvenis) é o que se chama de **controle local**. Cada uma dessas
+fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a
+qual o efeito do tratamento é julgado.
+
+O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.
+
+Parte dessa decisão é definir contra o que o tratamento será comparado. Um **grupo controle**
+representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação
+convencional; para um contaminante, concentração zero; para um procedimento, um manejo simulado que
+reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos outros
+grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.
+
+Controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de
+uma única origem, o experimento mede o efeito naquela origem com precisão, mas pode representar mal
+outras populações. O objetivo não é eliminar toda variação biológica; é controlar fontes que
+obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.
+
+Uma última providência diz respeito a quem mede. Quando possível, quem registra a resposta não deve
+saber qual tratamento cada unidade recebeu. Esse **mascaramento** não altera a biologia, mas reduz a
+chance de expectativas influenciarem a medição, a exclusão de observações ou o registro de resultados
+ambíguos.
+
+::: {.callout-note appearance="minimal" title="Três decisões, três funções"}
+**Quantas unidades experimentais**: define quantas repetições independentes do tratamento existem.
+
+**Aleatorização**: impede que diferenças pré-existentes se confundam com o tratamento.
+
+**Controle local**: reduz a variação residual e torna o efeito mais fácil de detectar.
+
+As três são decisões de delineamento. Nenhuma delas pode ser tomada depois, na análise.
+:::
+
 # Nem tudo pode ser sorteado
 
-Uma ressalva que acompanha boa parte das Ciências do Mar.
-
-Em muitos estudos o "tratamento" é uma condição observada, não atribuída: costões expostos e
-abrigados, meses de coleta, estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.
+Uma ressalva acompanha boa parte das Ciências do Mar. Em muitos estudos o "tratamento" é uma
+condição observada, não atribuída: costões expostos e abrigados, meses de coleta, estuários poluídos
+e limpos. Ninguém sorteia qual costão será exposto.
 
 Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para
 controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido: sem
@@ -334,9 +333,22 @@ manejo e medição; planeje mascaramento, perdas e exclusões; e declare previam
 comparações principais.
 :::
 
+Os 120 peixes do início continuam sendo 120. O que as três decisões determinam é quanta informação
+sobre a dieta esses mesmos peixes serão capazes de fornecer, e nenhuma delas pode ser revista depois
+que o experimento começa. É por isso que o delineamento, e não a análise, é a etapa em que um estudo
+ganha ou perde a capacidade de responder à pergunta que o originou.
+
+# Para saber mais
+
+O MEAD não trata de delineamento experimental, mas dois livros da bibliografia da unidade curricular
+desenvolvem o tema com profundidade: Ruxton e Colegrave [@ruxton2011], voltado especificamente ao
+planejamento em ciências da vida, e Quinn e Keough [@quinn2002], que conecta delineamento e análise.
+
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Se a pesquisadora só puder montar 6 tanques, é melhor colocar 30 peixes em cada um, ou 10 peixes
   em cada um e usar o restante do orçamento em mais tanques?
 - Um colega sugere manter os tanques da dieta nova em uma sala mais quente, "para os peixes
   crescerem melhor". Que problema isso cria para a comparação?
 :::
+
+# Referências

@@ -1,6 +1,6 @@
 ---
 title: "Uma diferença poderia surgir só por acaso?"
-subtitle: "Leitura prévia - Aula 05"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -49,18 +49,16 @@ que podemos escrever e executar no computador:
 > **o mesmo** desvio-padrão; calcule a diferença entre as médias.
 
 Rodando essa receita uma vez, obtemos uma diferença. Rodando 5000 vezes, obtemos o conjunto de
-diferenças que o acaso sozinho é capaz de produzir.
+diferenças que o acaso sozinho é capaz de produzir. É exatamente isso que o código abaixo faz, e
+vale acompanhá-lo linha a linha, porque ele é a tradução literal da receita.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver a geração da distribuição nula e do valor de p"
-#| label: fig-pread07-distribuicao-nula
+#| label: fig-distribuicao-nula
 #| fig-cap: "Cinco mil diferenças entre médias de dois grupos gerados pelo mesmo processo. A linha marca a diferença de 1,4 cm observada no experimento."
 #| fig-alt: "Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda."
 #| fig-height: 3.4
-
-library(tidyverse)
-
 diferencas <- replicate(5000, mean(rnorm(12, 10.2, 2)) - mean(rnorm(12, 10.2, 2)))
 
 valor_p <- mean(abs(diferencas) >= 1.4)
@@ -77,6 +75,20 @@ sem que exista qualquer efeito.
 
 A diferença observada, 1,4 cm, cai numa região onde o acaso ainda produz resultados com certa
 regularidade.
+
+## O processo nulo precisa respeitar o experimento
+
+A receita acima não é a única possível, e escrever a receita errada invalida tudo o que vem depois.
+No exemplo, cada placa é independente e os dois grupos têm o mesmo desvio-padrão no gerador. Se o
+tratamento tivesse sido aplicado a tanques com várias placas dentro, simular placas independentes
+seria um modelo nulo errado. O processo precisa reproduzir número de unidades experimentais,
+agrupamento, alocação, variabilidade e estatística usada na análise.
+
+Convém notar que nem toda hipótese fixa tudo o que é preciso simular. Há hipóteses **simples**, que
+determinam completamente um parâmetro, e hipóteses **compostas**, que reúnem vários valores. A
+hipótese $H_0:\mu_A-\mu_B=0$ fixa a diferença, mas deixa desconhecidas médias e variâncias que
+precisam ser estimadas. Um teste clássico produz sua distribuição nula levando essa estimação em
+conta; uma simulação precisa fazer o mesmo de forma coerente.
 
 # O valor de p
 
@@ -100,31 +112,27 @@ resultado ter sido "sorte".
 Trocar essas duas leituras é o erro de interpretação mais frequente em toda a estatística aplicada.
 :::
 
-# Uma receita que serve para qualquer comparação
+## Uma ou duas caudas
 
-Vale reparar no que foi feito aqui, porque o procedimento se repete em praticamente toda a
-estatística aplicada.
+A definição fala em resultados "tão ou mais extremos", e essa expressão esconde uma decisão. No teste
+bilateral, diferenças positivas e negativas contam como extremas, e é por isso que o código usa
+`abs()`. Um teste unilateral, como $H_A:\mu_B>\mu_A$, conta apenas a cauda previamente especificada.
+Ele pode ter maior poder na direção escolhida, mas deixa de considerar a direção oposta como
+evidência contra $H_0$.
 
-## O processo nulo precisa respeitar o experimento
+A escolha precisa ocorrer antes de olhar os resultados e só é defensável quando a direção oposta
+não responderia à pergunta científica. Observar o sinal da diferença e então escolher uma cauda
+reduz artificialmente o valor de p.
 
-No exemplo, cada placa é independente e os dois grupos têm o mesmo desvio-padrão no gerador. Se o
-tratamento tivesse sido aplicado a tanques com várias placas dentro, simular placas independentes
-seria um modelo nulo errado. O processo precisa reproduzir número de unidades experimentais,
-agrupamento, alocação, variabilidade e estatística usada na análise.
-
-Há hipóteses **simples**, que fixam completamente um parâmetro, e hipóteses **compostas**, que reúnem
-vários valores. $H_0:\mu_A-\mu_B=0$ fixa a diferença, mas deixa desconhecidas médias e variâncias que
-precisam ser estimadas. Um teste clássico produz sua distribuição nula levando essa estimação em
-conta; uma simulação precisa fazer o mesmo de forma coerente.
-
-Escrevemos o cenário sem efeito como um processo gerador de dados. Executamos esse processo muitas
-vezes. Olhamos onde o resultado observado cai dentro do que o acaso produz. Contamos.
-
-Nenhuma fórmula apareceu, e nenhuma foi necessária. As fórmulas dos testes clássicos existem
-porque, antes dos computadores, simular cinco mil experimentos era impossível. Elas chegam ao mesmo
-lugar por um atalho matemático, mas a pergunta que respondem continua sendo esta.
+Em um teste bilateral com nível $\alpha$, a região de rejeição é dividida em $\alpha/2$ em cada
+cauda. Em um unilateral, toda a área $\alpha$ fica em uma cauda. Essa concentração reduz o valor
+crítico na direção prevista e aumenta o poder ali, mas torna resultados extremos no sentido oposto
+incapazes de rejeitar o teste tal como especificado.
 
 # Hipóteses, estatística e distribuição nula
+
+Até aqui trabalhamos com uma receita e uma contagem. O vocabulário formal descreve as mesmas
+operações e é o que aparece nos artigos e nos programas de análise.
 
 Uma hipótese estatística precisa ser escrita sobre parâmetros da população. Se $\mu_A$ e $\mu_B$
 são os comprimentos médios sob os dois substratos, o teste bilateral usa
@@ -137,7 +145,8 @@ $$
 
 $H_0$ fornece um valor de referência; $H_A$ reúne diferenças em qualquer direção. A diferença entre
 médias é a **estatística de teste** escolhida para medir a discrepância entre dados e hipótese. Sua
-distribuição quando $H_0$ é verdadeira é a **distribuição nula**.
+distribuição quando $H_0$ é verdadeira é a **distribuição nula**, isto é, precisamente o histograma
+que simulamos.
 
 Uma estatística útil aumenta quando os dados se afastam de $H_0$. Em testes clássicos, costuma ser
 padronizada pela própria incerteza:
@@ -152,32 +161,28 @@ estudo preciso. O numerador mede efeito observado; o denominador mede o ruído e
 
 ## O atalho analítico: um teste Z
 
-Suponha, apenas para tornar a conta transparente, que uma população tenha desvio-padrão conhecido
-$\sigma=2$ cm. Uma amostra de $n=25$ placas apresenta média $\bar x=10{,}8$ cm e queremos testar
-$H_0:\mu=10$ cm. A estatística é
+Um exemplo numérico torna a padronização concreta. Suponha, apenas para simplificar a conta, que uma
+população tenha desvio-padrão conhecido $\sigma=2$ cm. Uma amostra de $n=25$ placas apresenta média
+$\bar x=10{,}8$ cm e queremos testar $H_0:\mu=10$ cm. A estatística é
 
 $$
 Z=\frac{\bar X-\mu_0}{\sigma/\sqrt n}
 =\frac{10{,}8-10}{2/\sqrt{25}}=2.
 $$
 
-$\mu_0$ é o valor previsto por $H_0$ e $\sigma/\sqrt n=0{,}4$ cm é o erro padrão. A leitura verbal é:
-a média observada ficou dois erros padrão acima do valor nulo. Em um teste bilateral, o valor de p é
-$2P(Z\ge2)\approx0{,}0455$.
+Aqui $\mu_0$ é o valor previsto por $H_0$ e $\sigma/\sqrt n=0{,}4$ cm é o erro padrão. A leitura
+verbal é: a média observada ficou dois erros padrão acima do valor nulo. Em um teste bilateral, o
+valor de p é $2P(Z\ge2)\approx0{,}0455$, que corresponde à área destacada nas duas caudas da figura.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver regiões críticas e valor de p bilateral"
-#| label: fig-pread07-caudas
+#| echo: false
+#| label: fig-caudas
 #| fig-cap: "Distribuição normal padrão sob H0. Em laranja, resultados tão ou mais extremos que Z igual a 2 nas duas caudas. Linhas tracejadas marcam os limites de rejeição para alfa igual a 0,05."
 #| fig-alt: "Curva normal com as duas caudas além de menos dois e mais dois coloridas. Linhas tracejadas próximas de menos 1,96 e 1,96 delimitam a região central."
 #| fig-height: 3.8
-library(tidyverse)
-
 z_observado <- 2
 alpha <- 0.05
 critico <- qnorm(1 - alpha / 2)
-valor_p_z <- 2 * pnorm(abs(z_observado), lower.tail = FALSE)
 
 curva <- tibble(
   z = seq(-4, 4, length.out = 1000),
@@ -190,35 +195,19 @@ ggplot(curva, aes(x = z, y = densidade)) +
   geom_line(linewidth = 1) +
   geom_vline(xintercept = c(-critico, critico), linetype = 2,
              colour = "#0072B2") +
-  labs(x = "Estatística Z sob H0", y = "Densidade") +
-  theme_bw(base_size = 12)
-
-valor_p_z
+  labs(x = "Estatística Z sob H0", y = "Densidade")
 ```
 
-No cotidiano, $\sigma$ é quase sempre desconhecido e a distribuição t substitui a normal. O exemplo
-Z é uma lente para compreender a padronização, não uma recomendação automática de teste.
-
-# Uma ou duas caudas
-
-No teste bilateral, diferenças positivas e negativas contam como extremas, por isso o código usa
-`abs()`. Um teste unilateral, como $H_A:\mu_B>\mu_A$, conta apenas a cauda previamente especificada.
-Ele pode ter maior poder na direção escolhida, mas deixa de considerar a direção oposta como
-evidência contra $H_0$.
-
-A escolha precisa ocorrer antes de olhar os resultados e só é defensável quando a direção oposta
-não responderia à pergunta científica. Observar o sinal da diferença e então escolher uma cauda
-reduz artificialmente o valor de p.
-
-Em um teste bilateral com nível $\alpha$, a região de rejeição é dividida em $\alpha/2$ em cada
-cauda. Em um unilateral, toda a área $\alpha$ fica em uma cauda. Essa concentração reduz o valor
-crítico na direção prevista e aumenta o poder ali, mas torna resultados extremos no sentido oposto
-incapazes de rejeitar o teste tal como especificado.
+As linhas tracejadas em aproximadamente $\pm1{,}96$ delimitam a região central que concentra 95% da
+distribuição nula. Como $Z=2$ ficou fora dela, o resultado seria declarado incompatível com $H_0$ ao
+nível de 5%. No cotidiano, $\sigma$ é quase sempre desconhecido e a distribuição t substitui a
+normal. O exemplo Z é uma lente para compreender a padronização, não uma recomendação automática de
+teste.
 
 # Do valor de p à decisão
 
-O nível de significância $\alpha$ é o risco máximo de erro tipo I aceito antes da análise. Com
-$\alpha=0,05$, usamos a regra:
+Calculado o valor de p, muitos contextos exigem uma decisão explícita. O nível de significância
+$\alpha$ é o risco máximo de erro tipo I aceito antes da análise. Com $\alpha=0,05$, usamos a regra:
 
 - se $p\le\alpha$, rejeitamos $H_0$;
 - se $p>\alpha$, não rejeitamos $H_0$.
@@ -236,14 +225,12 @@ Evite "aceitar $H_0$", "provar $H_A$" e "não existe diferença". Um teste pode 
 porque o efeito é realmente nulo, porque a amostra é pequena, porque a variabilidade é alta ou porque
 o modelo e a estatística são pouco sensíveis ao efeito existente.
 
-Também não mede a magnitude ou relevância do efeito. Uma diferença minúscula pode produzir valor de
-p pequeno em uma amostra enorme; uma diferença biologicamente importante pode permanecer incerta em
-uma amostra pequena. Por isso estimativa, intervalo de confiança, unidade de medida e contexto devem
-acompanhar a decisão.
-
-Um relato informativo reúne diferença estimada, unidade, intervalo de confiança, estatística, graus
-de liberdade quando houver, valor de p e descrição do delineamento. A decisão binária é apenas uma
-parte dessa evidência.
+O valor de p também não mede a magnitude ou a relevância do efeito. Uma diferença minúscula pode
+produzir valor de p pequeno em uma amostra enorme; uma diferença biologicamente importante pode
+permanecer incerta em uma amostra pequena. Por isso estimativa, intervalo de confiança, unidade de
+medida e contexto devem acompanhar a decisão. Um relato informativo reúne diferença estimada,
+unidade, intervalo de confiança, estatística, graus de liberdade quando houver, valor de p e
+descrição do delineamento. A decisão binária é apenas uma parte dessa evidência.
 
 ::: {.callout-warning appearance="minimal" title="A distribuição nula não é fixa"}
 Ela não depende só do que se mede: depende do experimento que foi montado.
@@ -252,6 +239,31 @@ Com menos placas por grupo, o acaso produz diferenças maiores com facilidade e 
 fica mais larga. Com mais placas, ela se estreita. A mesma diferença de 1,4 cm pode ser banal em um
 experimento e rara em outro.
 :::
+
+# Uma receita que serve para qualquer comparação
+
+Vale reparar no que foi feito aqui, porque o procedimento se repete em praticamente toda a
+estatística aplicada. Escrevemos o cenário sem efeito como um processo gerador de dados. Executamos
+esse processo muitas vezes. Olhamos onde o resultado observado cai dentro do que o acaso produz.
+Contamos.
+
+Nenhuma fórmula apareceu nas três primeiras etapas, e nenhuma foi necessária. As fórmulas dos testes
+clássicos existem porque, antes dos computadores, simular cinco mil experimentos era impossível. Elas
+chegam ao mesmo lugar por um atalho matemático, e é por isso que o teste Z da seção anterior e o
+histograma simulado respondem à mesma pergunta.
+
+Essa é a razão pela qual vale a pena entender o modelo nulo como uma receita, e não como uma tabela
+de valores críticos. Diante de um delineamento novo, para o qual nenhuma fórmula pronta se aplica,
+ainda é possível escrever o processo que geraria os dados na ausência de efeito, executá-lo e contar.
+A diferença de 1,4 cm do início não ganhou nem perdeu importância nesta leitura: ela apenas passou a
+ser lida contra o que o acaso, naquele experimento específico, é capaz de produzir sozinho.
+
+# Para saber mais
+
+- [Probabilidade condicional](https://fcopf.github.io/mead/content/fundamentos-probabilidade/probabilidade-condicional.html){target="_blank"} (MEAD)
+- [Teorema de Bayes](https://fcopf.github.io/mead/content/fundamentos-probabilidade/teorema-bayes.html){target="_blank"} (MEAD),
+  que formaliza por que $P(\text{dados}\mid H_0)$ e $P(H_0\mid \text{dados})$ são quantidades
+  diferentes.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Uma simulação de 5000 repetições devolve 40 resultados tão extremos quanto o observado. Qual é o

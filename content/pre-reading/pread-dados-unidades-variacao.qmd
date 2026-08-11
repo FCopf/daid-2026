@@ -1,6 +1,6 @@
 ---
 title: "Por que duas medidas nunca são iguais?"
-subtitle: "Leitura prévia - Aula 01"
+subtitle: "Leitura prévia"
 author:
   - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"
   - "Instituto do Mar - Unifesp"
@@ -38,7 +38,7 @@ A segunda é ignorá-la e ficar só com a média: "a temperatura é 25,4 °C". N
 seguimos por outro caminho: a variação é informação, e boa parte do trabalho consiste em descobrir
 **de onde ela vem**.
 
-# De onde vem a diferença entre duas medidas?
+## De onde vem a diferença entre duas medidas?
 
 Quando dois números diferem, pelo menos três coisas podem estar acontecendo ao mesmo tempo.
 
@@ -60,9 +60,10 @@ perfeito e poças medidas sem nenhum erro, mediríamos três números diferentes
 diferentes.
 :::
 
-# O que é uma unidade amostral?
+# A unidade amostral e a tabela de dados
 
-Antes de anotar qualquer número, é preciso responder: **o número descreve o quê?**
+Reconhecer que os valores variam ainda não diz o que cada valor representa. Antes de anotar qualquer
+número, é preciso responder: **o número descreve o quê?**
 
 No exemplo, cada número descreve **uma poça de maré**. A poça é a *unidade amostral*: a coisa
 sobre a qual a medida é feita. Se estivéssemos pesando peixes, a unidade seria cada peixe. Se
@@ -73,9 +74,10 @@ poça cinco vezes, você tem cinco medidas, mas continua tendo **uma** poça. Ci
 poça não são a mesma coisa que uma medida de cinco poças, ainda que a planilha fique com cinco
 linhas nos dois casos.
 
-# Como isso vira uma tabela?
+## Cada linha é uma unidade, cada coluna é uma característica
 
-Uma tabela de dados organizada segue duas regras simples:
+Definida a unidade amostral, a tabela de dados praticamente se escreve sozinha. Ela segue duas
+regras:
 
 - **cada linha é uma unidade amostral**;
 - **cada coluna é uma característica medida nessa unidade**.
@@ -84,7 +86,7 @@ Para as poças de maré, ficaria assim:
 
 ```{r}
 #| echo: false
-#| label: tbl-pread01-pocas
+#| label: tbl-pocas
 tibble(
   poca = c(1, 2, 3, 4, 5),
   temperatura = c(25.4, 25.9, 24.8, 26.3, 25.1),
@@ -105,62 +107,21 @@ perguntas como "as poças mais fundas são mais frias?" sem reescrever nada.
 
 ## Ausência de informação não é um valor zero
 
-Uma célula vazia pode significar que a profundidade não foi medida, que o instrumento falhou ou que
-a anotação se perdeu. Em R, essa ausência é representada por `NA`. Ela não deve ser substituída por
-zero: profundidade igual a zero é uma medida possível e tem significado científico; profundidade
-desconhecida é falta de informação.
+Nem toda célula da tabela é preenchida. Uma célula vazia pode significar que a profundidade não foi
+medida, que o instrumento falhou ou que a anotação se perdeu. Em R, essa ausência é representada por
+`NA`. Ela não deve ser substituída por zero: profundidade igual a zero é uma medida possível e tem
+significado científico; profundidade desconhecida é falta de informação.
 
 Antes de resumir uma coluna, convém contar quantos valores estão ausentes e perguntar por quê. Se a
 ausência ocorrer sobretudo nas poças mais profundas ou nos dias de mar agitado, remover essas linhas
 pode alterar a distribuição observada. Assim, até um procedimento aparentemente simples, como
 calcular uma média com `na.rm = TRUE`, precisa de justificativa.
 
-# O que a variação parece quando a vemos?
-
-Cinco números são poucos para enxergar um padrão. Com trinta poças, a figura abaixo mostra o que
-costuma acontecer: os valores se espalham em torno de um centro, a maioria perto dele e poucos
-bem longe.
-
-```{r}
-#| code-fold: true
-#| code-summary: "Ver dados e código da figura"
-#| label: fig-pread01-variacao-espalhamento
-#| fig-cap: "Temperatura medida em trinta poças de maré. A linha marca a média das trinta medidas."
-#| fig-alt: "Gráfico de pontos mostrando trinta valores de temperatura espalhados ao longo do eixo, com uma linha vertical marcando a média das trinta medidas. A maioria dos pontos fica próxima da linha e poucos ficam nas extremidades."
-#| fig-height: 3.2
-
-library(tidyverse)
-
-pocas <- tibble(
-  poca = 1:30,
-  temperatura = rnorm(30, mean = 25.5, sd = 1.1)
-)
-
-ggplot(pocas, aes(x = temperatura, y = 0)) +
-  geom_vline(xintercept = mean(pocas$temperatura), linewidth = 1, colour = "#0072B2") +
-  geom_point(size = 3, alpha = 0.6) +
-  labs(x = "Temperatura (°C)", y = NULL) +
-  scale_y_continuous(breaks = NULL)
-```
-
-Duas coisas descrevem essa figura, e vamos usá-las o semestre inteiro:
-
-- **onde está o centro**: a média das trinta medidas;
-- **quão espalhados estão os valores** em torno desse centro.
-
-Um resumo que informa só o centro esconde metade do que aconteceu. Dizer "a temperatura média é
-25,5 °C" é verdadeiro tanto para poças que variam de 25,4 a 25,6 quanto para poças que variam de
-21 a 30. São situações completamente diferentes.
-
-Descrever essas duas coisas é a primeira tarefa de quem analisa dados, e é por ela que a unidade
-curricular começa. Antes de comparar, testar ou modelar qualquer coisa, é preciso saber dizer onde
-está o centro das medidas e o quanto elas se afastam dele.
-
 # Que tipo de característica foi registrada?
 
-Uma coluna pode guardar números sem representar uma quantidade. O código da poça, por exemplo,
-poderia ser 1, 2 ou 3, mas calcular sua média não teria sentido. Antes de escolher um resumo ou um
-gráfico, precisamos identificar o tipo da variável.
+As colunas da tabela não admitem todas o mesmo tratamento. Uma coluna pode guardar números sem
+representar uma quantidade: o código da poça poderia ser 1, 2 ou 3, mas calcular sua média não teria
+sentido. Antes de escolher um resumo ou um gráfico, precisamos identificar o tipo da variável.
 
 Variáveis **qualitativas** registram categorias. Elas podem ser **nominais**, quando não existe uma
 ordem natural, como o tipo de substrato, ou **ordinais**, quando os níveis têm ordem, como
@@ -194,6 +155,39 @@ antes de qualquer resumo.
 
 # Centro, posição e espalhamento
 
+Sabendo que a temperatura é uma variável quantitativa contínua, podemos resumi-la. Resumi-la em quê,
+porém? Cinco números são poucos para enxergar um padrão. Com trinta poças, a figura abaixo mostra o
+que costuma acontecer: os valores se espalham em torno de um centro, a maioria perto dele e poucos
+bem longe.
+
+```{r}
+#| echo: false
+#| label: fig-variacao-espalhamento
+#| fig-cap: "Temperatura medida em trinta poças de maré. A linha marca a média das trinta medidas."
+#| fig-alt: "Gráfico de pontos mostrando trinta valores de temperatura espalhados ao longo do eixo, com uma linha vertical marcando a média das trinta medidas. A maioria dos pontos fica próxima da linha e poucos ficam nas extremidades."
+#| fig-height: 3.2
+pocas <- tibble(
+  poca = 1:30,
+  temperatura = rnorm(30, mean = 25.5, sd = 1.1)
+)
+
+ggplot(pocas, aes(x = temperatura, y = 0)) +
+  geom_vline(xintercept = mean(pocas$temperatura), linewidth = 1, colour = "#0072B2") +
+  geom_point(size = 3, alpha = 0.6) +
+  labs(x = "Temperatura (°C)", y = NULL) +
+  scale_y_continuous(breaks = NULL)
+```
+
+Duas coisas descrevem essa figura, e vamos usá-las o semestre inteiro:
+
+- **onde está o centro**: a média das trinta medidas;
+- **quão espalhados estão os valores** em torno desse centro.
+
+Um resumo que informa só o centro esconde metade do que aconteceu. Dizer "a temperatura média é
+25,5 °C" é verdadeiro tanto para poças que variam de 25,4 a 25,6 quanto para poças que variam de
+21 a 30. São situações completamente diferentes. Vale, portanto, definir com precisão cada uma
+dessas duas quantidades.
+
 Considere valores $x_1,x_2,\ldots,x_n$. A **média amostral** é
 
 $$
@@ -205,12 +199,14 @@ sensível a valores extremos. A **mediana** é o valor central depois de ordenar
 representar melhor o centro de distribuições muito assimétricas. A **moda** é o valor ou categoria
 mais frequente e pode ser usada tanto com variáveis quantitativas quanto qualitativas.
 
-Os **quartis** dividem os valores ordenados em quatro partes. O primeiro quartil, $Q_1$, deixa cerca
-de 25% das observações abaixo dele; a mediana, $Q_2$, deixa 50%; e $Q_3$, 75%. A distância
-$AIQ=Q_3-Q_1$ é a amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor
-a extremos que a amplitude total, calculada por máximo menos mínimo.
+Além do centro, interessa localizar uma observação dentro do conjunto ordenado. Os **quartis**
+dividem os valores ordenados em quatro partes. O primeiro quartil, $Q_1$, deixa cerca de 25% das
+observações abaixo dele; a mediana, $Q_2$, deixa 50%; e $Q_3$, 75%. A distância $AIQ=Q_3-Q_1$ é a
+amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor a extremos que a
+amplitude total, calculada por máximo menos mínimo.
 
-A variância amostral mede a média dos desvios quadráticos em relação a $\bar{x}$:
+Falta a segunda quantidade anunciada pela figura: o espalhamento. A variância amostral mede a média
+dos desvios quadráticos em relação a $\bar{x}$:
 
 $$
 s^2=\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}.
@@ -226,11 +222,11 @@ Quando duas variáveis positivas usam escalas muito diferentes, o **coeficiente 
 $CV=100s/\bar{x}$ expressa o desvio-padrão como porcentagem da média. Ele não é adequado quando a
 média está perto de zero ou quando o zero da escala é arbitrário, como em graus Celsius.
 
+Todas essas medidas cabem em poucas linhas de código, aplicadas às cinco temperaturas do início:
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver os resumos em R"
-library(tidyverse)
-
 temperaturas_exemplo <- c(25.4, 25.9, 24.8, 26.3, 25.1)
 
 moda <- function(x) {
@@ -258,16 +254,23 @@ medidas contínuas registradas com alta precisão.
 
 ## Uma conta completa de variância
 
-Para $25{,}4$, $25{,}9$, $24{,}8$, $26{,}3$ e $25{,}1$ °C, a média é 25,5 °C. Os desvios em relação à
-média são $-0{,}1$, $0{,}4$, $-0{,}7$, $0{,}8$ e $-0{,}4$ °C. A soma dos desvios é zero, por isso não
-podemos usá-la como medida de variação. Elevando-os ao quadrado, obtemos soma igual a 1,46 °C². Ao
-dividir por $n-1=4$, a variância é 0,365 °C² e o desvio-padrão é aproximadamente 0,604 °C.
+Acompanhar a variância uma vez, valor por valor, deixa claro o que a fórmula faz. Para $25{,}4$,
+$25{,}9$, $24{,}8$, $26{,}3$ e $25{,}1$ °C, a média é 25,5 °C. Os desvios em relação à média são
+$-0{,}1$, $0{,}4$, $-0{,}7$, $0{,}8$ e $-0{,}4$ °C. A soma dos desvios é zero, por isso não podemos
+usá-la como medida de variação. Elevando-os ao quadrado, obtemos soma igual a 1,46 °C². Ao dividir
+por $n-1=4$, a variância é 0,365 °C² e o desvio-padrão é aproximadamente 0,604 °C.
 
 O cálculo separa três ideias: um centro estimado, os afastamentos de cada unidade e um resumo desses
 afastamentos. Ele também deixa explícitas as unidades. A variância está em °C²; o desvio-padrão volta
 a °C e pode ser comparado diretamente aos valores medidos.
 
-# Frequências transformam uma lista em distribuição
+# Da lista de valores à distribuição
+
+Média e desvio-padrão comprimem trinta números em dois, e nessa compressão muita informação se perde.
+Para recuperar parte dela, contamos quantas unidades ocorrem em cada valor ou em cada faixa de
+valores. É isso que transforma uma lista de medidas em uma **distribuição**.
+
+## Frequências de uma variável qualitativa
 
 Para uma variável qualitativa, a distribuição é descrita contando os níveis. A frequência absoluta
 $f_j$ é o número de unidades na categoria $j$; a frequência relativa é
@@ -281,14 +284,12 @@ Em variáveis ordinais também podemos acumular as frequências seguindo a ordem
 variável nominal, acumular categorias não tem interpretação porque não existe uma ordem científica.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver tabela de frequências e gráfico de barras"
-#| label: fig-pread01-frequencias-sombra
+#| echo: false
+#| label: fig-frequencias-sombra
 #| fig-cap: "Frequências do sombreamento em trinta poças. Barras representam categorias, por isso ficam separadas."
 #| fig-alt: "Gráfico de barras com as categorias baixo, médio e alto no eixo horizontal e a frequência de poças no vertical."
-library(tidyverse)
-
-poças_sombra <- tibble(
+#| fig-height: 3.2
+sombra_pocas <- tibble(
   sombra = factor(
     c(rep("baixo", 13), rep("médio", 10), rep("alto", 7)),
     levels = c("baixo", "médio", "alto"),
@@ -296,104 +297,89 @@ poças_sombra <- tibble(
   )
 )
 
-tabela_sombra <- poças_sombra |>
+tabela_sombra <- sombra_pocas |>
   count(sombra, name = "frequencia") |>
-  mutate(
-    proporcao = frequencia / sum(frequencia),
-    proporcao_acumulada = cumsum(proporcao)
-  )
-
-tabela_sombra
+  mutate(proporcao = frequencia / sum(frequencia))
 
 ggplot(tabela_sombra, aes(x = sombra, y = frequencia)) +
   geom_col(fill = "#0072B2", width = 0.7) +
-  labs(x = "Sombreamento", y = "Número de poças") +
-  theme_bw(base_size = 12)
+  labs(x = "Sombreamento", y = "Número de poças")
 ```
 
 As barras não se encostam porque baixo, médio e alto são categorias. A ordem é informativa, mas a
 distância visual entre baixo e médio não representa uma diferença numérica conhecida.
 
-Para uma variável quantitativa contínua, agrupamos valores em classes. Se a classe $j$ tem limites
-$a_j$ e $a_{j+1}$, contamos observações com $a_j\le x<a_{j+1}$. A escolha da largura modifica a
-aparência: classes largas escondem detalhes; classes estreitas deixam o ruído amostral dominar.
+## Classes, histogramas e boxplot
+
+Uma variável quantitativa contínua raramente repete valores, de modo que contar ocorrências uma a uma
+não produz um resumo útil. Agrupamos então os valores em classes. Se a classe $j$ tem limites $a_j$ e
+$a_{j+1}$, contamos as observações com $a_j\le x<a_{j+1}$. A escolha da largura modifica a aparência:
+classes largas escondem detalhes; classes estreitas deixam o ruído amostral dominar. A figura abaixo
+representa os mesmos comprimentos de quatro maneiras.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Ver histogramas, frequência acumulada e boxplot"
-#| label: fig-pread01-formas-distribuicao
-#| fig-cap: "Três representações dos mesmos comprimentos: histogramas com duas larguras de classe, frequência acumulada e boxplot."
+#| echo: false
+#| label: fig-formas-distribuicao
+#| fig-cap: "Quatro representações dos mesmos comprimentos: histogramas com duas larguras de classe, frequência acumulada e boxplot."
 #| fig-alt: "Painéis mostram dois histogramas com resoluções diferentes, uma curva crescente de frequência acumulada e um boxplot horizontal dos mesmos valores."
-#| fig-height: 6
-library(tidyverse)
-
+#| fig-height: 7.5
 comprimentos <- tibble(
   valor = c(3.8, 4.0, 4.1, 4.2, 4.3, 4.4, 4.4, 4.5, 4.5, 4.6,
             4.7, 4.8, 4.8, 4.9, 5.0, 5.1, 5.1, 5.2, 5.3, 5.5,
             5.6, 5.8, 6.0, 6.4, 7.2)
 )
 
-histogramas <- bind_rows(
-  comprimentos |> mutate(painel = "Histograma: classe de 0,5 cm"),
-  comprimentos |> mutate(painel = "Histograma: classe de 1,0 cm")
-)
+p_estreito <- ggplot(comprimentos, aes(x = valor)) +
+  geom_histogram(binwidth = 0.5, boundary = 0, fill = "#0072B2", colour = "white") +
+  labs(x = NULL, y = "Frequência", title = "Classes de 0,5 cm")
 
-ggplot(histogramas, aes(x = valor)) +
-  geom_histogram(
-    data = filter(histogramas, painel == "Histograma: classe de 0,5 cm"),
-    binwidth = 0.5, boundary = 0, fill = "#0072B2", colour = "white"
-  ) +
-  geom_histogram(
-    data = filter(histogramas, painel == "Histograma: classe de 1,0 cm"),
-    binwidth = 1, boundary = 0, fill = "#D55E00", colour = "white"
-  ) +
-  facet_wrap(~ painel, ncol = 1) +
-  labs(x = "Comprimento (cm)", y = "Frequência") +
-  theme_bw(base_size = 12)
+p_largo <- ggplot(comprimentos, aes(x = valor)) +
+  geom_histogram(binwidth = 1, boundary = 0, fill = "#D55E00", colour = "white") +
+  labs(x = NULL, y = "Frequência", title = "Classes de 1,0 cm")
 
-ggplot(comprimentos, aes(x = valor)) +
+p_acumulada <- ggplot(comprimentos, aes(x = valor)) +
   stat_ecdf(geom = "step", linewidth = 1, colour = "#0072B2") +
-  labs(x = "Comprimento (cm)", y = "Proporção acumulada") +
-  theme_bw(base_size = 12)
+  labs(x = NULL, y = "Proporção acumulada", title = "Frequência acumulada")
 
-ggplot(comprimentos, aes(x = valor, y = "")) +
-  geom_boxplot(fill = "#56B4E9", width = 0.5) +
-  labs(x = "Comprimento (cm)", y = NULL) +
-  theme_bw(base_size = 12)
+p_caixa <- ggplot(comprimentos, aes(x = valor, y = "")) +
+  geom_boxplot(fill = "#0072B2", alpha = 0.35, width = 0.5) +
+  labs(x = "Comprimento (cm)", y = NULL, title = "Boxplot")
+
+patchwork::wrap_plots(p_estreito, p_largo, p_acumulada, p_caixa, ncol = 1)
 ```
 
-No gráfico acumulado, a altura em 5 cm informa a proporção de unidades com comprimento menor ou
-igual a 5 cm. No boxplot, a caixa vai de $Q_1$ a $Q_3$, a linha interna é a mediana e os bigodes
-avançam até os valores observados dentro das cercas
-
-$$
-Q_1-1{,}5\,AIQ \qquad\text{e}\qquad Q_3+1{,}5\,AIQ.
-$$
+Os dois histogramas descrevem exatamente os mesmos dados e sugerem formas um pouco diferentes, o que
+já é um aviso contra ler detalhes finos de um histograma isolado. No gráfico acumulado, a altura em
+5 cm informa a proporção de unidades com comprimento menor ou igual a 5 cm. No boxplot, a caixa vai
+de $Q_1$ a $Q_3$, a linha interna é a mediana e os bigodes avançam até os valores observados dentro
+das cercas $Q_1-1{,}5\,AIQ$ e $Q_3+1{,}5\,AIQ$.
 
 Pontos além das cercas são sinalizados como candidatos a valores atípicos. Eles não são erros por
 definição. Podem representar falha de digitação, uma unidade biologicamente incomum ou a cauda
 legítima da distribuição, e por isso devem ser investigados, não apagados automaticamente.
 
-# A distribuição reúne centro, forma e variação
+# Forma, posição relativa e escolha do resumo
 
-Uma lista de resumos nunca substitui a distribuição. Um histograma divide o eixo numérico em
-intervalos e conta quantas observações caem em cada um. Um gráfico de pontos preserva cada valor e
-é especialmente informativo para amostras pequenas. Um boxplot compacta mediana, quartis e valores
-afastados, sendo útil para comparar grupos, mas esconde detalhes da forma.
+As representações anteriores mostram que a distribuição carrega informação que nenhuma medida isolada
+reproduz. Um histograma divide o eixo numérico em intervalos e conta quantas observações caem em cada
+um. Um gráfico de pontos preserva cada valor e é especialmente informativo para amostras pequenas.
+Um boxplot compacta mediana, quartis e valores afastados, sendo útil para comparar grupos, mas
+esconde detalhes da forma.
 
 Distribuições podem ser aproximadamente simétricas, assimétricas ou ter mais de um agrupamento.
 Em uma distribuição simétrica e unimodal, média e mediana tendem a ficar próximas. Uma cauda longa
-para valores altos puxa a média nessa direção, enquanto a mediana muda menos. Dois conjuntos podem
+para valores altos desloca a média nessa direção, enquanto a mediana muda menos. Dois conjuntos podem
 ter a mesma média e o mesmo desvio-padrão, mas formas inteiramente diferentes. Por isso a sequência
-segura é olhar os dados, descrever a forma e então escolher resumos compatíveis.
+segura é observar os dados, descrever a forma e então escolher resumos compatíveis.
 
-Para localizar uma observação em relação ao conjunto, podemos padronizá-la:
+A forma da distribuição também é o que permite situar uma observação individual dentro do conjunto.
+Para isso, padronizamos o valor:
 
 $$
 z_i=\frac{x_i-\bar{x}}{s}.
 $$
 
-Um escore $z=1,5$ informa que a observação está 1,5 desvio-padrão acima da média. O escore não diz
+Um escore $z=1,5$ informa que a observação está 1,5 desvio-padrão acima da média. O escore não indica
 que o valor é raro por si só. Essa conclusão também depende da forma da distribuição e do número
 de observações.
 
@@ -408,6 +394,18 @@ Média, mediana, desvio-padrão, AIQ e escore z descrevem aspectos diferentes. N
 automaticamente o "melhor". A variável, a forma da distribuição, a presença de limites e o objetivo
 científico determinam qual combinação de tabela, figura e medida é informativa.
 :::
+
+No início desta leitura, três temperaturas diferentes pareciam apenas ruído de medição. Percorrido o
+caminho, elas se tornaram um conjunto com unidade amostral definida, tipo de variável identificado,
+centro estimado, espalhamento quantificado e forma descrita. Saber dizer onde está o centro das
+medidas e o quanto elas se afastam dele é a primeira tarefa de quem analisa dados, e é por ela que a
+unidade curricular começa. Tudo o que vem depois, comparar grupos, testar hipóteses ou ajustar
+modelos, continuará sendo uma maneira de perguntar de onde vem a variação observada.
+
+# Para saber mais
+
+- [Transformação de dados com dplyr](https://fcopf.github.io/mead/content/manipulacao-dados-R/transform.html){target="_blank"} (MEAD)
+- [Gráficos em camadas com ggplot2](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html){target="_blank"} (MEAD)
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
 - Se você medisse a temperatura de outras trinta poças no mesmo costão, esperaria obter exatamente
