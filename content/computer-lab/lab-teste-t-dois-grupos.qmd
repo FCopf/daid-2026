@@ -17,23 +17,38 @@ format:
     code-tools: true
 ---
 
-# Um experimento em mesocosmos
+# Objetivo desta prática
 
-Um experimento investigou como a presença de algas afeta a concentração de nutrientes na água.
-Tanques experimentais receberam ou não algas, e a concentração de três nutrientes foi medida em
-cada um.
+A [leitura desta semana](../pre-reading/pread-erros-poder.qmd) apresentou o teste t e lembrou o que
+ele **não** faz: verificar se as unidades sobre as quais você o aplicou são de fato as unidades
+experimentais. "Essa parte continua sendo sua", diz a leitura.
 
-Nesta prática comparamos dois grupos com dados reais, do começo ao fim: contar as unidades
-experimentais, olhar os dados, aplicar o teste, ler o intervalo de confiança e, por último, fazer
-a pergunta que quase ninguém faz: **este experimento seria capaz de detectar um efeito, se ele
-existisse?**
+Hoje ela é sua, com dados reais. Você vai decidir qual é a unidade experimental de um experimento em
+mesocosmos, conduzir a comparação no nível certo e depois fazer deliberadamente a análise errada,
+para medir o que exatamente ela alega a mais.
+
+O objetivo em R é reduzir dados ao nível da unidade experimental e ler a saída completa de
+`t.test()`, com intervalo de confiança.
+
+::: {.callout-note appearance="minimal" title="Como a hora será usada"}
+- **5 min** abrir o RStudio, criar o script e ler a proposta;
+- **40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;
+- **10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.
+:::
+
+# Preparação
+
+Crie um script `pr-dois-grupos.R` com o cabeçalho de identificação e comece por:
 
 ```{r}
 library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-# Vamos abrir os dados
+# Quantas unidades experimentais existem?
+
+Um experimento investigou como a presença de algas afeta a concentração de nutrientes na água.
+Mesocosmos receberam ou não algas, e a concentração de três nutrientes foi medida em cada um.
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Biodiversity.txt"
@@ -43,27 +58,21 @@ biodiv <- read_tsv(url, show_col_types = FALSE)
 glimpse(biodiv)
 ```
 
-`MU` identifica o mesocosmo, `Treatment` indica a presença de algas, `Nutrient` o nutriente medido
-e `Concentration` a concentração observada.
+`MU` identifica a unidade medida, `Treatment` indica a presença de algas, `Nutrient` o nutriente e
+`Concentration` a concentração observada.
 
-# Quantas unidades experimentais existem?
-
-Antes de qualquer teste, a pergunta obrigatória: quantas vezes o tratamento foi de fato aplicado?
+Antes de qualquer teste, a pergunta obrigatória da Prática 04: quantas vezes o tratamento foi de fato
+aplicado?
 
 ```{r}
 nrow(biodiv)
 n_distinct(biodiv$MU)
+biodiv |> count(MU) |> count(n, name = "quantas_unidades")
 ```
 
-São 108 linhas, mas apenas 36 mesocosmos. Cada mesocosmo foi medido três vezes.
-
-```{r}
-biodiv |> count(MU) |> count(n, name = "quantos_mesocosmos")
-```
-
-As três medidas de um mesmo mesocosmo são subamostras: descrevem bem aquele mesocosmo, mas não são
-repetições independentes do tratamento. A unidade experimental é o **mesocosmo**, e é a ele que
-reduzimos os dados antes de analisar.
+São 108 linhas para 36 unidades: **cada unidade foi medida três vezes**. Essas três medidas descrevem
+bem aquela unidade, mas não são repetições independentes do tratamento. É a ela que reduzimos os
+dados antes de analisar:
 
 ```{r}
 mesocosmos <- biodiv |>
@@ -75,25 +84,21 @@ mesocosmos |> count(Treatment, Nutrient)
 
 Trinta e seis unidades, seis em cada combinação de tratamento e nutriente.
 
-# Como ficam os dois grupos?
+# A comparação no nível certo
 
-Vamos começar por um nutriente só:
+Vamos começar por um nutriente só, o fosfato:
 
 ```{r}
 fosfato <- mesocosmos |> filter(Nutrient == "PO3")
 
 fosfato |>
   group_by(Treatment) |>
-  summarise(
-    n = n(),
-    media = mean(concentracao),
-    desvio = sd(concentracao)
-  )
+  summarise(n = n(), media = mean(concentracao), desvio = sd(concentracao))
 ```
 
 ```{r}
 #| label: fig-fosfato-grupos
-#| fig-cap: "Concentração de fosfato nos mesocosmos com e sem algas. Cada ponto é um mesocosmo."
+#| fig-cap: "Concentração de fosfato nos mesocosmos com e sem algas. Cada ponto é uma unidade experimental."
 #| fig-height: 3.4
 
 ggplot(fosfato, aes(x = Treatment, y = concentracao)) +
@@ -102,156 +107,138 @@ ggplot(fosfato, aes(x = Treatment, y = concentracao)) +
   labs(x = "Tratamento", y = "Concentração de fosfato")
 ```
 
-::: {.callout-tip appearance="minimal" title="Observe"}
-As duas nuvens de pontos se sobrepõem? A diferença entre elas parece grande em relação ao
-espalhamento dentro de cada grupo?
+::: {.callout-tip appearance="minimal" title="Preveja"}
+As duas nuvens se sobrepõem? A diferença entre elas parece grande em relação ao espalhamento dentro
+de cada grupo?
 
-Responda **antes** de rodar o teste. Comparar a sua impressão com o resultado é uma boa forma de
-calibrar a leitura de gráficos.
+Escreva no script, como comentário, se você espera um valor de p **abaixo ou acima de 0,05** —
+**antes** de rodar o teste.
 :::
 
-# O teste t
+A fórmula `concentracao ~ Treatment` lê-se "concentração **em função de** tratamento". É a notação que
+usaremos em todos os modelos daqui em diante.
 
-Comparar duas médias é uma operação tão frequente que existe uma função pronta para ela. Em vez de
-simular a distribuição nula, `t.test()` chega ao mesmo lugar por um caminho matemático:
+::: {.callout-tip appearance="minimal" title="Complete"}
+No bloco abaixo falta a variável que separa os dois grupos.
+
+```r
+teste <- t.test(concentracao ~ ____, data = fosfato)
+```
+:::
 
 ```{r}
+#| echo: false
 teste <- t.test(concentracao ~ Treatment, data = fosfato)
+```
 
+```{r}
 teste
 ```
 
-A saída traz, em ordem: a estatística `t`, os graus de liberdade, o valor de p, o intervalo de
+A saída traz, em ordem: a estatística `t`, os **graus de liberdade**, o valor de p, o intervalo de
 confiança de 95% para a diferença entre as médias e as duas médias.
 
-A fórmula `concentracao ~ Treatment` lê-se "concentração **em função de** tratamento", a mesma
-notação que usaremos em todos os modelos daqui em diante.
+::: {.callout-tip appearance="minimal" title="Observe os graus de liberdade"}
+Com 6 unidades em cada grupo, os graus de liberdade ficam em torno de 10. Eles não são um detalhe
+técnico: são a contabilidade de **quanta informação independente** o teste acredita ter recebido.
 
-```{r}
-teste$conf.int
-```
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-O intervalo de confiança costuma ser mais informativo que o valor de p, porque está na unidade da
-resposta: ele diz **de quanto** é a diferença, com que incerteza.
-
-Escreva uma frase de conclusão que use o intervalo, não apenas o "significativo". Repare também no
-que o intervalo **exclui**: valores fora dele são pouco compatíveis com o que foi observado.
+Guarde esse número. Ele volta no bloco *Sua vez*.
 :::
 
-# Os pressupostos se sustentam?
+# Sua vez
 
-O teste t supõe que os valores de cada grupo se distribuem de forma aproximadamente simétrica em
-torno da média. Com poucas unidades, o jeito mais honesto de verificar isso é olhar.
+## Outro nutriente, outra conclusão?
 
-```{r}
-#| label: fig-fosfato-pressupostos
-#| fig-cap: "Distribuição dos valores dentro de cada grupo."
-#| fig-height: 3
+O conjunto tem três nutrientes: `PO3`, `NH4` e `NO3`. Você analisou o primeiro.
 
-ggplot(fosfato, aes(x = concentracao)) +
-  geom_dotplot(binwidth = 0.1, fill = "#0072B2", colour = "white") +
-  facet_wrap(~ Treatment) +
-  labs(x = "Concentração de fosfato", y = NULL) +
-  scale_y_continuous(breaks = NULL)
-```
+::: {.callout-tip appearance="minimal" title="Escolha"}
+Escolha **um** dos outros dois e refaça a análise inteira para ele: o `filter()`, a tabela de médias,
+o gráfico e o teste. Registre a escolha no script.
 
-Compare também os desvios-padrão dos dois grupos na tabela anterior. Se um for muito maior que o
-outro, a versão do teste que o R usa por padrão (`Welch`) já lida com isso: repare que os graus
-de liberdade não são inteiros.
-
-# Este experimento enxergaria um efeito?
-
-Seis mesocosmos por grupo é pouco. Vale medir o quanto esse tamanho limita o que o experimento
-consegue detectar, e para isso simulamos experimentos em que o efeito **existe** e contamos quantas
-vezes ele é detectado.
-
-O tamanho do efeito é expresso em desvios-padrão, para não depender da escala do nutriente: um
-efeito de `1` significa "uma diferença do tamanho da variação entre mesocosmos".
-
-```{r}
-poder_para <- function(n_por_grupo, efeito, repeticoes = 1000) {
-  mean(replicate(repeticoes, {
-    sem_algas <- rnorm(n_por_grupo, mean = 0, sd = 1)
-    com_algas <- rnorm(n_por_grupo, mean = efeito, sd = 1)
-    t.test(sem_algas, com_algas)$p.value < 0.05
-  }))
-}
-
-poder_para(n_por_grupo = 6, efeito = 1)
-```
-
-A função devolve a proporção de experimentos em que o efeito foi detectado. Agora vamos percorrer
-vários tamanhos de experimento e vários tamanhos de efeito:
-
-```{r}
-cenarios <- expand_grid(
-  n_por_grupo = c(6, 12, 20, 40),
-  efeito = c(0.5, 1, 1.5)
-) |>
-  mutate(poder = map2_dbl(n_por_grupo, efeito, poder_para))
-
-cenarios
-```
-
-```{r}
-#| label: fig-fosfato-poder
-#| fig-cap: "Proporção de experimentos que detectam o efeito, por tamanho de experimento e tamanho de efeito. A linha tracejada marca 80%, um alvo usual no planejamento."
-#| fig-height: 3.4
-
-ggplot(cenarios, aes(x = n_por_grupo, y = poder, colour = factor(efeito))) +
-  geom_hline(yintercept = 0.8, linetype = "dashed", colour = "grey40") +
-  geom_line(linewidth = 0.9) +
-  geom_point(size = 2.4) +
-  scale_colour_manual(values = c("0.5" = "#0072B2", "1" = "#D55E00", "1.5" = "#009E73")) +
-  labs(
-    x = "Mesocosmos por grupo",
-    y = "Proporção de experimentos que detectam o efeito",
-    colour = "Efeito (em desvios-padrão)"
-  )
-```
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Olhe a coluna dos 6 mesocosmos por grupo, que é o tamanho real deste experimento.
-
-Um efeito de meio desvio-padrão passaria despercebido na maioria das vezes. Um efeito grande, de
-1,5 desvio-padrão, seria detectado com frequência razoável.
-
-Isso muda a leitura de um resultado não significativo: ele não diz que as algas não fazem nada, diz
-que este experimento só teria enxergado efeitos grandes.
+Não copie a conclusão do fosfato. Olhe o **sinal** do intervalo de confiança do seu nutriente antes de
+escrever qualquer frase.
 :::
 
-::: {.callout-warning appearance="minimal" title="O tamanho do efeito é escolhido, não observado"}
-Repare que em nenhum momento usamos a diferença que apareceu nos dados para calcular essas
-proporções.
+Escreva a conclusão do seu nutriente em uma frase que use o **intervalo**, não apenas a palavra
+"significativo": ele está na unidade da resposta e diz de quanto é a diferença, com que incerteza.
 
-Calcular o poder a partir do efeito observado apenas reescreve o valor de p em outra escala.
-O cálculo útil é feito **antes** de coletar, com o efeito que seria biologicamente relevante
-detectar.
+## O preço de usar a régua errada
+
+Agora faça de propósito o que a Prática 04 ensinou a evitar: rode o mesmo teste sobre as **108 linhas
+originais**, sem reduzir aos mesocosmos, para o seu nutriente.
+
+::: {.callout-tip appearance="minimal" title="Complete"}
+Atenção a um detalhe: em `biodiv` a coluna da resposta chama-se `Concentration`, e não
+`concentracao` — este segundo nome só passou a existir depois do `summarise()`.
+
+```r
+biodiv_nutriente <- biodiv |> filter(Nutrient == "____")
+
+t.test(____ ~ Treatment, data = biodiv_nutriente)
+```
 :::
 
-::: {.callout-tip appearance="minimal" title="Explore"}
-Refaça a análise trocando `PO3` por `NH4` ou `NO3` no `filter()`.
+Compare as duas saídas e anote:
 
-A conclusão sobre o efeito das algas é a mesma para os três nutrientes? Guarde a resposta: ela
-volta mais adiante na unidade curricular.
+- os **graus de liberdade** de cada uma;
+- quantas unidades independentes por grupo cada análise está alegando ter;
+- a **largura** dos dois intervalos de confiança.
+
+::: {.callout-warning appearance="minimal" title="Nem todo sintoma aparece no valor de p"}
+Neste conjunto de dados o efeito das algas é grande, e o valor de p continua minúsculo nas duas
+análises. Isso não absolve a análise errada.
+
+O sintoma confiável está nos graus de liberdade: a análise sobre 108 linhas alega ter três vezes mais
+unidades independentes do que o experimento produziu. Em um estudo com efeito menor, é exatamente
+essa alegação a mais que transforma ruído em "descoberta".
 :::
 
 # Entrega
 
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-dois-grupos.R` que rode em sessão nova e contenha:
+Salve o script `pr-dois-grupos.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
+(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
+script, como comentários iniciados por `#`.
 
-1. a importação dos dados e a redução às 36 unidades experimentais, com a contagem que justifica
-   essa redução;
-2. o gráfico do fosfato, o teste t e o gráfico de verificação dos pressupostos;
-3. a tabela e o gráfico de poder para os quatro tamanhos de experimento;
-4. em comentários, quatro a cinco frases contendo: uma conclusão sobre o efeito das algas escrita
-   com o intervalo de confiança, uma explicação de **por que as 108 linhas não podem ser usadas
-   diretamente no teste**, e uma frase sobre qual tamanho de efeito este experimento conseguiria
-   detectar.
+::: {.callout-important appearance="minimal" title="Entregue"}
+1. a base da aula: a contagem que justifica a redução às 36 unidades, o gráfico do fosfato e o teste,
+   com a sua previsão sobre o valor de p registrada em comentário **antes** dele;
+2. **a análise completa do nutriente que você escolheu**: tabela de médias, gráfico e teste, com uma
+   frase de conclusão escrita a partir do **intervalo de confiança**, na unidade da resposta;
+3. **o mesmo teste feito sobre as 108 linhas**, com os graus de liberdade e a largura do intervalo
+   das duas análises anotados lado a lado em comentário;
+4. em comentários, 3 a 4 frases respondendo, **com os seus números**: o que mudou e o que **não**
+   mudou ao usar a régua errada, no seu nutriente?
+5. em comentários, mais 2 frases comparando o **seu** nutriente com o fosfato: qual dos dois
+   experimentos estimou o efeito das algas com mais precisão? Responda pela largura dos dois
+   intervalos, lembrando que eles estão em unidades diferentes — diga então por que essa comparação
+   exige cuidado.
+:::
+
+::: {.callout-tip appearance="minimal" title="O que será avaliado"}
+- [ ] o script roda em sessão nova, do início ao fim, sem erro;
+- [ ] a previsão sobre o valor de p aparece **antes** do teste;
+- [ ] a escolha do nutriente está registrada e a conclusão corresponde ao **sinal** do intervalo dele;
+- [ ] a conclusão do item 2 cita os limites do intervalo, e não apenas "significativo";
+- [ ] os graus de liberdade das duas análises aparecem comparados explicitamente;
+- [ ] a comparação do item 5 usa as larguras dos intervalos e reconhece a diferença de unidades;
+- [ ] cada gráfico tem eixos com nome e unidade.
+:::
+
+::: {.callout-note appearance="minimal" collapse="true" title="Para levar adiante (fora da entrega)"}
+A leitura desta semana estimou o **poder** de um experimento por simulação. Com os 6 mesocosmos por
+grupo deste estudo, você pode repetir aquele cálculo trocando o tamanho do efeito:
+
+```r
+efeito <- 0.5
+mean(replicate(1000, t.test(rnorm(6, 0, 1), rnorm(6, efeito, 1))$p.value < 0.05))
+```
+
+Tente alguns valores de `efeito` e veja a partir de qual deles este delineamento passaria a detectar
+o efeito em cerca de 80% das vezes. O resultado costuma surpreender.
 :::
 
 # Para saber mais
 
-- [Comparando médias: teste t de Student](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html){target="_blank"} (MEAD)
+- [Comparando médias: teste t de Student](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html){target="_blank"}
+  (MEAD) — procure a seção sobre o teste para duas amostras independentes e a versão de Welch, que é
+  a que o R usa por padrão.

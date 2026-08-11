@@ -17,85 +17,129 @@ format:
     code-tools: true
 ---
 
-# Quatro concentrações de zinco
+# Objetivo desta prática
 
-Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco: `BACK`
-(concentração de fundo, o controle), `LOW`, `MED` e `HIGH`.
+A [leitura desta semana](../pre-reading/pread-fontes-variacao-anova.qmd) mostrou dois experimentos com
+**as mesmas médias** e conclusões opostas, e explicou que a razão F compara duas fontes de variação.
 
-Com quatro grupos, comparar de dois em dois resulta em seis comparações. Nesta prática vamos fazer o que
-faz sentido: **uma pergunta só para o conjunto**, e só depois olhar os pares.
+Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você **define os
+parâmetros** que os geram: quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz
+F subir e o que faz F descer — e só então aplica o procedimento a dados reais de contaminação por
+zinco.
+
+O objetivo em R é escrever um modelo como processo gerador, ajustar `aov()` e ler as comparações
+par a par.
+
+::: {.callout-note appearance="minimal" title="Como a hora será usada"}
+- **5 min** abrir o RStudio, criar o script e ler a proposta;
+- **40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;
+- **10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.
+:::
+
+# Preparação
+
+Crie um script `pr-anova.R` com o cabeçalho de identificação e comece por:
 
 ```{r}
 library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-# Vamos abrir os dados
+# Um experimento sem efeito nenhum
+
+Vamos construir um experimento com quatro tratamentos e oito canais em cada um, medindo a diversidade
+de algas. Os parâmetros ficam explícitos no início, para serem fáceis de mudar:
+
+```{r}
+medias_verdadeiras <- c(1.8, 1.8, 1.8, 1.8)   # uma por tratamento
+desvio_dentro <- 0.5                          # variação entre canais do mesmo tratamento
+n_por_grupo <- 8
+
+experimento <- tibble(
+  tratamento = factor(rep(c("BACK", "LOW", "MED", "HIGH"), each = n_por_grupo),
+                      levels = c("BACK", "LOW", "MED", "HIGH")),
+  diversidade = rnorm(4 * n_por_grupo,
+                      mean = rep(medias_verdadeiras, each = n_por_grupo),
+                      sd = desvio_dentro)
+)
+
+glimpse(experimento)
+```
+
+Repare no que acabamos de escrever: as quatro médias verdadeiras são **iguais**. Neste experimento o
+tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.
+
+```{r}
+#| label: fig-anova-simulado
+#| fig-cap: "Diversidade nos quatro tratamentos de um experimento construído sem efeito algum."
+#| fig-height: 3.4
+
+ggplot(experimento, aes(x = tratamento, y = diversidade)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.12, size = 2.2, alpha = 0.7, colour = "#0072B2") +
+  labs(x = "Tratamento", y = "Diversidade")
+```
+
+Ainda assim as quatro caixas não ficam alinhadas: são 32 canais sorteados. A pergunta da ANOVA é se
+essa separação é grande **em comparação com** o espalhamento dentro dos grupos.
+
+A fórmula `diversidade ~ tratamento` lê-se "diversidade em função de tratamento", a mesma notação da
+Prática 06:
+
+```{r}
+modelo_nulo <- aov(diversidade ~ tratamento, data = experimento)
+
+summary(modelo_nulo)
+```
+
+A tabela traz os graus de liberdade (`Df`), a soma de quadrados (`Sum Sq`), o quadrado médio
+(`Mean Sq`), a razão F e o valor de p. A linha `tratamento` é a variação entre grupos; `Residuals` é
+a variação dentro dos grupos.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Como as quatro médias verdadeiras são iguais, as duas linhas estão medindo a mesma coisa e F fica em
+torno de **1**.
+
+Execute o bloco da simulação e o `summary()` mais duas vezes. F muda bastante de uma execução para
+outra, e ocasionalmente fica bem acima de 1 — sem que nada tenha mudado no experimento. É o mesmo
+alarme falso da Prática 05, agora medido por F.
+:::
+
+# Sua vez, parte 1: mova o F
+
+::: {.callout-tip appearance="minimal" title="Escolha e preveja"}
+Escolha **as suas quatro médias verdadeiras**, com pelo menos uma diferente das demais, e registre-as
+no script. Mantenha `desvio_dentro <- 0.5` por enquanto.
+
+Antes de rodar, escreva como comentário: o F ficará perto de 1 ou bem acima? Por quê?
+:::
+
+Troque o vetor `medias_verdadeiras` pelos seus valores, gere de novo o experimento e ajuste o modelo.
+
+::: {.callout-tip appearance="minimal" title="O desafio"}
+Agora mude **um único parâmetro** — só as médias, ou só `desvio_dentro`, ou só `n_por_grupo` — de
+modo a levar o F na **direção oposta** à que você acabou de obter.
+
+Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de
+`summary()`. Rode cada versão duas vezes antes de concluir: uma execução isolada pode enganar.
+:::
+
+# Os dados reais: quatro concentrações de zinco
+
+Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco: `BACK`
+(concentração de fundo, o controle), `LOW`, `MED` e `HIGH`.
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/medley.csv"
 
-algas <- read_csv(url, show_col_types = FALSE)
+algas <- read_csv(url, show_col_types = FALSE) |>
+  mutate(ZINC = fct_relevel(ZINC, "BACK", "LOW", "MED", "HIGH"))
 
-glimpse(algas)
-```
-
-Trinta e quatro canais, cada um com a sua concentração de zinco (`ZINC`) e o seu índice de
-diversidade (`DIVERSITY`).
-
-```{r}
 algas |> count(ZINC)
 ```
 
-Os níveis não estão na ordem que interessa. Vamos ordená-los do menor para o maior zinco, o que
-vale tanto para as tabelas quanto para o eixo do gráfico:
-
-```{r}
-algas <- algas |>
-  mutate(ZINC = fct_relevel(ZINC, "BACK", "LOW", "MED", "HIGH"))
-
-levels(algas$ZINC)
-```
-
-# Como os grupos se comparam?
-
-```{r}
-algas |>
-  group_by(ZINC) |>
-  summarise(
-    n = n(),
-    media = mean(DIVERSITY),
-    desvio = sd(DIVERSITY)
-  )
-```
-
-```{r}
-#| label: fig-anova-boxplot
-#| fig-cap: "Diversidade de algas nas quatro concentrações de zinco. Cada ponto é um canal."
-#| fig-height: 3.4
-
-ggplot(algas, aes(x = ZINC, y = DIVERSITY)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(width = 0.12, size = 2.2, alpha = 0.7, colour = "#0072B2") +
-  labs(x = "Concentração de zinco", y = "Diversidade")
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-Há uma tendência de queda da diversidade com o aumento do zinco?
-
-Repare também no espalhamento **dentro** de cada grupo. As caixas se sobrepõem bastante, e é
-justamente por isso que precisamos de um critério mais firme do que a impressão visual.
-:::
-
-# Duas fontes de variação
-
-A ideia da análise de variância é comparar duas coisas:
-
-- o quanto as **médias dos grupos** se afastam da média geral;
-- o quanto os **canais dentro de um mesmo grupo** se afastam da média do seu grupo.
-
-Se a primeira for grande em relação à segunda, o zinco separa os grupos além do que o ruído
-explicaria. A função `aov()` faz essa conta:
+`fct_relevel()` coloca os níveis na ordem que interessa, do menor para o maior zinco. Isso vale tanto
+para as tabelas quanto para o eixo dos gráficos.
 
 ```{r}
 modelo <- aov(DIVERSITY ~ ZINC, data = algas)
@@ -103,150 +147,78 @@ modelo <- aov(DIVERSITY ~ ZINC, data = algas)
 summary(modelo)
 ```
 
-A fórmula `DIVERSITY ~ ZINC` lê-se "diversidade **em função de** zinco".
-
-A tabela traz, em cada linha, os graus de liberdade (`Df`), a soma de quadrados (`Sum Sq`), o
-quadrado médio (`Mean Sq`), a razão F e o valor de p. A linha `ZINC` é a variação entre grupos; a
-linha `Residuals` é a variação dentro dos grupos.
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Confira que os graus de liberdade batem: com 4 grupos, `ZINC` tem $4 - 1 = 3$; com 34 canais no
-total, o resíduo tem $34 - 4 = 30$.
-
-E confira o significado do F: divida o `Mean Sq` de `ZINC` pelo `Mean Sq` de `Residuals`. Você
-deve reencontrar o valor da coluna `F value`.
-:::
-
-# O que esse valor de p responde
-
-Ele responde a **uma** pergunta: "as quatro médias são todas iguais?". Um valor pequeno indica que
-essa descrição não se sustenta.
-
-Ele **não** diz quais concentrações diferem entre si. Para isso existe o passo seguinte.
-
-# Os resíduos se comportam bem?
-
-Antes de seguir, vale conferir se o modelo é razoável. Dois gráficos bastam:
-
-```{r}
-#| label: fig-anova-residuos
-#| fig-cap: "Resíduos do modelo em função dos valores ajustados, e distribuição dos resíduos."
-#| fig-height: 3.2
-
-diagnostico <- tibble(
-  ajustado = fitted(modelo),
-  residuo = residuals(modelo)
-)
-
-ggplot(diagnostico, aes(x = ajustado, y = residuo)) +
-  geom_hline(yintercept = 0, linewidth = 0.6) +
-  geom_point(size = 2, alpha = 0.7, colour = "#0072B2") +
-  labs(x = "Valor ajustado (média do grupo)", y = "Resíduo")
-```
-
-```{r}
-#| label: fig-anova-qq
-#| fig-cap: "Gráfico quantil-quantil dos resíduos. Pontos próximos da linha indicam resíduos aproximadamente normais."
-#| fig-height: 3.2
-
-ggplot(diagnostico, aes(sample = residuo)) +
-  stat_qq(colour = "#0072B2") +
-  stat_qq_line() +
-  labs(x = "Quantis teóricos", y = "Resíduos")
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-No primeiro gráfico, procure por espalhamento muito diferente entre as quatro colunas de pontos:
-seria sinal de que a variação não é constante entre grupos.
-
-No segundo, procure por pontos que se afastam muito da linha nas extremidades.
-:::
-
-# Quais concentrações realmente diferem?
-
-Agora sim, as comparações par a par. O teste de Tukey compara todos os pares ajustando para o fato
-de que são várias comparações:
+O valor de p responde a **uma** pergunta: "as quatro médias são todas iguais?". Ele não diz quais
+concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares
+ajustando para o número de comparações:
 
 ```{r}
 TukeyHSD(modelo)
 ```
 
-Cada linha é um par. A coluna `diff` é a diferença entre as médias, `lwr` e `upr` delimitam o
-intervalo de confiança dessa diferença, e `p adj` é o valor de p ajustado.
+Cada linha é um par. `diff` é a diferença entre as médias, `lwr` e `upr` delimitam o intervalo de
+confiança dessa diferença, e `p adj` é o valor de p ajustado. Um par cujo intervalo **contém o zero**
+não mostra diferença detectável.
 
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Um par cujo intervalo (`lwr`, `upr`) **contém o zero** não mostra diferença detectável.
-
-Quantos dos seis pares mostram diferença? O padrão é compatível com uma queda gradual da
-diversidade ao longo das quatro concentrações, ou apenas os extremos se separam?
+::: {.callout-tip appearance="minimal" title="Leia a tabela antes de seguir"}
+Percorra as seis linhas e anote quais pares **não** contêm o zero. Guarde essa lista: ela é a chave
+do próximo bloco.
 :::
 
-# E se o zinco não fizesse nada?
+# Sua vez, parte 2: de onde vem o F?
 
-Para calibrar a leitura do F, vale ver que valores ele assume quando não há efeito algum:
+O F da tabela completa resume as quatro concentrações em um número só. Vamos descobrir quais grupos
+o sustentam.
 
-```{r}
-#| label: fig-anova-f-nulo
-#| fig-cap: "Valores de F em 2000 experimentos simulados com quatro grupos e nenhum efeito. A linha marca o F observado nos dados reais."
-#| fig-height: 3.2
+::: {.callout-tip appearance="minimal" title="Escolha e preveja"}
+Escolha **uma** das quatro concentrações para remover da análise e registre a escolha no script.
 
-f_observado <- summary(modelo)[[1]][["F value"]][1]
-
-media_geral <- mean(algas$DIVERSITY)
-desvio_residual <- sigma(modelo)
-
-f_nulos <- replicate(2000, {
-  simulado <- tibble(
-    grupo = rep(c("a", "b", "c", "d"), length.out = 34),
-    valor = rnorm(34, mean = media_geral, sd = desvio_residual)
-  )
-  summary(aov(valor ~ grupo, data = simulado))[[1]][["F value"]][1]
-})
-
-ggplot(tibble(f = f_nulos), aes(x = f)) +
-  geom_histogram(bins = 60, fill = "#0072B2", colour = "white") +
-  geom_vline(xintercept = f_observado, colour = "#D55E00", linewidth = 1.1) +
-  labs(x = "Razão F sob a hipótese nula", y = "Frequência")
-```
-
-O `sigma(modelo)` devolve a variação residual estimada nos dados reais, e é ela que usamos para
-simular canais sem nenhum efeito de zinco.
-
-```{r}
-proporcao_maiores <- mean(f_nulos >= f_observado)
-proporcao_maiores
-```
-
-```{r}
-#| echo: false
-prop_txt <- formatC(100 * proporcao_maiores, format = "f", digits = 1, decimal.mark = ",")
-```
-
-Nesta simulação, `r prop_txt`% dos 2000 experimentos sem efeito nenhum produziram um F igual ou
-maior que o observado. Compare esse número com o valor de p da tabela do
-`summary(modelo)`: os dois caminhos (a simulação e a distribuição teórica de F) levam
-praticamente ao mesmo lugar.
-
-::: {.callout-tip appearance="minimal" title="Explore"}
-No bloco da simulação, troque `sd = desvio_residual` por `sd = 1.5` e execute novamente.
-
-A distribuição de F sob a nula muda de forma? E a posição da linha laranja em relação a ela?
+Antes de rodar, escreva: com três grupos em vez de quatro, o F vai **subir ou descer**? Use a tabela
+de Tukey que você acabou de ler para justificar em uma frase.
 :::
+
+```r
+algas_reduzido <- algas |>
+  filter(ZINC != "____") |>
+  mutate(ZINC = fct_drop(ZINC))
+
+summary(aov(DIVERSITY ~ ZINC, data = algas_reduzido))
+```
+
+`fct_drop()` elimina o nível que ficou sem observações depois do `filter()`. Sem ele, o R continuaria
+esperando quatro grupos.
+
+Compare a nova tabela com a completa: graus de liberdade, F e valor de p.
 
 # Entrega
 
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-anova.R` que rode em sessão nova e contenha:
+Salve o script `pr-anova.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
+(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
+script, como comentários iniciados por `#`.
 
-1. a importação dos dados, o reordenamento dos níveis e o gráfico dos quatro grupos;
-2. a tabela de resumo por grupo e a saída de `summary(aov(...))`;
-3. os dois gráficos de diagnóstico dos resíduos;
-4. o resultado do teste de Tukey;
-5. em comentários, quatro a cinco frases contendo: **qual é a conclusão sobre o efeito do zinco,
-   quais pares de concentrações diferem, e por que a razão F precisa dos dois quadrados médios em
-   vez de apenas da diferença entre as médias.**
+::: {.callout-important appearance="minimal" title="Entregue"}
+1. **o seu experimento simulado**: as quatro médias que você escolheu, o gráfico e a tabela de
+   `summary()`, com a previsão sobre o F registrada em comentário **antes** dela;
+2. **o desafio**: o parâmetro que você mudou, os valores antigo e novo, as duas tabelas e uma frase
+   explicando por que essa mudança moveu o F na direção pretendida;
+3. a análise dos dados reais de zinco: a ANOVA completa e o teste de Tukey;
+4. **o teste de robustez**: a concentração que você removeu, a previsão registrada antes, a nova
+   tabela e a comparação com a completa;
+5. em comentários, 3 a 4 frases respondendo, **com os seus números**: qual é a conclusão sobre o
+   efeito do zinco, e o que a remoção que você fez revelou sobre quais grupos sustentavam o F da
+   análise completa?
+:::
+
+::: {.callout-tip appearance="minimal" title="O que será avaliado"}
+- [ ] o script roda em sessão nova, do início ao fim, sem erro;
+- [ ] as duas previsões aparecem **antes** das tabelas correspondentes;
+- [ ] no desafio, **um só** parâmetro mudou entre as duas tabelas, e a mudança está registrada;
+- [ ] a escolha da concentração removida está registrada e justificada pela tabela de Tukey;
+- [ ] a conclusão do item 5 cita valores de F ou de p obtidos por você;
+- [ ] cada gráfico tem eixos com nome e unidade.
 :::
 
 # Para saber mais
 
-- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"} (MEAD)
+- [Análise de variância de um fator](https://fcopf.github.io/mead/content/anova/anova-simples.html){target="_blank"}
+  (MEAD) — procure a seção sobre a partição da soma de quadrados, para rever de onde saem os dois
+  quadrados médios que formam o F.

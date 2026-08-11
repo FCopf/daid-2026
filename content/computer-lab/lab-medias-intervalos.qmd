@@ -17,21 +17,40 @@ format:
     code-tools: true
 ---
 
-# Um costão inventado, para poder conferir a resposta
+# Objetivo desta prática
 
-Com dados reais nunca sabemos o valor verdadeiro que estamos estimando. Aqui vamos fazer o
-contrário: **inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm, com
-desvio-padrão de 1 cm.
+A [leitura desta semana](../pre-reading/pread-erro-padrao-intervalo.qmd) mostrou cem intervalos de
+confiança e contou quantos continham o valor real. Você viu que o procedimento acerta cerca de 95%
+das vezes.
 
-Sabendo a resposta de antemão, podemos verificar se os métodos que usamos com dados reais acertam,
-e com que frequência.
+Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de **acertar com
+certa frequência**, ele tem uma **largura** — e é a largura que diz se o estudo estabeleceu alguma
+coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das
+duas muda.
+
+O objetivo em R é construir um experimento de verificação: gerar muitas coletas, calcular um
+intervalo para cada uma e resumir o desempenho do procedimento.
+
+::: {.callout-note appearance="minimal" title="Como a hora será usada"}
+- **5 min** abrir o RStudio, criar o script e ler a proposta;
+- **40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;
+- **10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.
+:::
+
+# Preparação
+
+Crie um script `pr-medias-intervalos.R` com o cabeçalho de identificação e comece por:
 
 ```{r}
 library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-Os parâmetros do costão ficam explícitos no início do script, para serem fáceis de mudar depois:
+Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário:
+**inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de
+antemão, podemos verificar se o método acerta, e com que frequência.
+
+Os parâmetros ficam no início do script, para serem fáceis de mudar depois:
 
 ```{r}
 media_real <- 5     # comprimento médio no costão, em cm
@@ -46,154 +65,54 @@ Coletar 20 mexilhões e medi-los é uma linha de código:
 ```{r}
 amostra <- rnorm(n, mean = media_real, sd = desvio_real)
 
-round(amostra, 2)
-
-media_amostra <- mean(amostra)
-media_amostra
-
+mean(amostra)
 sd(amostra)
 ```
 
+A média observada não é exatamente 5, e não deveria ser: são 20 mexilhões sorteados, não o costão
+inteiro.
+
+A leitura mostrou que o espalhamento dessas médias, entre coletas repetidas, pode ser estimado a
+partir de **uma única amostra**, pela fórmula do erro padrão:
+
+$$EP = \frac{s}{\sqrt{n}}$$
+
+::: {.callout-tip appearance="minimal" title="Complete"}
+Traduza a fórmula para o R. `sd(amostra)` é o $s$; falta o denominador.
+
+```r
+erro_padrao <- sd(amostra) / sqrt(____)
+```
+:::
+
 ```{r}
 #| echo: false
-media_txt <- formatC(media_amostra, format = "f", digits = 2, decimal.mark = ",")
-```
-
-Nesta coleta, a média observada foi `r media_txt` cm, não exatamente 5. E não deveria ser:
-são 20 mexilhões sorteados, não o costão inteiro.
-
-::: {.callout-tip appearance="minimal" title="Modifique"}
-Execute as linhas acima cinco vezes seguidas. Anote as médias.
-
-Elas caem todas do mesmo lado de 5, ou se distribuem em volta?
-:::
-
-# Uma equipe é pouco. Vamos mandar duas mil
-
-Repetir a coleta mil vezes na mão seria inviável. `replicate()` faz isso:
-
-```{r}
-medias <- replicate(2000, mean(rnorm(n, mean = media_real, sd = desvio_real)))
-
-length(medias)
-head(medias, 5)
-```
-
-O objeto `medias` guarda duas mil médias, cada uma vinda de uma coleta independente de 20
-mexilhões.
-
-```{r}
-#| label: fig-medias-distribuicao-amostral
-#| fig-cap: "Duas mil médias amostrais, cada uma calculada a partir de 20 mexilhões. A linha marca o valor real de 5 cm."
-#| fig-height: 3.2
-
-ggplot(tibble(media = medias), aes(x = media)) +
-  geom_histogram(bins = 40, fill = "#0072B2", colour = "white") +
-  geom_vline(xintercept = media_real, linewidth = 1) +
-  labs(x = "Média amostral (cm)", y = "Frequência")
-```
-
-```{r}
-mean(medias)
-sd(medias)
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-Duas coisas ao mesmo tempo:
-
-- o **centro** das médias fica praticamente em 5: em média, o método acerta;
-- o **espalhamento** delas é bem menor que 1 cm, que é como os mexilhões variam entre si.
-
-Não confunda os dois: um descreve mexilhões, o outro descreve médias de 20 mexilhões.
-:::
-
-# O que muda quando a amostra cresce?
-
-```{r}
-#| label: fig-medias-tamanhos
-#| fig-cap: "Distribuição das médias amostrais para três tamanhos de amostra, no mesmo costão."
-#| fig-height: 4
-
-comparacao <- bind_rows(
-  tibble(tamanho = "n = 5",   media = replicate(2000, mean(rnorm(5,   media_real, desvio_real)))),
-  tibble(tamanho = "n = 20",  media = replicate(2000, mean(rnorm(20,  media_real, desvio_real)))),
-  tibble(tamanho = "n = 100", media = replicate(2000, mean(rnorm(100, media_real, desvio_real))))
-) |>
-  mutate(tamanho = fct_relevel(tamanho, "n = 5", "n = 20", "n = 100"))
-
-ggplot(comparacao, aes(x = media)) +
-  geom_histogram(bins = 45, fill = "#0072B2", colour = "white") +
-  geom_vline(xintercept = media_real, linewidth = 0.8) +
-  facet_wrap(~ tamanho, ncol = 1) +
-  labs(x = "Média amostral (cm)", y = "Frequência")
-```
-
-```{r}
-comparacao |>
-  group_by(tamanho) |>
-  summarise(
-    centro = mean(media),
-    espalhamento = sd(media)
-  )
-```
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-O centro é o mesmo nos três casos; só o espalhamento muda.
-
-Compare os valores de `espalhamento` da tabela com $1/\sqrt{5}$, $1/\sqrt{20}$ e $1/\sqrt{100}$.
-O que você conclui?
-:::
-
-# O erro padrão a partir de uma única amostra
-
-O problema é que, na vida real, você não roda 2000 coletas. Tem uma só.
-
-A saída é estimar o espalhamento das médias a partir da própria amostra, com a fórmula do
-**erro padrão**. Reaproveitamos a mesma `amostra` criada no começo, sem sortear outra:
-
-```{r}
 erro_padrao <- sd(amostra) / sqrt(n)
+```
+
+```{r}
 erro_padrao
 ```
 
-Compare esse valor com o `sd(medias)` calculado lá atrás, que veio de duas mil coletas. Uma
-amostra só conseguiu estimar razoavelmente bem a variação de um procedimento que nunca foi
-repetido.
-
-# De um número para um intervalo
-
-Com a média e o erro padrão, construímos um **intervalo de confiança de 95%**. A função `qt()` fornece
+Com a média e o erro padrão, construímos o **intervalo de confiança de 95%**. A função `qt()` fornece
 o multiplicador da distribuição t, que depende dos graus de liberdade ($n - 1$):
 
 ```{r}
 multiplicador <- qt(0.975, df = n - 1)
-multiplicador
 
-inferior <- media_amostra - multiplicador * erro_padrao
-superior <- media_amostra + multiplicador * erro_padrao
+inferior <- mean(amostra) - multiplicador * erro_padrao
+superior <- mean(amostra) + multiplicador * erro_padrao
 
 c(inferior, superior)
 ```
 
-```{r}
-#| echo: false
-contem <- inferior <= media_real & superior >= media_real
-inf_txt <- formatC(inferior, format = "f", digits = 2, decimal.mark = ",")
-sup_txt <- formatC(superior, format = "f", digits = 2, decimal.mark = ",")
-```
+Este é o intervalo **desta** coleta. Ele contém 5 cm, ou não contém; e com uma amostra só você nunca
+saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.
 
-::: {.callout-tip appearance="minimal" title="Observe"}
-O intervalo desta amostra vai de `r inf_txt` a `r sup_txt` cm, e
-**`r if (contem) "contém" else "não contém"`** o valor real de 5 cm.
+# Duas propriedades do procedimento
 
-Isso não prova nada sobre o método: diz apenas o que aconteceu desta vez. Para julgar o método, é
-preciso repeti-lo muitas vezes.
-:::
-
-# O intervalo acerta com que frequência?
-
-Vamos construir 200 amostras, calcular um intervalo para cada uma e contar quantos contêm o valor
-real.
+Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas
+medidas: a **proporção que contém o valor real** e a **largura média** dos intervalos.
 
 ```{r}
 coletas <- tibble(
@@ -205,72 +124,118 @@ intervalos <- coletas |>
   group_by(id) |>
   summarise(
     media = mean(comprimento),
-    erro = qt(0.975, df = n - 1) * sd(comprimento) / sqrt(n)
+    erro = qt(0.975, df = n - 1) * sd(comprimento) / sqrt(n),
+    .groups = "drop"
   ) |>
   mutate(
     inferior = media - erro,
     superior = media + erro,
-    cobre = factor(
-      if_else(inferior <= media_real & superior >= media_real, "sim", "não"),
-      levels = c("sim", "não")
-    )
+    cobre = inferior <= media_real & superior >= media_real,
+    largura = superior - inferior
   )
 
-intervalos |> count(cobre)
+resumo_20 <- intervalos |>
+  summarise(
+    mexilhoes_por_amostra = n,
+    cobertura = mean(cobre),
+    largura_media = mean(largura)
+  )
+
+resumo_20
 ```
 
-```{r}
-#| echo: false
-cobertura <- mean(intervalos$cobre == "sim")
-cobertura_txt <- formatC(100 * cobertura, format = "f", digits = 1, decimal.mark = ",")
-```
+Duas observações sobre o código. A coluna `cobre` guarda `TRUE` ou `FALSE` para cada intervalo, e a
+média de um vetor lógico é a proporção de `TRUE`. A coluna `largura` é simplesmente a distância entre
+os dois limites.
 
-Nesta execução, `r cobertura_txt`% dos 200 intervalos contêm o valor real. Os demais,
-não. O valor oscila em torno de 95% a cada nova execução, e é essa a taxa de acerto que o "95%" do
-nome promete.
-
-```{r}
-#| label: fig-medias-cobertura
-#| fig-cap: "Os primeiros 50 intervalos de confiança. A linha vertical é o valor real de 5 cm; em laranja, os intervalos que não o contêm."
-#| fig-height: 4.5
-
-ggplot(head(intervalos, 50), aes(y = id, x = media, colour = cobre)) +
-  geom_vline(xintercept = media_real, linewidth = 0.8) +
-  geom_errorbarh(aes(xmin = inferior, xmax = superior), height = 0) +
-  geom_point(size = 1.3) +
-  scale_colour_manual(values = c(sim = "#0072B2", `não` = "#D55E00"), drop = FALSE) +
-  labs(x = "Comprimento médio (cm)", y = "Coleta", colour = "Contém 5 cm")
-```
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Os intervalos em laranja, quando aparecem, foram calculados exatamente com o mesmo procedimento
-dos azuis, sem nenhum erro de quem coletou.
-
-Com uma amostra só, você não tem como saber em qual cor está. O que a estatística oferece é a
-**taxa de acerto do procedimento**, não uma garantia sobre o seu caso.
+::: {.callout-tip appearance="minimal" title="Observe"}
+A cobertura obtida não será exatamente 95%: são 200 coletas sorteadas, e essa proporção também varia
+de execução para execução. Rode o bloco mais uma vez para ver o número oscilar.
 :::
 
-::: {.callout-tip appearance="minimal" title="Modifique"}
-Troque `n <- 20` por `n <- 5` no início do script e execute tudo novamente. Como todo o resto do
-script usa o objeto `n`, basta essa única alteração.
+# Sua vez
 
-A proporção de intervalos que cobrem o valor real muda? E a **largura** deles?
+Você tem o desempenho do procedimento para amostras de 20 mexilhões. Falta saber o que acontece
+quando a amostra muda de tamanho.
+
+::: {.callout-tip appearance="minimal" title="Escolha"}
+Escolha um segundo tamanho de amostra, diferente de 20: pode ser **5**, **10**, **50** ou **100**.
+Registre a escolha no script.
+:::
+
+::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
+O resumo tem duas colunas. Antes de executar qualquer coisa, escreva no script, como comentário, o
+que você espera que aconteça com **cada uma delas** quando o tamanho da amostra mudar:
+
+- a **cobertura** vai subir, descer ou ficar parecida?
+- a **largura média** vai subir, descer ou ficar parecida?
+
+As duas respostas não são iguais. Registre as duas antes de olhar.
+:::
+
+Para produzir o segundo resultado, **duplique no seu script** o bloco dos 200 intervalos, trocando o
+valor de `n` no início e guardando o resumo com outro nome:
+
+```r
+n <- ____            # o tamanho que você escolheu
+
+# ... cole aqui o bloco dos 200 intervalos ...
+
+resumo_meu <- intervalos |>
+  summarise(
+    mexilhoes_por_amostra = n,
+    cobertura = mean(cobre),
+    largura_media = mean(largura)
+  )
+```
+
+Por fim, junte os dois resumos em uma tabela só, para poder comparar as linhas:
+
+```r
+bind_rows(resumo_20, resumo_meu)
+```
+
+::: {.callout-warning appearance="minimal" title="Cuidado com a ordem"}
+Todo o bloco usa o objeto `n`. Se você mudar `n` e não reexecutar as linhas que vêm depois, a tabela
+sairá com números misturados de dois tamanhos diferentes.
+
+Por isso o script precisa rodar **do início ao fim em sessão nova** antes de ser enviado: é assim que
+você garante que cada resumo corresponde ao `n` que está escrito ao lado dele.
 :::
 
 # Entrega
 
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-medias-intervalos.R` que rode em sessão nova e contenha:
+Salve o script `pr-medias-intervalos.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
+(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
+script, como comentários iniciados por `#`.
 
-1. a distribuição de 2000 médias amostrais para `n = 5`, `n = 20` e `n = 100`, com o desvio-padrão
-   de cada conjunto;
-2. o cálculo do erro padrão a partir de uma única amostra e o intervalo de 95% correspondente;
-3. a verificação de cobertura com 200 intervalos;
-4. em comentários, quatro a cinco frases respondendo: **por que o desvio-padrão das médias cai com
-   a raiz de n, e o que significa dizer que um intervalo tem 95% de confiança?**
+::: {.callout-important appearance="minimal" title="Entregue"}
+1. a base da aula: uma amostra, o erro padrão completado por você e o intervalo de 95% dessa coleta;
+2. **a tabela com as duas linhas**, uma para `n = 20` e outra para o tamanho que você escolheu, com
+   as duas previsões registradas em comentário **antes** dela;
+3. em comentários, uma frase dizendo **qual das duas colunas mudou e qual não mudou**, e por quê;
+4. em comentários, 3 a 4 frases respondendo, **com os seus dois pares de números**: dois estudos
+   informam intervalos de 95% para a mesma população, um com amostra grande e outro com amostra
+   pequena. Os dois acertam com a mesma frequência? Então o que exatamente o estudo maior comprou com
+   o esforço extra de coleta?
+5. em comentários, uma conta: partindo do `n = 20`, quantos mexilhões seriam necessários para obter
+   um intervalo com **metade** da largura obtida ali? Use as suas duas larguras para conferir se a
+   sua resposta é coerente com o que você observou.
+:::
+
+::: {.callout-tip appearance="minimal" title="O que será avaliado"}
+- [ ] o script roda em sessão nova, do início ao fim, sem erro;
+- [ ] as duas previsões (cobertura e largura) aparecem **antes** da tabela;
+- [ ] a tabela tem as duas linhas e as três colunas, e cada linha corresponde ao `n` indicado;
+- [ ] a escolha do segundo tamanho de amostra está registrada;
+- [ ] a resposta do item 3 distingue explicitamente cobertura de largura;
+- [ ] a conclusão final cita os seus próprios valores, e não uma frase genérica;
+- [ ] a conta do item 5 aparece e é coerente com as duas larguras que você mediu.
 :::
 
 # Para saber mais
 
-- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"} (MEAD)
-- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"} (MEAD)
+- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"}
+  (MEAD) — procure a seção sobre a margem de erro, se quiser rever de onde sai o multiplicador `qt()`.
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"}
+  (MEAD) — para rever por que o erro padrão cai com a raiz de $n$.

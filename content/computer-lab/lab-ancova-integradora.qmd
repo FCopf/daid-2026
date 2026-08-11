@@ -17,262 +17,245 @@ format:
     code-tools: true
 ---
 
-# Os machos de setembro estão mais maduros?
+# Objetivo desta prática
 
-Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto e o peso dos
-testículos. A pergunta biológica é sobre maturação: **em setembro, os machos têm testículos mais
-pesados do que em fevereiro?**
+As leituras das duas últimas semanas
+([retas paralelas](../pre-reading/pread-retas-paralelas.qmd) e
+[tratamento e covariável](../pre-reading/pread-tratamento-covariavel.qmd)) mostraram que duas retas só
+podem se relacionar de três maneiras, e que as três cabem em uma única equação com quatro
+coeficientes.
 
-Comparar as médias brutas seria fácil, e provavelmente errado. Peso de testículo cresce com o
-tamanho do animal, e se as lulas de setembro forem maiores, parte da diferença vem apenas do
-tamanho.
+Nesta última prática você vai **construir** as três situações, escolhendo os parâmetros que produzem
+cada uma. Depois vai gerar uma delas sem dizer qual, e verificar se a comparação entre modelos
+consegue recuperar o cenário que você construiu. Só então aplica tudo isso a dados reais de lulas, com
+um par de meses escolhido por você.
 
-Esta é a última prática, e ela junta tudo: descrever, escolher o modelo, verificar, comparar
-modelos e interpretar com os limites do delineamento.
+O objetivo em R é escrever um gerador com dois parâmetros de interesse, comparar modelos aninhados com
+`anova()` e transformar previsões de volta para a escala original.
+
+::: {.callout-note appearance="minimal" title="Como a hora será usada"}
+- **5 min** abrir o RStudio, criar o script e ler a proposta;
+- **40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;
+- **10 a 15 min** escrever a conclusão final, rodar o script do início ao fim e enviar.
+:::
+
+# Preparação
+
+Crie um script `pr-ancova.R` com o cabeçalho de identificação e comece por:
 
 ```{r}
 library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-# Vamos abrir os dados
+# Um gerador para os três cenários
+
+Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em
+cada mês, e a diferença entre os meses cabe em **dois** números: quanto o segundo mês se desloca
+verticalmente, e quanto a sua inclinação difere.
+
+```{r}
+gerar_dois_meses <- function(delta_intercepto, delta_inclinacao, n = 60, sigma = 0.2) {
+  tibble(
+    mes = factor(rep(c("mês 1", "mês 2"), each = n), levels = c("mês 1", "mês 2")),
+    comprimento = runif(2 * n, min = 14, max = 30)
+  ) |>
+    mutate(
+      biomassa = -0.8 + 0.09 * comprimento +
+        if_else(mes == "mês 2", delta_intercepto, 0) +
+        if_else(mes == "mês 2", delta_inclinacao * comprimento, 0) +
+        rnorm(n(), mean = 0, sd = sigma)
+    )
+}
+```
+
+A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três
+cenários são três combinações desses dois números:
+
+```{r}
+#| label: fig-ancova-cenarios
+#| fig-cap: "Os três cenários possíveis, gerados a partir dos mesmos dois parâmetros."
+#| fig-height: 3.6
+
+cenarios <- bind_rows(
+  gerar_dois_meses(0, 0) |> mutate(cenario = "Uma reta só"),
+  gerar_dois_meses(0.35, 0) |> mutate(cenario = "Interceptos diferentes"),
+  gerar_dois_meses(0, 0.05) |> mutate(cenario = "Inclinações diferentes")
+) |>
+  mutate(cenario = fct_relevel(cenario, "Uma reta só", "Interceptos diferentes"))
+
+ggplot(cenarios, aes(x = comprimento, y = biomassa, colour = mes)) +
+  geom_point(alpha = 0.45, size = 1.3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
+  facet_wrap(~ cenario) +
+  labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)", colour = "Mês")
+```
+
+::: {.callout-tip appearance="minimal" title="Identifique"}
+Olhe os argumentos das três chamadas e escreva no script, como comentário, qual parâmetro precisa ser
+**diferente de zero** para produzir cada cenário. São três frases curtas.
+
+Repare que "interceptos diferentes" e "inclinações diferentes" não são versões fortes e fracas da
+mesma coisa: são parâmetros distintos, e um pode existir sem o outro.
+:::
+
+# Os dois modelos, e o que os separa
+
+Na fórmula, `+` supõe **uma inclinação só** para os dois meses; `*` permite que cada mês tenha a sua.
+Vamos ajustar os dois a um dos cenários e compará-los:
+
+```{r}
+dados_c <- gerar_dois_meses(0, 0.05)
+
+aditivo <- lm(biomassa ~ comprimento + mes, data = dados_c)
+com_interacao <- lm(biomassa ~ comprimento * mes, data = dados_c)
+
+anova(aditivo, com_interacao)
+```
+
+A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria
+por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados; um
+valor grande indica que ficamos com ele, que é mais fácil de interpretar.
+
+::: {.callout-tip appearance="minimal" title="Observe"}
+Estes dados foram gerados com `delta_inclinacao = 0.05`, isto é, com inclinações realmente diferentes.
+A tabela deveria detectar isso.
+
+Rode o bloco mais uma vez. O valor de p muda de execução para execução — a decisão é sobre um
+processo que varia, como tudo o que vimos neste semestre.
+:::
+
+# Sua vez, parte 1: um cenário às cegas
+
+::: {.callout-tip appearance="minimal" title="Gere sem contar qual é"}
+Escolha **um** dos três cenários e gere os dados com os parâmetros correspondentes, **sem escrever
+ainda** qual foi a sua escolha.
+
+```r
+meus_dados <- gerar_dois_meses(____, ____)
+```
+
+Ajuste os dois modelos, rode `anova()` e só então registre, em comentário: qual cenário você havia
+construído, e o que a tabela recuperou. Acertou?
+:::
+
+::: {.callout-tip appearance="minimal" title="Se sobrar tempo"}
+Repita o mesmo cenário aumentando `sigma` (por exemplo, `gerar_dois_meses(0, 0.05, sigma = 0.6)`) ou
+reduzindo `n`.
+
+A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo
+fenômeno do tema da Prática 06: um efeito que existe pode não ser detectado, e o resultado não avisa
+que isso aconteceu.
+:::
+
+# Sua vez, parte 2: lulas, dados reais
+
+Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (`DML`, em mm) e
+o peso dos testículos (`Testisweight`, em gramas). A pergunta biológica é sobre maturação: os machos
+de um mês têm testículos mais pesados do que os de outro?
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Squid.txt"
 
 lulas <- read_tsv(url, show_col_types = FALSE)
 
-glimpse(lulas)
+lulas |> count(MONTH)
 ```
 
-`DML` é o comprimento do manto em milímetros e `Testisweight` é o peso dos testículos em gramas.
+::: {.callout-tip appearance="minimal" title="Escolha o seu par de meses"}
+Escolha **dois meses** e registre a escolha no script.
 
-Vamos comparar dois meses:
-
-```{r}
+```r
 dois_meses <- lulas |>
-  filter(MONTH %in% c(2, 9)) |>
-  mutate(mes = factor(MONTH, labels = c("fevereiro", "setembro")))
-
-dois_meses |> count(mes)
+  filter(MONTH %in% c(____, ____)) |>
+  mutate(mes = factor(MONTH), log_peso = log(Testisweight))
 ```
 
-# A comparação bruta
+Use `factor(MONTH)` e não rótulos escritos à mão: assim os níveis correspondem sempre aos meses que
+você filtrou.
 
-```{r}
+O logaritmo do peso é necessário porque, na escala original, o espalhamento cresce muito nos animais
+maiores, o que violaria a suposição de variação constante.
+:::
+
+Antes de qualquer modelo, a verificação obrigatória de uma comparação por covariável:
+
+```r
 dois_meses |>
   group_by(mes) |>
-  summarise(
-    n = n(),
-    peso_medio = mean(Testisweight),
-    comprimento_medio = mean(DML)
-  )
+  summarise(n = n(), minimo = min(DML), maximo = max(DML))
 ```
 
-::: {.callout-tip appearance="minimal" title="Observe"}
-Setembro tem peso médio maior, mas também comprimento médio maior.
+::: {.callout-warning appearance="minimal" title="Sem faixa comum não existe comparação"}
+Os dois meses precisam cobrir uma faixa de comprimentos **sobreposta**. É só dentro dela que comparar
+os meses tem apoio nos dados; fora dela, o R calcula um número que nenhum molusco sustenta.
 
-Antes de atribuir a diferença ao mês, precisamos descontar o tamanho. É isso que a covariável faz.
+Anote a faixa comum: o maior dos dois mínimos e o menor dos dois máximos.
 :::
 
-# Como as duas variáveis se relacionam?
+Desenhe os pontos com uma reta por mês, ajuste os dois modelos e compare-os com `anova()`, exatamente
+como você fez com os dados simulados. Depois escolha **dois ou três comprimentos dentro da faixa
+comum** e obtenha as previsões:
 
-```{r}
-#| label: fig-ancova-bruto
-#| fig-cap: "Peso dos testículos em função do comprimento do manto, nos dois meses."
-#| fig-height: 3.6
+```r
+comprimentos <- c(____, ____)   # dentro da faixa comum
 
-ggplot(dois_meses, aes(x = DML, y = Testisweight, colour = mes)) +
-  geom_point(alpha = 0.6, size = 1.6) +
-  labs(x = "Comprimento do manto (mm)", y = "Peso dos testículos (g)", colour = "Mês")
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-A relação cresce, mas o espalhamento aumenta muito nos animais maiores, formando um funil nítido.
-
-Ajustar uma reta a esses dados violaria a suposição de variação constante.
-:::
-
-Passar a resposta para a escala logarítmica costuma resolver esse tipo de padrão:
-
-```{r}
-dois_meses <- dois_meses |>
-  mutate(log_peso = log(Testisweight))
-```
-
-```{r}
-#| label: fig-ancova-log
-#| fig-cap: "As mesmas observações com o peso em escala logarítmica, com uma reta ajustada por mês."
-#| fig-height: 3.6
-
-ggplot(dois_meses, aes(x = DML, y = log_peso, colour = mes)) +
-  geom_point(alpha = 0.6, size = 1.6) +
-  geom_smooth(method = "lm", se = FALSE, linewidth = 0.9) +
-  labs(x = "Comprimento do manto (mm)", y = "log do peso dos testículos", colour = "Mês")
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-Agora o espalhamento é mais parecido ao longo do eixo.
-
-E olhe para as duas retas: elas parecem paralelas, ou uma sobe mais rápido que a outra?
-:::
-
-# As faixas de comprimento se sobrepõem?
-
-Uma verificação obrigatória antes de qualquer ajuste por covariável:
-
-```{r}
-dois_meses |>
-  group_by(mes) |>
-  summarise(minimo = min(DML), maximo = max(DML))
-```
-
-Os dois meses cobrem faixas amplas e sobrepostas. Isso permite comparar os meses em comprimentos
-efetivamente observados nos dois grupos, sem extrapolar.
-
-# Dois modelos, duas hipóteses sobre as retas
-
-O **modelo aditivo** supõe retas paralelas: uma única inclinação para os dois meses e um
-deslocamento vertical entre eles.
-
-```{r}
-aditivo <- lm(log_peso ~ DML + mes, data = dois_meses)
-
-summary(aditivo)
-```
-
-O **modelo com interação** permite que cada mês tenha a sua própria inclinação:
-
-```{r}
-com_interacao <- lm(log_peso ~ DML * mes, data = dois_meses)
-
-summary(com_interacao)
-```
-
-# De qual dos dois precisamos?
-
-Em vez de decidir no olho, compare os dois modelos diretamente:
-
-```{r}
-anova(aditivo, com_interacao)
-```
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Essa tabela testa se acrescentar a interação reduz a variação residual mais do que se esperaria por
-acaso.
-
-Se o valor de p for pequeno, as inclinações **não** são iguais e o modelo aditivo é simples demais
-para estes dados. Se for grande, ficamos com o modelo aditivo, que é mais fácil de interpretar.
-
-Qual é a decisão aqui?
-:::
-
-# O que muda na interpretação
-
-A diferença entre os dois modelos não é técnica, é de conclusão.
-
-No **modelo aditivo**, o coeficiente `messetembro` seria a resposta pronta: a diferença entre os
-meses, na escala logarítmica, válida em qualquer comprimento.
-
-No **modelo com interação**, essa frase deixa de existir. A diferença entre os meses depende do
-comprimento, e precisa ser descrita em pontos concretos:
-
-```{r}
-comprimentos <- c(150, 250, 350)
-
-comparacao <- tibble(
+novos <- tibble(
   DML = rep(comprimentos, each = 2),
-  mes = factor(rep(c("fevereiro", "setembro"), times = 3))
+  mes = factor(rep(levels(dois_meses$mes), times = length(comprimentos)),
+               levels = levels(dois_meses$mes))
 )
 
-comparacao |>
-  mutate(log_peso_previsto = predict(com_interacao, newdata = comparacao)) |>
-  pivot_wider(names_from = mes, values_from = log_peso_previsto) |>
-  mutate(diferenca = setembro - fevereiro)
+novos |>
+  mutate(previsto_log = predict(modelo_escolhido, newdata = novos),
+         previsto_g = exp(previsto_log))
 ```
 
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Percorra a coluna `diferenca` ao longo dos três comprimentos. Ela é aproximadamente constante, ou
-muda de tamanho, ou até de sinal?
-
-Escreva a conclusão em uma frase que mencione **em qual comprimento** vale o que você está
-afirmando.
-:::
-
-# Os resíduos sustentam o modelo?
-
-```{r}
-#| label: fig-ancova-residuos
-#| fig-cap: "Resíduos do modelo com interação em função dos valores ajustados."
-#| fig-height: 3.2
-
-diagnostico <- tibble(
-  ajustado = fitted(com_interacao),
-  residuo = residuals(com_interacao),
-  mes = dois_meses$mes
-)
-
-ggplot(diagnostico, aes(x = ajustado, y = residuo, colour = mes)) +
-  geom_hline(yintercept = 0, linewidth = 0.6) +
-  geom_point(alpha = 0.6, size = 1.6) +
-  labs(x = "log do peso ajustado", y = "Resíduo", colour = "Mês")
-```
-
-```{r}
-#| label: fig-ancova-qq
-#| fig-cap: "Gráfico quantil-quantil dos resíduos."
-#| fig-height: 3.2
-
-ggplot(diagnostico, aes(sample = residuo)) +
-  stat_qq(alpha = 0.6, colour = "#0072B2") +
-  stat_qq_line() +
-  labs(x = "Quantis teóricos", y = "Resíduos")
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-Procure por curvatura, por funil e por um grupo de pontos que se destaque dos demais.
-
-Nenhum modelo fica perfeito com dados reais. A pergunta não é "está perfeito?", e sim "os desvios
-que sobraram comprometem a conclusão que pretendo tirar?".
-:::
-
-# Até onde a conclusão pode ir
-
-Esta é a parte mais importante da prática, e não tem código.
-
-Ninguém sorteou quais lulas seriam coletadas em fevereiro e quais em setembro. O mês é uma
-condição **observada**, não um tratamento atribuído.
-
-Isso significa que os dois grupos podem diferir em muitas coisas além do tamanho: temperatura da
-água, disponibilidade de alimento, estágio do ciclo reprodutivo, profundidade de captura, seleção
-do próprio método de pesca.
-
-::: {.callout-warning appearance="minimal" title="Ajustar não é aleatorizar"}
-Incluir `DML` no modelo remove a diferença devida ao comprimento, e **só ela**.
-
-Todas as outras diferenças entre fevereiro e setembro continuam misturadas ao efeito estimado do
-mês. A conclusão honesta é uma associação ajustada pelo tamanho, não uma demonstração de que o mês
-causa a diferença.
-:::
+`exp()` desfaz o logaritmo e devolve o peso previsto em gramas, que é a escala em que a conclusão
+precisa ser escrita.
 
 # Entrega
 
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-ancova.R` que rode em sessão nova e contenha:
+Salve o script `pr-ancova.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
+(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
+script, como comentários iniciados por `#`.
 
-1. a importação, a seleção dos dois meses e a comparação bruta das médias;
-2. os gráficos na escala original e na escala logarítmica, e a verificação de sobreposição das
-   faixas de comprimento;
-3. os modelos aditivo e com interação, e a comparação entre eles com `anova()`;
-4. a tabela de diferenças previstas em três comprimentos;
-5. os dois gráficos de resíduos;
-6. em comentários, um parágrafo de seis a oito frases com a **conclusão final**, contendo:
-   - qual modelo você escolheu e por quê;
-   - a diferença entre os meses, com o comprimento em que ela vale;
-   - uma frase sobre o que os resíduos mostraram;
-   - uma frase sobre o que este estudo **não** permite concluir.
+::: {.callout-important appearance="minimal" title="Entregue"}
+1. o gerador e o gráfico dos três cenários, com as **três frases** identificando qual parâmetro
+   produz cada um;
+2. **o seu cenário às cegas**: os parâmetros usados, a tabela de `anova()` e o registro de qual
+   cenário você havia construído e do que a tabela recuperou;
+3. **o seu par de meses**: a tabela de faixas de `DML` com a faixa comum anotada, o gráfico com uma
+   reta por mês, os dois modelos e a comparação com `anova()`;
+4. as previsões nos comprimentos que você escolheu, na escala original, em gramas;
+5. em comentários, um parágrafo de 6 a 8 frases com a **conclusão final**, contendo:
+   - qual modelo você escolheu para o seu par de meses e por quê;
+   - a diferença entre os meses, dizendo **em qual comprimento** ela vale e de quanto ela é em gramas;
+   - uma frase sobre o que a faixa comum permitiu ou limitou;
+   - uma frase sobre o que este estudo **não** permite concluir, e por quê.
+:::
+
+::: {.callout-tip appearance="minimal" title="O que será avaliado"}
+- [ ] o script roda em sessão nova, do início ao fim, sem erro;
+- [ ] as três frases do item 1 associam corretamente parâmetro e cenário;
+- [ ] no item 2, o cenário construído e o recuperado aparecem os dois, mesmo se não coincidirem;
+- [ ] o par de meses está registrado e os comprimentos escolhidos estão **dentro da faixa comum**;
+- [ ] a escolha entre modelo aditivo e com interação é justificada pela tabela de `anova()`;
+- [ ] a conclusão final menciona um comprimento concreto e uma diferença em gramas;
+- [ ] a última frase distingue associação de causa, com base no delineamento.
+:::
+
+::: {.callout-warning appearance="minimal" title="Ajustar não é aleatorizar"}
+Ninguém sorteou quais lulas seriam coletadas em cada mês. O mês é uma condição **observada**, não um
+tratamento atribuído.
+
+Incluir `DML` no modelo remove a diferença devida ao comprimento, e só ela. Temperatura da água,
+alimento disponível, fase do ciclo reprodutivo e seletividade da pesca continuam misturados ao efeito
+estimado do mês.
 :::
 
 # Para saber mais
 
-- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD)
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"}
+  (MEAD) — procure a seção sobre interação entre um preditor contínuo e um fator, que é o modelo desta
+  prática.

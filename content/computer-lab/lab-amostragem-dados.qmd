@@ -17,24 +17,42 @@ format:
     code-tools: true
 ---
 
-# Nove praias, 45 estações
+# Objetivo desta prática
 
-Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de
-invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As
-estações se distribuem por nove praias.
+A [leitura desta semana](../pre-reading/pread-populacao-amostra.qmd) comparou duas estratégias de
+amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear
+estações soltas. Você viu o resultado; hoje você vai **medir** essa instabilidade com as suas mãos,
+em dados reais, e descobrir uma coisa que a leitura não informa: **quanto** ela custa e o que muda
+quando você escolhe o número de praias.
 
-A pergunta desta prática é a mais básica de qualquer levantamento: **o que essas 45 estações
-permitem dizer sobre a região, e o que não permitem?**
+O objetivo em R é importar dados de uma fonte externa, descrever o conjunto e sortear amostras dele.
+
+Ao final, você entrega um script com quatro medidas de instabilidade calculadas por você e uma
+recomendação de delineamento justificada com esses números.
+
+::: {.callout-note appearance="minimal" title="Como a hora será usada"}
+- **5 min** abrir o RStudio, criar o script e ler a proposta;
+- **40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;
+- **10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.
+:::
+
+# Preparação
+
+Crie um script `pr-amostragem.R` com o mesmo cabeçalho de identificação da Prática 01 e comece por:
 
 ```{r}
 library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-# Vamos abrir os dados
+# Abrir os dados
 
-Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos
-o endereço em um objeto e passamos para `read_tsv()`:
+Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de
+invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As estações
+se distribuem por nove praias.
+
+Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos o
+endereço em um objeto e o passamos para `read_tsv()`:
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"
@@ -49,17 +67,15 @@ São 45 linhas e 5 colunas:
 - `Sample`: identificador da estação;
 - `Richness`: número de espécies encontradas;
 - `Exposure`: índice de exposição da praia às ondas;
-- `NAP`: altura da estação em relação à maré, em metros (valores negativos ficam abaixo do nível médio);
+- `NAP`: altura da estação em relação à maré, em metros;
 - `Beach`: identificador da praia.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e nove
+Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e as nove
 praias aparecem repetidas várias vezes cada uma.
 :::
 
-# Como os dados estão distribuídos entre as praias?
-
-Antes de calcular qualquer média, vale conferir se o esforço de coleta foi o mesmo em toda parte.
+Antes de calcular qualquer média, confira se o esforço de coleta foi o mesmo em toda parte:
 
 ```{r}
 rikz |> count(Beach)
@@ -67,7 +83,7 @@ rikz |> count(Beach)
 
 Cinco estações por praia, nas nove praias. Um levantamento equilibrado, o que nem sempre acontece.
 
-# Qual é a riqueza típica da região?
+Agora o resumo do conjunto inteiro, que servirá de referência o resto da aula:
 
 ```{r}
 rikz |>
@@ -80,37 +96,16 @@ rikz |>
   )
 ```
 
-A média fica em torno de 5 espécies, mas o intervalo entre mínimo e máximo é enorme. Um único
-número esconde isso.
-
-```{r}
-#| label: fig-amostragem-histograma
-#| fig-cap: "Distribuição do número de espécies nas 45 estações."
-#| fig-height: 3.2
-
-ggplot(rikz, aes(x = Richness)) +
-  geom_histogram(binwidth = 2, fill = "#0072B2", colour = "white") +
-  labs(x = "Número de espécies", y = "Número de estações")
-```
-
-::: {.callout-tip appearance="minimal" title="Observe"}
-A distribuição é assimétrica: muitas estações com poucas espécies e algumas com muitas. Quando a
-distribuição é assim, a média fica puxada para cima pelos valores altos e deixa de representar bem
-"a estação típica".
-:::
+Guarde a média das 45 estações: é contra ela que todas as suas estimativas serão comparadas.
 
 # As praias são todas parecidas?
 
-```{r}
-resumo_praias <- rikz |>
-  group_by(Beach) |>
-  summarise(
-    media = mean(Richness),
-    desvio = sd(Richness)
-  )
+::: {.callout-tip appearance="minimal" title="Preveja"}
+Antes de executar o bloco abaixo, escreva no seu script, como comentário: você espera que as nove
+praias tenham médias parecidas entre si?
 
-resumo_praias
-```
+A resposta muda tudo o que vem depois nesta prática. Registre-a antes de olhar.
+:::
 
 ```{r}
 #| label: fig-amostragem-praias
@@ -123,53 +118,22 @@ ggplot(rikz, aes(x = factor(Beach), y = Richness)) +
   labs(x = "Praia", y = "Número de espécies")
 ```
 
-::: {.callout-tip appearance="minimal" title="Interprete"}
-As praias não são intercambiáveis: algumas concentram estações pobres, outras estações ricas.
+# Sortear uma amostra
 
-Isso tem uma consequência prática imediata. Uma amostra que caísse por acaso só em praias ricas
-produziria uma estimativa alta para a região inteira, sem que ninguém tivesse errado nada.
-:::
-
-# E se tivéssemos medido só uma parte?
-
-Vamos testar essa ideia. A função `slice_sample()` sorteia linhas de uma tabela. Aqui pegamos 10
-das 45 estações, como se o orçamento só permitisse isso:
+A função `slice_sample()` sorteia linhas de uma tabela. Aqui pegamos 10 das 45 estações, como se o
+orçamento só permitisse isso:
 
 ```{r}
-primeira_amostra <- rikz |> slice_sample(n = 10)
-media_primeira <- mean(primeira_amostra$Richness)
-
-media_primeira
+rikz |>
+  slice_sample(n = 10) |>
+  summarise(media = mean(Richness))
 ```
 
-Compare com a média das 45 estações calculada acima. Agora sorteie outra amostra de 10:
+Execute essa linha duas ou três vezes. Cada execução sorteia dez estações diferentes e devolve uma
+estimativa diferente para a mesma região.
 
-```{r}
-segunda_amostra <- rikz |> slice_sample(n = 10)
-media_segunda <- mean(segunda_amostra$Richness)
-
-media_segunda
-```
-
-```{r}
-#| echo: false
-dif_txt <- formatC(abs(media_primeira - media_segunda), format = "f", digits = 2, decimal.mark = ",")
-```
-
-Duas amostras do mesmo levantamento, duas estimativas diferentes: nesta execução, a diferença entre elas foi de `r dif_txt`.
-
-::: {.callout-tip appearance="minimal" title="Modifique"}
-Execute o bloco acima cinco vezes seguidas e anote as cinco médias. Cada execução sorteia dez estações
-diferentes.
-
-Depois troque `n = 10` por `n = 30` e repita. As médias ficaram mais parecidas entre si ou mais
-diferentes?
-:::
-
-# Sortear estações ou sortear praias?
-
-Existe outra maneira de amostrar, e ela muda o resultado. Em vez de sortear estações soltas,
-podemos sortear **praias inteiras** e usar todas as suas estações.
+Também é possível sortear **praias inteiras** e usar todas as suas estações. O `sample()` sorteia os
+identificadores e o `%in%` mantém as linhas cujas praias foram sorteadas:
 
 ```{r}
 praias_sorteadas <- sample(1:9, size = 3)
@@ -182,53 +146,86 @@ rikz |>
 
 São 15 estações, mais do que as 10 do sorteio anterior, mas vindas de apenas três praias.
 
-::: {.callout-tip appearance="minimal" title="Compare"}
-Execute o bloco acima três vezes e anote as médias. Depois compare a variação dessas médias com a
-variação das médias obtidas ao sortear 15 estações soltas, rodando três vezes também:
+# Sua vez
+
+Rodar uma linha algumas vezes dá uma impressão. Para ter uma **medida**, é preciso guardar as
+estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas: `c()` monta um
+vetor e `sd()` mede o espalhamento.
+
+## Quanto o tamanho da amostra estabiliza a estimativa
 
 ```r
-rikz |> slice_sample(n = 15) |> summarise(media = mean(Richness))
+# rode a linha abaixo CINCO vezes, anotando cada resultado
+rikz |> slice_sample(n = 10) |> summarise(media = mean(Richness))
+
+# escreva as cinco médias que você obteve
+medias_10 <- c(____, ____, ____, ____, ____)
+sd(medias_10)
 ```
 
-Qual das duas estratégias produz estimativas mais instáveis? Por que praias inteiras tornam o
-resultado mais dependente da sorte do sorteio?
+Repita todo o procedimento com `n = 30`, guardando em `medias_30`, e calcule o `sd()` das cinco.
+
+## A comparação justa
+
+Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso
+custa em precisão — e a comparação só é honesta se as duas estratégias medirem **o mesmo número de
+estações**.
+
+::: {.callout-tip appearance="minimal" title="Escolha e justifique"}
+Escolha quantas praias inteiras sortear: **2, 3 ou 4**. Registre a escolha no script.
+
+Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número:
+ele é o `n` que você vai usar na comparação com estações soltas.
 :::
 
-# A altura da estação explica alguma coisa?
+::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
+Antes de executar, escreva no script: quantas vezes maior você espera que seja o espalhamento das
+estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações?
+Duas vezes? Cinco? Quase igual?
+:::
 
-Uma última olhada, que prepara boa parte do semestre:
+Rode cinco vezes cada estratégia, guarde as médias em dois vetores e calcule os dois `sd()`:
 
-```{r}
-#| label: fig-amostragem-nap
-#| fig-cap: "Riqueza de espécies em função da altura da estação em relação à maré."
-#| fig-height: 3.4
+```r
+# cinco sorteios de praias inteiras (troque o size pelo número que você escolheu)
+rikz |> filter(Beach %in% sample(1:9, size = ____)) |> summarise(media = mean(Richness))
 
-ggplot(rikz, aes(x = NAP, y = Richness)) +
-  geom_point(alpha = 0.7, colour = "#0072B2") +
-  labs(x = "Altura em relação à maré (m)", y = "Número de espécies")
+# cinco sorteios de estações soltas, com o MESMO número de estações
+rikz |> slice_sample(n = ____) |> summarise(media = mean(Richness))
 ```
-
-::: {.callout-tip appearance="minimal" title="Interprete"}
-Estações mais altas ficam expostas mais tempo fora d'água. O gráfico sugere alguma relação entre
-altura e riqueza? Em que direção?
-
-Repare que ainda não estamos ajustando nada, apenas observando. Descrever antes de modelar é sempre
-a ordem certa.
-:::
 
 # Entrega
 
-::: {.callout-important appearance="minimal" title="Entregue"}
-Um script `pr-amostragem.R` que rode em uma sessão nova e contenha:
+Salve o script `pr-amostragem.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
+(*Session → Restart R*) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As
+respostas escritas vão no próprio script, como comentários iniciados por `#`.
 
-1. a importação dos dados a partir da URL e o resumo geral da riqueza;
-2. o gráfico de riqueza por praia;
-3. cinco amostras de 10 estações e cinco de 30, com as respectivas médias;
-4. em comentários, três a quatro frases respondendo: **por que as médias de amostras pequenas
-   variam mais, e o que se perde ao sortear praias inteiras em vez de estações soltas?**
+::: {.callout-important appearance="minimal" title="Entregue"}
+1. a base da aula: a importação dos dados, o resumo das 45 estações e o gráfico por praia, com a sua
+   previsão sobre as praias registrada em comentário **antes** dele;
+2. os vetores `medias_10` e `medias_30`, com os dois `sd()` correspondentes;
+3. a comparação justa: o número de praias que você escolheu, o número de estações que isso produz, os
+   dois vetores de cinco médias e os dois `sd()`, precedidos da sua previsão sobre a razão entre eles;
+4. em comentários, 3 a 4 frases respondendo, **com os seus quatro desvios**: um colega tem orçamento
+   para medir exatamente o mesmo número de estações que você usou na comparação. Que estratégia você
+   recomenda a ele, e o que ele perde ao escolher a outra? Diga também quantas praias inteiras você
+   acha que ele precisaria sortear para que essa estratégia se tornasse competitiva.
+:::
+
+::: {.callout-tip appearance="minimal" title="O que será avaliado"}
+- [ ] o script roda em sessão nova, do início ao fim, sem erro;
+- [ ] as duas previsões aparecem **antes** dos resultados correspondentes;
+- [ ] os quatro desvios-padrão foram calculados a partir de cinco execuções cada;
+- [ ] a comparação usa o **mesmo número de estações** nas duas estratégias;
+- [ ] a escolha do número de praias está registrada e justificada;
+- [ ] cada gráfico tem eixos com nome e unidade;
+- [ ] a recomendação final cita os seus próprios desvios, e não uma frase genérica.
 :::
 
 # Para saber mais
 
-- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html){target="_blank"} (MEAD)
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
+- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html){target="_blank"}
+  (MEAD) — procure as funções da família `read_*()` se precisar abrir um arquivo com outro separador.
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"}
+  (MEAD) — procure a seção sobre amostragem por conglomerados, que é o nome formal do sorteio de
+  praias inteiras.
