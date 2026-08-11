@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -99,6 +134,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -324,11 +388,21 @@ div.csl-indent {
    
   <ul class="collapse">
   <li><a href="#um-experimento-com-60-peixes" id="toc-um-experimento-com-60-peixes" class="nav-link active" data-scroll-target="#um-experimento-com-60-peixes"><span class="header-section-number">1</span> Um experimento com 60 peixes</a></li>
-  <li><a href="#siga-o-tratamento-até-onde-ele-foi-aplicado" id="toc-siga-o-tratamento-até-onde-ele-foi-aplicado" class="nav-link" data-scroll-target="#siga-o-tratamento-até-onde-ele-foi-aplicado"><span class="header-section-number">2</span> Siga o tratamento até onde ele foi aplicado</a></li>
-  <li><a href="#por-que-60-medidas-não-resolvem" id="toc-por-que-60-medidas-não-resolvem" class="nav-link" data-scroll-target="#por-que-60-medidas-não-resolvem"><span class="header-section-number">3</span> Por que 60 medidas não resolvem</a></li>
+  <li><a href="#siga-o-tratamento-até-onde-ele-foi-aplicado" id="toc-siga-o-tratamento-até-onde-ele-foi-aplicado" class="nav-link" data-scroll-target="#siga-o-tratamento-até-onde-ele-foi-aplicado"><span class="header-section-number">2</span> Siga o tratamento até onde ele foi aplicado</a>
+  <ul class="collapse">
+  <li><a href="#cada-papel-corresponde-a-uma-ação-concreta" id="toc-cada-papel-corresponde-a-uma-ação-concreta" class="nav-link" data-scroll-target="#cada-papel-corresponde-a-uma-ação-concreta"><span class="header-section-number">2.1</span> Cada papel corresponde a uma ação concreta</a></li>
+  </ul></li>
+  <li><a href="#por-que-60-medidas-não-resolvem" id="toc-por-que-60-medidas-não-resolvem" class="nav-link" data-scroll-target="#por-que-60-medidas-não-resolvem"><span class="header-section-number">3</span> Por que 60 medidas não resolvem</a>
+  <ul class="collapse">
+  <li><a href="#quanta-informação-uma-subamostra-realmente-acrescenta" id="toc-quanta-informação-uma-subamostra-realmente-acrescenta" class="nav-link" data-scroll-target="#quanta-informação-uma-subamostra-realmente-acrescenta"><span class="header-section-number">3.1</span> Quanta informação uma subamostra realmente acrescenta</a></li>
+  </ul></li>
   <li><a href="#pseudorreplicação" id="toc-pseudorreplicação" class="nav-link" data-scroll-target="#pseudorreplicação"><span class="header-section-number">4</span> Pseudorreplicação</a></li>
-  <li><a href="#a-correção-não-é-medir-mais" id="toc-a-correção-não-é-medir-mais" class="nav-link" data-scroll-target="#a-correção-não-é-medir-mais"><span class="header-section-number">5</span> A correção não é medir mais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6</span> Referências</a></li>
+  <li><a href="#a-correção-não-é-medir-mais" id="toc-a-correção-não-é-medir-mais" class="nav-link" data-scroll-target="#a-correção-não-é-medir-mais"><span class="header-section-number">5</span> A correção não é medir mais</a>
+  <ul class="collapse">
+  <li><a href="#resumir-no-nível-correto" id="toc-resumir-no-nível-correto" class="nav-link" data-scroll-target="#resumir-no-nível-correto"><span class="header-section-number">5.1</span> Resumir no nível correto</a></li>
+  </ul></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -357,7 +431,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -397,36 +471,135 @@ div.csl-indent {
 <p><strong>Réplica</strong>: cada unidade experimental adicional que recebeu o mesmo tratamento de forma independente.</p>
 </div>
 </div>
-<p>Com dois tanques, o experimento tem <strong>uma réplica por tratamento</strong>. E com uma réplica por tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra coisa que diferencie os dois tanques: temperatura, luz, aeração, posição na sala, o acaso da distribuição inicial dos peixes.</p>
-<p>Não há como separar. O efeito da dieta está <strong>confundido</strong> com o efeito do tanque.</p>
-</section>
-<section id="por-que-60-medidas-não-resolvem" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Por que 60 medidas não resolvem</h1>
-<p>É tentador pensar que 30 peixes por tratamento é bastante gente e que isso compensa. Não compensa, e vale entender por quê.</p>
-<p>Medir mais peixes dentro do mesmo tanque reduz a incerteza sobre <strong>a média daquele tanque</strong>. Mas o que a pergunta exige é comparar dietas, e para isso precisamos saber quanto <strong>tanques tratados da mesma forma</strong> variam entre si. Com um tanque por dieta, essa variação nunca foi observada.</p>
-<p>O gráfico abaixo mostra o que acontece nos dois cenários.</p>
+<section id="cada-papel-corresponde-a-uma-ação-concreta" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="cada-papel-corresponde-a-uma-ação-concreta"><span class="header-section-number">2.1</span> Cada papel corresponde a uma ação concreta</h2>
+<p>Além desses três, há dois nomes úteis. A <strong>unidade amostral</strong> é a entidade selecionada pelo plano de amostragem; a <strong>unidade de medição</strong> é aquela sobre a qual o instrumento produz um valor. Em um experimento, a unidade observacional pode coincidir ou não com ambas. O vocabulário só é útil quando cada papel é ligado a uma ação concreta: selecionar, atribuir tratamento, observar ou medir.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Papel</th>
+<th>Pergunta de diagnóstico</th>
+<th>Exemplo dos tanques</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Unidade experimental</td>
+<td>o que poderia receber outro tratamento independentemente?</td>
+<td>tanque</td>
+</tr>
+<tr class="even">
+<td>Unidade amostral</td>
+<td>o que foi selecionado para representar a população?</td>
+<td>tanque, se tanques foram sorteados</td>
+</tr>
+<tr class="odd">
+<td>Unidade observacional</td>
+<td>sobre o que existe uma linha de observação?</td>
+<td>peixe</td>
+</tr>
+<tr class="even">
+<td>Unidade de medição</td>
+<td>onde o instrumento foi aplicado?</td>
+<td>peixe, ou cada leitura do peixe</td>
+</tr>
+<tr class="odd">
+<td>Subamostra</td>
+<td>o que foi medido dentro de uma unidade maior?</td>
+<td>peixes do mesmo tanque</td>
+</tr>
+</tbody>
+</table>
+<p>Esses papéis não são definidos pelo nome biológico da entidade. Um peixe pode ser unidade experimental se cada indivíduo receber uma dieta sorteada separadamente. O mesmo peixe passa a ser subamostra quando a dieta é distribuída ao tanque. Para reconhecer o nível correto em um estudo qualquer, três perguntas bastam:</p>
+<ol type="1">
+<li>Qual entidade poderia ter recebido outro tratamento sem obrigar as demais a mudar?</li>
+<li>Em qual nível o tratamento foi sorteado?</li>
+<li>Qual fonte de variação deve servir de comparação para o efeito?</li>
+</ol>
+<p>A distinção reaparece no laboratório com outro vocabulário. <strong>Réplicas biológicas</strong> são unidades independentes que representam variação do sistema de interesse. <strong>Réplicas técnicas</strong> repetem a medição da mesma unidade, como três leituras da mesma amostra em um equipamento. Réplicas técnicas ajudam a estimar e reduzir erro de medição, mas não representam novos organismos, tanques ou locais.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-replicacao-duas-fontes" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta.">
+<div id="fig-hierarquia" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagrama em níveis. No topo aparecem duas dietas; abaixo, quatro tanques por dieta; abaixo de cada tanque, três peixes.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-replicacao-duas-fontes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-replicacao-unidades_files/figure-html/fig-replicacao-duas-fontes-1.png" class="img-fluid figure-img" alt="Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta." width="672">
+<div aria-describedby="fig-hierarquia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-replicacao-unidades_files/figure-html/fig-hierarquia-1.png" class="img-fluid figure-img" alt="Diagrama em níveis. No topo aparecem duas dietas; abaixo, quatro tanques por dieta; abaixo de cada tanque, três peixes." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-replicacao-duas-fontes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Comprimento de peixes em oito tanques. Cada ponto é um peixe; cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hierarquia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Estrutura de um experimento com duas dietas, quatro tanques por dieta e três peixes destacados por tanque.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Repare em duas coisas na figura.</p>
-<p>Dentro de cada tanque, os peixes se parecem: os pontos formam nuvens compactas. Entre tanques da <strong>mesma dieta</strong>, as médias já não coincidem: o tanque 1 e o tanque 3 receberam a mesma coisa e mesmo assim diferem.</p>
+<p>O diagrama deixa visível por que três peixes ligados ao mesmo tanque não equivalem a três tanques. O tratamento chega ao tanque; as medidas de peixe estão aninhadas abaixo dele.</p>
+<p>Voltando ao experimento original: com dois tanques, ele tem <strong>uma réplica por tratamento</strong>. E com uma réplica por tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra coisa que diferencie os dois tanques: temperatura, luz, aeração, posição na sala, o acaso da distribuição inicial dos peixes. Não há como separar. O efeito da dieta está <strong>confundido</strong> com o efeito do tanque.</p>
+</section>
+</section>
+<section id="por-que-60-medidas-não-resolvem" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Por que 60 medidas não resolvem</h1>
+<p>É tentador pensar que 30 peixes por tratamento é bastante gente e que isso compensa. Não compensa, e vale entender por quê.</p>
+<p>Medir mais peixes dentro do mesmo tanque reduz a incerteza sobre <strong>a média daquele tanque</strong>. Mas o que a pergunta exige é comparar dietas, e para isso precisamos saber quanto <strong>tanques tratados da mesma forma</strong> variam entre si. Com um tanque por dieta, essa variação nunca foi observada.</p>
+<p>Para ver as duas fontes de variação separadas, vale simular um experimento com oito tanques, quatro por dieta, e quinze peixes em cada um. A simulação é escrita em dois passos, que correspondem exatamente aos dois níveis do experimento: primeiro sorteamos a média de cada tanque, depois sorteamos os peixes dentro dele.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver a simulação hierárquica de tanques e peixes</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>media_tanque <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">4</span>, <span class="fl">10.0</span>, <span class="fl">0.7</span>), <span class="fu">rnorm</span>(<span class="dv">4</span>, <span class="fl">11.0</span>, <span class="fl">0.7</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>peixes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">tanque =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">each =</span> <span class="dv">15</span>)),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dieta =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">60</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">rnorm</span>(<span class="dv">120</span>, <span class="at">mean =</span> <span class="fu">rep</span>(media_tanque, <span class="at">each =</span> <span class="dv">15</span>), <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peixes, <span class="fu">aes</span>(<span class="at">x =</span> tanque, <span class="at">y =</span> comprimento, <span class="at">colour =</span> dieta)) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">1.6</span>) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> medias, <span class="fu">aes</span>(<span class="at">y =</span> media), <span class="at">shape =</span> <span class="dv">95</span>, <span class="at">size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tanque"</span>, <span class="at">y =</span> <span class="st">"Comprimento (cm)"</span>, <span class="at">colour =</span> <span class="st">"Dieta"</span>) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">comum =</span> <span class="st">"#0072B2"</span>, <span class="at">enriquecida =</span> <span class="st">"#D55E00"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-duas-fontes" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-duas-fontes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-replicacao-unidades_files/figure-html/fig-duas-fontes-1.png" class="img-fluid figure-img" alt="Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-duas-fontes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Comprimento de peixes em oito tanques. Cada ponto é um peixe; cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Repare em duas coisas na figura. Dentro de cada tanque, os peixes se parecem: os pontos formam nuvens compactas. Entre tanques da <strong>mesma dieta</strong>, as médias já não coincidem: o tanque 1 e o tanque 3 receberam a mesma coisa e mesmo assim diferem.</p>
 <p>Essa segunda variação é a régua correta para julgar o efeito da dieta. Um experimento com dois tanques a apaga por completo.</p>
+<section id="quanta-informação-uma-subamostra-realmente-acrescenta" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="quanta-informação-uma-subamostra-realmente-acrescenta"><span class="header-section-number">3.1</span> Quanta informação uma subamostra realmente acrescenta</h2>
+<p>A figura mostra qualitativamente que peixes do mesmo tanque trazem informação repetida. É possível quantificar essa perda. Peixes do mesmo tanque compartilham água, alimento, temperatura e manejo, e essa semelhança pode ser descrita por uma correlação intragrupo <span class="math inline">\(\rho\)</span>. Se cada um de <span class="math inline">\(m\)</span> peixes fosse independente, <span class="math inline">\(m\)</span> medidas forneceriam <span class="math inline">\(m\)</span> unidades de informação. Quando <span class="math inline">\(\rho&gt;0\)</span>, uma aproximação para o efeito da dependência é</p>
+<p><span class="math display">\[
+\text{efeito do agrupamento}=1+(m-1)\rho.
+\]</span></p>
+<p>Quanto maior o grupo e a correlação, maior a diferença entre o número de linhas e a informação efetiva. Dividindo o número nominal de observações por esse fator, obtemos uma aproximação para o tamanho amostral efetivo:</p>
+<p><span class="math display">\[
+n_{efetivo}\approx\frac{n_{nominal}}{1+(m-1)\rho}.
+\]</span></p>
+<p>Se há 120 peixes, 15 por tanque, e <span class="math inline">\(\rho=0{,}30\)</span>, o efeito do agrupamento é <span class="math inline">\(1+14\times0{,}30=5{,}2\)</span> e o tamanho efetivo aproximado é <span class="math inline">\(120/5{,}2\approx23\)</span>. Ou seja, 120 medidas carregam aproximadamente a informação de 23 observações independentes.</p>
+<p>A fórmula explica quantitativamente por que tratar observações correlacionadas como independentes produz erros padrão pequenos demais. O que ela não faz é criar réplicas: mesmo com o ajuste, o experimento continua tendo apenas oito unidades experimentais para avaliar a dieta, e teria apenas duas no desenho original.</p>
+</section>
 </section>
 <section id="pseudorreplicação" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Pseudorreplicação</h1>
 <p>Analisar os 60 peixes como se fossem 60 réplicas independentes tem nome: <strong>pseudorreplicação</strong>. O termo foi popularizado por Hurlbert <span class="citation" data-cites="hurlbert1984">(<a href="#ref-hurlbert1984" role="doc-biblioref">Hurlbert 1984</a>)</span> justamente ao revisar experimentos ecológicos publicados, e o diagnóstico continua atual.</p>
 <p>O sintoma é sempre o mesmo: o número de linhas da planilha é maior que o número de vezes que o tratamento foi realmente sorteado. O efeito prático também: o erro padrão fica artificialmente pequeno, o intervalo de confiança fica estreito demais e o resultado parece mais convincente do que é.</p>
+<p>Pseudorreplicação também ocorre sem tanques. Pontos muito próximos podem compartilhar o mesmo processo espacial; medidas sucessivas no mesmo organismo compartilham história; anos consecutivos podem estar ligados pela dinâmica da população. A dependência não é identificada apenas olhando a correlação observada. Ela começa no modo como as unidades foram geradas e selecionadas.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Um teste rápido antes de analisar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -444,9 +617,51 @@ Figura&nbsp;1: Comprimento de peixes em oito tanques. Cada ponto é um peixe; ca
 </section>
 <section id="a-correção-não-é-medir-mais" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> A correção não é medir mais</h1>
-<p>Vale antecipar o desfecho, porque ele costuma contrariar a intuição.</p>
+<p>Identificado o problema, resta a solução, e ela costuma contrariar a intuição.</p>
 <p>O experimento dos dois tanques não melhora com 60 peixes por tanque, nem com 300. Cada peixe a mais refina a estimativa da média daquele tanque, e o que falta não é isso: falta ter visto tanques tratados da mesma forma diferirem entre si.</p>
 <p>O que o experimento precisa é de <strong>mais tanques</strong>, ainda que menores e com menos peixes em cada um. Uma medida repetida barata não substitui uma unidade experimental cara.</p>
+<section id="resumir-no-nível-correto" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="resumir-no-nível-correto"><span class="header-section-number">5.1</span> Resumir no nível correto</h2>
+<p>Quando o desenho já tem vários tanques e vários peixes em cada um, a análise precisa respeitar essa estrutura. A alternativa mais transparente é calcular uma média por tanque e comparar essas médias, de modo que cada linha da tabela analítica corresponda a uma atribuição independente de tratamento. Aplicada aos oito tanques simulados acima, a operação cabe em uma sequência curta:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver a mudança de unidade no R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dados_por_tanque <span class="ot">&lt;-</span> peixes <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_peixes =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento_medio =</span> <span class="fu">mean</span>(comprimento),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dados_por_tanque</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  tanque dieta       n_peixes comprimento_medio
+  &lt;fct&gt;  &lt;chr&gt;          &lt;int&gt;             &lt;dbl&gt;
+1 1      comum             15              9.73
+2 2      comum             15              9.82
+3 3      comum             15              9.55
+4 4      comum             15             10.0 
+5 5      enriquecida       15             11.3 
+6 6      enriquecida       15             11.5 
+7 7      enriquecida       15             10.9 
+8 8      enriquecida       15             10.8 </code></pre>
+</div>
+</div>
+<p>A tabela resultante tem oito linhas, uma por unidade experimental, e é sobre ela que uma comparação entre dietas pode ser feita. Aumentar o número de peixes por tanque estabiliza cada média da coluna <code>comprimento_medio</code>; aumentar o número de tanques acrescenta linhas, que é o que realmente fortalece a comparação.</p>
+<p>Modelos hierárquicos permitem conservar as medidas individuais e representar explicitamente a variação entre tanques e entre peixes. Essa abordagem é útil, mas não muda a exigência de desenho: os tratamentos ainda precisam de unidades experimentais replicadas. Nenhum modelo estatístico recupera uma fonte de variação que o experimento não observou.</p>
+<p>Subamostras continuam valiosas. Elas melhoram a média do tanque, permitem estudar heterogeneidade interna e protegem contra uma medição atípica. O erro está apenas em atribuir a elas o papel de réplicas independentes.</p>
+<p>O experimento do início tinha 60 medidas e duas réplicas. A confusão entre esses dois números é a origem de boa parte dos resultados que não se sustentam quando outra equipe tenta reproduzi-los. Contar réplicas, portanto, não é uma formalidade da análise: é a maneira de verificar se a pergunta feita em campo pode mesmo ser respondida pelos dados coletados.</p>
+</section>
+</section>
+<section id="para-saber-mais" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html" target="_blank">Amostrando uma população estatística</a> (MEAD), com o tratamento formal de conglomerados, que é a versão amostral do problema discutido aqui.</li>
+</ul>
+<p>O artigo de Hurlbert <span class="citation" data-cites="hurlbert1984">(<a href="#ref-hurlbert1984" role="doc-biblioref">Hurlbert 1984</a>)</span> permanece a leitura de referência sobre o tema e traz dezenas de exemplos reais de delineamentos ecológicos.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -463,30 +678,15 @@ Figura&nbsp;1: Comprimento de peixes em oito tanques. Cada ponto é um peixe; ca
 </ul>
 </div>
 </div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html" target="_blank">Amostrando uma população estatística</a> (MEAD)</li>
-</ul>
-</div>
-</div>
 </section>
-<section id="referências" class="level1" data-number="6">
+<section id="referências" class="level1" data-number="7">
 
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-hurlbert1984" class="csl-entry" role="listitem">
 Hurlbert, Stuart H. 1984. <span>“Pseudoreplication and the Design of Ecological Field Experiments”</span>. <em>Ecological Monographs</em> 54 (2): 187–211. <a href="https://doi.org/10.2307/1942661">https://doi.org/10.2307/1942661</a>.
 </div>

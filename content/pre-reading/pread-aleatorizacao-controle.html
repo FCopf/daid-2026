@@ -28,7 +28,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -80,6 +134,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -305,10 +388,20 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#cento-e-vinte-peixes-para-distribuir" id="toc-cento-e-vinte-peixes-para-distribuir" class="nav-link active" data-scroll-target="#cento-e-vinte-peixes-para-distribuir"><span class="header-section-number">1</span> Cento e vinte peixes para distribuir</a></li>
-  <li><a href="#primeira-decisão-quantas-unidades-experimentais" id="toc-primeira-decisão-quantas-unidades-experimentais" class="nav-link" data-scroll-target="#primeira-decisão-quantas-unidades-experimentais"><span class="header-section-number">2</span> Primeira decisão: quantas unidades experimentais?</a></li>
-  <li><a href="#segunda-decisão-quem-recebe-qual-tratamento" id="toc-segunda-decisão-quem-recebe-qual-tratamento" class="nav-link" data-scroll-target="#segunda-decisão-quem-recebe-qual-tratamento"><span class="header-section-number">3</span> Segunda decisão: quem recebe qual tratamento?</a></li>
+  <li><a href="#primeira-decisão-quantas-unidades-experimentais" id="toc-primeira-decisão-quantas-unidades-experimentais" class="nav-link" data-scroll-target="#primeira-decisão-quantas-unidades-experimentais"><span class="header-section-number">2</span> Primeira decisão: quantas unidades experimentais?</a>
+  <ul class="collapse">
+  <li><a href="#quantas-unidades-em-cada-tratamento" id="toc-quantas-unidades-em-cada-tratamento" class="nav-link" data-scroll-target="#quantas-unidades-em-cada-tratamento"><span class="header-section-number">2.1</span> Quantas unidades em cada tratamento</a></li>
+  </ul></li>
+  <li><a href="#segunda-decisão-quem-recebe-qual-tratamento" id="toc-segunda-decisão-quem-recebe-qual-tratamento" class="nav-link" data-scroll-target="#segunda-decisão-quem-recebe-qual-tratamento"><span class="header-section-number">3</span> Segunda decisão: quem recebe qual tratamento?</a>
+  <ul class="collapse">
+  <li><a href="#confundimento-visto-como-falta-de-comparação" id="toc-confundimento-visto-como-falta-de-comparação" class="nav-link" data-scroll-target="#confundimento-visto-como-falta-de-comparação"><span class="header-section-number">3.1</span> Confundimento visto como falta de comparação</a></li>
+  <li><a href="#quando-o-sorteio-precisa-respeitar-a-estrutura" id="toc-quando-o-sorteio-precisa-respeitar-a-estrutura" class="nav-link" data-scroll-target="#quando-o-sorteio-precisa-respeitar-a-estrutura"><span class="header-section-number">3.2</span> Quando o sorteio precisa respeitar a estrutura</a></li>
+  <li><a href="#sortear-unidades-e-sortear-tratamentos" id="toc-sortear-unidades-e-sortear-tratamentos" class="nav-link" data-scroll-target="#sortear-unidades-e-sortear-tratamentos"><span class="header-section-number">3.3</span> Sortear unidades e sortear tratamentos</a></li>
+  </ul></li>
   <li><a href="#terceira-decisão-o-que-manter-constante" id="toc-terceira-decisão-o-que-manter-constante" class="nav-link" data-scroll-target="#terceira-decisão-o-que-manter-constante"><span class="header-section-number">4</span> Terceira decisão: o que manter constante?</a></li>
   <li><a href="#nem-tudo-pode-ser-sorteado" id="toc-nem-tudo-pode-ser-sorteado" class="nav-link" data-scroll-target="#nem-tudo-pode-ser-sorteado"><span class="header-section-number">5</span> Nem tudo pode ser sorteado</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -337,7 +430,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -361,19 +454,19 @@ ul.task-list li input[type="checkbox"] {
 <p>Vale ver o que isso significa em números. A figura abaixo repete duas mil vezes um experimento em que <strong>as duas dietas são idênticas</strong>, variando apenas a distribuição dos 120 peixes, e guarda a diferença estimada entre as dietas em cada repetição.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-aleatorizacao-alocacao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero.">
+<div id="fig-alocacao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-aleatorizacao-alocacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-aleatorizacao-controle_files/figure-html/fig-aleatorizacao-alocacao-1.png" class="img-fluid figure-img" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero." width="672">
+<div aria-describedby="fig-alocacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-aleatorizacao-controle_files/figure-html/fig-alocacao-1.png" class="img-fluid figure-img" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aleatorizacao-alocacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-alocacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,14 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,36 cm.</p>
+<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,14 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,38 cm.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -403,12 +496,60 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 <p>A decisão é um equilíbrio, mas ele começa contando unidades experimentais, não observações.</p>
 </div>
 </div>
+<p>Replicação tem duas funções. Primeiro, permite estimar a variação entre unidades tratadas da mesma forma. Segundo, faz com que uma ocorrência particular, como a falha de uma bomba, não determine inteiramente o efeito estimado. Réplicas precisam ser genuinamente independentes e cobrir a variabilidade sobre a qual se pretende concluir.</p>
+<section id="quantas-unidades-em-cada-tratamento" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="quantas-unidades-em-cada-tratamento"><span class="header-section-number">2.1</span> Quantas unidades em cada tratamento</h2>
+<p>Definido o número total de unidades, resta distribuí-las entre os tratamentos. Um desenho <strong>balanceado</strong> atribui o mesmo número de unidades a cada um. O balanceamento não é obrigatório para todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças de variância. Também evita que a perda de poucas unidades deixe um tratamento quase sem replicação, situação em que o experimento inteiro passa a depender de duas ou três observações.</p>
+</section>
 </section>
 <section id="segunda-decisão-quem-recebe-qual-tratamento" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Segunda decisão: quem recebe qual tratamento?</h1>
 <p>Definidos os tanques, resta atribuir as dietas. E essa atribuição precisa ser <strong>sorteada</strong>.</p>
 <p>Sortear não é uma formalidade burocrática. É o que impede que diferenças pré-existentes se alinhem com o tratamento. Se a pesquisadora escolher “os tanques mais claros para a dieta nova”, luz e dieta ficam confundidas para sempre, e nenhuma análise posterior separa as duas.</p>
 <p>O sorteio também cobre o que ninguém pensou em medir: a posição na sala, a idade da bomba de aeração, a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado.</p>
+<p>Vale escrever isso com um pouco mais de precisão. Se <span class="math inline">\(Y_i(0)\)</span> representa o resultado que o tanque <span class="math inline">\(i\)</span> teria sob a dieta comum e <span class="math inline">\(Y_i(1)\)</span> o resultado sob a dieta enriquecida, o efeito individual seria <span class="math inline">\(Y_i(1)-Y_i(0)\)</span>. Nunca observamos os dois resultados no mesmo tanque, porque cada tanque recebe uma única dieta. A alocação aleatória contorna esse impasse ao criar grupos comparáveis, de modo que o efeito médio pode ser estimado por</p>
+<p><span class="math display">\[
+\widehat\Delta=\bar Y_{enriquecida}-\bar Y_{comum}.
+\]</span></p>
+<p>O símbolo <span class="math inline">\(\widehat\Delta\)</span> é a diferença observada entre médias. Sob sorteio correto e ausência de interferência entre unidades, ela é centrada no efeito médio. A aleatorização não garante que toda característica fique exatamente balanceada em uma realização; garante que desequilíbrios não sejam sistematicamente produzidos pelo pesquisador e fornece base probabilística para a comparação.</p>
+<p>Na prática, o sorteio balanceado é uma linha de código, e convém que seja registrada:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver uma alocação balanceada em R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>alocacao <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dieta =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">10</span>)))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alocacao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   tanque dieta      
+    &lt;int&gt; &lt;chr&gt;      
+ 1      1 comum      
+ 2      2 enriquecida
+ 3      3 comum      
+ 4      4 comum      
+ 5      5 enriquecida
+ 6      6 comum      
+ 7      7 enriquecida
+ 8      8 enriquecida
+ 9      9 enriquecida
+10     10 enriquecida
+11     11 comum      
+12     12 comum      
+13     13 comum      
+14     14 comum      
+15     15 enriquecida
+16     16 enriquecida
+17     17 enriquecida
+18     18 comum      
+19     19 comum      
+20     20 enriquecida</code></pre>
+</div>
+</div>
+<p>O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima; a função <code>sample()</code> apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Aleatorizar não é escolher sem critério">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -423,12 +564,97 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 <p>O sorteio precisa ser feito com um mecanismo explícito, e vale registrar no caderno de campo qual foi.</p>
 </div>
 </div>
+<section id="confundimento-visto-como-falta-de-comparação" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="confundimento-visto-como-falta-de-comparação"><span class="header-section-number">3.1</span> Confundimento visto como falta de comparação</h2>
+<p>O que exatamente se perde quando o sorteio não acontece? A resposta fica clara ao olhar a tabela do desenho. Suponha que todos os tanques da dieta comum fiquem na prateleira superior e todos os da dieta enriquecida, na inferior:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Prateleira</th>
+<th style="text-align: right;">Dieta comum</th>
+<th style="text-align: right;">Dieta enriquecida</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Superior</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Inferior</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral: vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-confundimento" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-confundimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-aleatorizacao-controle_files/figure-html/fig-confundimento-1.png" class="img-fluid figure-img" alt="Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confundimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira coincidem; no segundo, cada prateleira contém as duas dietas.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>No painel de baixo, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.</p>
+</section>
+<section id="quando-o-sorteio-precisa-respeitar-a-estrutura" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="quando-o-sorteio-precisa-respeitar-a-estrutura"><span class="header-section-number">3.2</span> Quando o sorteio precisa respeitar a estrutura</h2>
+<p>O painel inferior da figura sugere um refinamento do sorteio. Aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear <strong>dentro</strong> deles. Por exemplo, em cada prateleira da sala metade dos tanques recebe cada dieta. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.</p>
+<p>Uma implementação completa cria os grupos primeiro e sorteia os rótulos separadamente em cada um:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver a aleatorização restrita por blocos</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>unidades <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">prateleira =</span> <span class="fu">paste</span>(<span class="st">"prateleira"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">posicao =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plano <span class="ot">&lt;-</span> unidades <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(prateleira) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tratamento =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"controle"</span>, <span class="st">"dieta nova"</span>), <span class="at">each =</span> <span class="dv">3</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(plano, prateleira, tratamento)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  prateleira   tratamento     n
+  &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt;
+1 prateleira 1 controle       3
+2 prateleira 1 dieta nova     3
+3 prateleira 2 controle       3
+4 prateleira 2 dieta nova     3
+5 prateleira 3 controle       3
+6 prateleira 3 dieta nova     3
+7 prateleira 4 controle       3
+8 prateleira 4 dieta nova     3</code></pre>
+</div>
+</div>
+<p>A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar <code>each = 3</code> altera a replicação por tratamento dentro de cada grupo; se o número de unidades for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.</p>
+<p>Esses grupos são blocos. O bloqueamento não transforma posição em tratamento de interesse; apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta e cada bloco deve permitir comparação entre os tratamentos.</p>
+</section>
+<section id="sortear-unidades-e-sortear-tratamentos" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sortear-unidades-e-sortear-tratamentos"><span class="header-section-number">3.3</span> Sortear unidades e sortear tratamentos</h2>
+<p>Duas operações levam o nome de sorteio e respondem a perguntas diferentes. A <strong>amostragem aleatória</strong> seleciona unidades de uma população e sustenta a generalização para essa população. A <strong>alocação aleatória</strong> distribui tratamentos entre unidades já selecionadas e sustenta a comparação causal entre tratamentos. Um estudo pode ter uma sem a outra.</p>
+<p>Peixes comprados de um único viveiro podem receber dietas por sorteio. A comparação causal dentro desse conjunto é forte, mas generalizar para todas as populações de robalo exige cautela. Em sentido oposto, uma amostra aleatória de estuários descreve bem a região, mas comparar estuários poluídos e não poluídos continua sendo observacional se a poluição não foi atribuída.</p>
+</section>
 </section>
 <section id="terceira-decisão-o-que-manter-constante" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Terceira decisão: o que manter constante?</h1>
 <p>A última decisão é sobre tudo aquilo que <strong>não</strong> é o tratamento.</p>
 <p>Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial, horário de alimentação, origem dos juvenis) é o que se chama de <strong>controle local</strong>. Cada uma dessas fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a qual o efeito do tratamento é julgado.</p>
 <p>O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.</p>
+<p>Parte dessa decisão é definir contra o que o tratamento será comparado. Um <strong>grupo controle</strong> representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional; para um contaminante, concentração zero; para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos outros grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.</p>
+<p>Controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede o efeito naquela origem com precisão, mas pode representar mal outras populações. O objetivo não é eliminar toda variação biológica; é controlar fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.</p>
+<p>Uma última providência diz respeito a quem mede. Quando possível, quem registra a resposta não deve saber qual tratamento cada unidade recebeu. Esse <strong>mascaramento</strong> não altera a biologia, mas reduz a chance de expectativas influenciarem a medição, a exclusão de observações ou o registro de resultados ambíguos.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Três decisões, três funções">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -448,9 +674,27 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </section>
 <section id="nem-tudo-pode-ser-sorteado" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Nem tudo pode ser sorteado</h1>
-<p>Uma ressalva que acompanha boa parte das Ciências do Mar.</p>
-<p>Em muitos estudos o “tratamento” é uma condição observada, não atribuída: costões expostos e abrigados, meses de coleta, estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.</p>
+<p>Uma ressalva acompanha boa parte das Ciências do Mar.&nbsp;Em muitos estudos o “tratamento” é uma condição observada, não atribuída: costões expostos e abrigados, meses de coleta, estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.</p>
 <p>Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido: sem aleatorização, a conclusão é sobre associação, não sobre causa.</p>
+<p>Mesmo em experimento aleatorizado, a interpretação causal exige cuidados: tratamentos precisam ser aplicados conforme planejado, uma unidade não deve alterar o tratamento efetivo de outra, perdas não podem depender seletivamente do resultado e a medição deve ser comparável. O sorteio é o núcleo do argumento causal, não uma licença para ignorar o restante do protocolo.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Protocolo mínimo antes da coleta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Protocolo mínimo antes da coleta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Defina população e unidade experimental; liste tratamentos e controle; escolha replicação e subamostragem; identifique fontes para bloqueio; gere e registre a sequência aleatória; padronize manejo e medição; planeje mascaramento, perdas e exclusões; e declare previamente respostas e comparações principais.</p>
+</div>
+</div>
+<p>Os 120 peixes do início continuam sendo 120. O que as três decisões determinam é quanta informação sobre a dieta esses mesmos peixes serão capazes de fornecer, e nenhuma delas pode ser revista depois que o experimento começa. É por isso que o delineamento, e não a análise, é a etapa em que um estudo ganha ou perde a capacidade de responder à pergunta que o originou.</p>
+</section>
+<section id="para-saber-mais" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<p>O MEAD não trata de delineamento experimental, mas dois livros da bibliografia da unidade curricular desenvolvem o tema com profundidade: Ruxton e Colegrave <span class="citation" data-cites="ruxton2011">(<a href="#ref-ruxton2011" role="doc-biblioref">Ruxton e Colegrave 2011</a>)</span>, voltado especificamente ao planejamento em ciências da vida, e Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span>, que conecta delineamento e análise.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -467,27 +711,22 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </ul>
 </div>
 </div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html" target="_blank">Amostrando uma população estatística</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/amostragem/pop-amostra.html" target="_blank">Descrevendo populações e amostras</a> (MEAD)</li>
-</ul>
-</div>
-</div>
+</section>
+<section id="referências" class="level1" data-number="7">
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-quinn2002" class="csl-entry" role="listitem">
+Quinn, Gerry P., e Michael J. Keough. 2002. <em>Experimental Design and Data Analysis for Biologists</em>. Cambridge University Press.
+</div>
+<div id="ref-ruxton2011" class="csl-entry" role="listitem">
+Ruxton, Graeme D., e Nick Colegrave. 2011. <em>Experimental Design for the Life Sciences</em>. 3º ed. Oxford University Press.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right

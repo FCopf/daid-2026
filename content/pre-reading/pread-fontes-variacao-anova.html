@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,10 +370,22 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#uma-pergunta-que-vale-para-os-quatro-grupos" id="toc-uma-pergunta-que-vale-para-os-quatro-grupos" class="nav-link active" data-scroll-target="#uma-pergunta-que-vale-para-os-quatro-grupos"><span class="header-section-number">1</span> Uma pergunta que vale para os quatro grupos</a></li>
   <li><a href="#duas-situações-com-a-mesma-diferença-de-médias" id="toc-duas-situações-com-a-mesma-diferença-de-médias" class="nav-link" data-scroll-target="#duas-situações-com-a-mesma-diferença-de-médias"><span class="header-section-number">2</span> Duas situações com a mesma diferença de médias</a></li>
-  <li><a href="#duas-fontes-de-variação" id="toc-duas-fontes-de-variação" class="nav-link" data-scroll-target="#duas-fontes-de-variação"><span class="header-section-number">3</span> Duas fontes de variação</a></li>
-  <li><a href="#por-que-não-comparar-as-somas-diretamente" id="toc-por-que-não-comparar-as-somas-diretamente" class="nav-link" data-scroll-target="#por-que-não-comparar-as-somas-diretamente"><span class="header-section-number">4</span> Por que não comparar as somas diretamente</a></li>
-  <li><a href="#a-razão-f" id="toc-a-razão-f" class="nav-link" data-scroll-target="#a-razão-f"><span class="header-section-number">5</span> A razão F</a></li>
-  <li><a href="#o-que-a-razão-f-responde-e-o-que-não-responde" id="toc-o-que-a-razão-f-responde-e-o-que-não-responde" class="nav-link" data-scroll-target="#o-que-a-razão-f-responde-e-o-que-não-responde"><span class="header-section-number">6</span> O que a razão F responde, e o que não responde</a></li>
+  <li><a href="#um-modelo-para-cada-observação" id="toc-um-modelo-para-cada-observação" class="nav-link" data-scroll-target="#um-modelo-para-cada-observação"><span class="header-section-number">3</span> Um modelo para cada observação</a></li>
+  <li><a href="#duas-fontes-de-variação" id="toc-duas-fontes-de-variação" class="nav-link" data-scroll-target="#duas-fontes-de-variação"><span class="header-section-number">4</span> Duas fontes de variação</a>
+  <ul class="collapse">
+  <li><a href="#a-partição-observação-por-observação" id="toc-a-partição-observação-por-observação" class="nav-link" data-scroll-target="#a-partição-observação-por-observação"><span class="header-section-number">4.1</span> A partição observação por observação</a></li>
+  </ul></li>
+  <li><a href="#da-soma-de-quadrados-ao-quadrado-médio" id="toc-da-soma-de-quadrados-ao-quadrado-médio" class="nav-link" data-scroll-target="#da-soma-de-quadrados-ao-quadrado-médio"><span class="header-section-number">5</span> Da soma de quadrados ao quadrado médio</a>
+  <ul class="collapse">
+  <li><a href="#a-tabela-calculada-passo-a-passo" id="toc-a-tabela-calculada-passo-a-passo" class="nav-link" data-scroll-target="#a-tabela-calculada-passo-a-passo"><span class="header-section-number">5.1</span> A tabela calculada passo a passo</a></li>
+  </ul></li>
+  <li><a href="#a-razão-f" id="toc-a-razão-f" class="nav-link" data-scroll-target="#a-razão-f"><span class="header-section-number">6</span> A razão F</a>
+  <ul class="collapse">
+  <li><a href="#quanto-da-variação-o-fator-representa" id="toc-quanto-da-variação-o-fator-representa" class="nav-link" data-scroll-target="#quanto-da-variação-o-fator-representa"><span class="header-section-number">6.1</span> Quanto da variação o fator representa</a></li>
+  <li><a href="#o-que-a-razão-f-responde-e-o-que-não-responde" id="toc-o-que-a-razão-f-responde-e-o-que-não-responde" class="nav-link" data-scroll-target="#o-que-a-razão-f-responde-e-o-que-não-responde"><span class="header-section-number">6.2</span> O que a razão F responde, e o que não responde</a></li>
+  </ul></li>
+  <li><a href="#o-que-precisa-ser-verificado" id="toc-o-que-precisa-ser-verificado" class="nav-link" data-scroll-target="#o-que-precisa-ser-verificado"><span class="header-section-number">7</span> O que precisa ser verificado</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -367,7 +414,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -390,15 +437,15 @@ window.Quarto = {
 </section>
 <section id="duas-situações-com-a-mesma-diferença-de-médias" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Duas situações com a mesma diferença de médias</h1>
-<p>Compare os dois cenários abaixo. Em ambos, as médias dos quatro grupos são exatamente as mesmas.</p>
+<p>Antes da conta, vale ver por que a pergunta precisa mencionar as duas variações, e não apenas a separação entre as médias. Compare os dois cenários abaixo: em ambos, as médias dos quatro grupos são exatamente as mesmas.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-anova-dois-cenarios" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente.">
+<div id="fig-dois-cenarios" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-anova-dois-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-fontes-variacao-anova_files/figure-html/fig-anova-dois-cenarios-1.png" class="img-fluid figure-img" alt="Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente." width="672">
+<div aria-describedby="fig-dois-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-fontes-variacao-anova_files/figure-html/fig-dois-cenarios-1.png" class="img-fluid figure-img" alt="Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anova-dois-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dois-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Dois experimentos com as mesmas quatro médias de grupo (linhas horizontais) e variações internas diferentes.
 </figcaption>
 </figure>
@@ -408,8 +455,25 @@ Figura&nbsp;1: Dois experimentos com as mesmas quatro médias de grupo (linhas h
 <p>À esquerda, a queda da diversidade ao longo das quatro concentrações salta aos olhos: cada grupo ocupa uma faixa estreita e a ordem entre eles é imediata. À direita, com as <strong>mesmas médias</strong>, as nuvens se sobrepõem amplamente: olhando um canal isolado, seria difícil dizer de qual tratamento ele veio.</p>
 <p>A conclusão é que a diferença entre médias, sozinha, não diz nada. Ela só ganha sentido quando comparada à variação de fundo.</p>
 </section>
-<section id="duas-fontes-de-variação" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Duas fontes de variação</h1>
+<section id="um-modelo-para-cada-observação" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Um modelo para cada observação</h1>
+<p>Para transformar essa ideia em conta, convém primeiro escrever de onde vem cada observação. Para o canal <span class="math inline">\(j\)</span> no tratamento <span class="math inline">\(i\)</span>, a ANOVA de um fator escreve</p>
+<p><span class="math display">\[
+Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
+\]</span></p>
+<p><span class="math inline">\(Y_{ij}\)</span> é a diversidade observada, <span class="math inline">\(\mu\)</span> é a média geral, <span class="math inline">\(\alpha_i\)</span> é o desvio associado ao tratamento <span class="math inline">\(i\)</span> e <span class="math inline">\(\varepsilon_{ij}\)</span> é a variação individual não explicada pelo tratamento. Uma forma equivalente usa diretamente a média de cada grupo, <span class="math inline">\(Y_{ij}=\mu_i+\varepsilon_{ij}\)</span>.</p>
+<p>A equação já contém a estrutura da pergunta: <span class="math inline">\(\alpha_i\)</span> é a parte que o tratamento explica e <span class="math inline">\(\varepsilon_{ij}\)</span> é a parte que ele não explica. As hipóteses globais dizem respeito aos <span class="math inline">\(\alpha_i\)</span>, ou de modo equivalente às médias:</p>
+<p><span class="math display">\[
+H_0:\mu_1=\mu_2=\cdots=\mu_k
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+H_A:\text{pelo menos uma média difere}.
+\]</span></p>
+<p>A alternativa não afirma que todas as médias diferem, nem especifica quais. Ela apenas nega a igualdade simultânea.</p>
+</section>
+<section id="duas-fontes-de-variação" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Duas fontes de variação</h1>
 <p>Toda observação carrega duas contribuições, e a análise consiste em separá-las.</p>
 <p><strong>Variação entre grupos.</strong> O quanto as médias dos tratamentos se afastam da média geral. É a parte que o tratamento explica.</p>
 <p><strong>Variação dentro dos grupos.</strong> O quanto os canais de um <em>mesmo</em> tratamento diferem entre si. Como receberam a mesma condição, essa variação vem de tudo o que não é o tratamento: diferenças entre canais, erro de medição, acaso. É a variação <strong>residual</strong>.</p>
@@ -431,36 +495,207 @@ Figura&nbsp;1: Dois experimentos com as mesmas quatro médias de grupo (linhas h
 <p>As duas se somam exatamente na variação total: <span class="math inline">\(SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}\)</span>.</p>
 </div>
 </div>
+<p>Em símbolos, com <span class="math inline">\(n_i\)</span> observações no grupo <span class="math inline">\(i\)</span> e <span class="math inline">\(N=\sum_i n_i\)</span>,</p>
+<p><span class="math display">\[
+SQ_{\text{total}}=\sum_{i=1}^{k}\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y}_{..})^2,
+\]</span></p>
+<p><span class="math display">\[
+SQ_{\text{entre}}=\sum_{i=1}^{k}n_i(\bar{Y}_{i.}-\bar{Y}_{..})^2,
+\]</span></p>
+<p><span class="math display">\[
+SQ_{\text{dentro}}=\sum_{i=1}^{k}\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y}_{i.})^2.
+\]</span></p>
+<p><span class="math inline">\(\bar{Y}_{i.}\)</span> é a média do grupo <span class="math inline">\(i\)</span> e <span class="math inline">\(\bar{Y}_{..}\)</span> é a média geral ponderada pelos tamanhos dos grupos. A identidade entre as três somas mostra que o modelo não cria nem perde variação: ele apenas atribui partes da variação total ao fator e ao resíduo.</p>
+<section id="a-partição-observação-por-observação" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="a-partição-observação-por-observação"><span class="header-section-number">4.1</span> A partição observação por observação</h2>
+<p>Essa identidade entre somas não é uma coincidência algébrica. Ela decorre de uma decomposição válida para cada canal individualmente:</p>
+<p><span class="math display">\[
+Y_{ij}-\bar Y_{..}
+=
+(\bar Y_{i.}-\bar Y_{..})
++
+(Y_{ij}-\bar Y_{i.}).
+\]</span></p>
+<p>O desvio total de uma observação em relação à média geral é a soma do desvio explicado pelo grupo e do resíduo. Quando somamos os quadrados de todas as observações, o termo cruzado desaparece e obtemos a partição das somas de quadrados. Esse é o mesmo princípio usado na regressão: comparar um modelo que prevê apenas a média geral com outro que permite previsões diferentes para os grupos.</p>
 </section>
-<section id="por-que-não-comparar-as-somas-diretamente" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Por que não comparar as somas diretamente</h1>
-<p>Porque somas dependem de quantas parcelas foram somadas. <span class="math inline">\(SQ_{\text{dentro}}\)</span> acumula uma parcela por canal; <span class="math inline">\(SQ_{\text{entre}}\)</span>, uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.</p>
-<p>A correção é dividir cada soma pelo seu número de <strong>graus de liberdade</strong>, ou seja, quantos valores podiam variar livremente. Com <span class="math inline">\(k\)</span> grupos e <span class="math inline">\(n\)</span> observações no total:</p>
+</section>
+<section id="da-soma-de-quadrados-ao-quadrado-médio" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Da soma de quadrados ao quadrado médio</h1>
+<p>As somas de quadrados ainda não podem ser comparadas entre si, e a razão é aritmética: somas dependem de quantas parcelas foram somadas. <span class="math inline">\(SQ_{\text{dentro}}\)</span> acumula uma parcela por canal; <span class="math inline">\(SQ_{\text{entre}}\)</span>, uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.</p>
+<p>A correção é dividir cada soma pelo seu número de <strong>graus de liberdade</strong>, ou seja, quantos valores podiam variar livremente. Com <span class="math inline">\(k\)</span> grupos e <span class="math inline">\(N\)</span> observações no total:</p>
 <p><span class="math display">\[QM_{\text{entre}} = \frac{SQ_{\text{entre}}}{k - 1}
 \qquad
-QM_{\text{dentro}} = \frac{SQ_{\text{dentro}}}{n - k}\]</span></p>
-<p>O resultado, chamado <strong>quadrado médio</strong>, é uma variação média por grau de liberdade. Agora as duas quantidades são comparáveis.</p>
+QM_{\text{dentro}} = \frac{SQ_{\text{dentro}}}{N - k}\]</span></p>
+<p>O resultado, chamado <strong>quadrado médio</strong>, é uma variação média por grau de liberdade. Agora as duas quantidades são comparáveis, e o conjunto costuma ser apresentado em uma tabela com esta estrutura:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fonte</th>
+<th style="text-align: right;">Soma de quadrados</th>
+<th style="text-align: right;">Graus de liberdade</th>
+<th style="text-align: right;">Quadrado médio</th>
+<th style="text-align: right;">Razão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tratamentos</td>
+<td style="text-align: right;"><span class="math inline">\(SQ_{\text{entre}}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(k-1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(QM_{\text{entre}}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(F=QM_{\text{entre}}/QM_{\text{dentro}}\)</span></td>
+</tr>
+<tr class="even">
+<td>Resíduo</td>
+<td style="text-align: right;"><span class="math inline">\(SQ_{\text{dentro}}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(N-k\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(QM_{\text{dentro}}\)</span></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: right;"><span class="math inline">\(SQ_{\text{total}}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(N-1\)</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Os graus de liberdade também se particionam: <span class="math inline">\((N-1)=(k-1)+(N-k)\)</span>.</p>
+<section id="a-tabela-calculada-passo-a-passo" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="a-tabela-calculada-passo-a-passo"><span class="header-section-number">5.1</span> A tabela calculada passo a passo</h2>
+<p>Todas as quantidades da tabela vêm das definições apresentadas acima, e vale construí-las uma vez a partir de um conjunto pequeno, com três grupos de quatro canais, para verificar que as identidades se cumprem.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver o cálculo manual completo da ANOVA</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dados_exemplo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupo =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"controle"</span>, <span class="st">"baixo"</span>, <span class="st">"alto"</span>), <span class="at">each =</span> <span class="dv">4</span>)),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">diversidade =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>media_geral <span class="ot">&lt;-</span> <span class="fu">mean</span>(dados_exemplo<span class="sc">$</span>diversidade)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>resumo_grupos <span class="ot">&lt;-</span> dados_exemplo <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(diversidade), <span class="at">.by =</span> grupo)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>sq_total <span class="ot">&lt;-</span> <span class="fu">sum</span>((dados_exemplo<span class="sc">$</span>diversidade <span class="sc">-</span> media_geral)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>sq_entre <span class="ot">&lt;-</span> <span class="fu">sum</span>(resumo_grupos<span class="sc">$</span>n <span class="sc">*</span> (resumo_grupos<span class="sc">$</span>media <span class="sc">-</span> media_geral)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>sq_dentro <span class="ot">&lt;-</span> dados_exemplo <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(resumo_grupos, <span class="at">by =</span> <span class="st">"grupo"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sq =</span> <span class="fu">sum</span>((diversidade <span class="sc">-</span> media)<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(sq)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(dados_exemplo<span class="sc">$</span>grupo)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dados_exemplo)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>tabela_anova <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">fonte =</span> <span class="fu">c</span>(<span class="st">"Tratamentos"</span>, <span class="st">"Resíduo"</span>, <span class="st">"Total"</span>),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">soma_quadrados =</span> <span class="fu">c</span>(sq_entre, sq_dentro, sq_total),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">graus_liberdade =</span> <span class="fu">c</span>(k <span class="sc">-</span> <span class="dv">1</span>, N <span class="sc">-</span> k, N <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">quadrado_medio =</span> <span class="fu">c</span>(sq_entre <span class="sc">/</span> (k <span class="sc">-</span> <span class="dv">1</span>), sq_dentro <span class="sc">/</span> (N <span class="sc">-</span> k), <span class="cn">NA_real_</span>),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">F =</span> <span class="fu">c</span>((sq_entre <span class="sc">/</span> (k <span class="sc">-</span> <span class="dv">1</span>)) <span class="sc">/</span> (sq_dentro <span class="sc">/</span> (N <span class="sc">-</span> k)), <span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabela_anova, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-anova-manual" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anova-manual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1: Tabela ANOVA calculada a partir das definições das somas de quadrados.
+</figcaption>
+<div aria-describedby="tbl-anova-manual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">fonte</th>
+<th style="text-align: right;">soma_quadrados</th>
+<th style="text-align: right;">graus_liberdade</th>
+<th style="text-align: right;">quadrado_medio</th>
+<th style="text-align: right;">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tratamentos</td>
+<td style="text-align: right;">34.667</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">17.333</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resíduo</td>
+<td style="text-align: right;">6.000</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.667</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: right;">40.667</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Neste exemplo, as médias dos três grupos são 8, 7 e 4, e a média geral é <span class="math inline">\(19/3\approx6{,}33\)</span>. A tabela permite verificar as duas identidades: a soma de quadrados dos tratamentos mais a do resíduo reproduz o total, e os graus de liberdade se somam do mesmo modo. Se alguma delas falhar, há erro na definição dos grupos, nos pesos ou nas contas.</p>
 </section>
-<section id="a-razão-f" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> A razão F</h1>
-<p>Comparáveis, elas podem ser postas em uma razão:</p>
+</section>
+<section id="a-razão-f" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> A razão F</h1>
+<p>Comparáveis, os dois quadrados médios podem ser postos em uma razão:</p>
 <p><span class="math display">\[F = \frac{QM_{\text{entre}}}{QM_{\text{dentro}}}\]</span></p>
 <p>A leitura é direta. Se o tratamento não faz nada, as duas fontes medem a mesma coisa (variação residual) e <span class="math inline">\(F\)</span> fica em torno de 1. Se o tratamento separa os grupos além do ruído, o numerador cresce e <span class="math inline">\(F\)</span> fica maior que 1.</p>
+<p>Resta saber quanto maior que 1 é grande o bastante, e a resposta vem da mesma estratégia usada para qualquer distribuição nula: gerar muitos experimentos em que o tratamento não faz nada e observar quais valores de <span class="math inline">\(F\)</span> o acaso produz.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-anova-distribuicao-f" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F.">
+<div id="fig-distribuicao-f" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-anova-distribuicao-f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-fontes-variacao-anova_files/figure-html/fig-anova-distribuicao-f-1.png" class="img-fluid figure-img" alt="Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F." width="672">
+<div aria-describedby="fig-distribuicao-f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-fontes-variacao-anova_files/figure-html/fig-distribuicao-f-1.png" class="img-fluid figure-img" alt="Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anova-distribuicao-f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribuicao-f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum efeito de tratamento (quatro grupos, oito canais por grupo).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>A linha marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 5,4% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
+<p>A linha marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 5,5% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
+<p>A distribuição F depende de dois graus de liberdade: <span class="math inline">\(k-1\)</span> no numerador e <span class="math inline">\(N-k\)</span> no denominador. Ela assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição a partir do F observado. Sob <span class="math inline">\(H_0\)</span>, numerador e denominador estimam a mesma variância residual; quando as médias diferem, o numerador incorpora também a separação entre grupos.</p>
+<p>Na prática, uma única função reúne toda a tabela:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver a ANOVA no R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dados_precisos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupo =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(grupos, <span class="at">each =</span> <span class="dv">8</span>), <span class="at">levels =</span> grupos),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">valor =</span> <span class="fu">rnorm</span>(<span class="dv">32</span>, <span class="at">mean =</span> <span class="fu">rep</span>(medias_grupo, <span class="at">each =</span> <span class="dv">8</span>), <span class="at">sd =</span> <span class="fl">0.15</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>modelo_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(valor <span class="sc">~</span> grupo, <span class="at">data =</span> dados_precisos)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_anova)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+grupo        3  4.821  1.6071   60.46 2.37e-12 ***
+Residuals   28  0.744  0.0266                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>A saída reproduz as colunas construídas manualmente: graus de liberdade, somas de quadrados, quadrados médios, a razão F e o valor de p associado. Vale notar que <code>aov()</code> e <code>lm()</code> ajustam o mesmo modelo linear; a diferença está na forma de apresentar os coeficientes e a partição de variação, não em uma família estatística separada.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Um F grande não conserta o delineamento">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -475,12 +710,47 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 <p>O teste responde à pergunta que o delineamento permite fazer, não à pergunta que queríamos fazer.</p>
 </div>
 </div>
+<section id="quanto-da-variação-o-fator-representa" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="quanto-da-variação-o-fator-representa"><span class="header-section-number">6.1</span> Quanto da variação o fator representa</h2>
+<p>A razão F responde se a separação entre grupos se destaca do ruído, mas não informa qual fração da variação total o tratamento explica. Essa segunda quantidade tem medida própria:</p>
+<p><span class="math display">\[
+\eta^2=\frac{SQ_{\text{entre}}}{SQ_{\text{total}}}.
+\]</span></p>
+<p>Na ANOVA de um fator, esse valor coincide com o <span class="math inline">\(R^2\)</span> do modelo linear. Uma proporção alta indica que conhecer o grupo reduz bastante o erro quadrático de previsão em comparação com usar apenas a média geral. Ela não afirma que o fator causou a variação, não corrige viés e tende a ser otimista em amostras pequenas, além de mudar quando a composição da amostra ou a variação residual muda. Por isso deve ser interpretada junto com as diferenças na unidade original e seus intervalos.</p>
 </section>
-<section id="o-que-a-razão-f-responde-e-o-que-não-responde" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> O que a razão F responde, e o que não responde</h1>
+<section id="o-que-a-razão-f-responde-e-o-que-não-responde" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="o-que-a-razão-f-responde-e-o-que-não-responde"><span class="header-section-number">6.2</span> O que a razão F responde, e o que não responde</h2>
 <p>A hipótese testada é sobre o conjunto: <strong>todas as médias de tratamento são iguais</strong>. Um valor de p pequeno indica que essa descrição não se sustenta, mas não diz <em>quais</em> tratamentos diferem.</p>
 <p>Descobrir isso é o passo seguinte, feito com comparações <strong>a posteriori</strong>, como o teste de Tukey, que compara todos os pares controlando a taxa global de alarmes falsos. A ordem importa: primeiro a pergunta global, depois as comparações específicas.</p>
-<p>Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente à mesma conclusão: são duas formas de escrever a mesma comparação. A análise de variância apenas generaliza a ideia para qualquer número de grupos.</p>
+<p>Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente à mesma conclusão: são duas formas de escrever a mesma comparação, e de fato <span class="math inline">\(F=t^2\)</span> nesse caso. A análise de variância apenas generaliza a ideia para qualquer número de grupos.</p>
+</section>
+</section>
+<section id="o-que-precisa-ser-verificado" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> O que precisa ser verificado</h1>
+<p>A partição em duas fontes de variação depende de suposições sobre o termo <span class="math inline">\(\varepsilon_{ij}\)</span> do modelo, e convém saber quais são. A ANOVA pressupõe independência entre unidades, variância residual aproximadamente constante entre grupos e resíduos aproximadamente normais. A independência vem do delineamento, não de um gráfico. Normalidade e constância de variância são avaliadas nos <strong>resíduos</strong>, isto é, nas diferenças entre cada observação e a média ajustada do seu grupo.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diagnosticos" class="quarto-float quarto-figure quarto-figure-center anchored" alt="O primeiro painel mostra resíduos distribuídos ao redor de zero em quatro valores ajustados; o segundo compara resíduos ordenados com uma linha normal.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnosticos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-fontes-variacao-anova_files/figure-html/fig-diagnosticos-1.png" class="img-fluid figure-img" alt="O primeiro painel mostra resíduos distribuídos ao redor de zero em quatro valores ajustados; o segundo compara resíduos ordenados com uma linha normal." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnosticos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Diagnósticos do modelo de um fator: resíduos contra valores ajustados e gráfico quantil-quantil.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>O gráfico de resíduos contra valores ajustados revela aumento de dispersão, curvaturas ou grupos com comportamento distinto: aqui as quatro colunas de pontos têm amplitude semelhante, o que é compatível com variância constante. O gráfico quantil-quantil ajuda a reconhecer caudas e valores extremos, e neste caso os pontos acompanham razoavelmente a linha de referência.</p>
+<p>Com grupos balanceados e amostras moderadas, a razão F é robusta a desvios leves de normalidade, mas variâncias muito diferentes, grupos muito desbalanceados ou observações influentes exigem cautela. O teste de razão de variâncias é sensível à normalidade e não substitui esses gráficos; quando grupos pequenos possuem maior dispersão, a distorção pode ser relevante. Transformações podem estabilizar a variância quando têm interpretação científica, mas não devem ser escolhidas apenas para obter significância e não corrigem pseudorreplicação ou confundimento.</p>
+<p>Os dois cenários do início desta leitura tinham exatamente as mesmas médias e conclusões opostas. A razão F é o instrumento que torna essa distinção explícita: ela não pergunta se os grupos diferem, mas se diferem mais do que canais tratados de forma idêntica já diferem entre si. Toda a construção, das somas de quadrados aos graus de liberdade, existe para tornar essas duas variações comparáveis na mesma escala.</p>
+</section>
+<section id="para-saber-mais" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html" target="_blank">Associação entre variáveis quantitativas e qualitativas</a> (MEAD), que aborda a mesma comparação entre grupos pelo ângulo descritivo das medidas de associação.</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -494,21 +764,6 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 <ul>
 <li>Dois experimentos têm as mesmas médias de tratamento, mas um usa canais muito homogêneos e o outro canais heterogêneos. Qual terá o maior <span class="math inline">\(F\)</span>? Por quê?</li>
 <li>Se um pesquisador aumenta o número de canais por tratamento sem mudar mais nada, o que acontece com <span class="math inline">\(QM_{\text{dentro}}\)</span> e com os graus de liberdade do denominador?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/anova/anova-simples.html" target="_blank">Análise de variância de um fator</a> (MEAD)</li>
 </ul>
 </div>
 </div>

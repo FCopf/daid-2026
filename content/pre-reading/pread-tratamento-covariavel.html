@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -334,9 +369,18 @@ window.Quarto = {
    
   <ul class="collapse">
   <li><a href="#os-moluscos-de-fevereiro-pesam-menos.-ou-não" id="toc-os-moluscos-de-fevereiro-pesam-menos.-ou-não" class="nav-link active" data-scroll-target="#os-moluscos-de-fevereiro-pesam-menos.-ou-não"><span class="header-section-number">1</span> Os moluscos de fevereiro pesam menos. Ou não?</a></li>
-  <li><a href="#comparar-em-condições-equivalentes" id="toc-comparar-em-condições-equivalentes" class="nav-link" data-scroll-target="#comparar-em-condições-equivalentes"><span class="header-section-number">2</span> Comparar em condições equivalentes</a></li>
-  <li><a href="#a-mesma-família-de-modelos" id="toc-a-mesma-família-de-modelos" class="nav-link" data-scroll-target="#a-mesma-família-de-modelos"><span class="header-section-number">3</span> A mesma família de modelos</a></li>
-  <li><a href="#ajustar-não-é-aleatorizar" id="toc-ajustar-não-é-aleatorizar" class="nav-link" data-scroll-target="#ajustar-não-é-aleatorizar"><span class="header-section-number">4</span> Ajustar não é aleatorizar</a></li>
+  <li><a href="#comparar-em-condições-equivalentes" id="toc-comparar-em-condições-equivalentes" class="nav-link" data-scroll-target="#comparar-em-condições-equivalentes"><span class="header-section-number">2</span> Comparar em condições equivalentes</a>
+  <ul class="collapse">
+  <li><a href="#modelos-aditivo-e-com-interação" id="toc-modelos-aditivo-e-com-interação" class="nav-link" data-scroll-target="#modelos-aditivo-e-com-interação"><span class="header-section-number">2.1</span> Modelos aditivo e com interação</a></li>
+  <li><a href="#diferença-bruta-e-diferença-ajustada" id="toc-diferença-bruta-e-diferença-ajustada" class="nav-link" data-scroll-target="#diferença-bruta-e-diferença-ajustada"><span class="header-section-number">2.2</span> Diferença bruta e diferença ajustada</a></li>
+  </ul></li>
+  <li><a href="#pressupostos-que-sustentam-o-ajuste" id="toc-pressupostos-que-sustentam-o-ajuste" class="nav-link" data-scroll-target="#pressupostos-que-sustentam-o-ajuste"><span class="header-section-number">3</span> Pressupostos que sustentam o ajuste</a>
+  <ul class="collapse">
+  <li><a href="#quando-o-ajuste-tenta-criar-uma-comparação-inexistente" id="toc-quando-o-ajuste-tenta-criar-uma-comparação-inexistente" class="nav-link" data-scroll-target="#quando-o-ajuste-tenta-criar-uma-comparação-inexistente"><span class="header-section-number">3.1</span> Quando o ajuste tenta criar uma comparação inexistente</a></li>
+  </ul></li>
+  <li><a href="#a-mesma-família-de-modelos" id="toc-a-mesma-família-de-modelos" class="nav-link" data-scroll-target="#a-mesma-família-de-modelos"><span class="header-section-number">4</span> A mesma família de modelos</a></li>
+  <li><a href="#ajustar-não-é-aleatorizar" id="toc-ajustar-não-é-aleatorizar" class="nav-link" data-scroll-target="#ajustar-não-é-aleatorizar"><span class="header-section-number">5</span> Ajustar não é aleatorizar</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -365,7 +409,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -389,12 +433,12 @@ window.Quarto = {
 <p>A ideia central é simples: em vez de comparar as médias brutas, comparar os meses <strong>em um mesmo comprimento de concha</strong>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-covariavel-ajuste" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita.">
+<div id="fig-ajuste" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-covariavel-ajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-tratamento-covariavel_files/figure-html/fig-covariavel-ajuste-1.png" class="img-fluid figure-img" alt="Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita." width="672">
+<div aria-describedby="fig-ajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-tratamento-covariavel_files/figure-html/fig-ajuste-1.png" class="img-fluid figure-img" alt="Gráfico de dispersão com dois grupos de pontos e duas retas paralelas ascendentes. Os pontos de fevereiro se concentram à esquerda, em comprimentos menores, e os de abril à direita." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-covariavel-ajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ajuste-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Biomassa em função do comprimento em dois meses. As linhas verticais tracejadas marcam o comprimento médio de cada mês; a linha cheia marca um comprimento comum aos dois.
 </figcaption>
 </figure>
@@ -417,19 +461,18 @@ Figura&nbsp;1: Biomassa em função do comprimento em dois meses. As linhas vert
 <p>Ela responde a duas perguntas ao mesmo tempo: como a resposta varia com a covariável, e quanto os grupos diferem <strong>depois de descontar</strong> essa variação.</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Escolha um valor sustentado pelos dois grupos">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Escolha um valor sustentado pelos dois grupos
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Comparar os meses em um comprimento que só um deles apresenta é extrapolar. O ponto de comparação precisa estar na faixa em que <strong>ambos</strong> os grupos foram observados.</p>
-</div>
-</div>
+<section id="modelos-aditivo-e-com-interação" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="modelos-aditivo-e-com-interação"><span class="header-section-number">2.1</span> Modelos aditivo e com interação</h2>
+<p>Escrever o modelo com precisão exige duas decisões: onde fica a origem da covariável e se as duas retas compartilham a mesma inclinação. Defina <span class="math inline">\(G=0\)</span> para fevereiro, <span class="math inline">\(G=1\)</span> para abril e <span class="math inline">\(X\)</span> como comprimento centralizado em um valor comum. O modelo aditivo de ANCOVA é</p>
+<p><span class="math display">\[
+Y=\beta_0+\beta_1X+\beta_2G+\varepsilon.
+\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> é a inclinação compartilhada e <span class="math inline">\(\beta_2\)</span> é a diferença ajustada entre meses no valor em que <span class="math inline">\(X=0\)</span>. A centralização é o que dá sentido a <span class="math inline">\(\beta_2\)</span>: sem ela, o coeficiente compararia os meses em uma concha de comprimento zero.</p>
+<p>A premissa de inclinações comuns não é automática e pode ser examinada acrescentando um termo:</p>
+<p><span class="math display">\[
+Y=\beta_0+\beta_1X+\beta_2G+\beta_3XG+\varepsilon.
+\]</span></p>
+<p>Aqui <span class="math inline">\(\beta_3\)</span> mede a diferença de inclinações. Comparar os dois modelos avalia se a interação reduz o resíduo o suficiente para justificar uma relação distinta em cada mês. A decisão não deve depender apenas de um limiar: gráfico, intervalo de <span class="math inline">\(\beta_3\)</span>, precisão e consequência biológica também importam.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Um efeito ajustado só existe se as retas forem paralelas">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -440,20 +483,135 @@ Figura&nbsp;1: Biomassa em função do comprimento em dois meses. As linhas vert
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O modelo acima resume o mês em <strong>um</strong> número, e isso só faz sentido se a biomassa crescer com o comprimento na mesma taxa nos dois meses.</p>
+<p>O modelo aditivo resume o mês em <strong>um</strong> número, e isso só faz sentido se a biomassa crescer com o comprimento na mesma taxa nos dois meses.</p>
 <p>Se as retas divergirem, a distância entre elas muda ao longo do comprimento e não existe um único “efeito do mês” a relatar. Por isso, na prática, ajusta-se primeiro o modelo com interação, verifica-se se ela é necessária e, se não for, segue-se com o modelo aditivo.</p>
 </div>
 </div>
+<p>No R, os dois modelos diferem por um único operador, e as médias ajustadas saem de uma previsão no ponto centralizado.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver o ajuste e as médias ajustadas no R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>limites <span class="ot">&lt;-</span> moluscos <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">minimo =</span> <span class="fu">min</span>(comprimento), <span class="at">maximo =</span> <span class="fu">max</span>(comprimento), <span class="at">.by =</span> mes)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>valor_comum <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">c</span>(<span class="fu">max</span>(limites<span class="sc">$</span>minimo), <span class="fu">min</span>(limites<span class="sc">$</span>maximo)))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>moluscos_modelo <span class="ot">&lt;-</span> moluscos <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comprimento_c =</span> comprimento <span class="sc">-</span> valor_comum)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>modelo_aditivo <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento_c <span class="sc">+</span> mes, <span class="at">data =</span> moluscos_modelo)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>modelo_com_interacao <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento_c <span class="sc">*</span> mes, <span class="at">data =</span> moluscos_modelo)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo_aditivo, modelo_com_interacao)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: biomassa ~ comprimento_c + mes
+Model 2: biomassa ~ comprimento_c * mes
+  Res.Df    RSS Df  Sum of Sq      F Pr(&gt;F)
+1    117 1.3535                            
+2    116 1.3533  1 0.00018286 0.0157 0.9006</code></pre>
+</div>
+<details class="code-fold">
+<summary>Ver o ajuste e as médias ajustadas no R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>medias_ajustadas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento_c =</span> <span class="dv">0</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mes =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"fevereiro"</span>, <span class="st">"abril"</span>), <span class="at">levels =</span> <span class="fu">levels</span>(moluscos_modelo<span class="sc">$</span>mes))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  medias_ajustadas[<span class="st">"mes"</span>],</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="fu">predict</span>(modelo_aditivo, medias_ajustadas, <span class="at">interval =</span> <span class="st">"confidence"</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  mes         fit   lwr   upr
+  &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 fevereiro  1.08  1.04  1.12
+2 abril      1.25  1.21  1.30</code></pre>
+</div>
+</div>
+<p>A comparação entre os dois modelos avalia a interação, e os dados desta simulação foram gerados com inclinações iguais, de modo que ela normalmente não se justifica. As previsões no comprimento centralizado zero, isto é, em 20,6 mm, são as <strong>médias ajustadas</strong>. Elas representam médias modeladas em uma condição comum, não médias de uma população artificial em que todos os indivíduos tenham exatamente aquele comprimento. A diferença entre as duas previsões é o contraste ajustado, e aqui vale 0,176 g.</p>
+<p>Formalmente, no modelo aditivo as médias ajustadas em <span class="math inline">\(x_0\)</span> são</p>
+<p><span class="math display">\[
+\widehat\mu_{fev}(x_0)=\hat\beta_0+\hat\beta_1x_0,
+\qquad
+\widehat\mu_{abr}(x_0)=\hat\beta_0+\hat\beta_1x_0+\hat\beta_2.
+\]</span></p>
+<p>Sua diferença é <span class="math inline">\(\hat\beta_2\)</span> para qualquer <span class="math inline">\(x_0\)</span>, o que reafirma que o efeito ajustado é um número único apenas sob paralelismo. No modelo com interação, a diferença se torna <span class="math inline">\(\hat\beta_2+\hat\beta_3x_0\)</span>. Em ambos os casos, o erro padrão de um contraste <span class="math inline">\(L\hat\beta\)</span> é</p>
+<p><span class="math display">\[
+EP(L\hat\beta)=\sqrt{L\widehat{\operatorname{Var}}(\hat\beta)L'},
+\]</span></p>
+<p>o que preserva as covariâncias entre os coeficientes. Subtrair limites de dois intervalos de confiança separados não produz o intervalo correto para a diferença.</p>
 </section>
-<section id="a-mesma-família-de-modelos" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> A mesma família de modelos</h1>
+<section id="diferença-bruta-e-diferença-ajustada" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="diferença-bruta-e-diferença-ajustada"><span class="header-section-number">2.2</span> Diferença bruta e diferença ajustada</h2>
+<p>Vale comparar diretamente os dois resultados possíveis. A diferença bruta responde quanto as médias observadas dos dois conjuntos diferem. A diferença ajustada responde quanto os grupos diferem no mesmo valor da covariável, sob o modelo. Elas coincidem aproximadamente quando a distribuição de <span class="math inline">\(X\)</span> é semelhante entre grupos ou quando <span class="math inline">\(X\)</span> quase não se relaciona com <span class="math inline">\(Y\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-bruta-ajustada" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Duas estimativas com intervalos. A diferença bruta é maior porque os meses têm comprimentos distintos; a ajustada é menor após comparar no mesmo comprimento.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bruta-ajustada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-tratamento-covariavel_files/figure-html/fig-bruta-ajustada-1.png" class="img-fluid figure-img" alt="Duas estimativas com intervalos. A diferença bruta é maior porque os meses têm comprimentos distintos; a ajustada é menor após comparar no mesmo comprimento." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bruta-ajustada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Diferenças bruta e ajustada entre meses. O ajuste compara os grupos em 21 mm, dentro da faixa comum.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A diferença bruta estimada foi 0,70 g e a ajustada, 0,19 g. A distância entre os dois resultados não é uma correção cosmética: a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.</p>
+</section>
+</section>
+<section id="pressupostos-que-sustentam-o-ajuste" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Pressupostos que sustentam o ajuste</h1>
+<p>O efeito ajustado é uma quantidade modelada, e por isso depende das suposições do modelo. Além da independência das unidades, a ANCOVA requer relação aproximadamente linear dentro de cada grupo, variância residual comparável, resíduos adequados e suporte comum da covariável. O modelo aditivo exige ainda homogeneidade de inclinações. Esses pressupostos devem ser avaliados nos resíduos e na distribuição conjunta de <span class="math inline">\(X\)</span>, grupo e resposta, que é o que os três painéis abaixo reúnem.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diagnosticos" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três gráficos. O primeiro mostra sobreposição dos comprimentos; o segundo resíduos ao redor de zero; o terceiro resíduos próximos de uma linha normal.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnosticos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-tratamento-covariavel_files/figure-html/fig-diagnosticos-1.png" class="img-fluid figure-img" alt="Três gráficos. O primeiro mostra sobreposição dos comprimentos; o segundo resíduos ao redor de zero; o terceiro resíduos próximos de uma linha normal." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnosticos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Diagnósticos de uma ANCOVA: suporte da covariável por grupo, resíduos contra ajustados e gráfico quantil-quantil.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>O primeiro painel é o mais específico da ANCOVA: as duas densidades precisam se sobrepor, porque é na região comum que a comparação ajustada tem apoio empírico. Os outros dois repetem os diagnósticos já usados na regressão e na análise de variância. Além desses gráficos, compare o modelo aditivo ao modelo com interação e inspecione observações influentes. Uma interação imprecisa não comprova homogeneidade; o intervalo para <span class="math inline">\(\beta_3\)</span> informa quais diferenças de inclinação ainda são compatíveis com os dados.</p>
+<section id="quando-o-ajuste-tenta-criar-uma-comparação-inexistente" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="quando-o-ajuste-tenta-criar-uma-comparação-inexistente"><span class="header-section-number">3.1</span> Quando o ajuste tenta criar uma comparação inexistente</h2>
+<p>O pressuposto de suporte comum merece um exame à parte, porque sua violação não impede o cálculo. Se fevereiro contém apenas conchas de 12 a 17 mm e abril apenas de 25 a 30 mm, não há comprimento comum. Um modelo aditivo ainda imprime <span class="math inline">\(\hat\beta_2\)</span>, mas ele é obtido estendendo as duas retas por uma região vazia. Nesse caso, mês e comprimento estão quase confundidos, e a estimativa depende inteiramente da forma linear assumida.</p>
+<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Sem suporte, não existe média ajustada observável">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Sem suporte, não existe média ajustada observável
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Não escolha a média geral da covariável apenas porque o software a oferece. Primeiro calcule a interseção das faixas dos grupos. Se ela for vazia ou sustentada por pouquíssimas unidades, restrinja a população-alvo, colete dados adicionais ou reconheça que o contraste não é identificável com o desenho disponível.</p>
+</div>
+</div>
+<p>Há ainda uma advertência sobre a escolha da covariável. Testar muitas opções e ficar com a que produz o resultado mais conveniente altera a estimativa e o valor de p de modo oportunista. A escolha deve vir da biologia, da temporalidade e do plano de análise. Covariáveis medidas antes do tratamento podem aumentar a precisão; variáveis causadas pelo tratamento podem ser mediadoras, e ajustar por elas muda a pergunta para um efeito direto condicionado.</p>
+</section>
+</section>
+<section id="a-mesma-família-de-modelos" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> A mesma família de modelos</h1>
 <p>Vale notar o que aconteceu ao longo do semestre. Comparar dois grupos, comparar quatro grupos, ajustar uma reta e agora combinar grupo e reta. Tudo isso são variações de uma mesma estrutura:</p>
 <p><span class="math display">\[\text{resposta} = \text{parte sistemática} + \text{variação residual}\]</span></p>
-<p>O que muda é quem entra na parte sistemática. Só categorias, e temos ANOVA. Só uma variável contínua, e temos regressão. Os dois juntos, e temos ANCOVA. As ferramentas de diagnóstico (resíduos, pressupostos, partição da variação) são as mesmas nos três casos.</p>
+<p>O que muda é quem entra na parte sistemática. Só categorias, e temos ANOVA. Só uma variável contínua, e temos regressão. Os dois juntos, e temos ANCOVA. As ferramentas de diagnóstico (resíduos, pressupostos, partição da variação) são as mesmas nos três casos, e é por isso que os gráficos da seção anterior seriam reconhecíveis em qualquer um deles.</p>
 </section>
-<section id="ajustar-não-é-aleatorizar" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Ajustar não é aleatorizar</h1>
-<p>Um ponto que decide o alcance das conclusões.</p>
+<section id="ajustar-não-é-aleatorizar" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Ajustar não é aleatorizar</h1>
+<p>Resta um ponto que decide o alcance das conclusões, e ele não é estatístico.</p>
 <p>Se o mês tivesse sido <strong>sorteado</strong> para cada molusco (o que é impossível, mas serve de referência), qualquer outra diferença entre os grupos estaria distribuída ao acaso, e o efeito ajustado poderia ser lido como efeito causal.</p>
 <p>Como os meses são condições observadas, os grupos podem diferir em muitas outras coisas: temperatura da água, disponibilidade de alimento, fase reprodutiva, profundidade de coleta. Ajustar pelo comprimento remove <strong>apenas</strong> a diferença devida ao comprimento.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O que o ajuste estatístico faz e não faz">
@@ -470,6 +628,14 @@ Figura&nbsp;1: Biomassa em função do comprimento em dois meses. As linhas vert
 <p>Não substitui a aleatorização e não elimina as demais diferenças entre grupos que ninguém mediu. Em estudos observacionais, o resultado é uma associação ajustada, não uma demonstração de causa.</p>
 </div>
 </div>
+<p>A pergunta que abriu esta leitura, se os moluscos de fevereiro realmente pesam menos, recebeu uma resposta condicional, e essa forma de resposta é o resumo do semestre inteiro. Eles pesam menos em média, e pesam menos também quando comparados a um mesmo comprimento, mas a segunda afirmação vale somente na faixa em que os dois meses foram observados, somente se as retas forem paralelas e somente como associação, porque ninguém sorteou o mês de nascimento de um molusco. Cada uma dessas ressalvas veio de uma decisão tomada antes da análise: o que foi medido, quantas unidades entraram, como foram selecionadas e o que ficou de fora. É essa cadeia, do delineamento à conclusão, que a unidade curricular procurou tornar visível.</p>
+</section>
+<section id="para-saber-mais" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/modelos-regressao-bayes/regressao-linear-bayesiana.html" target="_blank">Regressão linear bayesiana</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/multivariada-numerica/ordination.html" target="_blank">Ordenação e análise multivariada</a> (MEAD)</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -483,21 +649,6 @@ Figura&nbsp;1: Biomassa em função do comprimento em dois meses. As linhas vert
 <ul>
 <li>Se os dois meses tivessem exatamente a mesma distribuição de comprimentos, o efeito ajustado seria muito diferente da diferença bruta entre as médias?</li>
 <li>Um pesquisador ajusta por uma covariável que foi <strong>medida depois</strong> do tratamento e pode ter sido afetada por ele. Que problema isso cria?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD)</li>
 </ul>
 </div>
 </div>

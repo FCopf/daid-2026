@@ -358,7 +358,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">As algas mudam a concentração de fosfato?</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
-<p class="subtitle lead">Prática em R</p>
+<p class="subtitle lead">Prática em R 06</p>
 </div>
 
 
@@ -376,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -602,7 +602,7 @@ Figura&nbsp;2: Distribuição dos valores dentro de cada grupo.
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">poder_para</span>(<span class="at">n_por_grupo =</span> <span class="dv">6</span>, <span class="at">efeito =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3</code></pre>
+<pre><code>[1] 0.348</code></pre>
 </div>
 </div>
 <p>A função devolve a proporção de experimentos em que o efeito foi detectado. Agora vamos percorrer vários tamanhos de experimento e vários tamanhos de efeito:</p>
@@ -618,17 +618,17 @@ Figura&nbsp;2: Distribuição dos valores dentro de cada grupo.
 <pre><code># A tibble: 12 × 3
    n_por_grupo efeito poder
          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
- 1           6    0.5 0.127
- 2           6    1   0.312
- 3           6    1.5 0.632
- 4          12    0.5 0.216
- 5          12    1   0.681
- 6          12    1.5 0.957
- 7          20    0.5 0.353
- 8          20    1   0.864
- 9          20    1.5 0.998
-10          40    0.5 0.616
-11          40    1   0.994
+ 1           6    0.5 0.125
+ 2           6    1   0.331
+ 3           6    1.5 0.626
+ 4          12    0.5 0.224
+ 5          12    1   0.593
+ 6          12    1.5 0.943
+ 7          20    0.5 0.344
+ 8          20    1   0.88 
+ 9          20    1.5 0.996
+10          40    0.5 0.608
+11          40    1   0.991
 12          40    1.5 1    </code></pre>
 </div>
 </div>
@@ -1200,7 +1200,7 @@ Figura&nbsp;3: Proporção de experimentos que detectam o efeito, por tamanho de
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "As algas mudam a concentração de fosfato?"</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 06"</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>

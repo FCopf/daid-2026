@@ -359,7 +359,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Tanques, subamostras e o que conta como réplica</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
-<p class="subtitle lead">Prática em R</p>
+<p class="subtitle lead">Prática em R 04</p>
 </div>
 
 
@@ -377,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -420,14 +420,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 8 × 3
   tanque dieta       media_tanque
    &lt;int&gt; &lt;chr&gt;              &lt;dbl&gt;
-1      1 comum               9.41
-2      2 comum              10.7 
-3      3 comum               8.03
-4      4 comum               9.87
-5      5 enriquecida         9.95
-6      6 enriquecida        11.3 
-7      7 enriquecida        11.2 
-8      8 enriquecida        10.1 </code></pre>
+1      1 comum              10.5 
+2      2 comum              10.9 
+3      3 comum               9.68
+4      4 comum               9.15
+5      5 enriquecida         9.72
+6      6 enriquecida        10.6 
+7      7 enriquecida         9.57
+8      8 enriquecida        10.4 </code></pre>
 </div>
 </div>
 <p>Repare no que acabamos de fazer: <strong><code>efeito_dieta</code> vale zero</strong>. As duas dietas são idênticas. Toda diferença entre tanques vem do <code>rnorm()</code> da última linha, ou seja, do acaso de cada tanque.</p>
@@ -443,8 +443,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Columns: 4
 $ tanque       &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, …
 $ dieta        &lt;chr&gt; "comum", "comum", "comum", "comum", "comum", "comum", "co…
-$ media_tanque &lt;dbl&gt; 9.410283, 9.410283, 9.410283, 9.410283, 9.410283, 9.41028…
-$ comprimento  &lt;dbl&gt; 8.336480, 9.609678, 9.867758, 9.388163, 9.836326, 9.56953…</code></pre>
+$ media_tanque &lt;dbl&gt; 10.54000, 10.54000, 10.54000, 10.54000, 10.54000, 10.5400…
+$ comprimento  &lt;dbl&gt; 9.911061, 10.815487, 10.799225, 11.238640, 10.561528, 10.…</code></pre>
 </div>
 </div>
 <p><code>slice(rep(1:8, each = 15))</code> repete cada linha de tanque 15 vezes, criando 15 peixes por tanque.</p>
@@ -495,8 +495,8 @@ Figura&nbsp;1: Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a
 <pre><code># A tibble: 2 × 4
   dieta           n media desvio
   &lt;chr&gt;       &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1 comum          60  9.55  1.11 
-2 enriquecida    60 10.6   0.785</code></pre>
+1 comum          60  9.99  0.858
+2 enriquecida    60 10.1   0.685</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -508,13 +508,13 @@ Figura&nbsp;1: Comprimento dos peixes em oito tanques. Cada ponto é um peixe; a
     Welch Two Sample t-test
 
 data:  comprimento by dieta
-t = -6.039, df = 106.17, p-value = 2.32e-08
+t = -0.67568, df = 112.47, p-value = 0.5006
 alternative hypothesis: true difference in means between group comum and group enriquecida is not equal to 0
 95 percent confidence interval:
- -1.4093607 -0.7127058
+ -0.3766498  0.1850820
 sample estimates:
       mean in group comum mean in group enriquecida 
-                 9.551493                 10.612526 </code></pre>
+                 9.994349                 10.090133 </code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -527,7 +527,7 @@ sample estimates:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nesta execução o valor de p foi menor que 0,001.</p>
+<p>Nesta execução o valor de p foi 0,501.</p>
 <p>Qualquer que seja ele, guarde o essencial: este teste supôs <strong>120 observações independentes</strong>, quando o sorteio da dieta aconteceu apenas 8 vezes. Ele está medindo a variação entre peixes do mesmo tanque, e não a variação entre tanques.</p>
 <p>Execute o script novamente algumas vezes e observe como esse valor de p muda de uma execução para outra.</p>
 </div>
@@ -546,14 +546,14 @@ sample estimates:
 <pre><code># A tibble: 8 × 3
   tanque dieta       media
    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
-1      1 comum        9.45
+1      1 comum       10.6 
 2      2 comum       10.8 
-3      3 comum        8.09
-4      4 comum        9.85
-5      5 enriquecida  9.97
-6      6 enriquecida 11.2 
-7      7 enriquecida 11.2 
-8      8 enriquecida 10.1 </code></pre>
+3      3 comum        9.63
+4      4 comum        8.95
+5      5 enriquecida  9.86
+6      6 enriquecida 10.5 
+7      7 enriquecida  9.47
+8      8 enriquecida 10.5 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -565,13 +565,13 @@ sample estimates:
     Welch Two Sample t-test
 
 data:  media by dieta
-t = -1.6199, df = 4.8637, p-value = 0.1678
+t = -0.19079, df = 4.912, p-value = 0.8563
 alternative hypothesis: true difference in means between group comum and group enriquecida is not equal to 0
 95 percent confidence interval:
- -2.7590694  0.6370029
+ -1.393308  1.201740
 sample estimates:
       mean in group comum mean in group enriquecida 
-                 9.551493                 10.612526 </code></pre>
+                 9.994349                 10.090133 </code></pre>
 </div>
 </div>
 <p>Agora são 4 valores por dieta, e a variação usada como referência é a variação <strong>entre tanques</strong>, que é a variação relevante.</p>
@@ -589,7 +589,7 @@ sample estimates:
 <ul>
 <li>quantos “n” cada análise usou?</li>
 <li>qual das duas produziu o intervalo de confiança mais estreito?</li>
-<li>nesta execução, o valor de p foi menor que 0,001 na análise com 120 peixes e 0,168 na análise com 8 tanques.</li>
+<li>nesta execução, o valor de p foi 0,501 na análise com 120 peixes e 0,856 na análise com 8 tanques.</li>
 </ul>
 </div>
 </div>
@@ -627,8 +627,8 @@ sample estimates:
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">errada =</span> taxa_errada, <span class="at">certa =</span> taxa_certa)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    errada      certa 
-0.61666667 0.03333333 </code></pre>
+<pre><code>   errada     certa 
+0.5266667 0.0300000 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -665,7 +665,7 @@ Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experi
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nestes 300 experimentos <strong>sem efeito nenhum</strong>, a análise com 120 peixes acusou diferença em 62% das vezes, e a análise com 8 tanques em 3%.</p>
+<p>Nestes 300 experimentos <strong>sem efeito nenhum</strong>, a análise com 120 peixes acusou diferença em 53% das vezes, e a análise com 8 tanques em 3%.</p>
 <p>A segunda taxa é a que se espera de um teste a 5%. A primeira é muitas vezes maior, e isso é pseudorreplicação em números: um procedimento que erra a unidade experimental transforma variação entre tanques em “evidência” de efeito da dieta.</p>
 <p>Repare também na forma dos histogramas. Na análise correta os valores de p se espalham por igual entre 0 e 1, como deve acontecer quando a hipótese nula é verdadeira. Na análise errada eles se amontoam perto de zero.</p>
 </div>
@@ -1266,7 +1266,7 @@ Figura&nbsp;2: Distribuição dos valores de p nas duas análises, em 300 experi
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Tanques, subamostras e o que conta como réplica"</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 04"</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>

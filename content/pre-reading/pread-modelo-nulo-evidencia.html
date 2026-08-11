@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -80,6 +115,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -305,9 +369,21 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#a-diferença-é-de-14-cm.-e-daí" id="toc-a-diferença-é-de-14-cm.-e-daí" class="nav-link active" data-scroll-target="#a-diferença-é-de-14-cm.-e-daí"><span class="header-section-number">1</span> A diferença é de 1,4 cm. E daí?</a></li>
-  <li><a href="#construindo-um-mundo-sem-efeito" id="toc-construindo-um-mundo-sem-efeito" class="nav-link" data-scroll-target="#construindo-um-mundo-sem-efeito"><span class="header-section-number">2</span> Construindo um mundo sem efeito</a></li>
-  <li><a href="#o-valor-de-p" id="toc-o-valor-de-p" class="nav-link" data-scroll-target="#o-valor-de-p"><span class="header-section-number">3</span> O valor de p</a></li>
-  <li><a href="#uma-receita-que-serve-para-qualquer-comparação" id="toc-uma-receita-que-serve-para-qualquer-comparação" class="nav-link" data-scroll-target="#uma-receita-que-serve-para-qualquer-comparação"><span class="header-section-number">4</span> Uma receita que serve para qualquer comparação</a></li>
+  <li><a href="#construindo-um-mundo-sem-efeito" id="toc-construindo-um-mundo-sem-efeito" class="nav-link" data-scroll-target="#construindo-um-mundo-sem-efeito"><span class="header-section-number">2</span> Construindo um mundo sem efeito</a>
+  <ul class="collapse">
+  <li><a href="#o-processo-nulo-precisa-respeitar-o-experimento" id="toc-o-processo-nulo-precisa-respeitar-o-experimento" class="nav-link" data-scroll-target="#o-processo-nulo-precisa-respeitar-o-experimento"><span class="header-section-number">2.1</span> O processo nulo precisa respeitar o experimento</a></li>
+  </ul></li>
+  <li><a href="#o-valor-de-p" id="toc-o-valor-de-p" class="nav-link" data-scroll-target="#o-valor-de-p"><span class="header-section-number">3</span> O valor de p</a>
+  <ul class="collapse">
+  <li><a href="#uma-ou-duas-caudas" id="toc-uma-ou-duas-caudas" class="nav-link" data-scroll-target="#uma-ou-duas-caudas"><span class="header-section-number">3.1</span> Uma ou duas caudas</a></li>
+  </ul></li>
+  <li><a href="#hipóteses-estatística-e-distribuição-nula" id="toc-hipóteses-estatística-e-distribuição-nula" class="nav-link" data-scroll-target="#hipóteses-estatística-e-distribuição-nula"><span class="header-section-number">4</span> Hipóteses, estatística e distribuição nula</a>
+  <ul class="collapse">
+  <li><a href="#o-atalho-analítico-um-teste-z" id="toc-o-atalho-analítico-um-teste-z" class="nav-link" data-scroll-target="#o-atalho-analítico-um-teste-z"><span class="header-section-number">4.1</span> O atalho analítico: um teste Z</a></li>
+  </ul></li>
+  <li><a href="#do-valor-de-p-à-decisão" id="toc-do-valor-de-p-à-decisão" class="nav-link" data-scroll-target="#do-valor-de-p-à-decisão"><span class="header-section-number">5</span> Do valor de p à decisão</a></li>
+  <li><a href="#uma-receita-que-serve-para-qualquer-comparação" id="toc-uma-receita-que-serve-para-qualquer-comparação" class="nav-link" data-scroll-target="#uma-receita-que-serve-para-qualquer-comparação"><span class="header-section-number">6</span> Uma receita que serve para qualquer comparação</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -336,7 +412,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -364,15 +440,26 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>sorteie 12 placas com média 10,2 e desvio-padrão 2; sorteie outras 12 com <strong>a mesma</strong> média e <strong>o mesmo</strong> desvio-padrão; calcule a diferença entre as médias.</p>
 </blockquote>
-<p>Rodando essa receita uma vez, obtemos uma diferença. Rodando 5000 vezes, obtemos o conjunto de diferenças que o acaso sozinho é capaz de produzir.</p>
+<p>Rodando essa receita uma vez, obtemos uma diferença. Rodando 5000 vezes, obtemos o conjunto de diferenças que o acaso sozinho é capaz de produzir. É exatamente isso que o código abaixo faz, e vale acompanhá-lo linha a linha, porque ele é a tradução literal da receita.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Ver a geração da distribuição nula e do valor de p</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>diferencas <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">5000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="fl">10.2</span>, <span class="dv">2</span>)) <span class="sc">-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="fl">10.2</span>, <span class="dv">2</span>)))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>valor_p <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas) <span class="sc">&gt;=</span> <span class="fl">1.4</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="at">d =</span> diferencas), <span class="fu">aes</span>(<span class="at">x =</span> d)) <span class="sc">+</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">45</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">1.4</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diferença entre as médias (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
-<div id="fig-modelo-nulo-distribuicao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda.">
+<div id="fig-distribuicao-nula" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-modelo-nulo-distribuicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-modelo-nulo-evidencia_files/figure-html/fig-modelo-nulo-distribuicao-1.png" class="img-fluid figure-img" alt="Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda." width="672">
+<div aria-describedby="fig-distribuicao-nula-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-modelo-nulo-evidencia_files/figure-html/fig-distribuicao-nula-1.png" class="img-fluid figure-img" alt="Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modelo-nulo-distribuicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-distribuicao-nula-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Cinco mil diferenças entre médias de dois grupos gerados pelo mesmo processo. A linha marca a diferença de 1,4 cm observada no experimento.
 </figcaption>
 </figure>
@@ -381,11 +468,16 @@ Figura&nbsp;1: Cinco mil diferenças entre médias de dois grupos gerados pelo m
 </div>
 <p>O histograma está centrado em zero, como esperado: em média, dois grupos idênticos não diferem. Mas ele é <strong>largo</strong>. Diferenças de 1 cm, de 2 cm e até maiores acontecem com alguma frequência, sem que exista qualquer efeito.</p>
 <p>A diferença observada, 1,4 cm, cai numa região onde o acaso ainda produz resultados com certa regularidade.</p>
+<section id="o-processo-nulo-precisa-respeitar-o-experimento" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="o-processo-nulo-precisa-respeitar-o-experimento"><span class="header-section-number">2.1</span> O processo nulo precisa respeitar o experimento</h2>
+<p>A receita acima não é a única possível, e escrever a receita errada invalida tudo o que vem depois. No exemplo, cada placa é independente e os dois grupos têm o mesmo desvio-padrão no gerador. Se o tratamento tivesse sido aplicado a tanques com várias placas dentro, simular placas independentes seria um modelo nulo errado. O processo precisa reproduzir número de unidades experimentais, agrupamento, alocação, variabilidade e estatística usada na análise.</p>
+<p>Convém notar que nem toda hipótese fixa tudo o que é preciso simular. Há hipóteses <strong>simples</strong>, que determinam completamente um parâmetro, e hipóteses <strong>compostas</strong>, que reúnem vários valores. A hipótese <span class="math inline">\(H_0:\mu_A-\mu_B=0\)</span> fixa a diferença, mas deixa desconhecidas médias e variâncias que precisam ser estimadas. Um teste clássico produz sua distribuição nula levando essa estimação em conta; uma simulação precisa fazer o mesmo de forma coerente.</p>
+</section>
 </section>
 <section id="o-valor-de-p" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> O valor de p</h1>
 <p>Agora podemos transformar essa leitura visual em um número: <strong>a proporção das diferenças simuladas que é tão extrema quanto a observada</strong>.</p>
-<p>No caso, cerca de <strong>8%</strong> das simulações produziram uma diferença de 1,4 cm ou mais, para mais ou para menos, num mundo sem efeito nenhum. Essa proporção é o <strong>valor de p</strong>.</p>
+<p>No caso, cerca de <strong>9%</strong> das simulações produziram uma diferença de 1,4 cm ou mais, para mais ou para menos, num mundo sem efeito nenhum. Essa proporção é o <strong>valor de p</strong>.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="O que o valor de p responde">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -414,12 +506,90 @@ Figura&nbsp;1: Cinco mil diferenças entre médias de dois grupos gerados pelo m
 <p>Trocar essas duas leituras é o erro de interpretação mais frequente em toda a estatística aplicada.</p>
 </div>
 </div>
+<section id="uma-ou-duas-caudas" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="uma-ou-duas-caudas"><span class="header-section-number">3.1</span> Uma ou duas caudas</h2>
+<p>A definição fala em resultados “tão ou mais extremos”, e essa expressão esconde uma decisão. No teste bilateral, diferenças positivas e negativas contam como extremas, e é por isso que o código usa <code>abs()</code>. Um teste unilateral, como <span class="math inline">\(H_A:\mu_B&gt;\mu_A\)</span>, conta apenas a cauda previamente especificada. Ele pode ter maior poder na direção escolhida, mas deixa de considerar a direção oposta como evidência contra <span class="math inline">\(H_0\)</span>.</p>
+<p>A escolha precisa ocorrer antes de olhar os resultados e só é defensável quando a direção oposta não responderia à pergunta científica. Observar o sinal da diferença e então escolher uma cauda reduz artificialmente o valor de p.</p>
+<p>Em um teste bilateral com nível <span class="math inline">\(\alpha\)</span>, a região de rejeição é dividida em <span class="math inline">\(\alpha/2\)</span> em cada cauda. Em um unilateral, toda a área <span class="math inline">\(\alpha\)</span> fica em uma cauda. Essa concentração reduz o valor crítico na direção prevista e aumenta o poder ali, mas torna resultados extremos no sentido oposto incapazes de rejeitar o teste tal como especificado.</p>
 </section>
-<section id="uma-receita-que-serve-para-qualquer-comparação" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Uma receita que serve para qualquer comparação</h1>
-<p>Vale reparar no que foi feito aqui, porque o procedimento se repete em praticamente toda a estatística aplicada.</p>
-<p>Escrevemos o cenário sem efeito como um processo gerador de dados. Executamos esse processo muitas vezes. Olhamos onde o resultado observado cai dentro do que o acaso produz. Contamos.</p>
-<p>Nenhuma fórmula apareceu, e nenhuma foi necessária. As fórmulas dos testes clássicos existem porque, antes dos computadores, simular cinco mil experimentos era impossível. Elas chegam ao mesmo lugar por um atalho matemático, mas a pergunta que respondem continua sendo esta.</p>
+</section>
+<section id="hipóteses-estatística-e-distribuição-nula" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Hipóteses, estatística e distribuição nula</h1>
+<p>Até aqui trabalhamos com uma receita e uma contagem. O vocabulário formal descreve as mesmas operações e é o que aparece nos artigos e nos programas de análise.</p>
+<p>Uma hipótese estatística precisa ser escrita sobre parâmetros da população. Se <span class="math inline">\(\mu_A\)</span> e <span class="math inline">\(\mu_B\)</span> são os comprimentos médios sob os dois substratos, o teste bilateral usa</p>
+<p><span class="math display">\[
+H_0:\mu_A-\mu_B=0
+\qquad\text{e}\qquad
+H_A:\mu_A-\mu_B\ne0.
+\]</span></p>
+<p><span class="math inline">\(H_0\)</span> fornece um valor de referência; <span class="math inline">\(H_A\)</span> reúne diferenças em qualquer direção. A diferença entre médias é a <strong>estatística de teste</strong> escolhida para medir a discrepância entre dados e hipótese. Sua distribuição quando <span class="math inline">\(H_0\)</span> é verdadeira é a <strong>distribuição nula</strong>, isto é, precisamente o histograma que simulamos.</p>
+<p>Uma estatística útil aumenta quando os dados se afastam de <span class="math inline">\(H_0\)</span>. Em testes clássicos, costuma ser padronizada pela própria incerteza:</p>
+<p><span class="math display">\[
+\text{estatística}=\frac{\text{estimativa}-\text{valor previsto por }H_0}
+{\text{erro padrão da estimativa}}.
+\]</span></p>
+<p>Essa forma explica por que a mesma diferença pode ser comum em um estudo pequeno e extrema em um estudo preciso. O numerador mede efeito observado; o denominador mede o ruído esperado pelo desenho.</p>
+<section id="o-atalho-analítico-um-teste-z" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="o-atalho-analítico-um-teste-z"><span class="header-section-number">4.1</span> O atalho analítico: um teste Z</h2>
+<p>Um exemplo numérico torna a padronização concreta. Suponha, apenas para simplificar a conta, que uma população tenha desvio-padrão conhecido <span class="math inline">\(\sigma=2\)</span> cm. Uma amostra de <span class="math inline">\(n=25\)</span> placas apresenta média <span class="math inline">\(\bar x=10{,}8\)</span> cm e queremos testar <span class="math inline">\(H_0:\mu=10\)</span> cm. A estatística é</p>
+<p><span class="math display">\[
+Z=\frac{\bar X-\mu_0}{\sigma/\sqrt n}
+=\frac{10{,}8-10}{2/\sqrt{25}}=2.
+\]</span></p>
+<p>Aqui <span class="math inline">\(\mu_0\)</span> é o valor previsto por <span class="math inline">\(H_0\)</span> e <span class="math inline">\(\sigma/\sqrt n=0{,}4\)</span> cm é o erro padrão. A leitura verbal é: a média observada ficou dois erros padrão acima do valor nulo. Em um teste bilateral, o valor de p é <span class="math inline">\(2P(Z\ge2)\approx0{,}0455\)</span>, que corresponde à área destacada nas duas caudas da figura.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-caudas" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curva normal com as duas caudas além de menos dois e mais dois coloridas. Linhas tracejadas próximas de menos 1,96 e 1,96 delimitam a região central.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-caudas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-modelo-nulo-evidencia_files/figure-html/fig-caudas-1.png" class="img-fluid figure-img" alt="Curva normal com as duas caudas além de menos dois e mais dois coloridas. Linhas tracejadas próximas de menos 1,96 e 1,96 delimitam a região central." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-caudas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Distribuição normal padrão sob H0. Em laranja, resultados tão ou mais extremos que Z igual a 2 nas duas caudas. Linhas tracejadas marcam os limites de rejeição para alfa igual a 0,05.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As linhas tracejadas em aproximadamente <span class="math inline">\(\pm1{,}96\)</span> delimitam a região central que concentra 95% da distribuição nula. Como <span class="math inline">\(Z=2\)</span> ficou fora dela, o resultado seria declarado incompatível com <span class="math inline">\(H_0\)</span> ao nível de 5%. No cotidiano, <span class="math inline">\(\sigma\)</span> é quase sempre desconhecido e a distribuição t substitui a normal. O exemplo Z é uma lente para compreender a padronização, não uma recomendação automática de teste.</p>
+</section>
+</section>
+<section id="do-valor-de-p-à-decisão" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Do valor de p à decisão</h1>
+<p>Calculado o valor de p, muitos contextos exigem uma decisão explícita. O nível de significância <span class="math inline">\(\alpha\)</span> é o risco máximo de erro tipo I aceito antes da análise. Com <span class="math inline">\(\alpha=0,05\)</span>, usamos a regra:</p>
+<ul>
+<li>se <span class="math inline">\(p\le\alpha\)</span>, rejeitamos <span class="math inline">\(H_0\)</span>;</li>
+<li>se <span class="math inline">\(p&gt;\alpha\)</span>, não rejeitamos <span class="math inline">\(H_0\)</span>.</li>
+</ul>
+<p>Não rejeitar não significa aceitar ou provar <span class="math inline">\(H_0\)</span>. Significa apenas que a estatística observada não foi suficientemente incompatível com o modelo nulo, dada a precisão disponível. O valor de p é uma medida contínua de compatibilidade e não muda de natureza ao cruzar 0,05.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situação calculada</th>
+<th>Decisão formal</th>
+<th>Formulação adequada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p\le\alpha\)</span></td>
+<td>rejeitar <span class="math inline">\(H_0\)</span></td>
+<td>dados pouco compatíveis com o modelo nulo</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p&gt;\alpha\)</span></td>
+<td>não rejeitar <span class="math inline">\(H_0\)</span></td>
+<td>evidência insuficiente para rejeitar o modelo nulo</td>
+</tr>
+</tbody>
+</table>
+<p>Evite “aceitar <span class="math inline">\(H_0\)</span>”, “provar <span class="math inline">\(H_A\)</span>” e “não existe diferença”. Um teste pode deixar de rejeitar porque o efeito é realmente nulo, porque a amostra é pequena, porque a variabilidade é alta ou porque o modelo e a estatística são pouco sensíveis ao efeito existente.</p>
+<p>O valor de p também não mede a magnitude ou a relevância do efeito. Uma diferença minúscula pode produzir valor de p pequeno em uma amostra enorme; uma diferença biologicamente importante pode permanecer incerta em uma amostra pequena. Por isso estimativa, intervalo de confiança, unidade de medida e contexto devem acompanhar a decisão. Um relato informativo reúne diferença estimada, unidade, intervalo de confiança, estatística, graus de liberdade quando houver, valor de p e descrição do delineamento. A decisão binária é apenas uma parte dessa evidência.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="A distribuição nula não é fixa">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -434,6 +604,19 @@ Figura&nbsp;1: Cinco mil diferenças entre médias de dois grupos gerados pelo m
 <p>Com menos placas por grupo, o acaso produz diferenças maiores com facilidade e a distribuição nula fica mais larga. Com mais placas, ela se estreita. A mesma diferença de 1,4 cm pode ser banal em um experimento e rara em outro.</p>
 </div>
 </div>
+</section>
+<section id="uma-receita-que-serve-para-qualquer-comparação" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Uma receita que serve para qualquer comparação</h1>
+<p>Vale reparar no que foi feito aqui, porque o procedimento se repete em praticamente toda a estatística aplicada. Escrevemos o cenário sem efeito como um processo gerador de dados. Executamos esse processo muitas vezes. Olhamos onde o resultado observado cai dentro do que o acaso produz. Contamos.</p>
+<p>Nenhuma fórmula apareceu nas três primeiras etapas, e nenhuma foi necessária. As fórmulas dos testes clássicos existem porque, antes dos computadores, simular cinco mil experimentos era impossível. Elas chegam ao mesmo lugar por um atalho matemático, e é por isso que o teste Z da seção anterior e o histograma simulado respondem à mesma pergunta.</p>
+<p>Essa é a razão pela qual vale a pena entender o modelo nulo como uma receita, e não como uma tabela de valores críticos. Diante de um delineamento novo, para o qual nenhuma fórmula pronta se aplica, ainda é possível escrever o processo que geraria os dados na ausência de efeito, executá-lo e contar. A diferença de 1,4 cm do início não ganhou nem perdeu importância nesta leitura: ela apenas passou a ser lida contra o que o acaso, naquele experimento específico, é capaz de produzir sozinho.</p>
+</section>
+<section id="para-saber-mais" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/fundamentos-probabilidade/probabilidade-condicional.html" target="_blank">Probabilidade condicional</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/fundamentos-probabilidade/teorema-bayes.html" target="_blank">Teorema de Bayes</a> (MEAD), que formaliza por que <span class="math inline">\(P(\text{dados}\mid H_0)\)</span> e <span class="math inline">\(P(H_0\mid \text{dados})\)</span> são quantidades diferentes.</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -447,21 +630,6 @@ Figura&nbsp;1: Cinco mil diferenças entre médias de dois grupos gerados pelo m
 <ul>
 <li>Uma simulação de 5000 repetições devolve 40 resultados tão extremos quanto o observado. Qual é o valor de p, e como você o descreveria em uma frase para quem não estudou estatística?</li>
 <li>Se a hipótese nula é uma receita que escrevemos, o que aconteceria com o valor de p caso escolhêssemos um desvio-padrão maior ao escrevê-la?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html" target="_blank">Introdução ao teste de hipóteses</a> (MEAD)</li>
 </ul>
 </div>
 </div>

@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -80,6 +115,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -305,10 +369,18 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#uma-reta-e-depois-duas" id="toc-uma-reta-e-depois-duas" class="nav-link active" data-scroll-target="#uma-reta-e-depois-duas"><span class="header-section-number">1</span> Uma reta, e depois duas</a></li>
-  <li><a href="#três-cenários-e-só-três" id="toc-três-cenários-e-só-três" class="nav-link" data-scroll-target="#três-cenários-e-só-três"><span class="header-section-number">2</span> Três cenários, e só três</a></li>
-  <li><a href="#por-que-o-terceiro-caso-é-diferente-dos-outros" id="toc-por-que-o-terceiro-caso-é-diferente-dos-outros" class="nav-link" data-scroll-target="#por-que-o-terceiro-caso-é-diferente-dos-outros"><span class="header-section-number">3</span> Por que o terceiro caso é diferente dos outros</a></li>
-  <li><a href="#como-distinguir-os-três-casos" id="toc-como-distinguir-os-três-casos" class="nav-link" data-scroll-target="#como-distinguir-os-três-casos"><span class="header-section-number">4</span> Como distinguir os três casos</a></li>
-  <li><a href="#dois-cuidados-ao-olhar-o-gráfico" id="toc-dois-cuidados-ao-olhar-o-gráfico" class="nav-link" data-scroll-target="#dois-cuidados-ao-olhar-o-gráfico"><span class="header-section-number">5</span> Dois cuidados ao olhar o gráfico</a></li>
+  <li><a href="#três-cenários-e-só-três" id="toc-três-cenários-e-só-três" class="nav-link" data-scroll-target="#três-cenários-e-só-três"><span class="header-section-number">2</span> Três cenários, e só três</a>
+  <ul class="collapse">
+  <li><a href="#por-que-o-terceiro-caso-é-diferente-dos-outros" id="toc-por-que-o-terceiro-caso-é-diferente-dos-outros" class="nav-link" data-scroll-target="#por-que-o-terceiro-caso-é-diferente-dos-outros"><span class="header-section-number">2.1</span> Por que o terceiro caso é diferente dos outros</a></li>
+  </ul></li>
+  <li><a href="#distinguir-os-três-casos-não-é-comparar-números" id="toc-distinguir-os-três-casos-não-é-comparar-números" class="nav-link" data-scroll-target="#distinguir-os-três-casos-não-é-comparar-números"><span class="header-section-number">3</span> Distinguir os três casos não é comparar números</a></li>
+  <li><a href="#uma-equação-contém-as-duas-retas" id="toc-uma-equação-contém-as-duas-retas" class="nav-link" data-scroll-target="#uma-equação-contém-as-duas-retas"><span class="header-section-number">4</span> Uma equação contém as duas retas</a>
+  <ul class="collapse">
+  <li><a href="#comparar-dois-modelos-aninhados" id="toc-comparar-dois-modelos-aninhados" class="nav-link" data-scroll-target="#comparar-dois-modelos-aninhados"><span class="header-section-number">4.1</span> Comparar dois modelos aninhados</a></li>
+  </ul></li>
+  <li><a href="#a-diferença-entre-grupos-é-uma-função" id="toc-a-diferença-entre-grupos-é-uma-função" class="nav-link" data-scroll-target="#a-diferença-entre-grupos-é-uma-função"><span class="header-section-number">5</span> A diferença entre grupos é uma função</a></li>
+  <li><a href="#dois-cuidados-ao-olhar-o-gráfico" id="toc-dois-cuidados-ao-olhar-o-gráfico" class="nav-link" data-scroll-target="#dois-cuidados-ao-olhar-o-gráfico"><span class="header-section-number">6</span> Dois cuidados ao olhar o gráfico</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -337,7 +409,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -363,12 +435,12 @@ ul.task-list li input[type="checkbox"] {
 <p>Duas retas podem se relacionar de três maneiras, e vale saber reconhecê-las antes de olhar qualquer saída de modelo.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-retas-tres-cenarios" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três painéis lado a lado. No primeiro as duas retas se sobrepõem; no segundo são paralelas e deslocadas verticalmente; no terceiro partem do mesmo lugar e divergem, com uma subindo mais rápido que a outra.">
+<div id="fig-tres-cenarios" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três painéis lado a lado. No primeiro as duas retas se sobrepõem; no segundo são paralelas e deslocadas verticalmente; no terceiro partem do mesmo lugar e divergem, com uma subindo mais rápido que a outra.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-retas-tres-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-retas-paralelas_files/figure-html/fig-retas-tres-cenarios-1.png" class="img-fluid figure-img" alt="Três painéis lado a lado. No primeiro as duas retas se sobrepõem; no segundo são paralelas e deslocadas verticalmente; no terceiro partem do mesmo lugar e divergem, com uma subindo mais rápido que a outra." width="672">
+<div aria-describedby="fig-tres-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-retas-paralelas_files/figure-html/fig-tres-cenarios-1.png" class="img-fluid figure-img" alt="Três painéis lado a lado. No primeiro as duas retas se sobrepõem; no segundo são paralelas e deslocadas verticalmente; no terceiro partem do mesmo lugar e divergem, com uma subindo mais rápido que a outra." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-retas-tres-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tres-cenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Três relações possíveis entre dois grupos. Em todos os painéis os dados foram gerados com a mesma variação em torno das retas.
 </figcaption>
 </figure>
@@ -378,10 +450,9 @@ Figura&nbsp;1: Três relações possíveis entre dois grupos. Em todos os painé
 <p><strong>Uma reta só.</strong> Os dois meses seguem a mesma relação. O mês não acrescenta informação: saber o comprimento de um indivíduo basta para prever a sua biomassa, venha ele de fevereiro ou de abril.</p>
 <p><strong>Interceptos diferentes, mesma inclinação.</strong> As retas são paralelas. A biomassa cresce com o comprimento na mesma taxa nos dois meses, mas um deles está sistematicamente acima do outro. A distância vertical entre as retas é a mesma em qualquer comprimento, e por isso pode ser resumida em um número: é o <strong>efeito do mês</strong>.</p>
 <p><strong>Inclinações diferentes.</strong> As retas divergem. O quanto a biomassa aumenta por milímetro depende do mês, e a distância entre as retas muda ao longo do eixo. Isso é uma <strong>interação</strong> entre a covariável e o grupo.</p>
-</section>
-<section id="por-que-o-terceiro-caso-é-diferente-dos-outros" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Por que o terceiro caso é diferente dos outros</h1>
-<p>Nos dois primeiros cenários existe uma frase única e verdadeira sobre o mês. No terceiro, não.</p>
+<section id="por-que-o-terceiro-caso-é-diferente-dos-outros" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="por-que-o-terceiro-caso-é-diferente-dos-outros"><span class="header-section-number">2.1</span> Por que o terceiro caso é diferente dos outros</h2>
+<p>Os dois primeiros cenários admitem uma frase única e verdadeira sobre o mês. O terceiro não.</p>
 <p>Olhe o painel da direita. Nos indivíduos pequenos as duas retas quase se tocam; nos grandes, estão bem separadas. Dizer “abril tem biomassa maior” é verdade em uma parte da faixa e quase falso na outra.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Com inclinações diferentes, a diferença precisa de endereço">
 <div class="callout-header d-flex align-content-center">
@@ -398,9 +469,10 @@ Figura&nbsp;1: Três relações possíveis entre dois grupos. Em todos os painé
 </div>
 </div>
 </section>
-<section id="como-distinguir-os-três-casos" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Como distinguir os três casos</h1>
-<p>O caminho mais direto é ajustar uma reta em cada grupo e comparar os coeficientes: dois interceptos e duas inclinações, quatro números.</p>
+</section>
+<section id="distinguir-os-três-casos-não-é-comparar-números" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Distinguir os três casos não é comparar números</h1>
+<p>Reconhecer os cenários em um gráfico feito para ilustrá-los é fácil. Com dados reais, o caminho mais direto parece ser ajustar uma reta em cada grupo e comparar os coeficientes: dois interceptos e duas inclinações, quatro números.</p>
 <p>Só que dois números estimados quase nunca são exatamente iguais, mesmo quando as retas verdadeiras são as mesmas. A comparação, portanto, não é entre os valores, e sim entre a diferença observada e a incerteza de cada estimativa.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
@@ -416,11 +488,164 @@ Figura&nbsp;1: Três relações possíveis entre dois grupos. Em todos os painé
 <p>Se cada uma vier com um intervalo de confiança que cobre folgadamente a outra, os dados não distinguem os dois meses, e insistir em duas retas é descrever o ruído.</p>
 </div>
 </div>
+<p>Comparar quatro coeficientes de dois ajustes separados também desperdiça informação, porque cada ajuste estima sua própria variação residual a partir de metade dos dados. A solução é escrever um único modelo que contenha os três cenários como casos particulares.</p>
 </section>
-<section id="dois-cuidados-ao-olhar-o-gráfico" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Dois cuidados ao olhar o gráfico</h1>
+<section id="uma-equação-contém-as-duas-retas" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Uma equação contém as duas retas</h1>
+<p>Defina <span class="math inline">\(G=0\)</span> para fevereiro e <span class="math inline">\(G=1\)</span> para abril. O modelo completo é</p>
+<p><span class="math display">\[
+Y=\beta_0+\beta_1X+\beta_2G+\beta_3XG+\varepsilon.
+\]</span></p>
+<p>Para fevereiro, <span class="math inline">\(G=0\)</span> e a reta é</p>
+<p><span class="math display">\[
+E(Y\mid X,G=0)=\beta_0+\beta_1X.
+\]</span></p>
+<p>Para abril, <span class="math inline">\(G=1\)</span> e a reta se torna</p>
+<p><span class="math display">\[
+E(Y\mid X,G=1)=(\beta_0+\beta_2)+(\beta_1+\beta_3)X.
+\]</span></p>
+<p>Portanto:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> é o intercepto de fevereiro;</li>
+<li><span class="math inline">\(\beta_1\)</span> é a inclinação de fevereiro;</li>
+<li><span class="math inline">\(\beta_2\)</span> é a diferença entre meses quando <span class="math inline">\(X=0\)</span>;</li>
+<li><span class="math inline">\(\beta_3\)</span> é a diferença entre as inclinações.</li>
+</ul>
+<p>O produto <span class="math inline">\(XG\)</span> é a interação, e os três cenários correspondem a três configurações desses coeficientes: uma reta só quando <span class="math inline">\(\beta_2=\beta_3=0\)</span>; retas paralelas quando apenas <span class="math inline">\(\beta_3=0\)</span>; inclinações diferentes quando <span class="math inline">\(\beta_3\ne0\)</span>. Testar <span class="math inline">\(H_0:\beta_3=0\)</span> pergunta, então, se as retas podem ser consideradas paralelas.</p>
+<p>Um detalhe da parametrização merece cuidado. Quando <span class="math inline">\(X=0\)</span> está fora dos dados, <span class="math inline">\(\beta_2\)</span> compara grupos em um ponto sem apoio empírico, e nas conchas medidas entre 14 e 30 mm um comprimento zero não existe. Podemos centralizar o comprimento em um valor relevante <span class="math inline">\(c\)</span>, usando <span class="math inline">\(X_c=X-c\)</span>. A inclinação e os valores ajustados não mudam, mas <span class="math inline">\(\beta_2\)</span> passa a representar a diferença entre meses em <span class="math inline">\(X=c\)</span>.</p>
+<section id="comparar-dois-modelos-aninhados" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="comparar-dois-modelos-aninhados"><span class="header-section-number">4.1</span> Comparar dois modelos aninhados</h2>
+<p>Escrito assim, o modelo de retas paralelas é o modelo completo com <span class="math inline">\(\beta_3=0\)</span>. Os dois são <strong>aninhados</strong>, e a comparação entre eles avalia se permitir outra inclinação reduz a variação residual mais do que seria esperado pela incerteza. No R, a diferença está no operador da fórmula.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver os modelos de uma e duas inclinações</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dados_interacao <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mes =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"fevereiro"</span>, <span class="st">"abril"</span>), <span class="at">each =</span> <span class="dv">80</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"fevereiro"</span>, <span class="st">"abril"</span>)),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">comprimento =</span> <span class="fu">runif</span>(<span class="dv">160</span>, <span class="dv">14</span>, <span class="dv">30</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">biomassa =</span> <span class="sc">-</span><span class="fl">1.2</span> <span class="sc">+</span> <span class="fu">if_else</span>(mes <span class="sc">==</span> <span class="st">"abril"</span>, <span class="fl">0.16</span>, <span class="fl">0.07</span>) <span class="sc">*</span> comprimento <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(<span class="dv">160</span>, <span class="dv">0</span>, <span class="fl">0.15</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento_c =</span> comprimento <span class="sc">-</span> <span class="dv">22</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>modelo_paralelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento_c <span class="sc">+</span> mes, <span class="at">data =</span> dados_interacao)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>modelo_interacao <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento_c <span class="sc">*</span> mes, <span class="at">data =</span> dados_interacao)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(modelo_paralelo, modelo_interacao)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: biomassa ~ comprimento_c + mes
+Model 2: biomassa ~ comprimento_c * mes
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    157 9.8122                                  
+2    156 2.7668  1    7.0453 397.23 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Como os dados foram gerados com inclinações realmente diferentes, a comparação favorece o modelo com interação: nesta execução a diferença de inclinações estimada foi 0,092 g por milímetro, com valor de p igual a &lt;0.001 na comparação entre os dois modelos.</p>
+<p>Centralizar em 22 mm permite ler os quatro coeficientes diretamente:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Coeficiente</th>
+<th style="text-align: right;">Fevereiro</th>
+<th style="text-align: right;">Abril</th>
+<th>Interpretação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Intercepto</td>
+<td style="text-align: right;"><span class="math inline">\(\beta_0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\beta_0+\beta_2\)</span></td>
+<td>biomassa esperada em 22 mm</td>
+</tr>
+<tr class="even">
+<td>Inclinação</td>
+<td style="text-align: right;"><span class="math inline">\(\beta_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\beta_1+\beta_3\)</span></td>
+<td>mudança por milímetro</td>
+</tr>
+<tr class="odd">
+<td>Diferença em 22 mm</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="math inline">\(\beta_2\)</span></td>
+<td>abril menos fevereiro</td>
+</tr>
+<tr class="even">
+<td>Diferença de inclinações</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><span class="math inline">\(\beta_3\)</span></td>
+<td>quanto a inclinação de abril difere</td>
+</tr>
+</tbody>
+</table>
+<p>Mudar o centro para 25 mm altera <span class="math inline">\(\beta_0\)</span> e <span class="math inline">\(\beta_2\)</span>, mas não altera inclinações, interação, previsões ou resíduos. Interceptos são coordenadas dependentes da origem; a geometria ajustada é a mesma.</p>
+<p>Vale ainda uma ressalva sobre a leitura do teste. Não rejeitar a interação não prova inclinações idênticas: significa que a precisão disponível não justifica a complexidade adicional. Por isso convém examinar também o intervalo de <span class="math inline">\(\beta_3\)</span>, os resíduos e a relevância biológica da diferença de inclinações. Se diferenças pequenas de inclinação forem importantes, o estudo precisa de faixa adequada de <span class="math inline">\(X\)</span> e replicação suficiente para distingui-las.</p>
+</section>
+</section>
+<section id="a-diferença-entre-grupos-é-uma-função" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> A diferença entre grupos é uma função</h1>
+<p>Quando há interação, a pergunta “qual é a diferença entre os meses?” não tem resposta única, e a equação mostra por quê. Subtraindo as duas retas, obtemos</p>
+<p><span class="math display">\[
+\Delta(X)=E(Y\mid X,G=1)-E(Y\mid X,G=0)=\beta_2+\beta_3X.
+\]</span></p>
+<p>Com retas paralelas, <span class="math inline">\(\beta_3=0\)</span> e a diferença é constante, o que devolve o número único do segundo cenário. Com interação, <span class="math inline">\(\Delta\)</span> é uma função do comprimento, e estimativas e intervalos devem ser apresentados em valores de <span class="math inline">\(X\)</span> cientificamente relevantes e sustentados pelos dois grupos. Uma figura da diferença estimada ao longo de <span class="math inline">\(X\)</span> costuma ser mais informativa que quatro coeficientes isolados.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diferenca-condicional" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curva crescente da diferença entre meses com faixa de incerteza. Uma linha horizontal em zero permite ver em quais comprimentos os dados distinguem os grupos.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diferenca-condicional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-retas-paralelas_files/figure-html/fig-diferenca-condicional-1.png" class="img-fluid figure-img" alt="Curva crescente da diferença entre meses com faixa de incerteza. Uma linha horizontal em zero permite ver em quais comprimentos os dados distinguem os grupos." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diferenca-condicional-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Diferença estimada entre abril e fevereiro ao longo do comprimento. A faixa é o intervalo de confiança de 95%, calculado apenas no suporte comum.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A linha central é <span class="math inline">\(\hat\Delta(X)\)</span> e a faixa é o seu intervalo de confiança, calculado apenas na região de comprimentos observada nos dois meses. Onde a faixa cruza a linha do zero, os dados não distinguem os meses; onde ela fica inteiramente acima, distinguem. Uma única frase sobre “a diferença entre os meses” perderia justamente essa informação. O intervalo apresentado incorpora simultaneamente a incerteza dos interceptos, das inclinações e a covariância entre os coeficientes, o que é diferente de somar intervalos calculados separadamente para cada reta.</p>
+</section>
+<section id="dois-cuidados-ao-olhar-o-gráfico" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Dois cuidados ao olhar o gráfico</h1>
+<p>Duas situações produzem gráficos que parecem indicar interação sem que ela exista, e ambas dizem respeito a onde os dados foram coletados, não a como foram analisados.</p>
 <p><strong>Faixas que não se sobrepõem.</strong> Se um mês só tem conchas pequenas e o outro só grandes, as duas retas se apoiam em regiões diferentes do eixo. Elas podem parecer muito distintas sem que exista nenhuma diferença real na faixa em que ambos foram observados.</p>
 <p><strong>Poucos pontos nos extremos.</strong> A inclinação estimada é muito sensível aos pontos das pontas. Alguns indivíduos isolados no extremo direito podem girar a reta inteira e criar uma divergência que some ao coletar mais dados.</p>
+<p>A figura seguinte mostra a primeira situação em sua forma mais enganosa: todos os indivíduos seguem uma única relação curva, mas cada mês ocupa um trecho diferente dela.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-suporte" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Pontos de um grupo aparecem no início de uma curva e os do outro no final. Retas ajustadas separadamente têm inclinações diferentes, embora todos os pontos pertençam à mesma curva.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-suporte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-retas-paralelas_files/figure-html/fig-suporte-1.png" class="img-fluid figure-img" alt="Pontos de um grupo aparecem no início de uma curva e os do outro no final. Retas ajustadas separadamente têm inclinações diferentes, embora todos os pontos pertençam à mesma curva." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-suporte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Dois grupos seguem a mesma curva, mas ocupam faixas diferentes. Retas separadas sugerem interação porque extrapolam partes distintas de uma relação não linear.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As duas retas têm inclinações claramente diferentes, e nenhum molusco se comportou de maneira distinta por ter sido coletado em abril. O problema não é resolvido por um valor de p para a interação: sem suporte comum, diferença de inclinações, curvatura e diferença entre grupos competem como explicações do mesmo padrão. Coletar os dois meses ao longo da mesma faixa de comprimento é parte do delineamento necessário para responder à pergunta.</p>
+<p>A pergunta inicial admitia apenas três respostas, e todas elas cabem em uma única equação com quatro coeficientes. O que decide entre elas não é a aparência do gráfico, e sim a comparação entre a diferença estimada e a incerteza que a acompanha, avaliada na faixa em que os dois grupos foram efetivamente observados. Quando as retas são paralelas, o efeito do grupo vira um número; quando não são, ele vira uma função, e informá-lo sem endereço deixa de ser uma simplificação para se tornar um erro.</p>
+</section>
+<section id="para-saber-mais" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD), para modelos com mais de um preditor e combinações de termos aditivos e de interação.</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -434,22 +659,6 @@ Figura&nbsp;1: Três relações possíveis entre dois grupos. Em todos os painé
 <ul>
 <li>Se as duas retas forem paralelas, a distância vertical entre elas é a mesma em qualquer comprimento. Isso significa que a <strong>razão</strong> entre as duas biomassas também é a mesma?</li>
 <li>Um estudo relata que os dois meses têm inclinações diferentes, mas as faixas de comprimento quase não se sobrepõem. Que dúvida isso levanta sobre a conclusão?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html" target="_blank">Regressão linear simples</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD)</li>
 </ul>
 </div>
 </div>

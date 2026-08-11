@@ -387,7 +387,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Médias que variam e intervalos que cobrem</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
-<p class="subtitle lead">Prática em R</p>
+<p class="subtitle lead">Prática em R 03</p>
 </div>
 
 
@@ -405,7 +405,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -440,20 +440,20 @@ window.Quarto = {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(amostra, <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 5.50 5.70 4.90 5.20 6.12 3.40 4.93 4.29 4.93 5.24 5.82 5.53 5.65 6.00 5.14
-[16] 5.82 5.01 5.53 4.19 5.54</code></pre>
+<pre><code> [1] 2.86 4.01 4.38 4.38 3.49 3.72 4.92 2.84 5.57 4.14 5.69 4.54 5.85 6.51 4.91
+[16] 5.50 4.81 5.73 6.26 5.55</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>media_amostra <span class="ot">&lt;-</span> <span class="fu">mean</span>(amostra)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>media_amostra</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.222004</code></pre>
+<pre><code>[1] 4.783406</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(amostra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6687456</code></pre>
+<pre><code>[1] 1.061442</code></pre>
 </div>
 </div>
-<p>Nesta coleta, a média observada foi 5,22 cm, não exatamente 5. E não deveria ser: são 20 mexilhões sorteados, não o costão inteiro.</p>
+<p>Nesta coleta, a média observada foi 4,78 cm, não exatamente 5. E não deveria ser: são 20 mexilhões sorteados, não o costão inteiro.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Modifique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -481,7 +481,7 @@ window.Quarto = {
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(medias, <span class="dv">5</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.151746 5.187217 5.011013 5.073763 5.102200</code></pre>
+<pre><code>[1] 4.583934 4.693095 4.872793 4.883494 5.182620</code></pre>
 </div>
 </div>
 <p>O objeto <code>medias</code> guarda duas mil médias, cada uma vinda de uma coleta independente de 20 mexilhões.</p>
@@ -506,11 +506,11 @@ Figura&nbsp;1: Duas mil médias amostrais, cada uma calculada a partir de 20 mex
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.002802</code></pre>
+<pre><code>[1] 5.000828</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2230089</code></pre>
+<pre><code>[1] 0.228364</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
@@ -571,9 +571,9 @@ Figura&nbsp;2: Distribuição das médias amostrais para três tamanhos de amost
 <pre><code># A tibble: 3 × 3
   tamanho centro espalhamento
   &lt;fct&gt;    &lt;dbl&gt;        &lt;dbl&gt;
-1 n = 5     5.02        0.451
-2 n = 20    4.99        0.224
-3 n = 100   5.00        0.101</code></pre>
+1 n = 5     5.01       0.443 
+2 n = 20    5.00       0.225 
+3 n = 100   5.00       0.0999</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Interprete">
@@ -599,7 +599,7 @@ Figura&nbsp;2: Distribuição das médias amostrais para três tamanhos de amost
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(amostra) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>erro_padrao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1495361</code></pre>
+<pre><code>[1] 0.2373456</code></pre>
 </div>
 </div>
 <p>Compare esse valor com o <code>sd(medias)</code> calculado lá atrás, que veio de duas mil coletas. Uma amostra só conseguiu estimar razoavelmente bem a variação de um procedimento que nunca foi repetido.</p>
@@ -618,7 +618,7 @@ Figura&nbsp;2: Distribuição das médias amostrais para três tamanhos de amost
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(inferior, superior)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.909021 5.534986</code></pre>
+<pre><code>[1] 4.286636 5.280176</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
@@ -631,7 +631,7 @@ Figura&nbsp;2: Distribuição das médias amostrais para três tamanhos de amost
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O intervalo desta amostra vai de 4,91 a 5,53 cm, e <strong>contém</strong> o valor real de 5 cm.</p>
+<p>O intervalo desta amostra vai de 4,29 a 5,28 cm, e <strong>contém</strong> o valor real de 5 cm.</p>
 <p>Isso não prova nada sobre o método: diz apenas o que aconteceu desta vez. Para julgar o método, é preciso repeti-lo muitas vezes.</p>
 </div>
 </div>
@@ -665,11 +665,11 @@ Figura&nbsp;2: Distribuição das médias amostrais para três tamanhos de amost
 <pre><code># A tibble: 2 × 2
   cobre     n
   &lt;fct&gt; &lt;int&gt;
-1 sim     191
-2 não       9</code></pre>
+1 sim     193
+2 não       7</code></pre>
 </div>
 </div>
-<p>Nesta execução, 95,5% dos 200 intervalos contêm o valor real. Os demais, não. O valor oscila em torno de 95% a cada nova execução, e é essa a taxa de acerto que o “95%” do nome promete.</p>
+<p>Nesta execução, 96,5% dos 200 intervalos contêm o valor real. Os demais, não. O valor oscila em torno de 95% a cada nova execução, e é essa a taxa de acerto que o “95%” do nome promete.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">head</span>(intervalos, <span class="dv">50</span>), <span class="fu">aes</span>(<span class="at">y =</span> id, <span class="at">x =</span> media, <span class="at">colour =</span> cobre)) <span class="sc">+</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_real, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
@@ -1220,7 +1220,7 @@ Figura&nbsp;3: Os primeiros 50 intervalos de confiança. A linha vertical é o v
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Médias que variam e intervalos que cobrem"</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R"</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 03"</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>

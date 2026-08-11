@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -335,9 +370,16 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#você-tem-uma-amostra-não-duas-mil" id="toc-você-tem-uma-amostra-não-duas-mil" class="nav-link active" data-scroll-target="#você-tem-uma-amostra-não-duas-mil"><span class="header-section-number">1</span> Você tem uma amostra, não duas mil</a></li>
   <li><a href="#o-erro-padrão" id="toc-o-erro-padrão" class="nav-link" data-scroll-target="#o-erro-padrão"><span class="header-section-number">2</span> O erro padrão</a></li>
-  <li><a href="#de-um-número-para-um-intervalo" id="toc-de-um-número-para-um-intervalo" class="nav-link" data-scroll-target="#de-um-número-para-um-intervalo"><span class="header-section-number">3</span> De um número para um intervalo</a></li>
+  <li><a href="#de-um-número-para-um-intervalo" id="toc-de-um-número-para-um-intervalo" class="nav-link" data-scroll-target="#de-um-número-para-um-intervalo"><span class="header-section-number">3</span> De um número para um intervalo</a>
+  <ul class="collapse">
+  <li><a href="#por-que-aparece-a-distribuição-t" id="toc-por-que-aparece-a-distribuição-t" class="nav-link" data-scroll-target="#por-que-aparece-a-distribuição-t"><span class="header-section-number">3.1</span> Por que aparece a distribuição t?</a></li>
+  <li><a href="#o-cálculo-termo-a-termo" id="toc-o-cálculo-termo-a-termo" class="nav-link" data-scroll-target="#o-cálculo-termo-a-termo"><span class="header-section-number">3.2</span> O cálculo, termo a termo</a></li>
+  <li><a href="#compatibilidade-e-intervalos-unilaterais" id="toc-compatibilidade-e-intervalos-unilaterais" class="nav-link" data-scroll-target="#compatibilidade-e-intervalos-unilaterais"><span class="header-section-number">3.3</span> Compatibilidade e intervalos unilaterais</a></li>
+  </ul></li>
   <li><a href="#o-que-os-95-prometem" id="toc-o-que-os-95-prometem" class="nav-link" data-scroll-target="#o-que-os-95-prometem"><span class="header-section-number">4</span> O que os 95% prometem</a></li>
-  <li><a href="#por-que-informar-o-intervalo-muda-a-leitura-de-um-resultado" id="toc-por-que-informar-o-intervalo-muda-a-leitura-de-um-resultado" class="nav-link" data-scroll-target="#por-que-informar-o-intervalo-muda-a-leitura-de-um-resultado"><span class="header-section-number">5</span> Por que informar o intervalo muda a leitura de um resultado</a></li>
+  <li><a href="#o-que-determina-a-largura" id="toc-o-que-determina-a-largura" class="nav-link" data-scroll-target="#o-que-determina-a-largura"><span class="header-section-number">5</span> O que determina a largura</a></li>
+  <li><a href="#quando-o-procedimento-é-confiável" id="toc-quando-o-procedimento-é-confiável" class="nav-link" data-scroll-target="#quando-o-procedimento-é-confiável"><span class="header-section-number">6</span> Quando o procedimento é confiável</a></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -366,7 +408,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -412,7 +454,62 @@ window.Quarto = {
 <p>Se a média de uma amostra quase nunca acerta o valor da população, informar só a média é informar pouco. É mais honesto informar uma <strong>faixa</strong> de valores compatíveis com o que foi observado.</p>
 <p>É isso que faz um <strong>intervalo de confiança</strong>: em vez de “a média é 4,9 cm”, ele diz algo como “a média está entre 4,5 e 5,3 cm”. O intervalo se constrói a partir da média e do erro padrão,</p>
 <p><span class="math display">\[\bar{x} \pm t \times EP\]</span></p>
-<p>e portanto encolhe quando a amostra cresce e alarga quando os indivíduos variam mais. O multiplicador <span class="math inline">\(t\)</span> depende do nível de confiança escolhido e do tamanho da amostra.</p>
+<p>e portanto encolhe quando a amostra cresce e alarga quando os indivíduos variam mais. Falta explicar de onde sai o multiplicador <span class="math inline">\(t\)</span>, que depende do nível de confiança escolhido e do tamanho da amostra.</p>
+<section id="por-que-aparece-a-distribuição-t" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="por-que-aparece-a-distribuição-t"><span class="header-section-number">3.1</span> Por que aparece a distribuição t?</h2>
+<p>Se o desvio-padrão populacional <span class="math inline">\(\sigma\)</span> fosse conhecido, a média padronizada seguiria a distribuição normal e o intervalo seria <span class="math inline">\(\bar{x}\pm z_{1-\alpha/2}\sigma/\sqrt n\)</span>. Essa situação é rara em estudos novos. Na prática substituímos <span class="math inline">\(\sigma\)</span> pelo desvio-padrão amostral <span class="math inline">\(s\)</span>, e essa segunda estimativa introduz uma incerteza adicional, sobretudo em amostras pequenas. Usar <span class="math inline">\(z\)</span> enquanto se substitui <span class="math inline">\(\sigma\)</span> por <span class="math inline">\(s\)</span> ignora essa incerteza e produz intervalos estreitos demais.</p>
+<p>A distribuição <strong>t de Student</strong> existe justamente para incorporá-la, por meio de caudas mais largas que as da normal. Para uma amostra de <span class="math inline">\(n\)</span> unidades, os graus de liberdade são <span class="math inline">\(gl=n-1\)</span>. Perdemos um grau de liberdade porque os desvios em relação à média amostral precisam somar zero. Com poucos graus de liberdade, o valor crítico t é maior e o intervalo fica mais largo. Conforme <span class="math inline">\(n\)</span> cresce, <span class="math inline">\(s\)</span> se estabiliza e a distribuição t se aproxima da normal.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-normal-t" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curvas simétricas centradas em zero. A t com três graus de liberdade tem pico mais baixo e caudas mais largas; com dez e trinta graus de liberdade aproxima-se da curva normal.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-erro-padrao-intervalo_files/figure-html/fig-normal-t-1.png" class="img-fluid figure-img" alt="Curvas simétricas centradas em zero. A t com três graus de liberdade tem pico mais baixo e caudas mais largas; com dez e trinta graus de liberdade aproxima-se da curva normal." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Densidades normal padrão e t de Student. Com poucos graus de liberdade, a t concentra mais probabilidade nas caudas.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A curva com três graus de liberdade tem pico mais baixo e caudas mais pesadas; com trinta, já é quase indistinguível da normal. Convém lembrar que uma densidade não atribui probabilidade a um ponto isolado: probabilidades são áreas sob a curva. No intervalo bilateral, <span class="math inline">\(t_{1-\alpha/2,n-1}\)</span> deixa área <span class="math inline">\(\alpha/2\)</span> em cada cauda e área <span class="math inline">\(1-\alpha\)</span> entre os dois valores críticos.</p>
+<p>Com isso, a fórmula geral do intervalo bilateral de confiança <span class="math inline">\(100(1-\alpha)\%\)</span> para a média fica completa:</p>
+<p><span class="math display">\[
+\bar{x}\pm t_{1-\alpha/2,\,n-1}\frac{s}{\sqrt{n}}.
+\]</span></p>
+<p>O termo à direita de <span class="math inline">\(\bar{x}\)</span> é a <strong>margem de erro</strong>. Em 95% de confiança, <span class="math inline">\(\alpha=0,05\)</span> e cada cauda da distribuição fica com 0,025. A largura total do intervalo é duas vezes a margem de erro.</p>
+</section>
+<section id="o-cálculo-termo-a-termo" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="o-cálculo-termo-a-termo"><span class="header-section-number">3.2</span> O cálculo, termo a termo</h2>
+<p>Vale executar a fórmula uma vez de maneira explícita, porque cada linha do código corresponde a um dos elementos discutidos acima.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver o cálculo do intervalo em R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>comprimentos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.2</span>, <span class="fl">5.0</span>, <span class="fl">5.1</span>, <span class="fl">4.7</span>, <span class="fl">5.4</span>, <span class="fl">4.8</span>, <span class="fl">5.3</span>, <span class="fl">4.9</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(comprimentos)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fu">mean</span>(comprimentos)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>erro_padrao <span class="ot">&lt;-</span> <span class="fu">sd</span>(comprimentos) <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>critico <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">media =</span> media,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">inferior =</span> media <span class="sc">-</span> critico <span class="sc">*</span> erro_padrao,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">superior =</span> media <span class="sc">+</span> critico <span class="sc">*</span> erro_padrao</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   media inferior superior 
+4.925000 4.609805 5.240195 </code></pre>
+</div>
+</div>
+<p>Nesse exemplo, <span class="math inline">\(n=8\)</span> e <span class="math inline">\(gl=7\)</span>. O código calcula <span class="math inline">\(\bar x\)</span>, depois <span class="math inline">\(s/\sqrt n\)</span>, consulta o quantil de t e finalmente soma e subtrai a margem. O comando <code>t.test(comprimentos)$conf.int</code> aplica exatamente a mesma lógica; a conta manual é útil porque deixa visível o papel separado de variabilidade, tamanho amostral e nível de confiança. Alterar <code>0.975</code> para <code>0.95</code> produziria um intervalo bilateral de 90%, pois sobrariam 5% em cada cauda. Alterar apenas o número sem repensar a área é uma fonte comum de erro.</p>
+</section>
+<section id="compatibilidade-e-intervalos-unilaterais" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="compatibilidade-e-intervalos-unilaterais"><span class="header-section-number">3.3</span> Compatibilidade e intervalos unilaterais</h2>
+<p>Obtido o intervalo, resta saber o que ele afirma. Os valores dentro dele são aqueles que não entram em conflito forte com a amostra sob o modelo adotado. Isso não significa que todos sejam igualmente plausíveis nem que valores externos sejam impossíveis. A fronteira depende de uma convenção de cobertura, do erro padrão e dos pressupostos.</p>
+<p>Intervalos unilaterais respondem a perguntas diferentes. Um limite inferior de 95% usa <span class="math inline">\(\bar x-t_{0,95,n-1}EP\)</span> e se estende até infinito; ele é adequado quando apenas estabelecer um mínimo tem significado científico. A escolha entre unilateral e bilateral deve ocorrer antes de olhar os dados, não depois de observar em qual direção ficou a média.</p>
+</section>
 </section>
 <section id="o-que-os-95-prometem" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> O que os 95% prometem</h1>
@@ -420,19 +517,19 @@ window.Quarto = {
 <p>Para enxergar isso, vale fazer o que não se pode fazer na vida real: inventar um costão cujo comprimento médio sabemos ser exatamente 5 cm, repetir a coleta cem vezes e olhar os cem intervalos.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-intervalo-cobertura" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados.">
+<div id="fig-cobertura" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-intervalo-cobertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-erro-padrao-intervalo_files/figure-html/fig-intervalo-cobertura-1.png" class="img-fluid figure-img" alt="Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados." width="672">
+<div aria-describedby="fig-cobertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-erro-padrao-intervalo_files/figure-html/fig-cobertura-1.png" class="img-fluid figure-img" alt="Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervalo-cobertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Intervalos de 95% calculados em 100 amostras de 20 mexilhões cada. A linha vertical é a média real da população (5 cm). Em laranja, os intervalos que não a contêm.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cobertura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Intervalos de 95% calculados em 100 amostras de 20 mexilhões cada. A linha vertical é a média real da população (5 cm). Em laranja, os intervalos que não a contêm.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Nesta simulação, o número de intervalos que <strong>não</strong> contêm o valor real foi 7, de 100. Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população. É por isso que o procedimento se chama “intervalo de 95% de confiança”.</p>
+<p>Nesta simulação, o número de intervalos que <strong>não</strong> contêm o valor real foi 4, de 100. Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população. É por isso que o procedimento se chama “intervalo de 95% de confiança”.</p>
 <p>Os intervalos laranja não foram calculados de forma diferente dos azuis. Ninguém errou a medição neles. Eles são a fração de coletas que, pelo sorteio, caiu longe demais do centro.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="A confiança é do procedimento, não do intervalo">
 <div class="callout-header d-flex align-content-center">
@@ -448,11 +545,46 @@ Figura&nbsp;1: Intervalos de 95% calculados em 100 amostras de 20 mexilhões cad
 <p>Por isso a frase “há 95% de probabilidade de a média estar neste intervalo” não descreve o que foi calculado. O que se sabe é a taxa de acerto do método quando ele é usado repetidamente.</p>
 </div>
 </div>
+<p>Essa propriedade explica por que o intervalo merece ser informado junto com a média. Um intervalo estreito e um intervalo largo em torno do mesmo valor dizem coisas muito diferentes sobre o que o estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa apenas a estimativa pontual. Um intervalo largo não é um resultado ruim: é um resultado honesto sobre um estudo pequeno ou sobre uma população heterogênea. O que seria ruim é apresentar a média sozinha e deixar quem lê supor uma precisão que os dados não têm.</p>
 </section>
-<section id="por-que-informar-o-intervalo-muda-a-leitura-de-um-resultado" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Por que informar o intervalo muda a leitura de um resultado</h1>
-<p>Um intervalo estreito e um intervalo largo em torno da mesma média dizem coisas muito diferentes sobre o que o estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa só a média.</p>
-<p>Um intervalo largo não é um resultado ruim: é um resultado honesto sobre um estudo pequeno ou sobre uma população heterogênea. O que seria ruim é apresentar a média sozinha e deixar quem lê supor uma precisão que os dados não têm.</p>
+<section id="o-que-determina-a-largura" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> O que determina a largura</h1>
+<p>Se a largura carrega tanta informação, convém saber o que a controla. Há três maneiras de alterá-la. Aumentar o nível de confiança exige um valor crítico maior e alarga o intervalo. Aumentar a variabilidade <span class="math inline">\(s\)</span> aumenta o erro padrão. Aumentar <span class="math inline">\(n\)</span> estreita o intervalo, mas com retorno decrescente por causa de <span class="math inline">\(\sqrt{n}\)</span>.</p>
+<p>Essas três relações permitem inverter o problema e planejar a coleta. Se desejamos uma margem de erro máxima <span class="math inline">\(E\)</span> e temos uma estimativa prévia de <span class="math inline">\(\sigma\)</span>, um primeiro planejamento usa</p>
+<p><span class="math display">\[
+n\approx\left(\frac{z_{1-\alpha/2}\sigma}{E}\right)^2,
+\]</span></p>
+<p>arredondando sempre para cima. O valor de <span class="math inline">\(\sigma\)</span> pode vir de literatura comparável ou de um estudo piloto. A fórmula supõe observações independentes e funciona como ponto de partida; perdas, desenho por conglomerados e população finita precisam ser considerados no plano real.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-planejamento" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro curvas decrescentes. Maior desvio-padrão e maior confiança produzem margens mais altas; todas caem rapidamente no início e depois mais devagar.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-planejamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-erro-padrao-intervalo_files/figure-html/fig-planejamento-1.png" class="img-fluid figure-img" alt="Quatro curvas decrescentes. Maior desvio-padrão e maior confiança produzem margens mais altas; todas caem rapidamente no início e depois mais devagar." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-planejamento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Margem de erro planejada em função do tamanho da amostra para dois desvios-padrão e dois níveis de confiança.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Todas as curvas caem rapidamente no início e depois quase estacionam, o que mostra graficamente o retorno decrescente de <span class="math inline">\(\sqrt{n}\)</span>. Um exemplo numérico fecha o raciocínio: com <span class="math inline">\(\sigma=1{,}4\)</span> cm, confiança de 95% e margem desejada de 0,25 cm, a fórmula fornece <span class="math inline">\(n\approx(1{,}96\times1{,}4/0{,}25)^2=120{,}5\)</span>, portanto planejamos pelo menos 121 unidades. Se o estudo piloto tiver poucas unidades, sua estimativa de <span class="math inline">\(\sigma\)</span> também é incerta; uma escolha prudente usa valor conservador e acrescenta margem para perdas.</p>
+<p>Quando a amostra representa fração grande de uma população finita, a correção populacional pode reduzir o tamanho necessário. Em conglomerados, ocorre o contrário: a semelhança entre unidades do mesmo grupo aumenta o tamanho exigido. Planejamento não é apenas aplicar uma fórmula; é alinhar precisão, desenho e recursos disponíveis.</p>
+</section>
+<section id="quando-o-procedimento-é-confiável" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Quando o procedimento é confiável</h1>
+<p>Toda essa construção repousa sobre pressupostos, e vale saber quais são. O intervalo t para a média supõe unidades independentes, seleção compatível com a população de interesse e ausência de distorções graves. Com amostras pequenas, assimetria forte e valores extremos podem comprometer a cobertura efetiva. Com amostras maiores, o Teorema Central do Limite torna o procedimento mais robusto, mas não corrige viés de seleção, pseudorreplicação nem erro sistemático de medição.</p>
+<p>Antes de interpretar um intervalo, portanto, convém verificar se a população está definida e a amostra a representa, se a independência vale no nível correto, se a unidade de análise é coerente com o desenho, se a forma da distribuição é compatível com o tamanho amostral, se valores extremos foram investigados e se a estimativa de variabilidade corresponde ao plano de coleta. Nenhum desses pontos é verificado pela fórmula: intervalos tratam da incerteza amostral sob um modelo, não ampliam a população representada pela amostra e não substituem a avaliação do delineamento.</p>
+<p>Há ainda uma distinção que costuma passar despercebida, entre <strong>intervalo de confiança da média</strong> e <strong>intervalo de previsão para uma unidade</strong>. O primeiro estima um centro populacional e encolhe com <span class="math inline">\(n\)</span>. O segundo precisa incluir a variação dos próprios indivíduos e, por isso, é muito mais largo. Confundir os dois transforma uma afirmação precisa sobre uma média em uma previsão excessivamente otimista sobre o próximo organismo.</p>
+<p>A pergunta inicial pedia medir o espalhamento de um procedimento executado uma única vez. A resposta tem duas partes. O erro padrão traduz a variabilidade observada na amostra em variabilidade esperada da estimativa; o intervalo transforma esse número em uma faixa cuja taxa de acerto é conhecida a longo prazo. Nenhuma das duas descreve o costão diretamente: as duas descrevem a qualidade do procedimento com que o estudamos.</p>
+</section>
+<section id="para-saber-mais" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/distribuicao-normal/distribuicao-normal-probabilidade.html" target="_blank">Probabilidades na distribuição normal</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/intro-bayes/intro-bayes-modelo-bayesiano.html" target="_blank">O modelo bayesiano: outra forma de expressar incerteza</a> (MEAD)</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -466,22 +598,6 @@ Figura&nbsp;1: Intervalos de 95% calculados em 100 amostras de 20 mexilhões cad
 <ul>
 <li>Duas equipes obtêm intervalos que se sobrepõem quase inteiramente. Isso é sinal de que erraram a medição, ou é o resultado esperado?</li>
 <li>Uma equipe informa média 4,9 cm sem nenhum intervalo. Que informação está faltando para alguém avaliar o resultado?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html" target="_blank">Estimando a média populacional</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html" target="_blank">Distribuição das médias amostrais</a> (MEAD)</li>
 </ul>
 </div>
 </div>

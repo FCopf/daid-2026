@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Fabio Cop (fcferreira@unifesp.br)">
 <meta name="author" content="Instituto do Mar - Unifesp">
 
-<title>Você sorteia, agrupa ou mede? – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
+<title>Fator, bloco ou covariável? – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -115,6 +115,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -340,11 +369,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#a-mesma-variável-papéis-diferentes" id="toc-a-mesma-variável-papéis-diferentes" class="nav-link active" data-scroll-target="#a-mesma-variável-papéis-diferentes"><span class="header-section-number">1</span> A mesma variável, papéis diferentes</a></li>
-  <li><a href="#o-critério-cabe-em-três-verbos" id="toc-o-critério-cabe-em-três-verbos" class="nav-link" data-scroll-target="#o-critério-cabe-em-três-verbos"><span class="header-section-number">2</span> O critério cabe em três verbos</a></li>
-  <li><a href="#fator" id="toc-fator" class="nav-link" data-scroll-target="#fator"><span class="header-section-number">3</span> Fator</a></li>
-  <li><a href="#bloco" id="toc-bloco" class="nav-link" data-scroll-target="#bloco"><span class="header-section-number">4</span> Bloco</a></li>
-  <li><a href="#covariável" id="toc-covariável" class="nav-link" data-scroll-target="#covariável"><span class="header-section-number">5</span> Covariável</a></li>
-  <li><a href="#a-fórmula-não-decide-nada" id="toc-a-fórmula-não-decide-nada" class="nav-link" data-scroll-target="#a-fórmula-não-decide-nada"><span class="header-section-number">6</span> A fórmula não decide nada</a></li>
+  <li><a href="#o-critério-cabe-em-três-verbos" id="toc-o-critério-cabe-em-três-verbos" class="nav-link" data-scroll-target="#o-critério-cabe-em-três-verbos"><span class="header-section-number">2</span> O critério cabe em três verbos</a>
+  <ul class="collapse">
+  <li><a href="#fator" id="toc-fator" class="nav-link" data-scroll-target="#fator"><span class="header-section-number">2.1</span> Fator</a></li>
+  <li><a href="#bloco" id="toc-bloco" class="nav-link" data-scroll-target="#bloco"><span class="header-section-number">2.2</span> Bloco</a></li>
+  <li><a href="#covariável" id="toc-covariável" class="nav-link" data-scroll-target="#covariável"><span class="header-section-number">2.3</span> Covariável</a></li>
+  </ul></li>
+  <li><a href="#a-fórmula-não-decide-nada" id="toc-a-fórmula-não-decide-nada" class="nav-link" data-scroll-target="#a-fórmula-não-decide-nada"><span class="header-section-number">3</span> A fórmula não decide nada</a></li>
+  <li><a href="#três-modelos-parecidos-três-perguntas-diferentes" id="toc-três-modelos-parecidos-três-perguntas-diferentes" class="nav-link" data-scroll-target="#três-modelos-parecidos-três-perguntas-diferentes"><span class="header-section-number">4</span> Três modelos parecidos, três perguntas diferentes</a>
+  <ul class="collapse">
+  <li><a href="#como-ler-um-coeficiente-parcial" id="toc-como-ler-um-coeficiente-parcial" class="nav-link" data-scroll-target="#como-ler-um-coeficiente-parcial"><span class="header-section-number">4.1</span> Como ler um coeficiente parcial</a></li>
+  </ul></li>
+  <li><a href="#quando-uma-covariável-não-serve-para-ajustar" id="toc-quando-uma-covariável-não-serve-para-ajustar" class="nav-link" data-scroll-target="#quando-uma-covariável-não-serve-para-ajustar"><span class="header-section-number">5</span> Quando uma covariável não serve para ajustar</a>
+  <ul class="collapse">
+  <li><a href="#a-variável-precisa-existir-antes-do-tratamento" id="toc-a-variável-precisa-existir-antes-do-tratamento" class="nav-link" data-scroll-target="#a-variável-precisa-existir-antes-do-tratamento"><span class="header-section-number">5.1</span> A variável precisa existir antes do tratamento</a></li>
+  <li><a href="#os-grupos-precisam-se-sobrepor-na-covariável" id="toc-os-grupos-precisam-se-sobrepor-na-covariável" class="nav-link" data-scroll-target="#os-grupos-precisam-se-sobrepor-na-covariável"><span class="header-section-number">5.2</span> Os grupos precisam se sobrepor na covariável</a></li>
+  <li><a href="#colinearidade-e-forma-da-relação" id="toc-colinearidade-e-forma-da-relação" class="nav-link" data-scroll-target="#colinearidade-e-forma-da-relação"><span class="header-section-number">5.3</span> Colinearidade e forma da relação</a></li>
+  </ul></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -354,7 +396,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Você sorteia, agrupa ou mede?</h1>
+<h1 class="title">Fator, bloco ou covariável?</h1>
 <p class="subtitle lead">Leitura prévia</p>
 </div>
 
@@ -373,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -414,7 +456,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>Fator</strong></td>
 <td>condição que você quer comparar</td>
 <td>sorteou entre as unidades</td>
-<td>sim, é a resposta do estudo</td>
+<td>sim, é o foco do estudo</td>
 </tr>
 <tr class="even">
 <td><strong>Bloco</strong></td>
@@ -430,50 +472,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Repare que a coluna do meio é a que decide. Não é o tipo da variável (categórica ou contínua) nem a posição dela na fórmula: é o verbo.</p>
-</section>
-<section id="fator" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Fator</h1>
+<p>Repare que a coluna do meio é a que decide. Não é o tipo da variável (categórica ou contínua) nem a posição dela na fórmula: é o verbo. Vale examinar os três casos separadamente.</p>
+<section id="fator" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="fator"><span class="header-section-number">2.1</span> Fator</h2>
 <p>O fator é aquilo que o estudo existe para comparar. Seus níveis foram atribuídos às unidades por sorteio, e é sobre ele que a conclusão vai falar.</p>
 <p>Um experimento pode ter mais de um fator de interesse ao mesmo tempo, e nesse caso a combinação deles também interessa: descobrir se o efeito de um depende do nível do outro é frequentemente a parte mais informativa do resultado.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>resposta <span class="sc">~</span> racao</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>resposta <span class="sc">~</span> racao <span class="sc">*</span> temperatura</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>No R, essas duas perguntas podem ser escritas como <code>resposta ~ racao</code> e <code>resposta ~ racao * temperatura</code>. A segunda inclui os dois efeitos principais e sua interação.</p>
 </section>
-<section id="bloco" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Bloco</h1>
+<section id="bloco" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="bloco"><span class="header-section-number">2.2</span> Bloco</h2>
 <p>O bloco é uma fonte de variação <strong>conhecida e indesejada</strong>, que você não consegue eliminar mas consegue organizar.</p>
 <p>Suponha juvenis criados em seis bandejas de berçário, e que as bandejas difiram entre si por posição, fluxo e iluminação. Em vez de espalhar os tratamentos ao acaso por todas elas e deixar a diferença entre bandejas engordar o resíduo, você garante que <strong>cada bandeja receba todos os tratamentos</strong>, sorteando as posições dentro dela.</p>
-<p>A variação entre bandejas passa a ser atribuída ao bloco e sai do resíduo. O efeito do tratamento fica mais fácil de detectar, sem coletar um dado a mais.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>resposta <span class="sc">~</span> racao <span class="sc">+</span> bandeja</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Bloco se decide antes">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Bloco se decide antes
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Blocos precisam ser definidos <strong>no planejamento</strong>, antes de alocar os tratamentos.</p>
-<p>Agrupar unidades depois de ver os dados não é controle local: é seleção de resultado.</p>
-</div>
-</div>
+<p>A variação entre bandejas passa a ser atribuída ao bloco e sai do resíduo. O efeito do tratamento fica mais fácil de detectar, sem coletar um dado a mais. O modelo correspondente pode ser escrito como <code>resposta ~ racao + bandeja</code>, mantendo os dois papéis científicos distintos apesar de ambos aparecerem na parte sistemática.</p>
+<p>Como o agrupamento organiza a alocação, ele precisa existir antes dela. Blocos definidos no planejamento são controle local; grupos formados depois de ver os dados são seleção de resultado, e retiram do teste a interpretação que ele teria.</p>
 </section>
-<section id="covariável" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Covariável</h1>
+<section id="covariável" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="covariável"><span class="header-section-number">2.3</span> Covariável</h2>
 <p>A covariável é uma medida contínua registrada em cada unidade, que afeta a resposta e não é o que você quer comparar.</p>
 <p>Se os juvenis entraram no experimento com pesos iniciais diferentes, o peso final vai refletir isso junto com o efeito da ração. Medir o peso inicial de cada indivíduo permite comparar as rações <strong>em um mesmo peso de partida</strong>, em vez de comparar médias brutas que misturam as duas coisas.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>resposta <span class="sc">~</span> racao <span class="sc">+</span> peso_inicial</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A lógica é a mesma do bloco, retirar do resíduo uma variação conhecida, mas o instrumento é diferente: em vez de agrupar unidades parecidas, mede-se a característica de cada uma.</p>
+<p>O ajuste é escrito como <code>resposta ~ racao + peso_inicial</code>: a ração representa a comparação e o peso inicial define a condição na qual ela é feita.</p>
+<p>A lógica é a mesma do bloco, retirar do resíduo uma variação conhecida, mas o instrumento é diferente: em vez de agrupar unidades parecidas, mede-se a característica de cada uma. A figura abaixo põe as duas estratégias lado a lado.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-papeis-bloco-covariavel" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis. No da esquerda, seis colunas de pontos com médias crescentes, e em cada coluna o ponto do grupo tratado fica acima do controle. No da direita, uma nuvem de pontos ascendente com duas retas paralelas, a do grupo tratado acima da do controle.">
+<div id="fig-bloco-covariavel" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis. No da esquerda, seis colunas de pontos com médias crescentes, e em cada coluna o ponto do grupo tratado fica acima do controle. No da direita, uma nuvem de pontos ascendente com duas retas paralelas, a do grupo tratado acima da do controle.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-papeis-bloco-covariavel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-papeis-fator-bloco-covariavel_files/figure-html/fig-papeis-bloco-covariavel-1.png" class="img-fluid figure-img" alt="Dois painéis. No da esquerda, seis colunas de pontos com médias crescentes, e em cada coluna o ponto do grupo tratado fica acima do controle. No da direita, uma nuvem de pontos ascendente com duas retas paralelas, a do grupo tratado acima da do controle." width="672">
+<div aria-describedby="fig-bloco-covariavel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-papeis-fator-bloco-covariavel_files/figure-html/fig-bloco-covariavel-1.png" class="img-fluid figure-img" alt="Dois painéis. No da esquerda, seis colunas de pontos com médias crescentes, e em cada coluna o ponto do grupo tratado fica acima do controle. No da direita, uma nuvem de pontos ascendente com duas retas paralelas, a do grupo tratado acima da do controle." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-papeis-bloco-covariavel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bloco-covariavel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;1: Duas maneiras de descontar uma variação conhecida. À esquerda, unidades agrupadas em bandejas; à direita, uma medida contínua registrada em cada unidade.
 </figcaption>
 </figure>
@@ -482,13 +508,157 @@ Figura&nbsp;1: Duas maneiras de descontar uma variação conhecida. À esquerda,
 </div>
 <p>Nos dois painéis existe o mesmo efeito de tratamento, de 3 unidades. E nos dois ele estaria escondido se a variação de fundo, entre bandejas ou entre pesos iniciais, tivesse sido ignorada.</p>
 </section>
-<section id="a-fórmula-não-decide-nada" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> A fórmula não decide nada</h1>
-<p>Este é o ponto que costuma confundir. Compare:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>resposta <span class="sc">~</span> racao <span class="sc">+</span> bandeja</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>resposta <span class="sc">~</span> racao <span class="sc">+</span> peso_inicial</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>As duas linhas têm a mesma forma, e o R as ajusta pelo mesmo procedimento. A tabela de saída também se parece. Nada nelas informa qual variável foi sorteada, qual foi agrupada e qual foi medida.</p>
-<p>Essa informação existe apenas no delineamento, e é você quem a carrega até a interpretação.</p>
+</section>
+<section id="a-fórmula-não-decide-nada" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> A fórmula não decide nada</h1>
+<p>Este é o ponto que costuma confundir. As fórmulas <code>resposta ~ racao + bandeja</code> e <code>resposta ~ racao + peso_inicial</code> têm exatamente a mesma forma algébrica, embora uma use um agrupamento planejado e a outra uma medida contínua.</p>
+<p>O R as ajusta pelo mesmo procedimento, e a tabela de saída também se parece. Nada nelas informa qual variável foi sorteada, qual foi agrupada e qual foi medida. Essa informação existe apenas no delineamento, e é você quem a carrega até a interpretação.</p>
+</section>
+<section id="três-modelos-parecidos-três-perguntas-diferentes" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Três modelos parecidos, três perguntas diferentes</h1>
+<p>Escrever os modelos lado a lado deixa a semelhança formal ainda mais evidente. Para um fator com níveis <span class="math inline">\(i\)</span>, o modelo mais simples é</p>
+<p><span class="math display">\[
+Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
+\]</span></p>
+<p><span class="math inline">\(\alpha_i\)</span> representa a diferença entre o nível <span class="math inline">\(i\)</span> e a referência definida pela parametrização. Quando o fator foi aleatorizado, essa diferença pode ser interpretada causalmente para as unidades e condições representadas pelo experimento.</p>
+<p>Com bloco, acrescentamos uma diferença para cada grupo de controle local:</p>
+<p><span class="math display">\[
+Y_{ij}=\mu+\alpha_i+\beta_j+\varepsilon_{ij}.
+\]</span></p>
+<p><span class="math inline">\(\beta_j\)</span> ajuda a explicar a resposta, mas não é uma comparação causal entre bandejas. A inclusão do bloco muda a régua residual e compara tratamentos dentro da estrutura usada na aleatorização.</p>
+<p>Com covariável contínua <span class="math inline">\(X\)</span>, o modelo aditivo é</p>
+<p><span class="math display">\[
+Y_i=\beta_0+\beta_1X_i+\alpha_{g(i)}+\varepsilon_i.
+\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> descreve a mudança esperada em <span class="math inline">\(Y\)</span> por unidade de <span class="math inline">\(X\)</span>, mantendo o grupo constante. <span class="math inline">\(\alpha_{g(i)}\)</span> compara grupos em um mesmo valor de <span class="math inline">\(X\)</span>. Esses são <strong>efeitos parciais</strong>: cada coeficiente é interpretado depois de considerar os outros termos do modelo.</p>
+<p>Ajustados aos dois conjuntos da figura anterior, os modelos com bloco e com covariável produzem tabelas de coeficientes com estrutura diferente, embora o comando seja quase o mesmo.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver os dois ajustes em R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>modelo_com_bloco <span class="ot">&lt;-</span> <span class="fu">lm</span>(resposta <span class="sc">~</span> grupo <span class="sc">+</span> <span class="fu">factor</span>(bandeja), <span class="at">data =</span> bandejas)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>modelo_com_covariavel <span class="ot">&lt;-</span> <span class="fu">lm</span>(resposta <span class="sc">~</span> grupo <span class="sc">+</span> peso_inicial, <span class="at">data =</span> inicial)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">modelo =</span> <span class="st">"bloco"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">termo =</span> <span class="fu">names</span>(<span class="fu">coef</span>(modelo_com_bloco)),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimativa =</span> <span class="fu">coef</span>(modelo_com_bloco)),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">modelo =</span> <span class="st">"covariável"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">termo =</span> <span class="fu">names</span>(<span class="fu">coef</span>(modelo_com_covariavel)),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimativa =</span> <span class="fu">coef</span>(modelo_com_covariavel))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   modelo     termo            estimativa
+   &lt;chr&gt;      &lt;chr&gt;                 &lt;dbl&gt;
+ 1 bloco      (Intercept)           24.4 
+ 2 bloco      grupotratado           3.12
+ 3 bloco      factor(bandeja)2       3.06
+ 4 bloco      factor(bandeja)3       7.93
+ 5 bloco      factor(bandeja)4      12.0 
+ 6 bloco      factor(bandeja)5      13.7 
+ 7 bloco      factor(bandeja)6      19.3 
+ 8 covariável (Intercept)            4.26
+ 9 covariável grupotratado           3.12
+10 covariável peso_inicial           1.14</code></pre>
+</div>
+</div>
+<p>No modelo com bloco, cada bandeja recebe seu próprio coeficiente, e são cinco deles para seis bandejas. No modelo com covariável, uma única inclinação descreve o efeito do peso inicial em toda a faixa medida. Em ambos, o coeficiente de <code>grupo</code> é o que responde à pergunta do estudo, e vale cerca de 3 unidades, como esperado pela construção dos dados.</p>
+<section id="como-ler-um-coeficiente-parcial" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="como-ler-um-coeficiente-parcial"><span class="header-section-number">4.1</span> Como ler um coeficiente parcial</h2>
+<p>A expressão “mantendo constante” merece um exame mais cuidadoso, porque ela sugere uma operação que não é a que o modelo realiza. Em regressão múltipla,</p>
+<p><span class="math display">\[
+Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\varepsilon_i,
+\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> descreve a diferença esperada em <span class="math inline">\(Y\)</span> para uma unidade adicional de <span class="math inline">\(X_1\)</span> <strong>mantendo <span class="math inline">\(X_2\)</span> constante</strong>. Essa frase não significa que o programa encontrou pares perfeitamente iguais em <span class="math inline">\(X_2\)</span>; significa que o modelo usa a variação de <span class="math inline">\(X_1\)</span> que não é explicada linearmente por <span class="math inline">\(X_2\)</span>.</p>
+<p>Uma forma de tornar isso visível é retirar de <span class="math inline">\(X_1\)</span> sua previsão por <span class="math inline">\(X_2\)</span>, retirar de <span class="math inline">\(Y\)</span> sua previsão por <span class="math inline">\(X_2\)</span> e relacionar os dois conjuntos de resíduos. A inclinação resultante é a mesma <span class="math inline">\(\hat\beta_1\)</span> do modelo múltiplo.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver um coeficiente parcial por resíduos</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ostras <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">peso_inicial =</span> <span class="fu">runif</span>(<span class="dv">80</span>, <span class="dv">8</span>, <span class="dv">25</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="dv">20</span> <span class="sc">+</span> <span class="fl">0.25</span> <span class="sc">*</span> peso_inicial <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">80</span>, <span class="dv">0</span>, <span class="fl">1.8</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">crescimento =</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">0.7</span> <span class="sc">*</span> peso_inicial <span class="sc">+</span> <span class="fl">0.45</span> <span class="sc">*</span> temperatura <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">80</span>, <span class="dv">0</span>, <span class="dv">2</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>modelo_multiplo <span class="ot">&lt;-</span> <span class="fu">lm</span>(crescimento <span class="sc">~</span> temperatura <span class="sc">+</span> peso_inicial, <span class="at">data =</span> ostras)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>parcial <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura_residual =</span> <span class="fu">residuals</span>(<span class="fu">lm</span>(temperatura <span class="sc">~</span> peso_inicial, <span class="at">data =</span> ostras)),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">crescimento_residual =</span> <span class="fu">residuals</span>(<span class="fu">lm</span>(crescimento <span class="sc">~</span> peso_inicial, <span class="at">data =</span> ostras))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(parcial, <span class="fu">aes</span>(<span class="at">x =</span> temperatura_residual, <span class="at">y =</span> crescimento_residual)) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.65</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperatura não explicada pelo peso inicial"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Crescimento não explicado pelo peso inicial"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-coeficiente-parcial" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Nuvem de resíduos centrada em zero com uma reta ascendente; os eixos representam partes de temperatura e crescimento não explicadas pelo peso inicial.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-coeficiente-parcial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-papeis-fator-bloco-covariavel_files/figure-html/fig-coeficiente-parcial-1.png" class="img-fluid figure-img" alt="Nuvem de resíduos centrada em zero com uma reta ascendente; os eixos representam partes de temperatura e crescimento não explicadas pelo peso inicial." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coeficiente-parcial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Relação parcial entre temperatura e crescimento depois de retirar linearmente o peso inicial de ambas as variáveis.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A inclinação da reta da figura é 0,349, e o coeficiente de <code>temperatura</code> no modelo múltiplo é 0,349. As duas coincidem, e essa coincidência é o conteúdo da expressão “controlar por”: comparar a parte de <span class="math inline">\(X_1\)</span> que ainda varia depois do ajuste, e não apagar magicamente diferenças entre unidades.</p>
+</section>
+</section>
+<section id="quando-uma-covariável-não-serve-para-ajustar" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Quando uma covariável não serve para ajustar</h1>
+<p>Nem toda variável medida pode entrar no modelo como covariável. Três condições costumam decidir a questão, e nenhuma delas é verificada automaticamente pelo programa.</p>
+<section id="a-variável-precisa-existir-antes-do-tratamento" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="a-variável-precisa-existir-antes-do-tratamento"><span class="header-section-number">5.1</span> A variável precisa existir antes do tratamento</h2>
+<p>Uma boa covariável de ajuste é medida antes da intervenção, prevê a resposta e não é consequência do tratamento. Peso inicial satisfaz esses critérios; ganho de peso medido durante o experimento pode estar no caminho pelo qual a ração atua. Ajustar por uma consequência remove parte do efeito ou cria associação artificial.</p>
+<p>Se <span class="math inline">\(T\)</span> é tratamento, <span class="math inline">\(M\)</span> uma medida causada por <span class="math inline">\(T\)</span> e <span class="math inline">\(Y\)</span> a resposta, o caminho <span class="math inline">\(T\to M\to Y\)</span> faz parte do efeito total. Condicionar em <span class="math inline">\(M\)</span> bloqueia esse caminho e responde a uma pergunta sobre efeito direto, que é uma pergunta diferente da original. Se <span class="math inline">\(M\)</span> também recebe causas não medidas de <span class="math inline">\(Y\)</span>, o condicionamento pode até abrir uma associação artificial. A temporalidade da variável precisa ser conhecida antes de incluí-la por conveniência.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Árvore de decisão científica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Árvore de decisão científica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>A condição foi atribuída para responder à pergunta? Trate-a como fator.</li>
+<li>Foi usada antes da alocação para agrupar unidades semelhantes? Trate-a como bloco.</li>
+<li>Foi medida antes do tratamento e ajuda a prever a resposta? Pode ser covariável.</li>
+<li>Foi medida depois ou pode ser consequência do tratamento? Não ajuste sem redefinir explicitamente o efeito que deseja estimar.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="os-grupos-precisam-se-sobrepor-na-covariável" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="os-grupos-precisam-se-sobrepor-na-covariável"><span class="header-section-number">5.2</span> Os grupos precisam se sobrepor na covariável</h2>
+<p>A segunda condição diz respeito à faixa de valores observada em cada grupo. Se apenas indivíduos leves recebem a ração A e apenas indivíduos pesados recebem B, o modelo precisa extrapolar para comparar rações no mesmo peso. Uma equação ajustada não cria a informação que falta nessa região.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-sobreposicao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis de pontos ao longo do peso inicial. No painel com suporte comum as cores se misturam; no painel sem suporte uma cor ocupa valores baixos e outra valores altos.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sobreposicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-papeis-fator-bloco-covariavel_files/figure-html/fig-sobreposicao-1.png" class="img-fluid figure-img" alt="Dois painéis de pontos ao longo do peso inicial. No painel com suporte comum as cores se misturam; no painel sem suporte uma cor ocupa valores baixos e outra valores altos." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sobreposicao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Distribuições da covariável em dois desenhos. No primeiro há suporte comum; no segundo, grupo e peso inicial estão quase confundidos.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>No painel da esquerda os dois grupos ocupam faixas semelhantes de peso inicial, e a comparação a um peso fixo se apoia em unidades realmente observadas. No painel da direita, grupo e peso inicial estão quase confundidos: “manter peso constante” passa a depender principalmente da forma linear assumida. Erros padrão crescem e pequenas mudanças de modelo podem alterar muito o contraste. Restringir a análise à região comum muda a população-alvo, mas costuma ser mais transparente que extrapolar.</p>
+</section>
+<section id="colinearidade-e-forma-da-relação" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="colinearidade-e-forma-da-relação"><span class="header-section-number">5.3</span> Colinearidade e forma da relação</h2>
+<p>A terceira condição diz respeito à relação entre as próprias variáveis explicativas. Quando duas covariáveis são fortemente relacionadas, há <strong>multicolinearidade</strong>. O modelo pode prever bem a resposta, mas separar seus coeficientes parciais se torna instável: erros padrão aumentam e os sinais podem mudar com pequenas alterações da amostra. Isso não é corrigido escolhendo a variável com menor valor de p; é preciso perguntar quais efeitos parciais têm apoio e significado científico.</p>
+<p>Por fim, a relação entre covariável e resposta deve ser aproximadamente linear na escala usada, com variação residual comparável entre grupos. Se a inclinação difere entre tratamentos, aparece uma interação e o efeito do fator passa a depender do valor da covariável, situação em que um único número deixa de descrever a comparação.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O que não se faz com bloco e covariável">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -503,6 +673,14 @@ Figura&nbsp;1: Duas maneiras de descontar uma variação conhecida. À esquerda,
 <p>Não se ajusta por uma covariável <strong>medida depois</strong> do tratamento e que pode ter sido afetada por ele. Nesse caso o ajuste remove parte do próprio efeito que se quer estimar.</p>
 </div>
 </div>
+<p>A temperatura do início desta leitura continua sendo a mesma medida, registrada com o mesmo instrumento, guardada na mesma coluna. O que decide seu papel é uma informação que não está na planilha: se ela foi sorteada, agrupada ou apenas observada. Vale insistir que essa informação não é recuperável depois. Um fator costuma ser categórico, mas uma dose controlada também pode ser representada continuamente; um bloco costuma ser categórico, mas pode nascer de faixas de uma medida contínua; uma covariável costuma ser contínua, mas outras variáveis prévias também podem funcionar como ajustes. O papel vem da pergunta, da temporalidade e da forma de alocação, e é ele que determina se um coeficiente pode ser lido como resultado, como controle ou como condição de comparação.</p>
+</section>
+</section>
+<section id="para-saber-mais" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/multivariada-numerica/intro-matrizes.html" target="_blank">Introdução a matrizes</a> (MEAD), onde a formulação matricial mostra fator, bloco e covariável ocupando colunas da mesma matriz de delineamento.</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -516,22 +694,6 @@ Figura&nbsp;1: Duas maneiras de descontar uma variação conhecida. À esquerda,
 <ul>
 <li>Um estudo compara duas dietas em tanques instalados em dois galpões. Se o pesquisador sorteou os tanques entre galpões, o galpão é bloco. E se ele colocou uma dieta em cada galpão?</li>
 <li>Uma variável contínua pode ser usada como bloco, agrupando as unidades em faixas de valor. O que se perde ao fazer isso, em vez de usá-la como covariável?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html" target="_blank">Associação entre variáveis quantitativas e qualitativas</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD)</li>
 </ul>
 </div>
 </div>

@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -80,6 +115,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -304,11 +368,24 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Conteúdo</h2>
    
   <ul class="collapse">
-  <li><a href="#um-levantamento-termina-e-começa-o-problema" id="toc-um-levantamento-termina-e-começa-o-problema" class="nav-link active" data-scroll-target="#um-levantamento-termina-e-começa-o-problema"><span class="header-section-number">1</span> Um levantamento termina, e começa o problema</a></li>
-  <li><a href="#duas-coisas-com-nomes-diferentes" id="toc-duas-coisas-com-nomes-diferentes" class="nav-link" data-scroll-target="#duas-coisas-com-nomes-diferentes"><span class="header-section-number">2</span> Duas coisas com nomes diferentes</a></li>
-  <li><a href="#estimar-é-aceitar-uma-margem" id="toc-estimar-é-aceitar-uma-margem" class="nav-link" data-scroll-target="#estimar-é-aceitar-uma-margem"><span class="header-section-number">3</span> Estimar é aceitar uma margem</a></li>
+  <li><a href="#um-levantamento-termina-e-começa-o-problema" id="toc-um-levantamento-termina-e-começa-o-problema" class="nav-link active" data-scroll-target="#um-levantamento-termina-e-começa-o-problema"><span class="header-section-number">1</span> Um levantamento termina, e começa o problema</a>
+  <ul class="collapse">
+  <li><a href="#população-e-amostra" id="toc-população-e-amostra" class="nav-link" data-scroll-target="#população-e-amostra"><span class="header-section-number">1.1</span> População e amostra</a></li>
+  </ul></li>
+  <li><a href="#da-população-alvo-à-lista-que-pode-ser-sorteada" id="toc-da-população-alvo-à-lista-que-pode-ser-sorteada" class="nav-link" data-scroll-target="#da-população-alvo-à-lista-que-pode-ser-sorteada"><span class="header-section-number">2</span> Da população-alvo à lista que pode ser sorteada</a>
+  <ul class="collapse">
+  <li><a href="#parâmetros-estimadores-e-estimativas" id="toc-parâmetros-estimadores-e-estimativas" class="nav-link" data-scroll-target="#parâmetros-estimadores-e-estimativas"><span class="header-section-number">2.1</span> Parâmetros, estimadores e estimativas</a></li>
+  </ul></li>
+  <li><a href="#quatro-maneiras-de-construir-uma-amostra-probabilística" id="toc-quatro-maneiras-de-construir-uma-amostra-probabilística" class="nav-link" data-scroll-target="#quatro-maneiras-de-construir-uma-amostra-probabilística"><span class="header-section-number">3</span> Quatro maneiras de construir uma amostra probabilística</a>
+  <ul class="collapse">
+  <li><a href="#o-algoritmo-revela-o-desenho" id="toc-o-algoritmo-revela-o-desenho" class="nav-link" data-scroll-target="#o-algoritmo-revela-o-desenho"><span class="header-section-number">3.1</span> O algoritmo revela o desenho</a></li>
+  </ul></li>
   <li><a href="#sortear-estações-soltas-ou-praias-inteiras" id="toc-sortear-estações-soltas-ou-praias-inteiras" class="nav-link" data-scroll-target="#sortear-estações-soltas-ou-praias-inteiras"><span class="header-section-number">4</span> Sortear estações soltas ou praias inteiras?</a></li>
-  <li><a href="#amostra-maior-não-conserta-amostra-torta" id="toc-amostra-maior-não-conserta-amostra-torta" class="nav-link" data-scroll-target="#amostra-maior-não-conserta-amostra-torta"><span class="header-section-number">5</span> Amostra maior não conserta amostra torta</a></li>
+  <li><a href="#precisão-e-viés-são-falhas-diferentes" id="toc-precisão-e-viés-são-falhas-diferentes" class="nav-link" data-scroll-target="#precisão-e-viés-são-falhas-diferentes"><span class="header-section-number">5</span> Precisão e viés são falhas diferentes</a>
+  <ul class="collapse">
+  <li><a href="#erro-amostral-e-erro-não-amostral" id="toc-erro-amostral-e-erro-não-amostral" class="nav-link" data-scroll-target="#erro-amostral-e-erro-não-amostral"><span class="header-section-number">5.1</span> Erro amostral e erro não amostral</a></li>
+  </ul></li>
+  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -337,7 +414,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de agosto de 2026</p>
+      <p class="date">11 de agosto de 2026</p>
     </div>
   </div>
   
@@ -354,9 +431,8 @@ ul.task-list li input[type="checkbox"] {
 <p>Uma equipe percorre o litoral e registra, em 45 estações distribuídas por nove praias, quantas espécies de invertebrados encontra em cada uma. Ao fim, a planilha tem 45 linhas.</p>
 <p>Só que o relatório não vai falar sobre essas 45 estações. Vai falar sobre a região: quantas espécies uma estação daquele litoral costuma abrigar, se as praias se parecem entre si, se o padrão observado justifica voltar lá.</p>
 <p>É aí que aparece a pergunta que separa a planilha da conclusão: <strong>o que 45 estações permitem dizer sobre um litoral que tem milhares delas?</strong></p>
-</section>
-<section id="duas-coisas-com-nomes-diferentes" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Duas coisas com nomes diferentes</h1>
+<section id="população-e-amostra" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="população-e-amostra"><span class="header-section-number">1.1</span> População e amostra</h2>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="População e amostra">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -373,33 +449,173 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Repare que a população não é definida pelos dados: é definida pela pergunta. Se a pergunta é sobre aquele litoral, a população são todas as estações do litoral. Se é sobre uma praia específica, a população encolhe, e as 5 estações daquela praia passam a ser a amostra.</p>
 <p>Definir a população antes de coletar evita a situação mais desconfortável da análise de dados: descobrir, no fim, que os dados respondem a uma pergunta diferente da que se queria fazer.</p>
+<p>Definida a população, a incerteza passa a ser inevitável. Se todas as estações do litoral fossem idênticas, uma única medida bastaria. Como elas variam, cada amostra produz uma resposta um pouco diferente. Isso não é um defeito do levantamento: é a consequência de medir uma parte para falar do todo, e é por isso que uma estimativa sempre vem acompanhada de uma margem.</p>
 </section>
-<section id="estimar-é-aceitar-uma-margem" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Estimar é aceitar uma margem</h1>
-<p>Se todas as estações do litoral fossem idênticas, uma única medida bastaria e não haveria incerteza nenhuma. Como elas variam, cada amostra produz uma resposta um pouco diferente.</p>
-<p>Isso não é um defeito do levantamento. É a consequência inevitável de medir uma parte para falar do todo, e é por isso que uma estimativa sempre vem acompanhada de uma margem.</p>
 </section>
-<section id="sortear-estações-soltas-ou-praias-inteiras" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Sortear estações soltas ou praias inteiras?</h1>
-<p>Aqui entra a decisão que mais influencia a qualidade de uma estimativa, e que quase nunca recebe a atenção que merece: <strong>como as unidades entram na amostra</strong>.</p>
-<p>Suponha que o orçamento permita visitar 15 estações. Há pelo menos dois jeitos de escolhê-las.</p>
-<p>Sortear <strong>15 estações soltas</strong> por toda a região, ou sortear <strong>3 praias inteiras</strong> e medir as 5 estações de cada uma. Nos dois casos são 15 estações, o mesmo esforço de campo, e a segunda opção é bem mais barata: menos deslocamento, menos dias de viagem.</p>
-<p>A figura abaixo repete as duas estratégias duas mil vezes em uma região onde as praias diferem bastante entre si.</p>
+<section id="da-população-alvo-à-lista-que-pode-ser-sorteada" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Da população-alvo à lista que pode ser sorteada</h1>
+<p>Entre a população que interessa e as unidades que efetivamente podem ser sorteadas há uma distância que convém tornar explícita. A <strong>população-alvo</strong> é o conjunto sobre o qual desejamos concluir. A <strong>população acessível</strong> é a parte que o plano de campo consegue alcançar. Para sortear unidades, ainda precisamos de um <strong>cadastro amostral</strong>, isto é, uma lista ou mapa que represente essas unidades. Se costões remotos não aparecem no cadastro, eles têm probabilidade zero de entrar na coleta, mesmo que pertençam à população-alvo.</p>
+<p>Usamos <span class="math inline">\(N\)</span> para o tamanho da população e <span class="math inline">\(n\)</span> para o tamanho da amostra. Medir todas as <span class="math inline">\(N\)</span> unidades é realizar um <strong>censo</strong>. Um censo elimina o erro de selecionar apenas parte da população, mas não elimina erros de medição, unidades não localizadas ou uma definição inadequada da população.</p>
+<section id="parâmetros-estimadores-e-estimativas" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="parâmetros-estimadores-e-estimativas"><span class="header-section-number">2.1</span> Parâmetros, estimadores e estimativas</h2>
+<p>Uma característica numérica da população é um <strong>parâmetro</strong>. A média populacional, por exemplo, é</p>
+<p><span class="math display">\[
+\mu=\frac{1}{N}\sum_{i=1}^{N}X_i.
+\]</span></p>
+<p>Como <span class="math inline">\(\mu\)</span> é desconhecida, calculamos a estatística</p>
+<p><span class="math display">\[
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+\]</span></p>
+<p>A regra que transforma uma amostra em <span class="math inline">\(\bar{x}\)</span> é um <strong>estimador</strong>; o número obtido em uma coleta específica é a <strong>estimativa</strong>. Um estimador é não enviesado quando, ao repetir o plano muitas vezes, suas estimativas ficam centradas no parâmetro. Isso não significa que cada estimativa acerte.</p>
+<p>A mesma distinção vale para a variabilidade. Para uma população finita com valores <span class="math inline">\(X_1,\ldots,X_N\)</span>, a variância populacional é</p>
+<p><span class="math display">\[
+\sigma^2=\frac{1}{N}\sum_{i=1}^{N}(X_i-\mu)^2.
+\]</span></p>
+<p>Na amostra, usamos</p>
+<p><span class="math display">\[
+s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
+\]</span></p>
+<p>O divisor <span class="math inline">\(n-1\)</span> faz com que <span class="math inline">\(s^2\)</span> seja não enviesado para <span class="math inline">\(\sigma^2\)</span> sob amostragem aleatória simples. A versão com divisor <span class="math inline">\(n\)</span> tende a subestimar a variabilidade populacional, porque a própria amostra foi usada para localizar o centro.</p>
+<p>Vale insistir na diferença entre três conjuntos de valores que costumam ser confundidos. A <strong>distribuição populacional</strong> descreve os valores de todas as unidades da população. A <strong>distribuição da amostra</strong> descreve apenas os valores que entraram em uma coleta, e muda quando o sorteio muda. Uma <strong>distribuição amostral</strong>, por sua vez, não descreve unidades: descreve os resultados de uma estatística, como <span class="math inline">\(\bar{x}\)</span>, quando o plano de coleta é repetido muitas vezes. A primeira fala das unidades, a segunda das unidades observadas e a terceira do desempenho de um procedimento.</p>
+<p>É essa terceira distribuição que permite avaliar um estimador, porque ela mostra onde as estimativas se concentram e o quanto se espalham. A figura abaixo simula uma região com 450 estações e põe lado a lado a distribuição populacional, no painel de cima, e a distribuição amostral da média para amostras de 45 unidades, no painel de baixo.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-populacao-estrategias" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois histogramas empilhados na mesma escala. O das estações soltas é estreito e concentrado em torno da linha do valor real. O das praias inteiras é muito mais largo, com estimativas que vão de valores baixos a valores altos.">
+<div id="fig-populacao-estimadores" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois histogramas. O primeiro mostra os valores de uma população finita, bastante espalhados; o segundo mostra muitas médias amostrais concentradas ao redor da média populacional.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-populacao-estrategias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-populacao-amostra_files/figure-html/fig-populacao-estrategias-1.png" class="img-fluid figure-img" alt="Dois histogramas empilhados na mesma escala. O das estações soltas é estreito e concentrado em torno da linha do valor real. O das praias inteiras é muito mais largo, com estimativas que vão de valores baixos a valores altos." width="672">
+<div aria-describedby="fig-populacao-estimadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-populacao-amostra_files/figure-html/fig-populacao-estimadores-1.png" class="img-fluid figure-img" alt="Dois histogramas. O primeiro mostra os valores de uma população finita, bastante espalhados; o segundo mostra muitas médias amostrais concentradas ao redor da média populacional." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-populacao-estrategias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Estimativas da riqueza média da região obtidas por duas estratégias de amostragem, ambas com 15 estações. A linha marca a riqueza média real da região.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-populacao-estimadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Valores das unidades da população e médias obtidas ao repetir amostras aleatórias simples de 45 estações. A linha laranja marca a média populacional.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As duas estratégias acertam <strong>em média</strong>: os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de 0,64 espécies, e as por praias inteiras, de 1,23.</p>
+<p>A média populacional desta simulação é 7,85 espécies. A amostra de 45 estações que sorteamos produziu a estimativa 7,93, próxima mas não idêntica. O histograma estreito das médias não afirma que as estações se tornaram homogêneas: ele mostra que uma média de 45 unidades é bem mais estável que uma unidade isolada, com desvio-padrão de 0,52 espécies entre as repetições. É essa nuvem de estimativas que permite dizer se o estimador está centrado no parâmetro e quão preciso é o procedimento.</p>
+</section>
+</section>
+<section id="quatro-maneiras-de-construir-uma-amostra-probabilística" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Quatro maneiras de construir uma amostra probabilística</h1>
+<p>Saber o que é um bom estimador não diz ainda como escolher as unidades. Em todos os planos a seguir a seleção envolve sorteio, e é o sorteio que sustenta a inferência; o que muda é a estrutura imposta a ele.</p>
+<p>Na <strong>amostragem aleatória simples</strong>, todas as unidades têm a mesma chance de seleção e cada sorteio é feito diretamente no cadastro. É o plano mais simples para justificar, mas pode espalhar o campo por uma área cara de percorrer.</p>
+<p>Na <strong>amostragem sistemática</strong>, sorteamos um ponto inicial e seguimos um intervalo regular, como visitar uma estação a cada 500 m. Ela distribui bem o esforço, desde que a periodicidade do ambiente não coincida com o intervalo escolhido.</p>
+<p>Na <strong>amostragem estratificada</strong>, dividimos a população em estratos conhecidos, como setores expostos e abrigados, e sorteamos unidades dentro de cada um. Isso garante representação e pode aumentar a precisão quando unidades do mesmo estrato se parecem. Para estimar toda a região, as médias dos estratos devem ser ponderadas por seus tamanhos.</p>
+<p>Na <strong>amostragem por conglomerados</strong>, sorteamos grupos naturais, como praias, e medimos várias unidades dentro deles. Ela reduz custos, mas unidades do mesmo conglomerado tendem a trazer informação repetida, e adiante veremos quanto isso custa em precisão.</p>
+<p>O sorteio propriamente dito é uma operação curta:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver um sorteio simples em R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cadastro_estacoes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">estacao =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">45</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">setor =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"exposto"</span>, <span class="st">"intermediário"</span>, <span class="st">"abrigado"</span>), <span class="at">each =</span> <span class="dv">15</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>cadastro_estacoes <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 2
+   estacao setor        
+     &lt;int&gt; &lt;chr&gt;        
+ 1      26 intermediário
+ 2       5 exposto      
+ 3      24 intermediário
+ 4      32 abrigado     
+ 5      31 abrigado     
+ 6      40 abrigado     
+ 7      34 abrigado     
+ 8       9 exposto      
+ 9      30 intermediário
+10       4 exposto      
+11      45 abrigado     
+12      41 abrigado     
+13      12 exposto      
+14      28 intermediário
+15      38 abrigado     </code></pre>
+</div>
+</div>
+<p>O argumento <code>replace = FALSE</code> representa amostragem <strong>sem reposição</strong>: uma estação sorteada não pode entrar de novo. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma vez. A reposição simplifica modelos probabilísticos, mas sem reposição descreve melhor muitos levantamentos de campo. Quando <span class="math inline">\(n\)</span> é uma fração pequena de <span class="math inline">\(N\)</span>, a diferença entre os dois planos é pequena; quando a fração é grande, amostrar sem reposição reduz a incerteza.</p>
+<section id="o-algoritmo-revela-o-desenho" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="o-algoritmo-revela-o-desenho"><span class="header-section-number">3.1</span> O algoritmo revela o desenho</h2>
+<p>Cada plano corresponde a um procedimento explícito, e é o procedimento, não o nome, que determina como a análise deve tratar os dados.</p>
+<p>Na amostragem sistemática, se <span class="math inline">\(N=45\)</span> e queremos <span class="math inline">\(n=9\)</span>, o intervalo é <span class="math inline">\(k=N/n=5\)</span>. Sorteamos um início entre 1 e 5 e selecionamos início, início + 5, início + 10, e assim por diante. O sorteio do início é indispensável; começar sempre na primeira estação pode favorecer uma posição recorrente do cadastro.</p>
+<p>Na estratificação proporcional, se o estrato <span class="math inline">\(h\)</span> possui <span class="math inline">\(N_h\)</span> unidades, selecionamos</p>
+<p><span class="math display">\[
+n_h=n\frac{N_h}{N}.
+\]</span></p>
+<p>Uma média regional é então a soma ponderada <span class="math inline">\(\bar{x}_{est}=\sum_h(N_h/N)\bar{x}_h\)</span>. Alocar o mesmo número em estratos de tamanhos diferentes é possível, mas a análise precisa restaurar os pesos da população. No desenho por conglomerados, a unidade sorteada na primeira etapa é o grupo. Medir todas as estações de uma praia não transforma cada estação em um sorteio independente de praia.</p>
+<p>Aplicados ao mesmo cadastro, os quatro planos produzem padrões espaciais visivelmente distintos.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-desenhos" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro painéis com uma grade de unidades. A amostra simples é dispersa ao acaso, a sistemática segue intervalo regular, a estratificada inclui unidades de todas as faixas e a amostra por conglomerados concentra unidades em poucos grupos.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-desenhos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-populacao-amostra_files/figure-html/fig-desenhos-1.png" class="img-fluid figure-img" alt="Quatro painéis com uma grade de unidades. A amostra simples é dispersa ao acaso, a sistemática segue intervalo regular, a estratificada inclui unidades de todas as faixas e a amostra por conglomerados concentra unidades em poucos grupos." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-desenhos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Unidades selecionadas por quatro desenhos em um cadastro espacial. Cores de fundo representam três estratos.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sortear-estações-soltas-ou-praias-inteiras" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Sortear estações soltas ou praias inteiras?</h1>
+<p>Os quatro desenhos custam quantias diferentes e produzem estimativas de qualidade diferente. Vale medir essa diferença em um caso concreto, comparando o plano aleatório simples com o plano por conglomerados.</p>
+<p>Suponha que o orçamento permita visitar 15 estações. Podemos sortear <strong>15 estações soltas</strong> por toda a região, ou sortear <strong>3 praias inteiras</strong> e medir as 5 estações de cada uma. Nos dois casos são 15 estações e o mesmo esforço de medição, mas a segunda opção é bem mais barata: menos deslocamento, menos dias de viagem.</p>
+<p>A figura abaixo repete as duas estratégias duas mil vezes em uma região onde as praias diferem bastante entre si. Como o código descreve a comparação inteira, ele fica disponível para leitura.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver a simulação das duas estratégias</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>praias <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">praia =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">media_praia =</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">6</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>regiao <span class="ot">&lt;-</span> praias <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">each =</span> <span class="dv">5</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">riqueza =</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="fu">rnorm</span>(<span class="dv">45</span>, <span class="at">mean =</span> media_praia, <span class="at">sd =</span> <span class="fl">1.5</span>)))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>media_regiao <span class="ot">&lt;-</span> <span class="fu">mean</span>(regiao<span class="sc">$</span>riqueza)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>estimativas <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">estrategia =</span> <span class="st">"15 estações soltas"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(regiao<span class="sc">$</span>riqueza, <span class="at">size =</span> <span class="dv">15</span>)))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">estrategia =</span> <span class="st">"3 praias inteiras"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, {</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      sorteadas <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>(regiao<span class="sc">$</span>riqueza[regiao<span class="sc">$</span>praia <span class="sc">%in%</span> sorteadas])</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estrategia =</span> <span class="fu">fct_relevel</span>(estrategia, <span class="st">"15 estações soltas"</span>))</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(estimativas, <span class="fu">aes</span>(<span class="at">x =</span> media)) <span class="sc">+</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">45</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_regiao, <span class="at">colour =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> estrategia, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Riqueza média estimada para a região"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-estrategias" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois histogramas empilhados na mesma escala. O das estações soltas é estreito e concentrado em torno da linha do valor real. O das praias inteiras é muito mais largo, com estimativas que vão de valores baixos a valores altos.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-estrategias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-populacao-amostra_files/figure-html/fig-estrategias-1.png" class="img-fluid figure-img" alt="Dois histogramas empilhados na mesma escala. O das estações soltas é estreito e concentrado em torno da linha do valor real. O das praias inteiras é muito mais largo, com estimativas que vão de valores baixos a valores altos." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-estrategias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Estimativas da riqueza média da região obtidas por duas estratégias de amostragem, ambas com 15 estações. A linha marca a riqueza média real da região.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>As duas estratégias acertam <strong>em média</strong>: os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de 0,78 espécies, e as por praias inteiras, de 1,62.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -414,11 +630,11 @@ Figura&nbsp;1: Estimativas da riqueza média da região obtidas por duas estrat�
 <p>O motivo é que estações da mesma praia se parecem entre si. Ao sortear uma praia rica, você leva cinco estações ricas de uma vez; ao sortear uma pobre, cinco pobres. A estimativa passa a depender muito mais da sorte do sorteio.</p>
 </div>
 </div>
+<p>Vale notar o que a simulação não mostra. O plano por conglomerados perde precisão, mas continua centrado no valor certo, porque as praias entraram por sorteio. Um plano que escolhesse as praias por conveniência erraria de outra maneira, e é essa segunda maneira que examinamos agora.</p>
 </section>
-<section id="amostra-maior-não-conserta-amostra-torta" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Amostra maior não conserta amostra torta</h1>
-<p>As duas estratégias acima diferem em <strong>precisão</strong>, e a precisão melhora ao coletar mais.</p>
-<p>Existe um problema diferente, que coletar mais não resolve. Se a equipe visitar apenas as praias de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra deixa de representar a região, e as estimativas passam a errar sistematicamente para o mesmo lado.</p>
+<section id="precisão-e-viés-são-falhas-diferentes" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Precisão e viés são falhas diferentes</h1>
+<p>A escolha entre estações soltas e praias inteiras afeta a <strong>precisão</strong>, e a precisão melhora ao coletar mais unidades. Existe um problema diferente, que coletar mais não resolve. Se a equipe visitar apenas as praias de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra deixa de representar a região, e as estimativas passam a errar sistematicamente para o mesmo lado.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Duas falhas que não se corrigem do mesmo jeito">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -434,6 +650,39 @@ Figura&nbsp;1: Estimativas da riqueza média da região obtidas por duas estrat�
 </div>
 </div>
 <p>O sorteio é o que protege contra a segunda falha. Ele não garante uma boa amostra em cada levantamento específico, mas garante que nenhuma característica da região seja sistematicamente favorecida ou excluída.</p>
+<p>As duas falhas recebem nomes próprios. <strong>Precisão</strong> descreve o espalhamento das estimativas repetidas; <strong>acurácia</strong> descreve a proximidade entre elas e o parâmetro. Uma estimativa pode ser muito precisa e pouco acurada quando o plano repete de modo consistente uma seleção enviesada, e as quatro combinações possíveis aparecem na figura seguinte.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-acuracia-precisao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro painéis de pontos em torno de uma linha vertical. Eles representam combinações de alta ou baixa precisão com alta ou baixa acurácia.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-acuracia-precisao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-populacao-amostra_files/figure-html/fig-acuracia-precisao-1.png" class="img-fluid figure-img" alt="Quatro painéis de pontos em torno de uma linha vertical. Eles representam combinações de alta ou baixa precisão com alta ou baixa acurácia." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-acuracia-precisao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Acurácia e precisão são propriedades diferentes. A linha vertical marca o parâmetro populacional.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>O painel inferior esquerdo é o mais perigoso na prática: estimativas muito concentradas, e concentradas no lugar errado. Nenhuma medida interna aos dados denuncia essa situação, porque a amostra é coerente consigo mesma. Só o conhecimento do plano de coleta revela o problema.</p>
+<section id="erro-amostral-e-erro-não-amostral" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="erro-amostral-e-erro-não-amostral"><span class="header-section-number">5.1</span> Erro amostral e erro não amostral</h2>
+<p>Convém separar as duas origens do erro. O <strong>erro amostral</strong> é a diferença que surge porque observamos uma amostra, e não a população inteira. Ele varia de sorteio para sorteio e diminui à medida que <span class="math inline">\(n\)</span> cresce. O <strong>erro não amostral</strong> inclui cadastro incompleto, unidades não localizadas, protocolo desigual e erro de medição. Ele pode produzir viés e não desaparece quando <span class="math inline">\(n\)</span> cresce.</p>
+<p>Formalmente, o erro de uma estimativa é <span class="math inline">\(e=\hat\theta-\theta\)</span>, em que <span class="math inline">\(\hat\theta\)</span> é a estimativa e <span class="math inline">\(\theta\)</span> o parâmetro. O viés é <span class="math inline">\(E(\hat\theta)-\theta\)</span>, isto é, a média dos erros em muitas repetições do plano, e a precisão pode ser expressa pela variância de <span class="math inline">\(\hat\theta\)</span>. O erro quadrático médio reúne as duas fontes em um único número:</p>
+<p><span class="math display">\[
+EQM(\hat\theta)=\operatorname{Var}(\hat\theta)+\operatorname{Viés}(\hat\theta)^2.
+\]</span></p>
+<p>A equação torna explícito por que as duas falhas não são intercambiáveis. Aumentar <span class="math inline">\(n\)</span> reduz o primeiro termo e deixa o segundo intacto. Um desenho que reduza o viés à custa de alguma precisão pode, portanto, diminuir o erro total.</p>
+<p>A pergunta do início tinha uma resposta condicional. As 45 estações dizem muito sobre a região se tiverem sido sorteadas de um cadastro que representa essa região, e dizem pouco, por mais numerosas que sejam, se a seleção tiver seguido a conveniência. O desenho amostral define sobre qual população a inferência é defensável, e nenhuma fórmula aplicada depois amplia esse alcance.</p>
+</section>
+</section>
+<section id="para-saber-mais" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<ul>
+<li><a href="https://fcopf.github.io/mead/content/fundamentos-probabilidade/espaco-amostral.html" target="_blank">Espaço amostral e eventos</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html" target="_blank">Importação e exportação de dados</a> (MEAD)</li>
+</ul>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -447,22 +696,6 @@ Figura&nbsp;1: Estimativas da riqueza média da região obtidas por duas estrat�
 <ul>
 <li>Uma equipe mede 200 estações, todas na mesma praia. Sobre qual população essas 200 estações permitem concluir alguma coisa?</li>
 <li>Duas equipes visitam a mesma região com o mesmo orçamento e chegam a estimativas diferentes. Isso indica que uma delas trabalhou mal?</li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para saber mais">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para saber mais
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/amostragem/pop-amostra.html" target="_blank">Descrevendo populações e amostras</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html" target="_blank">Amostrando uma população estatística</a> (MEAD)</li>
 </ul>
 </div>
 </div>
