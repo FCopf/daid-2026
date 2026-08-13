@@ -26,12 +26,9 @@ theme_set(theme_bw(base_size = 12))
 
 Uma pesquisadora quer saber se uma dieta enriquecida faz juvenis de robalo crescerem mais rápido.
 
-Ela monta o experimento assim: **dois tanques**. No tanque 1, todos os peixes recebem a dieta
-comum. No tanque 2, todos recebem a dieta enriquecida. Trinta peixes em cada tanque. Ao fim de
-seis semanas, ela mede o comprimento de cada peixe: 60 medidas.
+Ela monta o experimento assim: **dois tanques**. No tanque 1, todos os peixes recebem a dieta comum. No tanque 2, todos recebem a dieta enriquecida. Trinta peixes em cada tanque. Ao fim de seis semanas, ela mede o comprimento de cada peixe: 60 medidas.
 
-A dieta enriquecida apresenta média maior. A diferença é grande e o teste estatístico produz um
-resultado convincente.
+A dieta enriquecida apresenta média maior. A diferença é grande e o teste estatístico produz um resultado convincente.
 
 Só que o experimento não permite concluir nada sobre a dieta.
 
@@ -39,32 +36,23 @@ Só que o experimento não permite concluir nada sobre a dieta.
 
 A pergunta que desmonta o problema é simples: **o sorteio da dieta foi feito quantas vezes?**
 
-Duas. A dieta comum foi atribuída ao tanque 1 e a enriquecida ao tanque 2. Nenhum peixe recebeu
-uma dieta individualmente: cada peixe recebeu a dieta *do seu tanque*.
+Duas. A dieta comum foi atribuída ao tanque 1 e a enriquecida ao tanque 2. Nenhum peixe recebeu uma dieta individualmente: cada peixe recebeu a dieta *do seu tanque*.
 
-Isso significa que o tratamento foi aplicado ao **tanque**, não ao peixe. O tanque é a
-**unidade experimental**: a menor unidade que recebeu uma atribuição independente de tratamento.
+Isso significa que o tratamento foi aplicado ao **tanque**, não ao peixe. O tanque é a **unidade experimental**: a menor unidade que recebeu uma atribuição independente de tratamento.
 
-Os 30 peixes de um tanque são **subamostras**: medidas repetidas dentro da mesma unidade
-experimental. Eles descrevem muito bem aquele tanque, mas não acrescentam nenhuma repetição
-independente do tratamento.
+Os 30 peixes de um tanque são **subamostras**: medidas repetidas dentro da mesma unidade experimental. Eles descrevem muito bem aquele tanque, mas não acrescentam nenhuma repetição independente do tratamento.
 
 ::: {.callout-note appearance="minimal" title="Três papéis que não se misturam"}
 **Unidade experimental**: o que recebeu o tratamento por sorteio. É ela que se replica.
 
-**Subamostra**: medida repetida dentro de uma unidade experimental. Melhora a precisão da medida
-daquela unidade; não aumenta o número de réplicas.
+**Subamostra**: medida repetida dentro de uma unidade experimental. Melhora a precisão da medida daquela unidade; não aumenta o número de réplicas.
 
-**Réplica**: cada unidade experimental adicional que recebeu o mesmo tratamento de forma
-independente.
+**Réplica**: cada unidade experimental adicional que recebeu o mesmo tratamento de forma independente.
 :::
 
 ## Cada papel corresponde a uma ação concreta
 
-Além desses três, há dois nomes úteis. A **unidade amostral** é a entidade selecionada pelo plano de
-amostragem; a **unidade de medição** é aquela sobre a qual o instrumento produz um valor. Em um
-experimento, a unidade observacional pode coincidir ou não com ambas. O vocabulário só é útil quando
-cada papel é ligado a uma ação concreta: selecionar, atribuir tratamento, observar ou medir.
+Além desses três, há dois nomes úteis. A **unidade amostral** é a entidade selecionada pelo plano de amostragem; a **unidade de medição** é aquela sobre a qual o instrumento produz um valor. Em um experimento, a unidade observacional pode coincidir ou não com ambas. O vocabulário só é útil quando cada papel é ligado a uma ação concreta: selecionar, atribuir tratamento, observar ou medir.
 
 | Papel | Pergunta de diagnóstico | Exemplo dos tanques |
 |---|---|---|
@@ -74,19 +62,13 @@ cada papel é ligado a uma ação concreta: selecionar, atribuir tratamento, obs
 | Unidade de medição | onde o instrumento foi aplicado? | peixe, ou cada leitura do peixe |
 | Subamostra | o que foi medido dentro de uma unidade maior? | peixes do mesmo tanque |
 
-Esses papéis não são definidos pelo nome biológico da entidade. Um peixe pode ser unidade
-experimental se cada indivíduo receber uma dieta sorteada separadamente. O mesmo peixe passa a ser
-subamostra quando a dieta é distribuída ao tanque. Para reconhecer o nível correto em um estudo
-qualquer, três perguntas bastam:
+Esses papéis não são definidos pelo nome biológico da entidade. Um peixe pode ser unidade experimental se cada indivíduo receber uma dieta sorteada separadamente. O mesmo peixe passa a ser subamostra quando a dieta é distribuída ao tanque. Para reconhecer o nível correto em um estudo qualquer, três perguntas bastam:
 
 1. Qual entidade poderia ter recebido outro tratamento sem obrigar as demais a mudar?
 2. Em qual nível o tratamento foi sorteado?
 3. Qual fonte de variação deve servir de comparação para o efeito?
 
-A distinção reaparece no laboratório com outro vocabulário. **Réplicas biológicas** são unidades
-independentes que representam variação do sistema de interesse. **Réplicas técnicas** repetem a
-medição da mesma unidade, como três leituras da mesma amostra em um equipamento. Réplicas técnicas
-ajudam a estimar e reduzir erro de medição, mas não representam novos organismos, tanques ou locais.
+A distinção reaparece no laboratório com outro vocabulário. **Réplicas biológicas** são unidades independentes que representam variação do sistema de interesse. **Réplicas técnicas** repetem a medição da mesma unidade, como três leituras da mesma amostra em um equipamento. Réplicas técnicas ajudam a estimar e reduzir erro de medição, mas não representam novos organismos, tanques ou locais.
 
 ```{r}
 #| echo: false
@@ -125,28 +107,17 @@ ggplot(hierarquia) +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
 
-O diagrama deixa visível por que três peixes ligados ao mesmo tanque não equivalem a três tanques.
-O tratamento chega ao tanque; as medidas de peixe estão aninhadas abaixo dele.
+O diagrama deixa visível por que três peixes ligados ao mesmo tanque não equivalem a três tanques. O tratamento chega ao tanque; as medidas de peixe estão aninhadas abaixo dele.
 
-Voltando ao experimento original: com dois tanques, ele tem **uma réplica por tratamento**. E com
-uma réplica por tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra
-coisa que diferencie os dois tanques: temperatura, luz, aeração, posição na sala, o acaso da
-distribuição inicial dos peixes. Não há como separar. O efeito da dieta está **confundido** com o
-efeito do tanque.
+Voltando ao experimento original: com dois tanques, ele tem **uma réplica por tratamento**. E com uma réplica por tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra coisa que diferencie os dois tanques: temperatura, luz, aeração, posição na sala, o acaso da distribuição inicial dos peixes. Não há como separar. O efeito da dieta está **confundido** com o efeito do tanque.
 
 # Por que 60 medidas não resolvem
 
-É tentador pensar que 30 peixes por tratamento é bastante gente e que isso compensa. Não compensa,
-e vale entender por quê.
+É tentador pensar que 30 peixes por tratamento é bastante gente e que isso compensa. Não compensa, e vale entender por quê.
 
-Medir mais peixes dentro do mesmo tanque reduz a incerteza sobre **a média daquele tanque**. Mas o
-que a pergunta exige é comparar dietas, e para isso precisamos saber quanto **tanques tratados da
-mesma forma** variam entre si. Com um tanque por dieta, essa variação nunca foi observada.
+Medir mais peixes dentro do mesmo tanque reduz a incerteza sobre **a média daquele tanque**. Mas o que a pergunta exige é comparar dietas, e para isso precisamos saber quanto **tanques tratados da mesma forma** variam entre si. Com um tanque por dieta, essa variação nunca foi observada.
 
-Para ver as duas fontes de variação separadas, vale simular um experimento com oito tanques, quatro
-por dieta, e quinze peixes em cada um. A simulação é escrita em dois passos, que correspondem
-exatamente aos dois níveis do experimento: primeiro sorteamos a média de cada tanque, depois
-sorteamos os peixes dentro dele.
+Para ver as duas fontes de variação separadas, vale simular um experimento com oito tanques, quatro por dieta, e quinze peixes em cada um. A simulação é escrita em dois passos, que correspondem exatamente aos dois níveis do experimento: primeiro sorteamos a média de cada tanque, depois sorteamos os peixes dentro dele.
 
 ```{r}
 #| code-fold: true
@@ -174,57 +145,35 @@ ggplot(peixes, aes(x = tanque, y = comprimento, colour = dieta)) +
   scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00"))
 ```
 
-Repare em duas coisas na figura. Dentro de cada tanque, os peixes se parecem: os pontos formam
-nuvens compactas. Entre tanques da **mesma dieta**, as médias já não coincidem: o tanque 1 e o
-tanque 3 receberam a mesma coisa e mesmo assim diferem.
+Repare em duas coisas na figura. Dentro de cada tanque, os peixes se parecem: os pontos formam nuvens compactas. Entre tanques da **mesma dieta**, as médias já não coincidem: o tanque 1 e o tanque 3 receberam a mesma coisa e mesmo assim diferem.
 
-Essa segunda variação é a régua correta para julgar o efeito da dieta. Um experimento com dois
-tanques a apaga por completo.
+Essa segunda variação é a régua correta para julgar o efeito da dieta. Um experimento com dois tanques a apaga por completo.
 
 ## Quanta informação uma subamostra realmente acrescenta
 
-A figura mostra qualitativamente que peixes do mesmo tanque trazem informação repetida. É possível
-quantificar essa perda. Peixes do mesmo tanque compartilham água, alimento, temperatura e manejo, e
-essa semelhança pode ser descrita por uma correlação intragrupo $\rho$. Se cada um de $m$ peixes
-fosse independente, $m$ medidas forneceriam $m$ unidades de informação. Quando $\rho>0$, uma
-aproximação para o efeito da dependência é
+A figura mostra qualitativamente que peixes do mesmo tanque trazem informação repetida. É possível quantificar essa perda. Peixes do mesmo tanque compartilham água, alimento, temperatura e manejo, e essa semelhança pode ser descrita por uma correlação intragrupo $\rho$. Se cada um de $m$ peixes fosse independente, $m$ medidas forneceriam $m$ unidades de informação. Quando $\rho>0$, uma aproximação para o efeito da dependência é
 
 $$
 \text{efeito do agrupamento}=1+(m-1)\rho.
 $$
 
-Quanto maior o grupo e a correlação, maior a diferença entre o número de linhas e a informação
-efetiva. Dividindo o número nominal de observações por esse fator, obtemos uma aproximação para o
-tamanho amostral efetivo:
+Quanto maior o grupo e a correlação, maior a diferença entre o número de linhas e a informação efetiva. Dividindo o número nominal de observações por esse fator, obtemos uma aproximação para o tamanho amostral efetivo:
 
 $$
 n_{efetivo}\approx\frac{n_{nominal}}{1+(m-1)\rho}.
 $$
 
-Se há 120 peixes, 15 por tanque, e $\rho=0{,}30$, o efeito do agrupamento é
-$1+14\times0{,}30=5{,}2$ e o tamanho efetivo aproximado é $120/5{,}2\approx23$. Ou seja, 120 medidas
-carregam aproximadamente a informação de 23 observações independentes.
+Se há 120 peixes, 15 por tanque, e $\rho=0{,}30$, o efeito do agrupamento é $1+14\times0{,}30=5{,}2$ e o tamanho efetivo aproximado é $120/5{,}2\approx23$. Ou seja, 120 medidas carregam aproximadamente a informação de 23 observações independentes.
 
-A fórmula explica quantitativamente por que tratar observações correlacionadas como independentes
-produz erros padrão pequenos demais. O que ela não faz é criar réplicas: mesmo com o ajuste, o
-experimento continua tendo apenas oito unidades experimentais para avaliar a dieta, e teria apenas
-duas no desenho original.
+A fórmula explica quantitativamente por que tratar observações correlacionadas como independentes produz erros padrão pequenos demais. O que ela não faz é criar réplicas: mesmo com o ajuste, o experimento continua tendo apenas oito unidades experimentais para avaliar a dieta, e teria apenas duas no desenho original.
 
 # Pseudorreplicação
 
-Analisar os 60 peixes como se fossem 60 réplicas independentes tem nome: **pseudorreplicação**.
-O termo foi popularizado por Hurlbert [@hurlbert1984] justamente ao revisar experimentos ecológicos
-publicados, e o diagnóstico continua atual.
+Analisar os 60 peixes como se fossem 60 réplicas independentes tem nome: **pseudorreplicação**. O termo foi popularizado por Hurlbert [@hurlbert1984] justamente ao revisar experimentos ecológicos publicados, e o diagnóstico continua atual.
 
-O sintoma é sempre o mesmo: o número de linhas da planilha é maior que o número de vezes que o
-tratamento foi realmente sorteado. O efeito prático também: o erro padrão fica artificialmente
-pequeno, o intervalo de confiança fica estreito demais e o resultado parece mais convincente do
-que é.
+O sintoma é sempre o mesmo: o número de linhas da planilha é maior que o número de vezes que o tratamento foi realmente sorteado. O efeito prático também: o erro padrão fica artificialmente pequeno, o intervalo de confiança fica estreito demais e o resultado parece mais convincente do que é.
 
-Pseudorreplicação também ocorre sem tanques. Pontos muito próximos podem compartilhar o mesmo
-processo espacial; medidas sucessivas no mesmo organismo compartilham história; anos consecutivos
-podem estar ligados pela dinâmica da população. A dependência não é identificada apenas olhando a
-correlação observada. Ela começa no modo como as unidades foram geradas e selecionadas.
+Pseudorreplicação também ocorre sem tanques. Pontos muito próximos podem compartilhar o mesmo processo espacial; medidas sucessivas no mesmo organismo compartilham história; anos consecutivos podem estar ligados pela dinâmica da população. A dependência não é identificada apenas olhando a correlação observada. Ela começa no modo como as unidades foram geradas e selecionadas.
 
 ::: {.callout-warning appearance="minimal" title="Um teste rápido antes de analisar"}
 Conte quantas vezes o tratamento foi atribuído. Esse é o seu número de unidades experimentais.
@@ -236,19 +185,13 @@ Se a análise usa mais observações do que isso, há subamostras entrando como 
 
 Identificado o problema, resta a solução, e ela costuma contrariar a intuição.
 
-O experimento dos dois tanques não melhora com 60 peixes por tanque, nem com 300. Cada peixe a
-mais refina a estimativa da média daquele tanque, e o que falta não é isso: falta ter visto tanques
-tratados da mesma forma diferirem entre si.
+O experimento dos dois tanques não melhora com 60 peixes por tanque, nem com 300. Cada peixe a mais refina a estimativa da média daquele tanque, e o que falta não é isso: falta ter visto tanques tratados da mesma forma diferirem entre si.
 
-O que o experimento precisa é de **mais tanques**, ainda que menores e com menos peixes em cada um.
-Uma medida repetida barata não substitui uma unidade experimental cara.
+O que o experimento precisa é de **mais tanques**, ainda que menores e com menos peixes em cada um. Uma medida repetida barata não substitui uma unidade experimental cara.
 
 ## Resumir no nível correto
 
-Quando o desenho já tem vários tanques e vários peixes em cada um, a análise precisa respeitar essa
-estrutura. A alternativa mais transparente é calcular uma média por tanque e comparar essas médias,
-de modo que cada linha da tabela analítica corresponda a uma atribuição independente de tratamento.
-Aplicada aos oito tanques simulados acima, a operação cabe em uma sequência curta:
+Quando o desenho já tem vários tanques e vários peixes em cada um, a análise precisa respeitar essa estrutura. A alternativa mais transparente é calcular uma média por tanque e comparar essas médias, de modo que cada linha da tabela analítica corresponda a uma atribuição independente de tratamento. Aplicada aos oito tanques simulados acima, a operação cabe em uma sequência curta:
 
 ```{r}
 #| code-fold: true
@@ -264,38 +207,23 @@ dados_por_tanque <- peixes |>
 dados_por_tanque
 ```
 
-A tabela resultante tem oito linhas, uma por unidade experimental, e é sobre ela que uma comparação
-entre dietas pode ser feita. Aumentar o número de peixes por tanque estabiliza cada média da coluna
-`comprimento_medio`; aumentar o número de tanques acrescenta linhas, que é o que realmente
-fortalece a comparação.
+A tabela resultante tem oito linhas, uma por unidade experimental, e é sobre ela que uma comparação entre dietas pode ser feita. Aumentar o número de peixes por tanque estabiliza cada média da coluna `comprimento_medio`; aumentar o número de tanques acrescenta linhas, que é o que realmente fortalece a comparação.
 
-Modelos hierárquicos permitem conservar as medidas individuais e representar explicitamente a
-variação entre tanques e entre peixes. Essa abordagem é útil, mas não muda a exigência de desenho:
-os tratamentos ainda precisam de unidades experimentais replicadas. Nenhum modelo estatístico
-recupera uma fonte de variação que o experimento não observou.
+Modelos hierárquicos permitem conservar as medidas individuais e representar explicitamente a variação entre tanques e entre peixes. Essa abordagem é útil, mas não muda a exigência de desenho: os tratamentos ainda precisam de unidades experimentais replicadas. Nenhum modelo estatístico recupera uma fonte de variação que o experimento não observou.
 
-Subamostras continuam valiosas. Elas melhoram a média do tanque, permitem estudar heterogeneidade
-interna e protegem contra uma medição atípica. O erro está apenas em atribuir a elas o papel de
-réplicas independentes.
+Subamostras continuam valiosas. Elas melhoram a média do tanque, permitem estudar heterogeneidade interna e protegem contra uma medição atípica. O erro está apenas em atribuir a elas o papel de réplicas independentes.
 
-O experimento do início tinha 60 medidas e duas réplicas. A confusão entre esses dois números é a
-origem de boa parte dos resultados que não se sustentam quando outra equipe tenta reproduzi-los.
-Contar réplicas, portanto, não é uma formalidade da análise: é a maneira de verificar se a pergunta
-feita em campo pode mesmo ser respondida pelos dados coletados.
+O experimento do início tinha 60 medidas e duas réplicas. A confusão entre esses dois números é a origem de boa parte dos resultados que não se sustentam quando outra equipe tenta reproduzi-los. Contar réplicas, portanto, não é uma formalidade da análise: é a maneira de verificar se a pergunta feita em campo pode mesmo ser respondida pelos dados coletados.
 
-# Para saber mais
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD), com o tratamento formal de conglomerados, que é a versão amostral do problema discutido aqui.
 
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD),
-  com o tratamento formal de conglomerados, que é a versão amostral do problema discutido aqui.
-
-O artigo de Hurlbert [@hurlbert1984] permanece a leitura de referência sobre o tema e traz dezenas
-de exemplos reais de delineamentos ecológicos.
+O artigo de Hurlbert [@hurlbert1984] permanece a leitura de referência sobre o tema e traz dezenas de exemplos reais de delineamentos ecológicos.
+:::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Um estudo mede a salinidade em 3 pontos de cada um de 2 estuários e compara os estuários com
-  6 medidas. Qual é a unidade experimental? Quantas réplicas existem por estuário?
-- Uma pesquisadora relata "n = 60" em um experimento com dois tanques. Que número ela deveria ter
-  informado?
+- Um estudo mede a salinidade em 3 pontos de cada um de 2 estuários e compara os estuários com 6 medidas. Qual é a unidade experimental? Quantas réplicas existem por estuário?
+- Uma pesquisadora relata "n = 60" em um experimento com dois tanques. Que número ela deveria ter informado?
 :::
 
 # Referências

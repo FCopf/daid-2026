@@ -19,16 +19,11 @@ format:
 
 # Objetivo desta prática
 
-A [leitura desta semana](../pre-reading/pread-relacao-linear.qmd) apresentou a reta como **processo
-gerador**: uma parte sistemática, $\beta_0 + \beta_1 X$, mais uma variação em torno dela.
+A [leitura desta semana](../pre-reading/pread-relacao-linear.qmd) apresentou a reta como **processo gerador**: uma parte sistemática, $\beta_0 + \beta_1 X$, mais uma variação em torno dela.
 
-Hoje você vai usar esse processo nos dois sentidos. Primeiro no sentido fácil: você escolhe
-$\beta_0$, $\beta_1$ e o tamanho da variação, gera os dados e vê o que `lm()` consegue recuperar —
-sabendo a resposta, dá para julgar a estimativa. Depois no sentido difícil: dados reais de moluscos,
-em que os parâmetros são desconhecidos e a única forma de julgar o ajuste é olhar os resíduos.
+Hoje você vai usar esse processo nos dois sentidos. Primeiro no sentido fácil: você escolhe $\beta_0$, $\beta_1$ e o tamanho da variação, gera os dados e vê o que `lm()` consegue recuperar — sabendo a resposta, dá para julgar a estimativa. Depois no sentido difícil: dados reais de moluscos, em que os parâmetros são desconhecidos e a única forma de julgar o ajuste é olhar os resíduos.
 
-O objetivo em R é ajustar modelos com `lm()`, ler `confint()` e escrever um gráfico de diagnóstico
-sem receber o código pronto.
+O objetivo em R é ajustar modelos com `lm()`, ler `confint()` e escrever um gráfico de diagnóstico sem receber o código pronto.
 
 ::: {.callout-note appearance="minimal" title="Como a hora será usada"}
 - **5 min** abrir o RStudio, criar o script e ler a proposta;
@@ -47,8 +42,7 @@ theme_set(theme_bw(base_size = 12))
 
 # Uma reta que você escreve
 
-Vamos inventar uma população de moluscos em que a biomassa cresce linearmente com o comprimento da
-concha. Os três parâmetros do processo gerador ficam explícitos:
+Vamos inventar uma população de moluscos em que a biomassa cresce linearmente com o comprimento da concha. Os três parâmetros do processo gerador ficam explícitos:
 
 ```{r}
 beta0 <- -0.8     # intercepto
@@ -62,8 +56,7 @@ moluscos_sim <- tibble(
 )
 ```
 
-`runif()` sorteia comprimentos espalhados entre 14 e 30 mm; a segunda linha calcula o centro previsto
-pela reta e soma a variação individual.
+`runif()` sorteia comprimentos espalhados entre 14 e 30 mm; a segunda linha calcula o centro previsto pela reta e soma a variação individual.
 
 ```{r}
 #| label: fig-regressao-simulado
@@ -78,8 +71,7 @@ ggplot(moluscos_sim, aes(x = comprimento, y = biomassa)) +
 
 Nenhum ponto cai exatamente sobre a reta: ela descreve o **centro** da resposta, não as observações.
 
-Agora o caminho de volta. `lm()` estima os coeficientes a partir dos dados, sem saber quais foram os
-valores usados para gerá-los:
+Agora o caminho de volta. `lm()` estima os coeficientes a partir dos dados, sem saber quais foram os valores usados para gerá-los:
 
 ```{r}
 modelo_sim <- lm(biomassa ~ comprimento, data = moluscos_sim)
@@ -89,14 +81,12 @@ confint(modelo_sim)
 ```
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-Compare o valor estimado para `comprimento` com o `beta1` que **você** escreveu. Eles não são iguais:
-o primeiro é uma estimativa obtida de 60 moluscos sorteados; o segundo é o parâmetro do processo.
+Compare o valor estimado para `comprimento` com o `beta1` que **você** escreveu. Eles não são iguais: o primeiro é uma estimativa obtida de 60 moluscos sorteados; o segundo é o parâmetro do processo.
 
 Olhe agora a linha `comprimento` de `confint()`. O intervalo contém o valor verdadeiro?
 :::
 
-O gráfico de resíduos é a ferramenta mais barata de toda a modelagem. Como aqui os dados foram
-gerados por uma reta de verdade, ele mostra o aspecto que um ajuste **adequado** produz:
+O gráfico de resíduos é a ferramenta mais barata de toda a modelagem. Como aqui os dados foram gerados por uma reta de verdade, ele mostra o aspecto que um ajuste **adequado** produz:
 
 ```{r}
 #| label: fig-regressao-residuos-sim
@@ -114,25 +104,20 @@ ggplot(diagnostico_sim, aes(x = ajustado, y = residuo)) +
   labs(x = "Biomassa ajustada (g)", y = "Resíduo (g)")
 ```
 
-Uma nuvem sem padrão, com espalhamento parecido da esquerda para a direita. Guarde esta imagem: é
-contra ela que você vai comparar o próximo gráfico.
+Uma nuvem sem padrão, com espalhamento parecido da esquerda para a direita. Guarde esta imagem: é contra ela que você vai comparar o próximo gráfico.
 
 # Sua vez, parte 1: parâmetro e estimativa
 
 ::: {.callout-tip appearance="minimal" title="Preveja e conte"}
-Execute o bloco da simulação, o `lm()` e o `confint()` **três vezes seguidas**, anotando a cada vez a
-inclinação estimada e se o intervalo conteve o seu `beta1`.
+Execute o bloco da simulação, o `lm()` e o `confint()` **três vezes seguidas**, anotando a cada vez a inclinação estimada e se o intervalo conteve o seu `beta1`.
 
-Antes de começar, escreva no script: em quantas das três você espera que o intervalo contenha o valor
-verdadeiro?
+Antes de começar, escreva no script: em quantas das três você espera que o intervalo contenha o valor verdadeiro?
 :::
 
 ::: {.callout-tip appearance="minimal" title="Escolha um parâmetro e mude"}
-Agora escolha **um** dos três parâmetros do processo (`beta1`, `sigma` ou `n`), mude o seu valor e
-repita o ajuste.
+Agora escolha **um** dos três parâmetros do processo (`beta1`, `sigma` ou `n`), mude o seu valor e repita o ajuste.
 
-Registre no script o parâmetro escolhido, o valor antigo, o novo e a **largura** do intervalo de
-confiança da inclinação antes e depois. A largura é `upr - lwr` na linha `comprimento`.
+Registre no script o parâmetro escolhido, o valor antigo, o novo e a **largura** do intervalo de confiança da inclinação antes e depois. A largura é `upr - lwr` na linha `comprimento`.
 :::
 
 # Os dados reais: moluscos de abril
@@ -147,12 +132,9 @@ abril <- moluscos |> filter(MONTH == 4)
 nrow(abril)
 ```
 
-As colunas que interessam são `LENGTH` (comprimento da concha, em mm) e `AFD` (biomassa livre de
-cinzas, em gramas); `MONTH` indica o mês de coleta.
+As colunas que interessam são `LENGTH` (comprimento da concha, em mm) e `AFD` (biomassa livre de cinzas, em gramas); `MONTH` indica o mês de coleta.
 
-Relações entre tamanho e massa em organismos raramente são retas: a massa acompanha o volume, que
-cresce com uma **potência** do comprimento. Tomar o logaritmo dos dois lados transforma essa relação
-em uma reta.
+Relações entre tamanho e massa em organismos raramente são retas: a massa acompanha o volume, que cresce com uma **potência** do comprimento. Tomar o logaritmo dos dois lados transforma essa relação em uma reta.
 
 ```{r}
 abril <- abril |>
@@ -183,16 +165,12 @@ summary(modelo_log)
 confint(modelo_log)
 ```
 
-Na escala logarítmica, a inclinação tem leitura direta: ela é o **expoente** da relação entre
-comprimento e biomassa. Compare-a com a sua previsão.
+Na escala logarítmica, a inclinação tem leitura direta: ela é o **expoente** da relação entre comprimento e biomassa. Compare-a com a sua previsão.
 
 ::: {.callout-tip appearance="minimal" title="Agora é com você"}
-Escreva o gráfico de resíduos de `modelo_log`, seguindo a estrutura usada nos dados simulados:
-`fitted()` e `residuals()` dentro de um `tibble()`, depois o `ggplot()` com `geom_hline()` e
-`geom_point()`. Troque os rótulos dos eixos para a escala logarítmica.
+Escreva o gráfico de resíduos de `modelo_log`, seguindo a estrutura usada nos dados simulados: `fitted()` e `residuals()` dentro de um `tibble()`, depois o `ggplot()` com `geom_hline()` e `geom_point()`. Troque os rótulos dos eixos para a escala logarítmica.
 
-Compare-o com o gráfico dos dados simulados. Procure duas coisas: **curvatura** (os pontos desenham
-um arco?) e **funil** (o espalhamento cresce da esquerda para a direita?).
+Compare-o com o gráfico dos dados simulados. Procure duas coisas: **curvatura** (os pontos desenham um arco?) e **funil** (o espalhamento cresce da esquerda para a direita?).
 :::
 
 # Sua vez, parte 2: o mesmo molusco em outro mês
@@ -204,8 +182,7 @@ moluscos |> count(MONTH)
 ```
 
 ::: {.callout-tip appearance="minimal" title="Escolha"}
-Escolha **um** segundo mês com pelo menos 20 indivíduos e registre a escolha no script. Refaça para
-ele o ajuste na escala logarítmica e obtenha `confint()`.
+Escolha **um** segundo mês com pelo menos 20 indivíduos e registre a escolha no script. Refaça para ele o ajuste na escala logarítmica e obtenha `confint()`.
 
 Antes de comparar as inclinações, execute também `range()` do comprimento observado nesse mês:
 
@@ -213,35 +190,25 @@ Antes de comparar as inclinações, execute também `range()` do comprimento obs
 range(____$LENGTH)
 ```
 
-Uma inclinação estimada sobre uma faixa estreita de comprimentos é muito menos confiável do que uma
-estimada sobre uma faixa ampla, mesmo quando o número de indivíduos é parecido.
+Uma inclinação estimada sobre uma faixa estreita de comprimentos é muito menos confiável do que uma estimada sobre uma faixa ampla, mesmo quando o número de indivíduos é parecido.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Decida"}
-Com os dois intervalos de confiança em mãos, decida: os dados distinguem os dois meses quanto ao
-expoente, ou os intervalos se cobrem folgadamente?
+Com os dois intervalos de confiança em mãos, decida: os dados distinguem os dois meses quanto ao expoente, ou os intervalos se cobrem folgadamente?
 
-Lembre da leitura: duas estimativas diferentes no sentido aritmético não são necessariamente
-diferentes no sentido estatístico.
+Lembre da leitura: duas estimativas diferentes no sentido aritmético não são necessariamente diferentes no sentido estatístico.
 :::
 
 # Entrega
 
-Salve o script `pr-regressao.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
-(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
-script, como comentários iniciados por `#`.
+Salve o script `pr-regressao.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por `#`.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-1. **o seu processo gerador**: os três parâmetros, o gráfico e, das três repetições, quantas vezes o
-   intervalo conteve o seu `beta1` — com a previsão registrada antes;
+1. **o seu processo gerador**: os três parâmetros, o gráfico e, das três repetições, quantas vezes o intervalo conteve o seu `beta1` — com a previsão registrada antes;
 2. **o parâmetro que você mudou**, com as duas larguras do intervalo da inclinação, antes e depois;
-3. o ajuste log-log de abril, com a previsão sobre a inclinação registrada antes, e o **gráfico de
-   resíduos escrito por você**;
-4. **o segundo mês escolhido**: a inclinação, o intervalo de confiança e a faixa de comprimentos
-   observada;
-5. em comentários, 3 a 4 frases respondendo, **com os seus números**: os dois meses têm o mesmo
-   expoente? O que a faixa de comprimentos do seu mês permite ou impede afirmar? E o que o gráfico de
-   resíduos mostrou que o $R^2$ sozinho não mostraria?
+3. o ajuste log-log de abril, com a previsão sobre a inclinação registrada antes, e o **gráfico de resíduos escrito por você**;
+4. **o segundo mês escolhido**: a inclinação, o intervalo de confiança e a faixa de comprimentos observada;
+5. em comentários, 3 a 4 frases respondendo, **com os seus números**: os dois meses têm o mesmo expoente? O que a faixa de comprimentos do seu mês permite ou impede afirmar? E o que o gráfico de resíduos mostrou que o $R^2$ sozinho não mostraria?
 :::
 
 ::: {.callout-tip appearance="minimal" title="O que será avaliado"}
@@ -253,10 +220,7 @@ script, como comentários iniciados por `#`.
 - [ ] a comparação entre meses usa os **intervalos**, e não apenas os dois números estimados.
 :::
 
-# Para saber mais
-
-- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html){target="_blank"}
-  (MEAD) — procure a seção sobre o erro padrão da inclinação, para entender por que uma faixa estreita
-  de $X$ produz um intervalo largo.
-- [Funções de potência](https://fcopf.github.io/mead/content/funcoes-modelos/funcoes-potencia.html){target="_blank"}
-  (MEAD) — para rever por que o logaritmo transforma $Y = aX^b$ em uma reta.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Regressão linear simples](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-simples.html){target="_blank"} (MEAD) — procure a seção sobre o erro padrão da inclinação, para entender por que uma faixa estreita de $X$ produz um intervalo largo.
+- [Funções de potência](https://fcopf.github.io/mead/content/funcoes-modelos/funcoes-potencia.html){target="_blank"} (MEAD) — para rever por que o logaritmo transforma $Y = aX^b$ em uma reta.
+:::

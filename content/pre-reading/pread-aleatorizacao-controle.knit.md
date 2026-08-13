@@ -16,11 +16,7 @@ format:
     toc-depth: 2
 ---
 
-```{r}
-#| include: false
-library(tidyverse)
-theme_set(theme_bw(base_size = 12))
-```
+
 
 # Cento e vinte peixes para distribuir
 
@@ -36,56 +32,21 @@ Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é 
 
 Vale ver o que isso significa em números. A figura abaixo repete duas mil vezes um experimento em que **as duas dietas são idênticas**, variando apenas a distribuição dos 120 peixes, e guarda a diferença estimada entre as dietas em cada repetição.
 
-```{r}
-#| echo: false
-#| label: fig-alocacao
-#| fig-cap: "Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero."
-#| fig-alt: "Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero."
-#| fig-height: 4.6
-variacao_entre_tanques <- 0.8
-variacao_entre_peixes <- 0.5
-orcamento <- 120
 
-diferenca_estimada <- function(n_tanques) {
-  peixes_por_tanque <- orcamento / n_tanques
-  dieta <- rep(c("comum", "enriquecida"), each = n_tanques / 2)
+::: {.cell}
+::: {.cell-output-display}
+![Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero.](pread-aleatorizacao-controle_files/figure-html/fig-alocacao-1.png){#fig-alocacao fig-alt='Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero.' width=672}
+:::
+:::
 
-  media_tanque <- rnorm(n_tanques, mean = 10, sd = variacao_entre_tanques)
-  media_medida <- media_tanque +
-    rnorm(n_tanques, mean = 0, sd = variacao_entre_peixes / sqrt(peixes_por_tanque))
 
-  mean(media_medida[dieta == "enriquecida"]) - mean(media_medida[dieta == "comum"])
-}
 
-alocacoes <- c(2, 4, 8, 20)
-rotulos <- paste0(alocacoes, " tanques de ", orcamento / alocacoes, " peixes")
+::: {.cell}
 
-diferencas <- bind_rows(lapply(seq_along(alocacoes), function(i) {
-  tibble(
-    alocacao = rotulos[i],
-    diferenca = replicate(2000, diferenca_estimada(alocacoes[i]))
-  )
-})) |>
-  mutate(alocacao = fct_relevel(alocacao, rotulos))
+:::
 
-ggplot(diferencas, aes(x = diferenca)) +
-  geom_histogram(bins = 50, fill = "#0072B2", colour = "white") +
-  geom_vline(xintercept = 0, colour = "#D55E00", linewidth = 1) +
-  facet_wrap(~ alocacao, ncol = 1, scales = "free_y") +
-  labs(x = "Diferença estimada entre as dietas (cm)", y = "Frequência")
-```
 
-```{r}
-#| echo: false
-espalhamento <- diferencas |>
-  group_by(alocacao) |>
-  summarise(desvio = sd(diferenca))
-
-sd_2  <- formatC(espalhamento$desvio[1], format = "f", digits = 2, decimal.mark = ",")
-sd_20 <- formatC(espalhamento$desvio[4], format = "f", digits = 2, decimal.mark = ",")
-```
-
-Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de `r sd_2` cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de `r sd_20` cm.
+Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,14 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,37 cm.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
 Nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a dieta foi sorteada de forma independente.
@@ -125,9 +86,10 @@ O símbolo $\widehat\Delta$ é a diferença observada entre médias. Sob sorteio
 
 Na prática, o sorteio balanceado é uma linha de código, e convém que seja registrada:
 
-```{r}
-#| code-fold: true
-#| code-summary: "Ver uma alocação balanceada em R"
+
+::: {.cell}
+
+```{.r .cell-code  code-fold="true" code-summary="Ver uma alocação balanceada em R"}
 tanques <- tibble(tanque = 1:20)
 
 alocacao <- tanques |>
@@ -135,6 +97,39 @@ alocacao <- tanques |>
 
 alocacao
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 20 × 2
+   tanque dieta      
+    <int> <chr>      
+ 1      1 enriquecida
+ 2      2 enriquecida
+ 3      3 comum      
+ 4      4 enriquecida
+ 5      5 enriquecida
+ 6      6 enriquecida
+ 7      7 enriquecida
+ 8      8 comum      
+ 9      9 comum      
+10     10 comum      
+11     11 enriquecida
+12     12 comum      
+13     13 enriquecida
+14     14 enriquecida
+15     15 comum      
+16     16 comum      
+17     17 comum      
+18     18 enriquecida
+19     19 comum      
+20     20 comum      
+```
+
+
+:::
+:::
+
 
 O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima; a função `sample()` apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.
 
@@ -155,34 +150,13 @@ O que exatamente se perde quando o sorteio não acontece? A resposta fica clara 
 
 Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral: vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.
 
-```{r}
-#| echo: false
-#| label: fig-confundimento
-#| fig-cap: "Dois desenhos com vinte tanques. No primeiro, dieta e prateleira coincidem; no segundo, cada prateleira contém as duas dietas."
-#| fig-alt: "Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira."
-#| fig-height: 4.2
-grade_tanques <- crossing(prateleira = c("superior", "inferior"), posicao = 1:10) |>
-  mutate(tanque = row_number())
 
-confundido <- grade_tanques |>
-  mutate(dieta = if_else(prateleira == "superior", "comum", "enriquecida"),
-         desenho = "Confundido")
+::: {.cell}
+::: {.cell-output-display}
+![Dois desenhos com vinte tanques. No primeiro, dieta e prateleira coincidem; no segundo, cada prateleira contém as duas dietas.](pread-aleatorizacao-controle_files/figure-html/fig-confundimento-1.png){#fig-confundimento fig-alt='Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira.' width=672}
+:::
+:::
 
-balanceado <- grade_tanques |>
-  group_by(prateleira) |>
-  mutate(dieta = sample(rep(c("comum", "enriquecida"), each = 5))) |>
-  ungroup() |>
-  mutate(desenho = "Aleatorizado dentro da prateleira")
-
-bind_rows(confundido, balanceado) |>
-  ggplot(aes(x = posicao, y = prateleira, fill = dieta)) +
-  geom_tile(colour = "white", width = 0.9, height = 0.65) +
-  geom_text(aes(label = tanque), size = 3) +
-  facet_wrap(~ desenho, ncol = 1) +
-  scale_fill_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00")) +
-  labs(x = "Posição", y = "Prateleira", fill = "Dieta") +
-  theme_bw(base_size = 11)
-```
 
 No painel de baixo, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.
 
@@ -192,9 +166,10 @@ O painel inferior da figura sugere um refinamento do sorteio. Aleatorização ir
 
 Uma implementação completa cria os grupos primeiro e sorteia os rótulos separadamente em cada um:
 
-```{r}
-#| code-fold: true
-#| code-summary: "Ver a aleatorização restrita por blocos"
+
+::: {.cell}
+
+```{.r .cell-code  code-fold="true" code-summary="Ver a aleatorização restrita por blocos"}
 unidades <- crossing(
   prateleira = paste("prateleira", 1:4),
   posicao = 1:6
@@ -207,6 +182,27 @@ plano <- unidades |>
 
 count(plano, prateleira, tratamento)
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 8 × 3
+  prateleira   tratamento     n
+  <chr>        <chr>      <int>
+1 prateleira 1 controle       3
+2 prateleira 1 dieta nova     3
+3 prateleira 2 controle       3
+4 prateleira 2 dieta nova     3
+5 prateleira 3 controle       3
+6 prateleira 3 dieta nova     3
+7 prateleira 4 controle       3
+8 prateleira 4 dieta nova     3
+```
+
+
+:::
+:::
+
 
 A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar `each = 3` altera a replicação por tratamento dentro de cada grupo; se o número de unidades for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.
 
@@ -266,3 +262,4 @@ O MEAD não trata de delineamento experimental, mas dois livros da bibliografia 
 :::
 
 # Referências
+

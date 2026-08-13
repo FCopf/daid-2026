@@ -19,16 +19,11 @@ format:
 
 # Objetivo desta prática
 
-A [leitura desta semana](../pre-reading/pread-populacao-amostra.qmd) comparou duas estratégias de
-amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear
-estações soltas. Você viu o resultado; hoje você vai **medir** essa instabilidade com as suas mãos,
-em dados reais, e descobrir uma coisa que a leitura não informa: **quanto** ela custa e o que muda
-quando você escolhe o número de praias.
+A [leitura desta semana](../pre-reading/pread-populacao-amostra.qmd) comparou duas estratégias de amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear estações soltas. Você viu o resultado; hoje você vai **medir** essa instabilidade com as suas mãos, em dados reais, e descobrir uma coisa que a leitura não informa: **quanto** ela custa e o que muda quando você escolhe o número de praias.
 
 O objetivo em R é importar dados de uma fonte externa, descrever o conjunto e sortear amostras dele.
 
-Ao final, você entrega um script com quatro medidas de instabilidade calculadas por você e uma
-recomendação de delineamento justificada com esses números.
+Ao final, você entrega um script com quatro medidas de instabilidade calculadas por você e uma recomendação de delineamento justificada com esses números.
 
 ::: {.callout-note appearance="minimal" title="Como a hora será usada"}
 - **5 min** abrir o RStudio, criar o script e ler a proposta;
@@ -47,12 +42,9 @@ theme_set(theme_bw(base_size = 12))
 
 # Abrir os dados
 
-Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de
-invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As estações
-se distribuem por nove praias.
+Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As estações se distribuem por nove praias.
 
-Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos o
-endereço em um objeto e o passamos para `read_tsv()`:
+Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos o endereço em um objeto e o passamos para `read_tsv()`:
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"
@@ -71,8 +63,7 @@ São 45 linhas e 5 colunas:
 - `Beach`: identificador da praia.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e as nove
-praias aparecem repetidas várias vezes cada uma.
+Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e as nove praias aparecem repetidas várias vezes cada uma.
 :::
 
 Antes de calcular qualquer média, confira se o esforço de coleta foi o mesmo em toda parte:
@@ -101,8 +92,7 @@ Guarde a média das 45 estações: é contra ela que todas as suas estimativas s
 # As praias são todas parecidas?
 
 ::: {.callout-tip appearance="minimal" title="Preveja"}
-Antes de executar o bloco abaixo, escreva no seu script, como comentário: você espera que as nove
-praias tenham médias parecidas entre si?
+Antes de executar o bloco abaixo, escreva no seu script, como comentário: você espera que as nove praias tenham médias parecidas entre si?
 
 A resposta muda tudo o que vem depois nesta prática. Registre-a antes de olhar.
 :::
@@ -120,8 +110,7 @@ ggplot(rikz, aes(x = factor(Beach), y = Richness)) +
 
 # Sortear uma amostra
 
-A função `slice_sample()` sorteia linhas de uma tabela. Aqui pegamos 10 das 45 estações, como se o
-orçamento só permitisse isso:
+A função `slice_sample()` sorteia linhas de uma tabela. Aqui pegamos 10 das 45 estações, como se o orçamento só permitisse isso:
 
 ```{r}
 rikz |>
@@ -129,11 +118,9 @@ rikz |>
   summarise(media = mean(Richness))
 ```
 
-Execute essa linha duas ou três vezes. Cada execução sorteia dez estações diferentes e devolve uma
-estimativa diferente para a mesma região.
+Execute essa linha duas ou três vezes. Cada execução sorteia dez estações diferentes e devolve uma estimativa diferente para a mesma região.
 
-Também é possível sortear **praias inteiras** e usar todas as suas estações. O `sample()` sorteia os
-identificadores e o `%in%` mantém as linhas cujas praias foram sorteadas:
+Também é possível sortear **praias inteiras** e usar todas as suas estações. O `sample()` sorteia os identificadores e o `%in%` mantém as linhas cujas praias foram sorteadas:
 
 ```{r}
 praias_sorteadas <- sample(1:9, size = 3)
@@ -148,9 +135,7 @@ São 15 estações, mais do que as 10 do sorteio anterior, mas vindas de apenas 
 
 # Sua vez
 
-Rodar uma linha algumas vezes dá uma impressão. Para ter uma **medida**, é preciso guardar as
-estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas: `c()` monta um
-vetor e `sd()` mede o espalhamento.
+Rodar uma linha algumas vezes dá uma impressão. Para ter uma **medida**, é preciso guardar as estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas: `c()` monta um vetor e `sd()` mede o espalhamento.
 
 ## Quanto o tamanho da amostra estabiliza a estimativa
 
@@ -167,21 +152,16 @@ Repita todo o procedimento com `n = 30`, guardando em `medias_30`, e calcule o `
 
 ## A comparação justa
 
-Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso
-custa em precisão — e a comparação só é honesta se as duas estratégias medirem **o mesmo número de
-estações**.
+Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso custa em precisão — e a comparação só é honesta se as duas estratégias medirem **o mesmo número de estações**.
 
 ::: {.callout-tip appearance="minimal" title="Escolha e justifique"}
 Escolha quantas praias inteiras sortear: **2, 3 ou 4**. Registre a escolha no script.
 
-Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número:
-ele é o `n` que você vai usar na comparação com estações soltas.
+Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número: ele é o `n` que você vai usar na comparação com estações soltas.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
-Antes de executar, escreva no script: quantas vezes maior você espera que seja o espalhamento das
-estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações?
-Duas vezes? Cinco? Quase igual?
+Antes de executar, escreva no script: quantas vezes maior você espera que seja o espalhamento das estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações? Duas vezes? Cinco? Quase igual?
 :::
 
 Rode cinco vezes cada estratégia, guarde as médias em dois vetores e calcule os dois `sd()`:
@@ -196,20 +176,13 @@ rikz |> slice_sample(n = ____) |> summarise(media = mean(Richness))
 
 # Entrega
 
-Salve o script `pr-amostragem.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
-(*Session → Restart R*) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As
-respostas escritas vão no próprio script, como comentários iniciados por `#`.
+Salve o script `pr-amostragem.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por `#`.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-1. a base da aula: a importação dos dados, o resumo das 45 estações e o gráfico por praia, com a sua
-   previsão sobre as praias registrada em comentário **antes** dele;
+1. a base da aula: a importação dos dados, o resumo das 45 estações e o gráfico por praia, com a sua previsão sobre as praias registrada em comentário **antes** dele;
 2. os vetores `medias_10` e `medias_30`, com os dois `sd()` correspondentes;
-3. a comparação justa: o número de praias que você escolheu, o número de estações que isso produz, os
-   dois vetores de cinco médias e os dois `sd()`, precedidos da sua previsão sobre a razão entre eles;
-4. em comentários, 3 a 4 frases respondendo, **com os seus quatro desvios**: um colega tem orçamento
-   para medir exatamente o mesmo número de estações que você usou na comparação. Que estratégia você
-   recomenda a ele, e o que ele perde ao escolher a outra? Diga também quantas praias inteiras você
-   acha que ele precisaria sortear para que essa estratégia se tornasse competitiva.
+3. a comparação justa: o número de praias que você escolheu, o número de estações que isso produz, os dois vetores de cinco médias e os dois `sd()`, precedidos da sua previsão sobre a razão entre eles;
+4. em comentários, 3 a 4 frases respondendo, **com os seus quatro desvios**: um colega tem orçamento para medir exatamente o mesmo número de estações que você usou na comparação. Que estratégia você recomenda a ele, e o que ele perde ao escolher a outra? Diga também quantas praias inteiras você acha que ele precisaria sortear para que essa estratégia se tornasse competitiva.
 :::
 
 ::: {.callout-tip appearance="minimal" title="O que será avaliado"}
@@ -222,10 +195,7 @@ respostas escritas vão no próprio script, como comentários iniciados por `#`.
 - [ ] a recomendação final cita os seus próprios desvios, e não uma frase genérica.
 :::
 
-# Para saber mais
-
-- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html){target="_blank"}
-  (MEAD) — procure as funções da família `read_*()` se precisar abrir um arquivo com outro separador.
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"}
-  (MEAD) — procure a seção sobre amostragem por conglomerados, que é o nome formal do sorteio de
-  praias inteiras.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Importando e exportando dados](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html){target="_blank"} (MEAD) — procure as funções da família `read_*()` se precisar abrir um arquivo com outro separador.
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD) — procure a seção sobre amostragem por conglomerados, que é o nome formal do sorteio de praias inteiras.
+:::

@@ -19,12 +19,9 @@ format:
 
 # Uma amostra dá uma resposta. E se fossem mil?
 
-Um levantamento no litoral holandês registrou o número de espécies de invertebrados em 45 estações
-distribuídas por nove praias. Se o orçamento permitisse visitar apenas dez dessas estações, a média
-obtida dependeria de quais dez tivessem sido sorteadas.
+Um levantamento no litoral holandês registrou o número de espécies de invertebrados em 45 estações distribuídas por nove praias. Se o orçamento permitisse visitar apenas dez dessas estações, a média obtida dependeria de quais dez tivessem sido sorteadas.
 
-Nesta atividade você repete esse sorteio mil vezes, para enxergar o padrão que existe por trás
-dessa variação.
+Nesta atividade você repete esse sorteio mil vezes, para enxergar o padrão que existe por trás dessa variação.
 
 ```{r}
 library(tidyverse)
@@ -55,8 +52,7 @@ sd(medias_10)
 sd(medias_30)
 ```
 
-`sample(rikz$Richness, size = 10)` sorteia 10 valores da coluna de riqueza; `mean()` calcula a
-média deles; `replicate(1000, ...)` faz isso mil vezes.
+`sample(rikz$Richness, size = 10)` sorteia 10 valores da coluna de riqueza; `mean()` calcula a média deles; `replicate(1000, ...)` faz isso mil vezes.
 
 ```{r}
 #| label: fig-muitas-amostras-tamanhos
@@ -75,8 +71,7 @@ ggplot(simulacoes, aes(x = media)) +
 ```
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-As duas distribuições ficam centradas aproximadamente no mesmo lugar, mas uma é bem mais estreita
-que a outra. Qual, e por quê?
+As duas distribuições ficam centradas aproximadamente no mesmo lugar, mas uma é bem mais estreita que a outra. Qual, e por quê?
 :::
 
 # Entrega
@@ -86,11 +81,9 @@ Um script `ae-muitas-amostras.R` que rode em sessão nova e contenha:
 
 1. as mil médias para `size = 5`, `size = 10` e `size = 30`, com o desvio-padrão de cada conjunto;
 2. um gráfico comparando as três distribuições de médias;
-3. em comentários, três a quatro frases respondendo: **o que acontece com a largura da distribuição
-   quando a amostra cresce, e por que os três histogramas ficam centrados aproximadamente no mesmo
-   lugar?**
+3. em comentários, três a quatro frases respondendo: **o que acontece com a largura da distribuição quando a amostra cresce, e por que os três histogramas ficam centrados aproximadamente no mesmo lugar?**
 :::
 
-# Para saber mais
-
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD)
+:::

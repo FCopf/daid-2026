@@ -19,12 +19,9 @@ format:
 
 # Três papéis, uma mesma fórmula
 
-Fator, bloco e covariável entram todos com `+` ou `*` na fórmula do modelo, e o R os ajusta pelo
-mesmo procedimento. O que os separa não está na fórmula: o fator é o que se quer testar, enquanto
-bloco e covariável são retirados do resíduo para tornar o teste mais sensível.
+Fator, bloco e covariável entram todos com `+` ou `*` na fórmula do modelo, e o R os ajusta pelo mesmo procedimento. O que os separa não está na fórmula: o fator é o que se quer testar, enquanto bloco e covariável são retirados do resíduo para tornar o teste mais sensível.
 
-Esta atividade pede que você reconheça esse papel em situações novas, e que mostre no R o que
-acontece quando ele é ignorado.
+Esta atividade pede que você reconheça esse papel em situações novas, e que mostre no R o que acontece quando ele é ignorado.
 
 ```{r}
 library(tidyverse)
@@ -33,22 +30,16 @@ theme_set(theme_bw(base_size = 12))
 
 # Quatro situações
 
-Cada situação abaixo descreve um estudo. Para cada uma, decida o papel de cada variável mencionada
-e justifique.
+Cada situação abaixo descreve um estudo. Para cada uma, decida o papel de cada variável mencionada e justifique.
 
-1. Um experimento testa três rações para camarões em 12 tanques, montados em três salas com
-   temperaturas ligeiramente diferentes. **O que é a sala?**
-2. Um estudo compara o crescimento de mudas de mangue em dois substratos. A altura inicial de cada
-   muda foi medida antes do plantio. **O que é a altura inicial?**
-3. Um experimento cruza duas temperaturas e três salinidades para avaliar a sobrevivência de
-   larvas. **O que são temperatura e salinidade?**
-4. Um levantamento compara a riqueza de peixes entre dois estuários. A profundidade de cada ponto
-   de coleta foi registrada. **O que é a profundidade?**
+1. Um experimento testa três rações para camarões em 12 tanques, montados em três salas com temperaturas ligeiramente diferentes. **O que é a sala?**
+2. Um estudo compara o crescimento de mudas de mangue em dois substratos. A altura inicial de cada muda foi medida antes do plantio. **O que é a altura inicial?**
+3. Um experimento cruza duas temperaturas e três salinidades para avaliar a sobrevivência de larvas. **O que são temperatura e salinidade?**
+4. Um levantamento compara a riqueza de peixes entre dois estuários. A profundidade de cada ponto de coleta foi registrada. **O que é a profundidade?**
 
 # Uma simulação para a situação 1
 
-A simulação a seguir reproduz a estrutura da situação 1: três rações, testadas em tanques
-distribuídos por salas com temperaturas diferentes.
+A simulação a seguir reproduz a estrutura da situação 1: três rações, testadas em tanques distribuídos por salas com temperaturas diferentes.
 
 ```{r}
 experimento <- tibble(
@@ -68,9 +59,7 @@ summary(com_sala)
 ```
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-Nesta simulação `racao` não tem efeito nenhum (a média não depende de `racao`). Ainda assim,
-compare o quadrado médio residual dos dois modelos: tratar a sala como se ela não existisse muda a
-régua usada para julgar a ração?
+Nesta simulação `racao` não tem efeito nenhum (a média não depende de `racao`). Ainda assim, compare o quadrado médio residual dos dois modelos: tratar a sala como se ela não existisse muda a régua usada para julgar a ração?
 :::
 
 # Entrega
@@ -78,14 +67,11 @@ régua usada para julgar a ração?
 ::: {.callout-important appearance="minimal" title="Entregue"}
 Um documento curto ou um script `ae-papeis.R` com comentários, contendo:
 
-1. para cada uma das quatro situações: o papel de cada variável (fator, bloco ou covariável), a
-   justificativa em uma frase, e a fórmula do modelo em R que você usaria;
-2. uma simulação, adaptada da simulação acima, mostrando o efeito de tratar uma variável de bloco
-   como se ela não existisse (use a situação 1 como base);
-3. em comentários, duas a três frases respondendo: **o que distingue um bloco de um fator, se os
-   dois aparecem do mesmo jeito na fórmula do modelo?**
+1. para cada uma das quatro situações: o papel de cada variável (fator, bloco ou covariável), a justificativa em uma frase, e a fórmula do modelo em R que você usaria;
+2. uma simulação, adaptada da simulação acima, mostrando o efeito de tratar uma variável de bloco como se ela não existisse (use a situação 1 como base);
+3. em comentários, duas a três frases respondendo: **o que distingue um bloco de um fator, se os dois aparecem do mesmo jeito na fórmula do modelo?**
 :::
 
-# Para saber mais
-
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"} (MEAD)
+:::

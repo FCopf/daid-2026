@@ -19,12 +19,9 @@ format:
 
 # Um delineamento com um problema escondido
 
-Um estudo mal delineado não deixa marca óbvia na planilha. As linhas se acumulam, as médias
-aparecem, o teste roda e devolve um valor de p. O problema só fica visível quando alguém pergunta
-quantas vezes a condição comparada foi de fato atribuída.
+Um estudo mal delineado não deixa marca óbvia na planilha. As linhas se acumulam, as médias aparecem, o teste roda e devolve um valor de p. O problema só fica visível quando alguém pergunta quantas vezes a condição comparada foi de fato atribuída.
 
-Esta atividade pede que você faça essa pergunta a um estudo novo e proponha uma versão dele capaz
-de responder ao que se propõe.
+Esta atividade pede que você faça essa pergunta a um estudo novo e proponha uma versão dele capaz de responder ao que se propõe.
 
 ```{r}
 library(tidyverse)
@@ -33,15 +30,12 @@ theme_set(theme_bw(base_size = 12))
 
 # O estudo proposto
 
-Um pesquisador propõe o seguinte estudo: comparar a cobertura de algas em dois costões, um exposto
-e um abrigado. Em cada costão, ele lança 20 quadrados de 1 m² e mede a cobertura em cada um. Depois
-compara os dois costões com um teste t sobre as 40 medidas.
+Um pesquisador propõe o seguinte estudo: comparar a cobertura de algas em dois costões, um exposto e um abrigado. Em cada costão, ele lança 20 quadrados de 1 m² e mede a cobertura em cada um. Depois compara os dois costões com um teste t sobre as 40 medidas.
 
 Sua tarefa é **avaliar e redesenhar** esse estudo.
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-Quantas vezes, neste estudo, a condição "exposto" ou "abrigado" foi de fato sorteada ou atribuída?
-Compare com quantas vezes ela foi apenas medida.
+Quantas vezes, neste estudo, a condição "exposto" ou "abrigado" foi de fato sorteada ou atribuída? Compare com quantas vezes ela foi apenas medida.
 :::
 
 # Entrega
@@ -49,13 +43,9 @@ Compare com quantas vezes ela foi apenas medida.
 ::: {.callout-important appearance="minimal" title="Entregue"}
 Um documento curto (uma página) ou um script `ae-redesenho.R` com comentários, contendo:
 
-1. **Diagnóstico.** Qual é a unidade experimental do estudo proposto? Quantas réplicas existem por
-   condição? O teste t sobre 40 medidas é apropriado? Justifique.
-2. **Redesenho.** Descreva uma versão do estudo que permita responder à pergunta sobre exposição.
-   Quantos costões, quantos quadrados por costão, e como as condições seriam atribuídas.
-3. **Simulação.** Construa no R uma simulação do seu redesenho, com o efeito da exposição fixado em
-   zero, e mostre que a análise correta **não** encontra efeito. A estrutura tem duas etapas: cada
-   costão recebe o seu próprio desvio, e os quadrados variam em torno da média do seu costão.
+1. **Diagnóstico.** Qual é a unidade experimental do estudo proposto? Quantas réplicas existem por condição? O teste t sobre 40 medidas é apropriado? Justifique.
+2. **Redesenho.** Descreva uma versão do estudo que permita responder à pergunta sobre exposição. Quantos costões, quantos quadrados por costão, e como as condições seriam atribuídas.
+3. **Simulação.** Construa no R uma simulação do seu redesenho, com o efeito da exposição fixado em zero, e mostre que a análise correta **não** encontra efeito. A estrutura tem duas etapas: cada costão recebe o seu próprio desvio, e os quadrados variam em torno da média do seu costão.
 
     ```r
     costoes <- tibble(
@@ -70,10 +60,9 @@ Um documento curto (uma página) ou um script `ae-redesenho.R` com comentários,
     ```
 
     Compare o teste feito sobre os 40 quadrados com o teste feito sobre as 8 médias de costão.
-4. **Limite.** Uma frase sobre o que continua impossível concluir mesmo com o redesenho, dado que
-   ninguém sorteia qual costão será exposto.
+4. **Limite.** Uma frase sobre o que continua impossível concluir mesmo com o redesenho, dado que ninguém sorteia qual costão será exposto.
 :::
 
-# Para saber mais
-
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html){target="_blank"} (MEAD)
+:::

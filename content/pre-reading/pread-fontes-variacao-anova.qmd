@@ -24,23 +24,17 @@ theme_set(theme_bw(base_size = 12))
 
 # Uma pergunta que vale para os quatro grupos
 
-Um experimento avalia o efeito de quatro concentrações de zinco sobre a diversidade de algas em
-canais experimentais. Quatro tratamentos, oito canais por tratamento, uma medida de diversidade
-em cada canal.
+Um experimento avalia o efeito de quatro concentrações de zinco sobre a diversidade de algas em canais experimentais. Quatro tratamentos, oito canais por tratamento, uma medida de diversidade em cada canal.
 
-Comparar os tratamentos dois a dois multiplica as chances de alarme falso e ainda deixa sem
-resposta o que interessa primeiro. A pergunta que vale para o conjunto é esta:
+Comparar os tratamentos dois a dois multiplica as chances de alarme falso e ainda deixa sem resposta o que interessa primeiro. A pergunta que vale para o conjunto é esta:
 
-> **A separação entre os quatro grupos é grande em comparação com a variação que existe dentro
-> deles?**
+> **A separação entre os quatro grupos é grande em comparação com a variação que existe dentro deles?**
 
 Esta leitura mostra como transformar essa frase em uma conta.
 
 # Duas situações com a mesma diferença de médias
 
-Antes da conta, vale ver por que a pergunta precisa mencionar as duas variações, e não apenas a
-separação entre as médias. Compare os dois cenários abaixo: em ambos, as médias dos quatro grupos
-são exatamente as mesmas.
+Antes da conta, vale ver por que a pergunta precisa mencionar as duas variações, e não apenas a separação entre as médias. Compare os dois cenários abaixo: em ambos, as médias dos quatro grupos são exatamente as mesmas.
 
 ```{r}
 #| echo: false
@@ -71,30 +65,21 @@ ggplot(cenarios, aes(x = grupo, y = valor)) +
   labs(x = "Concentração de zinco", y = "Diversidade")
 ```
 
-À esquerda, a queda da diversidade ao longo das quatro concentrações salta aos olhos: cada grupo
-ocupa uma faixa estreita e a ordem entre eles é imediata. À direita, com as **mesmas médias**, as
-nuvens se sobrepõem amplamente: olhando um canal isolado, seria difícil dizer de qual tratamento
-ele veio.
+À esquerda, a queda da diversidade ao longo das quatro concentrações salta aos olhos: cada grupo ocupa uma faixa estreita e a ordem entre eles é imediata. À direita, com as **mesmas médias**, as nuvens se sobrepõem amplamente: olhando um canal isolado, seria difícil dizer de qual tratamento ele veio.
 
-A conclusão é que a diferença entre médias, sozinha, não diz nada. Ela só ganha sentido quando
-comparada à variação de fundo.
+A conclusão é que a diferença entre médias, sozinha, não diz nada. Ela só ganha sentido quando comparada à variação de fundo.
 
 # Um modelo para cada observação
 
-Para transformar essa ideia em conta, convém primeiro escrever de onde vem cada observação. Para o
-canal $j$ no tratamento $i$, a ANOVA de um fator escreve
+Para transformar essa ideia em conta, convém primeiro escrever de onde vem cada observação. Para o canal $j$ no tratamento $i$, a ANOVA de um fator escreve
 
 $$
 Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
 $$
 
-$Y_{ij}$ é a diversidade observada, $\mu$ é a média geral, $\alpha_i$ é o desvio associado ao
-tratamento $i$ e $\varepsilon_{ij}$ é a variação individual não explicada pelo tratamento. Uma forma
-equivalente usa diretamente a média de cada grupo, $Y_{ij}=\mu_i+\varepsilon_{ij}$.
+$Y_{ij}$ é a diversidade observada, $\mu$ é a média geral, $\alpha_i$ é o desvio associado ao tratamento $i$ e $\varepsilon_{ij}$ é a variação individual não explicada pelo tratamento. Uma forma equivalente usa diretamente a média de cada grupo, $Y_{ij}=\mu_i+\varepsilon_{ij}$.
 
-A equação já contém a estrutura da pergunta: $\alpha_i$ é a parte que o tratamento explica e
-$\varepsilon_{ij}$ é a parte que ele não explica. As hipóteses globais dizem respeito aos $\alpha_i$,
-ou de modo equivalente às médias:
+A equação já contém a estrutura da pergunta: $\alpha_i$ é a parte que o tratamento explica e $\varepsilon_{ij}$ é a parte que ele não explica. As hipóteses globais dizem respeito aos $\alpha_i$, ou de modo equivalente às médias:
 
 $$
 H_0:\mu_1=\mu_2=\cdots=\mu_k
@@ -106,30 +91,23 @@ $$
 H_A:\text{pelo menos uma média difere}.
 $$
 
-A alternativa não afirma que todas as médias diferem, nem especifica quais. Ela apenas nega a
-igualdade simultânea.
+A alternativa não afirma que todas as médias diferem, nem especifica quais. Ela apenas nega a igualdade simultânea.
 
 # Duas fontes de variação
 
 Toda observação carrega duas contribuições, e a análise consiste em separá-las.
 
-**Variação entre grupos.** O quanto as médias dos tratamentos se afastam da média geral. É a parte
-que o tratamento explica.
+**Variação entre grupos.** O quanto as médias dos tratamentos se afastam da média geral. É a parte que o tratamento explica.
 
-**Variação dentro dos grupos.** O quanto os canais de um *mesmo* tratamento diferem entre si. Como
-receberam a mesma condição, essa variação vem de tudo o que não é o tratamento: diferenças entre
-canais, erro de medição, acaso. É a variação **residual**.
+**Variação dentro dos grupos.** O quanto os canais de um *mesmo* tratamento diferem entre si. Como receberam a mesma condição, essa variação vem de tudo o que não é o tratamento: diferenças entre canais, erro de medição, acaso. É a variação **residual**.
 
 ::: {.callout-note appearance="minimal" title="Somas de quadrados"}
 Cada uma dessas variações é medida somando desvios ao quadrado:
 
-- $SQ_{\text{entre}}$ soma, para cada grupo, o quadrado da distância entre a média do grupo e a
-  média geral;
-- $SQ_{\text{dentro}}$ soma, para cada observação, o quadrado da distância até a média do seu
-  próprio grupo.
+- $SQ_{\text{entre}}$ soma, para cada grupo, o quadrado da distância entre a média do grupo e a média geral;
+- $SQ_{\text{dentro}}$ soma, para cada observação, o quadrado da distância até a média do seu próprio grupo.
 
-As duas se somam exatamente na variação total:
-$SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}$.
+As duas se somam exatamente na variação total: $SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}$.
 :::
 
 Em símbolos, com $n_i$ observações no grupo $i$ e $N=\sum_i n_i$,
@@ -146,14 +124,11 @@ $$
 SQ_{\text{dentro}}=\sum_{i=1}^{k}\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y}_{i.})^2.
 $$
 
-$\bar{Y}_{i.}$ é a média do grupo $i$ e $\bar{Y}_{..}$ é a média geral ponderada pelos tamanhos dos
-grupos. A identidade entre as três somas mostra que o modelo não cria nem perde variação: ele apenas
-atribui partes da variação total ao fator e ao resíduo.
+$\bar{Y}_{i.}$ é a média do grupo $i$ e $\bar{Y}_{..}$ é a média geral ponderada pelos tamanhos dos grupos. A identidade entre as três somas mostra que o modelo não cria nem perde variação: ele apenas atribui partes da variação total ao fator e ao resíduo.
 
 ## A partição observação por observação
 
-Essa identidade entre somas não é uma coincidência algébrica. Ela decorre de uma decomposição válida
-para cada canal individualmente:
+Essa identidade entre somas não é uma coincidência algébrica. Ela decorre de uma decomposição válida para cada canal individualmente:
 
 $$
 Y_{ij}-\bar Y_{..}
@@ -163,27 +138,19 @@ Y_{ij}-\bar Y_{..}
 (Y_{ij}-\bar Y_{i.}).
 $$
 
-O desvio total de uma observação em relação à média geral é a soma do desvio explicado pelo grupo e
-do resíduo. Quando somamos os quadrados de todas as observações, o termo cruzado desaparece e
-obtemos a partição das somas de quadrados. Esse é o mesmo princípio usado na regressão: comparar um
-modelo que prevê apenas a média geral com outro que permite previsões diferentes para os grupos.
+O desvio total de uma observação em relação à média geral é a soma do desvio explicado pelo grupo e do resíduo. Quando somamos os quadrados de todas as observações, o termo cruzado desaparece e obtemos a partição das somas de quadrados. Esse é o mesmo princípio usado na regressão: comparar um modelo que prevê apenas a média geral com outro que permite previsões diferentes para os grupos.
 
 # Da soma de quadrados ao quadrado médio
 
-As somas de quadrados ainda não podem ser comparadas entre si, e a razão é aritmética: somas dependem
-de quantas parcelas foram somadas. $SQ_{\text{dentro}}$ acumula uma parcela por canal;
-$SQ_{\text{entre}}$, uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.
+As somas de quadrados ainda não podem ser comparadas entre si, e a razão é aritmética: somas dependem de quantas parcelas foram somadas. $SQ_{\text{dentro}}$ acumula uma parcela por canal; $SQ_{\text{entre}}$, uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.
 
-A correção é dividir cada soma pelo seu número de **graus de liberdade**, ou seja, quantos valores
-podiam variar livremente. Com $k$ grupos e $N$ observações no total:
+A correção é dividir cada soma pelo seu número de **graus de liberdade**, ou seja, quantos valores podiam variar livremente. Com $k$ grupos e $N$ observações no total:
 
 $$QM_{\text{entre}} = \frac{SQ_{\text{entre}}}{k - 1}
 \qquad
 QM_{\text{dentro}} = \frac{SQ_{\text{dentro}}}{N - k}$$
 
-O resultado, chamado **quadrado médio**, é uma variação média por grau de liberdade. Agora as
-duas quantidades são comparáveis, e o conjunto costuma ser apresentado em uma tabela com esta
-estrutura:
+O resultado, chamado **quadrado médio**, é uma variação média por grau de liberdade. Agora as duas quantidades são comparáveis, e o conjunto costuma ser apresentado em uma tabela com esta estrutura:
 
 | Fonte | Soma de quadrados | Graus de liberdade | Quadrado médio | Razão |
 |---|---:|---:|---:|---:|
@@ -195,9 +162,7 @@ Os graus de liberdade também se particionam: $(N-1)=(k-1)+(N-k)$.
 
 ## A tabela calculada passo a passo
 
-Todas as quantidades da tabela vêm das definições apresentadas acima, e vale construí-las uma vez a
-partir de um conjunto pequeno, com três grupos de quatro canais, para verificar que as identidades
-se cumprem.
+Todas as quantidades da tabela vêm das definições apresentadas acima, e vale construí-las uma vez a partir de um conjunto pequeno, com três grupos de quatro canais, para verificar que as identidades se cumprem.
 
 ```{r}
 #| code-fold: true
@@ -234,10 +199,7 @@ tabela_anova <- tibble(
 knitr::kable(tabela_anova, digits = 3)
 ```
 
-Neste exemplo, as médias dos três grupos são 8, 7 e 4, e a média geral é $19/3\approx6{,}33$. A
-tabela permite verificar as duas identidades: a soma de quadrados dos tratamentos mais a do resíduo
-reproduz o total, e os graus de liberdade se somam do mesmo modo. Se alguma delas falhar, há erro na
-definição dos grupos, nos pesos ou nas contas.
+Neste exemplo, as médias dos três grupos são 8, 7 e 4, e a média geral é $19/3\approx6{,}33$. A tabela permite verificar as duas identidades: a soma de quadrados dos tratamentos mais a do resíduo reproduz o total, e os graus de liberdade se somam do mesmo modo. Se alguma delas falhar, há erro na definição dos grupos, nos pesos ou nas contas.
 
 # A razão F
 
@@ -245,13 +207,9 @@ Comparáveis, os dois quadrados médios podem ser postos em uma razão:
 
 $$F = \frac{QM_{\text{entre}}}{QM_{\text{dentro}}}$$
 
-A leitura é direta. Se o tratamento não faz nada, as duas fontes medem a mesma coisa (variação
-residual) e $F$ fica em torno de 1. Se o tratamento separa os grupos além do ruído, o numerador
-cresce e $F$ fica maior que 1.
+A leitura é direta. Se o tratamento não faz nada, as duas fontes medem a mesma coisa (variação residual) e $F$ fica em torno de 1. Se o tratamento separa os grupos além do ruído, o numerador cresce e $F$ fica maior que 1.
 
-Resta saber quanto maior que 1 é grande o bastante, e a resposta vem da mesma estratégia usada para
-qualquer distribuição nula: gerar muitos experimentos em que o tratamento não faz nada e observar
-quais valores de $F$ o acaso produz.
+Resta saber quanto maior que 1 é grande o bastante, e a resposta vem da mesma estratégia usada para qualquer distribuição nula: gerar muitos experimentos em que o tratamento não faz nada e observar quais valores de $F$ o acaso produz.
 
 ```{r}
 #| echo: false
@@ -280,14 +238,9 @@ limiar_txt <- formatC(limiar_5pc, format = "f", digits = 2, decimal.mark = ",")
 prop_txt   <- formatC(100 * prop_acima, format = "f", digits = 1, decimal.mark = ",")
 ```
 
-A linha marca `r limiar_txt`, o valor acima do qual ficam os 5% maiores $F$ quando não há efeito
-nenhum. Nesta simulação, `r prop_txt`% dos 3000 experimentos passaram dessa marca, próximo dos 5%
-esperados. É essa raridade que o valor de p quantifica.
+A linha marca `r limiar_txt`, o valor acima do qual ficam os 5% maiores $F$ quando não há efeito nenhum. Nesta simulação, `r prop_txt`% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.
 
-A distribuição F depende de dois graus de liberdade: $k-1$ no numerador e $N-k$ no denominador. Ela
-assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição
-a partir do F observado. Sob $H_0$, numerador e denominador estimam a mesma variância residual;
-quando as médias diferem, o numerador incorpora também a separação entre grupos.
+A distribuição F depende de dois graus de liberdade: $k-1$ no numerador e $N-k$ no denominador. Ela assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição a partir do F observado. Sob $H_0$, numerador e denominador estimam a mesma variância residual; quando as médias diferem, o numerador incorpora também a separação entre grupos.
 
 Na prática, uma única função reúne toda a tabela:
 
@@ -303,53 +256,35 @@ modelo_anova <- aov(valor ~ grupo, data = dados_precisos)
 summary(modelo_anova)
 ```
 
-A saída reproduz as colunas construídas manualmente: graus de liberdade, somas de quadrados,
-quadrados médios, a razão F e o valor de p associado. Vale notar que `aov()` e `lm()` ajustam o mesmo
-modelo linear; a diferença está na forma de apresentar os coeficientes e a partição de variação, não
-em uma família estatística separada.
+A saída reproduz as colunas construídas manualmente: graus de liberdade, somas de quadrados, quadrados médios, a razão F e o valor de p associado. Vale notar que `aov()` e `lm()` ajustam o mesmo modelo linear; a diferença está na forma de apresentar os coeficientes e a partição de variação, não em uma família estatística separada.
 
 ::: {.callout-warning appearance="minimal" title="Um F grande não conserta o delineamento"}
-A razão F compara duas fontes de variação. Se a variação "dentro dos grupos" foi calculada sobre
-subamostras em vez de unidades experimentais, o denominador fica pequeno demais e $F$ fica inflado.
+A razão F compara duas fontes de variação. Se a variação "dentro dos grupos" foi calculada sobre subamostras em vez de unidades experimentais, o denominador fica pequeno demais e $F$ fica inflado.
 
 O teste responde à pergunta que o delineamento permite fazer, não à pergunta que queríamos fazer.
 :::
 
 ## Quanto da variação o fator representa
 
-A razão F responde se a separação entre grupos se destaca do ruído, mas não informa qual fração da
-variação total o tratamento explica. Essa segunda quantidade tem medida própria:
+A razão F responde se a separação entre grupos se destaca do ruído, mas não informa qual fração da variação total o tratamento explica. Essa segunda quantidade tem medida própria:
 
 $$
 \eta^2=\frac{SQ_{\text{entre}}}{SQ_{\text{total}}}.
 $$
 
-Na ANOVA de um fator, esse valor coincide com o $R^2$ do modelo linear. Uma proporção alta indica
-que conhecer o grupo reduz bastante o erro quadrático de previsão em comparação com usar apenas a
-média geral. Ela não afirma que o fator causou a variação, não corrige viés e tende a ser otimista
-em amostras pequenas, além de mudar quando a composição da amostra ou a variação residual muda. Por
-isso deve ser interpretada junto com as diferenças na unidade original e seus intervalos.
+Na ANOVA de um fator, esse valor coincide com o $R^2$ do modelo linear. Uma proporção alta indica que conhecer o grupo reduz bastante o erro quadrático de previsão em comparação com usar apenas a média geral. Ela não afirma que o fator causou a variação, não corrige viés e tende a ser otimista em amostras pequenas, além de mudar quando a composição da amostra ou a variação residual muda. Por isso deve ser interpretada junto com as diferenças na unidade original e seus intervalos.
 
 ## O que a razão F responde, e o que não responde
 
-A hipótese testada é sobre o conjunto: **todas as médias de tratamento são iguais**. Um valor de p
-pequeno indica que essa descrição não se sustenta, mas não diz *quais* tratamentos diferem.
+A hipótese testada é sobre o conjunto: **todas as médias de tratamento são iguais**. Um valor de p pequeno indica que essa descrição não se sustenta, mas não diz *quais* tratamentos diferem.
 
-Descobrir isso é o passo seguinte, feito com comparações **a posteriori**, como o teste de Tukey,
-que compara todos os pares controlando a taxa global de alarmes falsos. A ordem importa: primeiro
-a pergunta global, depois as comparações específicas.
+Descobrir isso é o passo seguinte, feito com comparações **a posteriori**, como o teste de Tukey, que compara todos os pares controlando a taxa global de alarmes falsos. A ordem importa: primeiro a pergunta global, depois as comparações específicas.
 
-Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente
-à mesma conclusão: são duas formas de escrever a mesma comparação, e de fato $F=t^2$ nesse caso. A
-análise de variância apenas generaliza a ideia para qualquer número de grupos.
+Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente à mesma conclusão: são duas formas de escrever a mesma comparação, e de fato $F=t^2$ nesse caso. A análise de variância apenas generaliza a ideia para qualquer número de grupos.
 
 # O que precisa ser verificado
 
-A partição em duas fontes de variação depende de suposições sobre o termo $\varepsilon_{ij}$ do
-modelo, e convém saber quais são. A ANOVA pressupõe independência entre unidades, variância residual
-aproximadamente constante entre grupos e resíduos aproximadamente normais. A independência vem do
-delineamento, não de um gráfico. Normalidade e constância de variância são avaliadas nos
-**resíduos**, isto é, nas diferenças entre cada observação e a média ajustada do seu grupo.
+A partição em duas fontes de variação depende de suposições sobre o termo $\varepsilon_{ij}$ do modelo, e convém saber quais são. A ANOVA pressupõe independência entre unidades, variância residual aproximadamente constante entre grupos e resíduos aproximadamente normais. A independência vem do delineamento, não de um gráfico. Normalidade e constância de variância são avaliadas nos **resíduos**, isto é, nas diferenças entre cada observação e a média ajustada do seu grupo.
 
 ```{r}
 #| echo: false
@@ -388,32 +323,17 @@ p_qq <- ggplot(diagnostico, aes(sample = residuo)) +
 patchwork::wrap_plots(p_residuos, p_qq, ncol = 2)
 ```
 
-O gráfico de resíduos contra valores ajustados revela aumento de dispersão, curvaturas ou grupos com
-comportamento distinto: aqui as quatro colunas de pontos têm amplitude semelhante, o que é
-compatível com variância constante. O gráfico quantil-quantil ajuda a reconhecer caudas e valores
-extremos, e neste caso os pontos acompanham razoavelmente a linha de referência.
+O gráfico de resíduos contra valores ajustados revela aumento de dispersão, curvaturas ou grupos com comportamento distinto: aqui as quatro colunas de pontos têm amplitude semelhante, o que é compatível com variância constante. O gráfico quantil-quantil ajuda a reconhecer caudas e valores extremos, e neste caso os pontos acompanham razoavelmente a linha de referência.
 
-Com grupos balanceados e amostras moderadas, a razão F é robusta a desvios leves de normalidade, mas
-variâncias muito diferentes, grupos muito desbalanceados ou observações influentes exigem cautela.
-O teste de razão de variâncias é sensível à normalidade e não substitui esses gráficos; quando
-grupos pequenos possuem maior dispersão, a distorção pode ser relevante. Transformações podem
-estabilizar a variância quando têm interpretação científica, mas não devem ser escolhidas apenas
-para obter significância e não corrigem pseudorreplicação ou confundimento.
+Com grupos balanceados e amostras moderadas, a razão F é robusta a desvios leves de normalidade, mas variâncias muito diferentes, grupos muito desbalanceados ou observações influentes exigem cautela. O teste de razão de variâncias é sensível à normalidade e não substitui esses gráficos; quando grupos pequenos possuem maior dispersão, a distorção pode ser relevante. Transformações podem estabilizar a variância quando têm interpretação científica, mas não devem ser escolhidas apenas para obter significância e não corrigem pseudorreplicação ou confundimento.
 
-Os dois cenários do início desta leitura tinham exatamente as mesmas médias e conclusões opostas. A
-razão F é o instrumento que torna essa distinção explícita: ela não pergunta se os grupos diferem,
-mas se diferem mais do que canais tratados de forma idêntica já diferem entre si. Toda a construção,
-das somas de quadrados aos graus de liberdade, existe para tornar essas duas variações comparáveis
-na mesma escala.
+Os dois cenários do início desta leitura tinham exatamente as mesmas médias e conclusões opostas. A razão F é o instrumento que torna essa distinção explícita: ela não pergunta se os grupos diferem, mas se diferem mais do que canais tratados de forma idêntica já diferem entre si. Toda a construção, das somas de quadrados aos graus de liberdade, existe para tornar essas duas variações comparáveis na mesma escala.
 
-# Para saber mais
-
-- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"} (MEAD),
-  que aborda a mesma comparação entre grupos pelo ângulo descritivo das medidas de associação.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"} (MEAD), que aborda a mesma comparação entre grupos pelo ângulo descritivo das medidas de associação.
+:::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Dois experimentos têm as mesmas médias de tratamento, mas um usa canais muito homogêneos e o
-  outro canais heterogêneos. Qual terá o maior $F$? Por quê?
-- Se um pesquisador aumenta o número de canais por tratamento sem mudar mais nada, o que acontece
-  com $QM_{\text{dentro}}$ e com os graus de liberdade do denominador?
+- Dois experimentos têm as mesmas médias de tratamento, mas um usa canais muito homogêneos e o outro canais heterogêneos. Qual terá o maior $F$? Por quê?
+- Se um pesquisador aumenta o número de canais por tratamento sem mudar mais nada, o que acontece com $QM_{\text{dentro}}$ e com os graus de liberdade do denominador?
 :::

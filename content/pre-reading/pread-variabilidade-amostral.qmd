@@ -24,45 +24,31 @@ theme_set(theme_bw(base_size = 12))
 
 # Duas equipes, duas respostas
 
-Duas equipes recebem a mesma tarefa: estimar o comprimento médio dos mexilhões de um costão.
-Cada equipe coleta 20 mexilhões, mede um por um e calcula a média.
+Duas equipes recebem a tarefa de estimar o comprimento médio dos mexilhões de um costão. Cada equipe coleta 20 mexilhões, mede um por um e calcula a média.
 
 A equipe A encontra **4,9 cm**. A equipe B encontra **5,3 cm**.
 
 Ninguém errou. Ninguém foi descuidado. Elas simplesmente pegaram mexilhões diferentes.
 
-A pergunta desta leitura é o que fazer com esse fato: se a resposta muda a cada amostra, **como
-usar uma única amostra para dizer alguma coisa sobre o costão inteiro?**
+A pergunta é o que fazer com esse fato. Se a resposta muda a cada amostra, **como usar uma única amostra para tirar alguma conclusão sobre o costão inteiro?**
 
 # Repetir o estudo, ao menos no computador
 
-Na prática você coleta uma amostra só. Mas nada impede que *imaginemos* o que aconteceria se
-o trabalho fosse repetido, e o computador consegue fazer exatamente isso.
+Na prática, você coleta uma amostra só. Mas nada impede que você *imagine* o que aconteceria se o trabalho fosse repetido, e o computador consegue fazer exatamente isso.
 
-Cada coleta é um **experimento aleatório**: conhecemos os resultados possíveis, mas não qual deles
-será observado. Um modelo probabilístico associa probabilidades a esses resultados. Quando o mesmo
-procedimento é repetido muitas vezes, as frequências observadas tendem às probabilidades do modelo.
-Essa regularidade é a Lei dos Grandes Números e é o que autoriza estudar um procedimento por
-simulação, em vez de repetir mil vezes o trabalho de campo.
+Cada coleta é um **experimento aleatório**. Neste experimento, conhecemos os resultados possíveis, mas não qual deles será observado. Um modelo probabilístico associa probabilidades a esses resultados. Quando o mesmo procedimento é repetido muitas vezes, as frequências observadas tendem às probabilidades do modelo. Essa regularidade vem da Lei dos Grandes Números e é o que autoriza estudar um procedimento por simulação, em vez de repetir mil vezes o trabalho de campo.
 
 ## Espaço amostral, eventos e variáveis aleatórias
 
-Antes de simular, convém nomear os objetos envolvidos. O **espaço amostral** $\Omega$ reúne todos os
-resultados possíveis do experimento. Em uma coleta de um mexilhão, cada indivíduo elegível é um
-resultado; o evento $A=\{X>6\}$ reúne aqueles cujo comprimento excede 6 cm. Uma **variável
-aleatória** $X$ associa um número a cada resultado. Ela é discreta quando assume valores contáveis,
-como número de espécies, e contínua quando pode ocupar um intervalo, como comprimento.
+Antes de simular, convém nomear os objetos envolvidos. O **espaço amostral** $\Omega$ reúne todos os resultados possíveis do experimento. Em uma coleta de um mexilhão, cada indivíduo elegível é um resultado. O evento $A=\{X>6\}$ reúne aqueles cujo comprimento excede 6 cm. Uma **variável aleatória** $X$ associa um número a cada resultado. Ela é **discreta** quando assume valores contáveis, como número de espécies, e **contínua** quando pode ocupar um intervalo, como comprimento da concha.
 
-Se repetimos o sorteio e definimos $I_i=1$ quando o evento $A$ ocorre e $I_i=0$ caso contrário, a
-proporção observada após $m$ repetições é
+Se repetimos o sorteio e definimos $I_i=1$ quando o evento $A$ ocorre e $I_i=0$ caso contrário, a proporção observada após $m$ repetições é
 
 $$
 \hat p_m=\frac{1}{m}\sum_{i=1}^{m}I_i.
 $$
 
-A Lei dos Grandes Números afirma que $\hat p_m$ se aproxima de $P(A)$ quando $m$ cresce, desde que
-as repetições sigam o mesmo mecanismo probabilístico. Ela não diz que a sequência se torna regular
-nem que o próximo resultado fica previsível.
+A Lei dos Grandes Números afirma que $\hat p_m$ se aproxima de $P(A)$ quando $m$ cresce, desde que as repetições sigam o mesmo mecanismo probabilístico. Ela não diz que a sequência se torna regular nem que o próximo resultado fica previsível.
 
 ```{r}
 #| echo: false
@@ -94,15 +80,11 @@ ggplot(sorteios, aes(x = repeticao, y = frequencia_acumulada)) +
   labs(x = "Número de sorteios", y = "Frequência acumulada")
 ```
 
-Nos primeiros sorteios a frequência oscila bastante e depois se aproxima da linha de referência. É
-essa estabilização que torna a simulação uma ferramenta de estudo, e não um jogo de adivinhação.
+Nos primeiros sorteios a frequência oscila bastante e depois se aproxima da linha de referência. É essa estabilização que permite que a simulação seja utilizada como uma ferramenta de estudo.
 
 ## Duas mil coletas de mexilhões
 
-Podemos então aplicar a mesma ideia à pergunta que interessa. Suponha um costão onde os mexilhões
-têm comprimento médio de 5 cm e variam com desvio-padrão de 1 cm. Vamos sortear 20 mexilhões,
-anotar a média, e repetir isso duas mil vezes. Três funções bastam para escrever o procedimento
-inteiro, e vale acompanhar o que cada uma representa.
+Podemos então aplicar a mesma ideia à pergunta que interessa. Suponha um costão onde os mexilhões têm comprimento médio de 5 cm e variam com desvio-padrão de 1 cm. Vamos sortear 20 mexilhões, anotar a média e repetir isso duas mil vezes. Três funções bastam para escrever o procedimento inteiro, e vale acompanhar o que cada uma representa.
 
 ```{r}
 #| code-fold: true
@@ -127,20 +109,15 @@ media_das_medias <- formata(mean(medias_simuladas))
 desvio_das_medias <- formata(sd(medias_simuladas))
 ```
 
-`rnorm()` representa o modelo da população, `replicate()` representa estudos independentes e
-`mean()` transforma cada amostra em uma estatística. O conjunto dos dois mil resultados é uma
-aproximação da **distribuição amostral da média**: nesta execução, as médias simuladas ficaram
-centradas em `r media_das_medias` cm, com desvio-padrão de `r desvio_das_medias` cm entre estudos.
-Comparar 4,9 com 5,3 cm, como fizeram as duas equipes, deixa de ser um problema quando se conhece
-essa dispersão.
+`rnorm()` representa o modelo da população, `replicate()` representa estudos independentes e `mean()` transforma cada amostra em uma estatística. O conjunto dos dois mil resultados é uma aproximação da **distribuição amostral da média**. Nesta execução, as médias simuladas ficaram centradas em `r media_das_medias` cm, com desvio-padrão de `r desvio_das_medias` cm entre estudos. Comparar 4,9 com 5,3 cm, como fizeram as duas equipes, deixa de ser um problema quando se conhece essa dispersão.
 
 # Duas distribuições que não devem ser confundidas
 
-A simulação permite colocar lado a lado dois conjuntos de números que costumam ser tomados um pelo
-outro: os comprimentos dos mexilhões e as médias das amostras.
+A simulação permite colocar lado a lado os comprimentos dos mexilhões e as médias das amostras, dois conjuntos de números que costumam ser confundidos entre si.
 
 ```{r}
-#| echo: false
+#| code-fold: true
+#| code-summary: "Ver o código em R"
 #| label: fig-duas-distribuicoes
 #| fig-cap: "À esquerda, os comprimentos de 2000 mexilhões individuais. À direita, as médias de 2000 amostras de 20 mexilhões cada. Os dois gráficos usam a mesma escala no eixo horizontal."
 #| fig-alt: "Dois histogramas lado a lado na mesma escala. O da esquerda, de mexilhões individuais, é largo. O da direita, de médias amostrais, é muito mais estreito e concentrado em torno do centro."
@@ -168,33 +145,25 @@ med_min <- formata(faixa_medias[1], 1)
 med_max <- formata(faixa_medias[2], 1)
 ```
 
-O gráfico da esquerda mostra o que você veria se medisse mexilhões um a um: nesta simulação, os
-comprimentos foram de `r ind_min` a `r ind_max` cm. O da direita mostra as **médias** de amostras
-de 20, que ficaram entre `r med_min` e `r med_max` cm. São dois gráficos que respondem a perguntas
-diferentes, e confundi-los é um dos erros mais comuns em análise de dados.
+O gráfico da esquerda mostra o que você veria se medisse 2000 mexilhões um a um. Nesta simulação, os comprimentos foram de `r ind_min` a `r ind_max` cm. O da direita mostra as **médias** de amostras de n = 20, que ficaram entre `r med_min` e `r med_max` cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.
 
 ::: {.callout-note appearance="minimal" title="Duas distribuições diferentes"}
 A distribuição da **esquerda** descreve como variam os *indivíduos* da população.
 
-A distribuição da **direita** descreve como varia a *média de uma amostra* quando o estudo é
-repetido. Ela recebe o nome de **distribuição amostral da média**.
+A distribuição da **direita** descreve como varia a *média de uma amostra* quando o estudo é repetido. Ela recebe o nome de **distribuição amostral da média**.
 
-A segunda é sempre mais estreita que a primeira, porque médias de vários indivíduos suavizam os
-extremos: para uma amostra dar média 7 cm, seria preciso que quase todos os 20 mexilhões fossem
-enormes ao mesmo tempo.
+A segunda é sempre mais estreita que a primeira, porque médias de vários indivíduos suavizam os extremos. Para uma amostra dar média 7 cm, seria preciso que quase todos os 20 mexilhões fossem enormes ao mesmo tempo.
 :::
 
 # E se a amostra for maior?
 
-A largura da distribuição da direita depende de duas coisas: quanto os indivíduos variam e quantos
-indivíduos entram em cada amostra. A primeira é uma propriedade do costão, sobre a qual não temos
-controle. A segunda é uma decisão de quem planeja a coleta, e por isso merece ser examinada.
+A largura da distribuição da direita depende de duas coisas, de quanto os indivíduos variam entre si e de quantos indivíduos entram em cada amostra. A primeira é uma propriedade do costão, sobre a qual não temos controle. A segunda é uma decisão de quem planeja a coleta, e por isso merece ser examinada.
 
 ```{r}
 #| echo: false
 #| label: fig-tamanho-amostra
 #| fig-cap: "Distribuição das médias amostrais para três tamanhos de amostra, na mesma população de mexilhões."
-#| fig-alt: "Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga; com n igual a 20 a faixa encolhe; com n igual a 100 as médias ficam concentradas em torno do centro."
+#| fig-alt: "Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga. Com n igual a 20 a faixa encolhe. Com n igual a 100 as médias ficam concentradas em torno do centro."
 #| fig-height: 4.2
 sim <- bind_rows(
   tibble(n = "n = 5",   media = replicate(2000, mean(rnorm(5,   mean = 5, sd = 1)))),
@@ -225,17 +194,11 @@ n100_min <- formata(faixa_n100$minimo, 1)
 n100_max <- formata(faixa_n100$maximo, 1)
 ```
 
-Com 5 mexilhões por amostra, as médias desta simulação foram de `r n5_min` a `r n5_max` cm: duas
-equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre
-`r n100_min` e `r n100_max` cm.
-
-Ou seja: **amostras maiores não mudam a população, mudam a nossa incerteza sobre ela.**
+Com 5 mexilhões por amostra, as médias desta simulação foram de `r n5_min` a `r n5_max` cm. Com amostras desse tamanho, duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre `r n100_min` e `r n100_max` cm. A conclusão que podemos tirar é que **amostras maiores não mudam a população, mas mudam a nossa incerteza sobre ela.**
 
 # Um resultado que não depende dos mexilhões
 
-Tudo o que a simulação mostrou até aqui poderia ser um acidente do exemplo escolhido. Não é. Se
-observações independentes vêm de uma população com média $\mu$ e variância finita $\sigma^2$, então
-a média amostral satisfaz
+Tudo o que a simulação mostrou até aqui pode ser generalizado para observações independentes que vêm de uma população com média $\mu$ e variância finita $\sigma^2$. Nestas situações, a média amostral satisfaz:
 
 $$
 E(\bar{X})=\mu
@@ -243,38 +206,51 @@ E(\bar{X})=\mu
 \operatorname{Var}(\bar{X})=\frac{\sigma^2}{n}.
 $$
 
-A primeira igualdade diz que a média amostral é um estimador não enviesado de $\mu$: é a tradução
-formal do fato de os histogramas simulados ficarem centrados no valor correto. A segunda diz que a
-variância das médias é a variância dos indivíduos dividida por $n$, e é a tradução formal do
-estreitamento observado quando $n$ aumentou de 5 para 100. Portanto, o desvio-padrão da distribuição
-amostral, chamado **erro padrão**, é
+A primeira igualdade diz que a média amostral é um estimador não enviesado de $\mu$, é a tradução formal do fato de os histogramas simulados ficarem centrados no valor correto. A segunda diz que a variância das médias é a variância dos indivíduos dividida por $n$, e é a tradução formal do estreitamento observado quando $n$ aumentou de 5 para 100. Portanto, o desvio-padrão da distribuição amostral, chamado **erro padrão**, é
 
 $$
 EP(\bar{X})=\frac{\sigma}{\sqrt{n}}.
 $$
 
-É a raiz quadrada que explica por que dobrar $n$ não reduz a incerteza pela metade. Para obter
-metade do erro padrão, é necessário multiplicar $n$ por quatro.
+É a raiz quadrada no denominador que explica por que dobrar $n$ não reduz a incerteza pela metade. Para obter metade do erro padrão, é necessário multiplicar $n$ por quatro. Essa mesma raiz quadrada explica por que a redução da incerteza é mais rápida quando a amostra ainda é pequena e por que, em amostras já grandes, aumentar ainda mais o tamanho amostral traz ganhos cada vez menores de precisão.
 
-O **Teorema Central do Limite** acrescenta uma informação sobre a forma, e não apenas sobre centro e
-dispersão: sob independência e variância finita,
+```{r}
+#| echo: false
+#| label: fig-erro-padrao-n
+#| fig-cap: "Erro padrão da média em função do tamanho amostral, para uma população com desvio-padrão de 1 cm. Os pontos em n = 25 e n = 100 mostram que quadruplicar a amostra reduz o erro padrão pela metade."
+#| fig-alt: "Curva decrescente do erro padrão em função do tamanho amostral. A queda é acentuada para amostras pequenas e a curva se achata progressivamente conforme n aumenta, ilustrando retornos decrescentes."
+#| fig-height: 3.6
+desvio_populacional <- 1
+
+erro_padrao <- tibble(
+  n = 1:100,
+  ep = desvio_populacional / sqrt(n)
+)
+
+referencia <- tibble(
+  n = c(25, 100),
+  ep = desvio_populacional / sqrt(n)
+)
+
+ggplot(erro_padrao, aes(x = n, y = ep)) +
+  geom_line(colour = "#0072B2", linewidth = 1) +
+  geom_segment(data = referencia, aes(xend = n, yend = 0),
+               linetype = "dashed", colour = "#D55E00") +
+  geom_point(data = referencia, colour = "#D55E00", size = 2.5) +
+  labs(x = "Tamanho amostral (n)", y = "Erro padrão da média")
+```
+
+O **Teorema Central do Limite** acrescenta uma informação sobre a forma da distribuição. Sob independência e variância finita, a expressão
 
 $$
 \frac{\bar{X}-\mu}{\sigma/\sqrt{n}}
 $$
 
-se aproxima de uma distribuição normal padrão quando $n$ cresce. A distribuição normal é simétrica,
-tem forma de sino e é determinada por média e desvio-padrão. Aqui ela descreve a distribuição da
-estatística, e não exige que cada mexilhão individual tenha distribuição normal.
+se aproxima de uma distribuição normal padrão quando $n$ cresce. A distribuição normal é simétrica, tem forma de sino e é determinada pela média e desvio-padrão. Aqui ela descreve a distribuição da estatística, e não exige que cada mexilhão individual tenha distribuição normal.
 
-Duas ressalvas acompanham o resultado. A aproximação não tem um tamanho amostral universal:
-populações aproximadamente simétricas exigem menos observações, enquanto distribuições muito
-assimétricas, com caudas longas ou valores extremos, exigem mais. E a dependência entre unidades
-invalida a conta usual, porque várias observações parecidas não carregam a mesma informação que
-observações independentes.
+Duas ressalvas acompanham o resultado. A aproximação não tem um tamanho amostral universal. Populações aproximadamente simétricas exigem menos observações, enquanto distribuições muito assimétricas, com caudas longas ou valores extremos, exigem mais observações para que a distribuição das médias se aproxime de uma normal.
 
-Há ainda um ajuste quando a coleta é sem reposição em uma população finita e $n$ representa parcela
-relevante de $N$. Nesse caso o erro padrão pode incluir a correção
+Há ainda um ajuste quando a coleta é sem reposição em uma população finita e $n$ representa parcela relevante de $N$. Nesse caso, o erro padrão pode incluir a correção:
 
 $$
 \frac{\sigma}{\sqrt{n}}\sqrt{\frac{N-n}{N-1}}.
@@ -284,13 +260,9 @@ Quando $n$ é pequeno em relação a $N$, o segundo fator fica próximo de 1 e p
 
 ## Esperança descreve o centro, não o resultado
 
-A notação $E(\bar X)=\mu$ merece um cuidado de leitura. Ela descreve o centro de uma distribuição de
-resultados possíveis, e não promete que a média observada será igual a $\mu$. De modo semelhante,
-$\operatorname{Var}(\bar X)=\sigma^2/n$ é uma propriedade do procedimento antes da coleta. Depois de
-observar uma única amostra, $\sigma$ geralmente é desconhecido e será aproximado por $s$.
+A notação $E(\bar X)=\mu$ merece um cuidado de leitura. Ela descreve o centro de uma distribuição de resultados possíveis, e não promete que a média observada será igual a $\mu$. De modo semelhante, $\operatorname{Var}(\bar X)=\sigma^2/n$ é uma propriedade do procedimento antes da coleta. Depois de observar uma única amostra, $\sigma$ geralmente é desconhecido e será aproximado por $s$.
 
-Quando a aproximação normal é adequada, probabilidades sobre a média podem ser calculadas como
-áreas:
+Quando a aproximação normal é adequada, probabilidades sobre a média podem ser calculadas como áreas:
 
 $$
 P(a\le \bar X\le b)
@@ -300,22 +272,17 @@ P(a\le \bar X\le b)
 \Phi\!\left(\frac{a-\mu}{\sigma/\sqrt n}\right),
 $$
 
-em que $\Phi$ é a função de distribuição acumulada normal padrão. A leitura verbal é direta:
-padronizamos os dois limites em unidades de erro padrão e subtraímos as áreas acumuladas. Essa mesma
-estrutura quantitativa sustentará intervalos de confiança e testes de hipóteses.
+em que $\Phi$ é a função de distribuição acumulada normal padrão. As expressões acima são entendidas como a padronização dos dois limites em unidades de erro padrão e a subtração das áreas acumuladas. Essa mesma estrutura quantitativa sustentará intervalos de confiança e testes de hipóteses.
 
 # A forma da população e a velocidade do TCL
 
-A afirmação de que a normalidade "melhora com $n$" fica mais concreta quando partimos de uma
-população claramente não normal. Quando a população já é normal, a média amostral é exatamente
-normal para qualquer $n$. Quando a população é assimétrica, a normalidade é uma aproximação. O
-gráfico seguinte parte de uma população exponencial, limitada por zero e com cauda longa à direita.
+A afirmação de que a normalidade "melhora com $n$" fica mais concreta quando partimos de uma população claramente não normal. Quando a população já é normal, a média amostral é exatamente normal para qualquer $n$. Quando a população é assimétrica, a normalidade é uma aproximação. O gráfico seguinte parte de uma população exponencial, limitada por zero e com cauda longa à direita.
 
 ```{r}
 #| echo: false
 #| label: fig-tcl-assimetria
 #| fig-cap: "População exponencial e distribuições de médias para n igual a 2, 10 e 50. A assimetria diminui, e a dispersão das médias encolhe."
-#| fig-alt: "Quatro histogramas. A população e as médias de duas observações têm cauda longa à direita; com dez observações a forma é mais simétrica; com cinquenta se aproxima de um sino estreito."
+#| fig-alt: "Quatro histogramas. A população e as médias de duas observações têm cauda longa à direita. Com dez observações a forma é mais simétrica. Com cinquenta se aproxima de um sino estreito."
 #| fig-height: 6
 numero_estudos <- 5000
 media_populacional <- 5
@@ -343,33 +310,22 @@ ggplot(distribuicoes, aes(x = valor)) +
   theme_bw(base_size = 11)
 ```
 
-A cauda longa persiste nas médias de duas observações, atenua-se com dez e praticamente desaparece
-com cinquenta. Duas condições sustentam esse comportamento e podem falhar: o TCL exige média e
-variância finitas, de modo que caudas extremamente pesadas tornam a convergência lenta ou invalidam
-a variância; e a dependência importa, pois se as unidades vêm do mesmo tanque ou do mesmo ponto, o
-tamanho nominal $n$ exagera a quantidade de informação independente disponível.
+A cauda longa persiste nas médias de duas observações, atenua-se com dez e praticamente desaparece com cinquenta. Esse comportamento depende de duas condições, que a média e a variância sejam finitas e que as observações sejam independentes. Assim, caudas extremamente longas tornam a convergência para a distribuição normal lenta ou invalidam a variância. Quanto à independência, se as unidades vêm do mesmo tanque ou do mesmo ponto, o tamanho nominal $n$ exagera a quantidade de informação independente disponível.
 
-::: {.callout-warning appearance="minimal" title="O TCL não corrige um plano ruim"}
-Uma distribuição amostral estreita pode estar centrada no valor errado quando há viés de seleção. O
-TCL descreve a forma da variação aleatória sob o mecanismo assumido; não recupera unidades excluídas,
-não cria independência e não remove erro sistemático.
+::: {.callout-warning appearance="minimal" title="O TCL não corrige um desenho ruim"}
+Uma distribuição amostral estreita pode estar centrada no valor errado quando há viés de seleção. O TCL descreve a forma da variação aleatória sob o mecanismo amostral assumido e não é capaz de recuperar unidades excluídas, tornar as observações independentes ou remover erros sistemáticos.
 :::
 
-As duas equipes do início continuam com médias diferentes, e nada nesta leitura mudou esse fato. O
-que mudou foi o estatuto da diferença: ela deixou de ser um sinal de descuido e passou a ser um
-resultado previsível de um procedimento cujo comportamento pode ser descrito, centrado em $\mu$ e
-com dispersão $\sigma/\sqrt{n}$. É por isso que a distribuição amostral da média é o alicerce de
-quase tudo o que vem depois. Ela transforma "a resposta muda a cada amostra" em uma quantidade que
-se pode medir e informar junto com o resultado.
+As duas equipes do início continuam com médias diferentes, e nada nesta leitura mudou esse fato. No entanto, entendemos agora que essa diferença é um resultado previsível de um procedimento cujo comportamento pode ser descrito como centrado em $\mu$ e com dispersão $\sigma/\sqrt{n}$.
 
-# Para saber mais
-
-- [A distribuição normal como modelo](https://fcopf.github.io/mead/content/distribuicao-normal/distr-norm.html){target="_blank"} (MEAD)
-- [Combinando probabilidades](https://fcopf.github.io/mead/content/fundamentos-probabilidade/combina-probabilidades.html){target="_blank"} (MEAD)
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [A distribuição normal](https://fcopf.github.io/mead/topics/distribuicao-normal.html){target="_blank"}
+- [Espaço de possibilidades de um experimento](https://fcopf.github.io/mead/content/fundamentos-probabilidade/espaco-amostral.html){target="_blank"}
+- [Combinando probabilidades](https://fcopf.github.io/mead/content/fundamentos-probabilidade/combina-probabilidades.html){target="_blank"}
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"}
+:::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Duas equipes coletam 20 mexilhões cada e obtêm médias de 4,9 e 5,3 cm. Isso é sinal de que uma
-  delas trabalhou mal, ou é o resultado esperado?
-- Uma equipe quer reduzir pela metade o espalhamento das suas estimativas. Basta dobrar o número
-  de mexilhões coletados?
+- Duas equipes coletam 20 mexilhões cada e obtêm médias de 4,9 e 5,3 cm. Isso é sinal de que uma delas trabalhou mal, ou é o resultado esperado?
+- Uma equipe quer reduzir pela metade o espalhamento das suas estimativas. Basta dobrar o número de mexilhões coletados?
 :::

@@ -19,11 +19,9 @@ format:
 
 # De dois grupos para três
 
-Um experimento em mesocosmos mediu a concentração de três nutrientes (`NH4`, `NO3` e `PO3`) na água
-de tanques com e sem algas.
+Um experimento em mesocosmos mediu a concentração de três nutrientes (`NH4`, `NO3` e `PO3`) na água de tanques com e sem algas.
 
-Esta atividade olha os três nutrientes ao mesmo tempo, dentro dos mesocosmos sem algas, e investiga
-o que acontece quando várias comparações de pares são feitas em vez de uma comparação só.
+Esta atividade olha os três nutrientes ao mesmo tempo, dentro dos mesocosmos sem algas, e investiga o que acontece quando várias comparações de pares são feitas em vez de uma comparação só.
 
 ```{r}
 library(tidyverse)
@@ -40,8 +38,7 @@ biodiv <- read_tsv(url, show_col_types = FALSE)
 glimpse(biodiv)
 ```
 
-O mesocosmo (`MU`) é a unidade experimental: cada um foi medido três vezes, então resumimos as três
-medidas antes de analisar.
+O mesocosmo (`MU`) é a unidade experimental: cada um foi medido três vezes, então resumimos as três medidas antes de analisar.
 
 ```{r}
 mesocosmos <- biodiv |>
@@ -66,28 +63,21 @@ ggplot(sem_algas, aes(x = Nutrient, y = concentracao)) +
   labs(x = "Nutriente", y = "Concentração")
 ```
 
-Com três grupos, a saída óbvia seria fazer três testes t: NH4 contra NO3, NH4 contra PO3, NO3
-contra PO3. Sua tarefa é investigar por que isso é problemático.
+Com três grupos, a saída óbvia seria fazer três testes t: NH4 contra NO3, NH4 contra PO3, NO3 contra PO3. Sua tarefa é investigar por que isso é problemático.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
 Um script `ae-tres-grupos.R` que rode em sessão nova e contenha:
 
 1. os três testes t entre pares de nutrientes, com os respectivos valores de p;
-2. uma simulação que ilustre o problema: gere **três** grupos com a mesma média (por exemplo,
-   `rnorm(6, 2, 0.5)` para cada), faça os três testes t entre pares, repita isso 1000 vezes com
-   `replicate()` e conte em que proporção das repetições **pelo menos um** dos três testes
-   resultou em p < 0,05;
-3. em comentários, três a quatro frases respondendo: **por que essa proporção é maior que 5%, e
-   por que seria melhor ter um único teste para a pergunta "os três nutrientes diferem?"**
+2. uma simulação que ilustre o problema: gere **três** grupos com a mesma média (por exemplo, `rnorm(6, 2, 0.5)` para cada), faça os três testes t entre pares, repita isso 1000 vezes com `replicate()` e conte em que proporção das repetições **pelo menos um** dos três testes resultou em p < 0,05;
+3. em comentários, três a quatro frases respondendo: **por que essa proporção é maior que 5%, e por que seria melhor ter um único teste para a pergunta "os três nutrientes diferem?"**
 
 ::: {.callout-tip appearance="minimal" collapse="true" title="Dica para o item 2"}
-Dentro do `replicate()`, gere os três vetores, calcule os três valores de p com
-`t.test(a, b)$p.value` e devolva `min(...) < 0.05`. `replicate()` guardará 1000 valores
-`TRUE`/`FALSE`, e `mean()` desse vetor retorna a proporção.
+Dentro do `replicate()`, gere os três vetores, calcule os três valores de p com `t.test(a, b)$p.value` e devolva `min(...) < 0.05`. `replicate()` guardará 1000 valores `TRUE`/`FALSE`, e `mean()` desse vetor retorna a proporção.
 :::
 :::
 
-# Para saber mais
-
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"} (MEAD)
 - [Comparando médias: teste t de Student](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html){target="_blank"} (MEAD)
+:::

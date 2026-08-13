@@ -8,21 +8,11 @@ toc-title: "Conteúdo"
 
 ## Ementa
 
-Nesta UC, o eixo organizador é o delineamento experimental. A escolha do método analítico é
-tratada como consequência direta da pergunta científica e do delineamento adotado, levando o
-estudante a refletir, de forma integrada, sobre quais informações obter, como obtê-las e como
-analisar os dados. O percurso abrange o planejamento de estudos observacionais e experimentais,
-os fundamentos da inferência estatística, a lógica dos testes de hipóteses e os principais
-delineamentos experimentais. O objetivo central é que o estudante seja capaz de traduzir uma
-pergunta científica em um delineamento adequado e de conduzir a análise e a interpretação dos
-dados obtidos. O R é utilizado ao longo de toda a UC para implementar análises e interpretar
-resultados a partir de dados das Ciências do Mar.
+Nesta UC, o eixo organizador é o delineamento experimental. A escolha do método analítico é tratada como consequência direta da pergunta científica e do delineamento adotado, levando o estudante a refletir, de forma integrada, sobre quais informações obter, como obtê-las e como analisar os dados. O percurso abrange o planejamento de estudos observacionais e experimentais, os fundamentos da inferência estatística, a lógica dos testes de hipóteses e os principais delineamentos experimentais. O objetivo central é que o estudante seja capaz de traduzir uma pergunta científica em um delineamento adequado e de conduzir a análise e a interpretação dos dados obtidos. O R é utilizado ao longo de toda a UC para implementar análises e interpretar resultados a partir de dados das Ciências do Mar.
 
 ## Objetivos
 
-**Geral.** Desenvolver a capacidade de traduzir perguntas científicas em delineamentos adequados,
-conduzir as análises estatísticas correspondentes e interpretar os resultados de forma crítica e
-contextualizada.
+**Geral.** Desenvolver a capacidade de traduzir perguntas científicas em delineamentos adequados, conduzir as análises estatísticas correspondentes e interpretar os resultados de forma crítica e contextualizada.
 
 **Específicos.**
 
@@ -31,70 +21,41 @@ contextualizada.
 - Reconhecer e classificar delineamentos observacionais e experimentais.
 - Compreender a lógica da inferência estatística e dos testes de hipóteses.
 - Selecionar, aplicar e interpretar as análises adequadas ao delineamento adotado.
-- Usar o R para executar análises, produzir visualizações e comunicar resultados a partir de
-  dados das Ciências do Mar.
+- Usar o R para executar análises, produzir visualizações e comunicar resultados a partir de dados das Ciências do Mar.
 
 ## Conteúdo programático
 
-**1. Análise de dados em R.** Objetos, importação, organização e manipulação de tabelas.
-Medidas-resumo e representação gráfica. Visualização, detecção de padrões e valores discrepantes.
-Transformações de dados.
+**1. Análise de dados em R.** Objetos, importação, organização e manipulação de tabelas. Medidas-resumo e representação gráfica. Visualização, detecção de padrões e valores discrepantes. Transformações de dados.
 
-**2. Planejamento de estudos observacionais e experimentais.** População, amostra, parâmetros e
-estimadores. A pergunta científica como ponto de partida para a escolha do delineamento. Tipos de
-amostragem. Aleatorização e controle local. Variável resposta, fatores e níveis. Replicação e
-independência entre unidades experimentais. Controles e covariáveis. Estudos observacionais e
-experimentos manipulativos.
+**2. Planejamento de estudos observacionais e experimentais.** População, amostra, parâmetros e estimadores. A pergunta científica como ponto de partida para a escolha do delineamento. Tipos de amostragem. Aleatorização e controle local. Variável resposta, fatores e níveis. Replicação e independência entre unidades experimentais. Controles e covariáveis. Estudos observacionais e experimentos manipulativos.
 
-**3. Fundamentos da inferência estatística.** Distribuição amostral da média. Teorema Central do
-Limite. Estimação pontual e intervalar. Erro padrão da média e distribuição t de Student.
-Intervalos de confiança para a média.
+**3. Fundamentos da inferência estatística.** Distribuição amostral da média. Teorema Central do Limite. Estimação pontual e intervalar. Erro padrão da média e distribuição t de Student. Intervalos de confiança para a média.
 
-**4. Lógica dos testes de hipóteses.** Hipótese nula e hipótese alternativa. Erros tipo I e tipo II,
-valor de p, poder do teste e dimensionamento amostral. Teste t para amostras independentes.
-Verificação de pressupostos de normalidade e homocedasticidade.
+**4. Lógica dos testes de hipóteses.** Hipótese nula e hipótese alternativa. Erros tipo I e tipo II, valor de p, poder do teste e dimensionamento amostral. Teste t para amostras independentes. Verificação de pressupostos de normalidade e homocedasticidade.
 
-**5. Delineamentos experimentais e análise de variância.** Delineamento inteiramente casualizado e
-ANOVA simples: partição da soma dos quadrados, quadrados médios, razão F e teste de hipóteses.
-Pressupostos da ANOVA e análise de resíduos. Comparações múltiplas a posteriori. Delineamento em
-blocos aleatorizados e ANOVA fatorial: efeitos principais e termos de interação.
+**5. Delineamentos experimentais e análise de variância.** Delineamento inteiramente casualizado e ANOVA simples: partição da soma dos quadrados, quadrados médios, razão F e teste de hipóteses. Pressupostos da ANOVA e análise de resíduos. Comparações múltiplas a posteriori. Delineamento em blocos aleatorizados e ANOVA fatorial: efeitos principais e termos de interação.
 
-**6. Regressão linear simples e análise de covariância.** O modelo linear como aproximação de
-fenômenos empíricos. Ajuste por mínimos quadrados e coeficiente de determinação. ANOVA da
-regressão e testes de hipóteses sobre os coeficientes. Intervalos de confiança para a reta e
-intervalo de predição. Pressupostos da regressão. ANCOVA: a covariável como estratégia de controle
-estatístico na comparação entre grupos.
+**6. Regressão linear simples e análise de covariância.** O modelo linear como aproximação de fenômenos empíricos. Ajuste por mínimos quadrados e coeficiente de determinação. ANOVA da regressão e testes de hipóteses sobre os coeficientes. Intervalos de confiança para a reta e intervalo de predição. Pressupostos da regressão. ANCOVA: a covariável como estratégia de controle estatístico na comparação entre grupos.
 
 ## Como a UC funciona
 
-A UC ocupa 15 sextas-feiras, listadas no [Cronograma](../index.qmd): **10 aulas presenciais** no
-laboratório de informática e **5 atividades extraclasse** realizadas em casa, nas semanas em que
-não há aula presencial.
+A UC ocupa 15 sextas-feiras, listadas no [Cronograma](../index.qmd): **10 aulas presenciais** no laboratório de informática e **5 atividades extraclasse** realizadas em casa, nas semanas em que não há aula presencial.
 
 Cada semana do cronograma reúne exatamente dois materiais:
 
-- uma **[Leitura prévia](../content/pre-reading/index.qmd)**, completa e conceitual, para ler antes do
-  encontro;
-- uma **[Prática em R](../content/computer-lab/index.qmd)**, onde a investigação acontece, nas
-  semanas com aula presencial, ou uma
-  **[Atividade extraclasse](../content/assignment/index.qmd)** nas demais.
+- uma **[Leitura prévia](../content/pre-reading/index.qmd)**, completa e conceitual, para ler antes do encontro;
+- uma **[Prática em R](../content/computer-lab/index.qmd)**, onde a investigação acontece, nas semanas com aula presencial, ou uma **[Atividade extraclasse](../content/assignment/index.qmd)** nas demais.
 
-Todos os materiais são independentes: cada um carrega seus próprios pacotes, importa seus próprios
-dados e roda do início ao fim em uma sessão nova do R. Nenhum conhecimento prévio de R é exigido.
+Todos os materiais são independentes: cada um carrega seus próprios pacotes, importa seus próprios dados e roda do início ao fim em uma sessão nova do R. Nenhum conhecimento prévio de R é exigido.
 
 ## Avaliação
 
-Não há provas. Cada aula presencial e cada atividade extraclasse produz uma entrega, totalizando
-**15 entregas** ao longo do semestre. O que deve ser entregue está descrito no fim de cada Prática
-em R e de cada Atividade extraclasse, no callout **Entregue**.
+Não há provas. Cada aula presencial e cada atividade extraclasse produz uma entrega, totalizando **15 entregas** ao longo do semestre. O que deve ser entregue está descrito no fim de cada Prática em R e de cada Atividade extraclasse, no callout **Entregue**.
 
-A **Nota do Período Letivo (NL)** é a média das 15 entregas. A aprovação depende do cumprimento
-simultâneo da **frequência mínima de 75%** e do aproveitamento acadêmico, conforme o Regulamento
-dos Cursos de Graduação da Unifesp.
+A **Nota do Período Letivo (NL)** é a média das 15 entregas. A aprovação depende do cumprimento simultâneo da **frequência mínima de 75%** e do aproveitamento acadêmico, conforme o Regulamento dos Cursos de Graduação da Unifesp.
 
 - $NL \geq 6{,}0$: **aprovado**, com Nota Final $NF = NL$.
-- $3{,}0 \leq NL < 6{,}0$: o estudante realiza o **Exame**, e $NF = \frac{NL + NE}{2}$, sendo
-  aprovado se $NF \geq 6{,}0$.
+- $3{,}0 \leq NL < 6{,}0$: o estudante realiza o **Exame**, e $NF = \frac{NL + NE}{2}$, sendo aprovado se $NF \geq 6{,}0$.
 - $NL < 3{,}0$: **reprovado** sem direito a Exame.
 
 ## Bibliografia
@@ -106,11 +67,8 @@ dos Cursos de Graduação da Unifesp.
 
 **Complementar**
 
-- Quinn, G. P. & Keough, M. J. (2002). *Experimental Design and Data Analysis for Biologists*.
-  Cambridge University Press. [@quinn2002]
-- Ruxton, G. D. & Colegrave, N. (2011). *Experimental Design for the Life Sciences* (3ª ed.).
-  Oxford University Press. [@ruxton2011]
-- Zuur, A. F., Ieno, E. N., Walker, N. J., Saveliev, A. A. & Smith, G. M. (2009). *Mixed Effects
-  Models and Extensions in Ecology with R*. Springer. [@zuur2009]
+- Quinn, G. P. & Keough, M. J. (2002). *Experimental Design and Data Analysis for Biologists*. Cambridge University Press. [@quinn2002]
+- Ruxton, G. D. & Colegrave, N. (2011). *Experimental Design for the Life Sciences* (3ª ed.). Oxford University Press. [@ruxton2011]
+- Zuur, A. F., Ieno, E. N., Walker, N. J., Saveliev, A. A. & Smith, G. M. (2009). *Mixed Effects Models and Extensions in Ecology with R*. Springer. [@zuur2009]
 
 ## Referências

@@ -19,13 +19,9 @@ format:
 
 # Objetivo desta prática
 
-A [leitura desta semana](../pre-reading/pread-blocos-interacao.qmd) fecha com uma frase que vale
-guardar: acrescentar um termo ao modelo **retira do resíduo uma variação que tem nome**, e o que muda
-entre bloco e interação não é a conta, é o estatuto científico do termo.
+A [leitura desta semana](../pre-reading/pread-blocos-interacao.qmd) fecha com uma frase que vale guardar: acrescentar um termo ao modelo **retira do resíduo uma variação que tem nome**, e o que muda entre bloco e interação não é a conta, é o estatuto científico do termo.
 
-Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do
-gradiente, o tamanho do efeito e o ruído — e vai descobrir, tentando, que a intuição mais comum sobre
-"como tornar um efeito detectável" falha neste delineamento.
+Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do gradiente, o tamanho do efeito e o ruído — e vai descobrir, tentando, que a intuição mais comum sobre "como tornar um efeito detectável" falha neste delineamento.
 
 O objetivo em R é comparar modelos que diferem por um único termo e ler o que acontece com o resíduo.
 
@@ -46,9 +42,7 @@ theme_set(theme_bw(base_size = 12))
 
 # Um costão com gradiente
 
-Você quer comparar três tipos de placa de assentamento, mas o costão tem um gradiente forte de altura
-que afeta muito o recrutamento. Seis faixas de altura, três placas em cada faixa, e todos os
-parâmetros explícitos:
+Você quer comparar três tipos de placa de assentamento, mas o costão tem um gradiente forte de altura que afeta muito o recrutamento. Seis faixas de altura, três placas em cada faixa, e todos os parâmetros explícitos:
 
 ```{r}
 gradiente <- 4      # recrutas a mais por faixa de altura
@@ -71,11 +65,9 @@ experimento <- tibble(
 experimento
 ```
 
-Leia a linha da `media_esperada`: cada faixa acrescenta `gradiente` recrutas, a placa B rende
-`efeito_B` a mais que a A, a C rende `efeito_C`, e o `rnorm()` acrescenta o que sobra.
+Leia a linha da `media_esperada`: cada faixa acrescenta `gradiente` recrutas, a placa B rende `efeito_B` a mais que a A, a C rende `efeito_C`, e o `rnorm()` acrescenta o que sobra.
 
-Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o
-efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer.
+Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer.
 
 ```{r}
 #| label: fig-blocos-gradiente
@@ -88,8 +80,7 @@ ggplot(experimento, aes(x = factor(bloco), y = recrutas, colour = placa)) +
 ```
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-O gradiente domina o gráfico. Dentro de cada faixa, porém, a ordem A → B → C se repete com
-regularidade. É esse padrão local que a análise precisa enxergar.
+O gradiente domina o gráfico. Dentro de cada faixa, porém, a ordem A → B → C se repete com regularidade. É esse padrão local que a análise precisa enxergar.
 :::
 
 # Duas análises do mesmo experimento
@@ -112,8 +103,7 @@ Não são a mesma resposta.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Complete"}
-Falta, dentro de `factor()`, a coluna que identifica a faixa de altura. `factor()` avisa ao R que os
-números de 1 a 6 são rótulos, não uma quantidade.
+Falta, dentro de `factor()`, a coluna que identifica a faixa de altura. `factor()` avisa ao R que os números de 1 a 6 são rótulos, não uma quantidade.
 
 ```r
 com_bloco <- aov(recrutas ~ placa + factor(____), data = experimento)
@@ -129,48 +119,38 @@ com_bloco <- aov(recrutas ~ placa + factor(bloco), data = experimento)
 summary(com_bloco)
 ```
 
-Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado: a
-variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.
+Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado: a variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.
 
 ::: {.callout-note appearance="minimal" title="O bloco não é um resultado"}
-Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difere da faixa 1" seria
-descrever o costão, não o experimento. O bloco entra no modelo para retirar variação conhecida do
-resíduo, não para ser interpretado.
+Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difere da faixa 1" seria descrever o costão, não o experimento. O bloco entra no modelo para retirar variação conhecida do resíduo, não para ser interpretado.
 :::
 
 # Sua vez
 
 ## O desafio: faça o modelo errado funcionar
 
-O modelo `sem_bloco` não detectou o efeito da placa. Ele pode passar a detectar — sem que o bloco
-entre na fórmula — se o experimento for outro.
+O modelo `sem_bloco` não detectou o efeito da placa. Ele pode passar a detectar — sem que o bloco entre na fórmula — se o experimento for outro.
 
 ::: {.callout-tip appearance="minimal" title="A regra do desafio"}
-Mude **um único** dos cinco parâmetros do início (`gradiente`, `efeito_B`, `efeito_C`, `ruido`,
-`n_blocos`), gere o experimento de novo e ajuste `sem_bloco`. O objetivo é obter um valor de p abaixo
-de 0,05 **no modelo que ignora o bloco**.
+Mude **um único** dos cinco parâmetros do início (`gradiente`, `efeito_B`, `efeito_C`, `ruido`, `n_blocos`), gere o experimento de novo e ajuste `sem_bloco`. O objetivo é obter um valor de p abaixo de 0,05 **no modelo que ignora o bloco**.
 
 Duas exigências:
 
 - registre no script **uma tentativa que falhou** e a que funcionou, com o valor antigo e o novo;
-- rode cada tentativa **duas ou três vezes** antes de decidir, porque uma execução isolada pode
-  enganar.
+- rode cada tentativa **duas ou três vezes** antes de decidir, porque uma execução isolada pode enganar.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de tentar"}
 Antes de mexer em qualquer coisa, escreva no script qual parâmetro você aposta que resolve, e por quê.
 
-Vale a pena pensar na régua: no modelo `sem_bloco`, o que exatamente está dentro do `Mean Sq`
-residual? Reduzir o `ruido` diminui esse resíduo o suficiente?
+Vale a pena pensar na régua: no modelo `sem_bloco`, o que exatamente está dentro do `Mean Sq` residual? Reduzir o `ruido` diminui esse resíduo o suficiente?
 :::
 
 ## Um segundo fator, no mesmo costão
 
-Agora um experimento diferente no mesmo local: sem gradiente de altura, mas com as placas instaladas
-em duas **orientações**, norte e sul, com quatro réplicas por combinação.
+Agora um experimento diferente no mesmo local: sem gradiente de altura, mas com as placas instaladas em duas **orientações**, norte e sul, com quatro réplicas por combinação.
 
-Aqui a segunda variável não é um incômodo: é uma pergunta científica. E ela permite algo que o bloco
-não permitia — perguntar se o efeito da placa **depende** da orientação.
+Aqui a segunda variável não é um incômodo: é uma pergunta científica. E ela permite algo que o bloco não permitia — perguntar se o efeito da placa **depende** da orientação.
 
 ```r
 efeito_interacao <- ____   # escolha e registre: quanto a placa C rende a mais, no sul
@@ -190,8 +170,7 @@ costao_fatorial <- expand_grid(
   )
 ```
 
-Na fórmula, `+` combina os fatores sem interação e `*` acrescenta o termo de interação. É a única
-diferença entre os dois modelos:
+Na fórmula, `+` combina os fatores sem interação e `*` acrescenta o termo de interação. É a única diferença entre os dois modelos:
 
 ```r
 summary(aov(recrutas ~ placa + orientacao, data = costao_fatorial))
@@ -199,33 +178,21 @@ summary(aov(recrutas ~ placa * orientacao, data = costao_fatorial))
 ```
 
 ::: {.callout-tip appearance="minimal" title="Escolha e preveja"}
-Escolha um valor para `efeito_interacao` e registre-o. Antes de rodar os dois modelos, escreva o que
-espera que aconteça com o `Mean Sq` **residual** ao trocar `+` por `*`.
+Escolha um valor para `efeito_interacao` e registre-o. Antes de rodar os dois modelos, escreva o que espera que aconteça com o `Mean Sq` **residual** ao trocar `+` por `*`.
 
-Depois, se sobrar tempo, repita com um `efeito_interacao` igual a zero e veja se a sua leitura se
-mantém.
+Depois, se sobrar tempo, repita com um `efeito_interacao` igual a zero e veja se a sua leitura se mantém.
 :::
 
 # Entrega
 
-Salve o script `pr-blocos-fatorial.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
-(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
-script, como comentários iniciados por `#`.
+Salve o script `pr-blocos-fatorial.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por `#`.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-1. a base da aula: o experimento gerado, o gráfico por faixa e os dois modelos, com as suas duas
-   previsões sobre a `Sum Sq` registradas em comentário **antes** das saídas;
-2. **o desafio**: a previsão inicial, a tentativa que falhou e a que funcionou, cada uma com o
-   parâmetro alterado, o valor antigo, o valor novo e a tabela de `summary()`;
-3. em comentários, 2 a 3 frases explicando **por que a tentativa que falhou não bastou** — diga o que
-   estava dentro do `Mean Sq` residual do modelo sem bloco;
-4. **o experimento fatorial** com o `efeito_interacao` que você escolheu, os modelos `+` e `*` e a sua
-   previsão sobre o resíduo registrada antes;
-5. em comentários, escreva **duas frases prontas para um relatório**, usando os números que você
-   obteve: uma que relate a interação do seu experimento fatorial como **resultado** (dizendo para
-   qual combinação de placa e orientação o efeito foi maior), e outra que mencione o bloco do
-   experimento do gradiente apenas como **parte do delineamento**. Em seguida, uma frase explicando
-   por que a primeira pode ser publicada como achado e a segunda não.
+1. a base da aula: o experimento gerado, o gráfico por faixa e os dois modelos, com as suas duas previsões sobre a `Sum Sq` registradas em comentário **antes** das saídas;
+2. **o desafio**: a previsão inicial, a tentativa que falhou e a que funcionou, cada uma com o parâmetro alterado, o valor antigo, o valor novo e a tabela de `summary()`;
+3. em comentários, 2 a 3 frases explicando **por que a tentativa que falhou não bastou** — diga o que estava dentro do `Mean Sq` residual do modelo sem bloco;
+4. **o experimento fatorial** com o `efeito_interacao` que você escolheu, os modelos `+` e `*` e a sua previsão sobre o resíduo registrada antes;
+5. em comentários, escreva **duas frases prontas para um relatório**, usando os números que você obteve: uma que relate a interação do seu experimento fatorial como **resultado** (dizendo para qual combinação de placa e orientação o efeito foi maior), e outra que mencione o bloco do experimento do gradiente apenas como **parte do delineamento**. Em seguida, uma frase explicando por que a primeira pode ser publicada como achado e a segunda não.
 :::
 
 ::: {.callout-tip appearance="minimal" title="O que será avaliado"}
@@ -237,10 +204,7 @@ script, como comentários iniciados por `#`.
 - [ ] a resposta do item 5 distingue o papel científico dos dois termos, não a conta.
 :::
 
-# Para saber mais
-
-- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"}
-  (MEAD) — para rever, pelo ângulo descritivo, a comparação de uma resposta contínua entre grupos.
-- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"}
-  (MEAD) — procure a seção sobre termos de interação, que reaparecem na Prática 10 com um preditor
-  contínuo.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Associação entre variáveis quantitativas e qualitativas](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html){target="_blank"} (MEAD) — para rever, pelo ângulo descritivo, a comparação de uma resposta contínua entre grupos.
+- [Regressão linear múltipla](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html){target="_blank"} (MEAD) — procure a seção sobre termos de interação, que reaparecem na Prática 10 com um preditor contínuo.
+:::

@@ -24,20 +24,13 @@ theme_set(theme_bw(base_size = 12))
 
 # A mesma variável, papéis diferentes
 
-Um experimento de cultivo de juvenis de ostra registra a temperatura da água. O que é a
-temperatura nesse estudo?
+Um experimento de cultivo de juvenis de ostra registra a temperatura da água. O que é a temperatura nesse estudo?
 
 Depende inteiramente do que foi feito com ela.
 
-Se a pesquisadora **sorteou** quais tanques ficariam a 22 °C e quais a 26 °C, a temperatura é o
-tratamento: é a resposta do estudo. Se ela apenas **agrupou** os tanques pela sala em que estavam,
-sabendo que as salas diferem de temperatura, a temperatura é um incômodo controlado. Se ela
-**mediu** a temperatura de cada tanque ao longo do experimento, sem interferir, ela é uma
-característica registrada de cada unidade.
+Se a pesquisadora **sorteou** quais tanques ficariam a 22 °C e quais a 26 °C, a temperatura é o tratamento: é a resposta do estudo. Se ela apenas **agrupou** os tanques pela sala em que estavam, sabendo que as salas diferem de temperatura, a temperatura é um incômodo controlado. Se ela **mediu** a temperatura de cada tanque ao longo do experimento, sem interferir, ela é uma característica registrada de cada unidade.
 
-Três estudos, uma variável, três papéis: **fator**, **bloco** e **covariável**. Saber distinguir os
-três é o que esta leitura desenvolve, e a distinção não está nos dados nem no modelo. Está no que
-aconteceu antes da coleta.
+Três estudos, uma variável, três papéis: **fator**, **bloco** e **covariável**. Saber distinguir os três é o que esta leitura desenvolve, e a distinção não está nos dados nem no modelo. Está no que aconteceu antes da coleta.
 
 # O critério cabe em três verbos
 
@@ -47,55 +40,35 @@ aconteceu antes da coleta.
 | **Bloco** | agrupamento de unidades parecidas | agrupou antes de sortear | não, é controle |
 | **Covariável** | medida contínua de cada unidade | mediu, sem interferir | como ajuste, não como resultado |
 
-Repare que a coluna do meio é a que decide. Não é o tipo da variável (categórica ou contínua) nem a
-posição dela na fórmula: é o verbo. Vale examinar os três casos separadamente.
+Repare que a coluna do meio é a que decide. Não é o tipo da variável (categórica ou contínua) nem a posição dela na fórmula: é o verbo. Vale examinar os três casos separadamente.
 
 ## Fator
 
-O fator é aquilo que o estudo existe para comparar. Seus níveis foram atribuídos às unidades por
-sorteio, e é sobre ele que a conclusão vai falar.
+O fator é aquilo que o estudo existe para comparar. Seus níveis foram atribuídos às unidades por sorteio, e é sobre ele que a conclusão vai falar.
 
-Um experimento pode ter mais de um fator de interesse ao mesmo tempo, e nesse caso a combinação
-deles também interessa: descobrir se o efeito de um depende do nível do outro é frequentemente a
-parte mais informativa do resultado.
+Um experimento pode ter mais de um fator de interesse ao mesmo tempo, e nesse caso a combinação deles também interessa: descobrir se o efeito de um depende do nível do outro é frequentemente a parte mais informativa do resultado.
 
-No R, essas duas perguntas podem ser escritas como `resposta ~ racao` e
-`resposta ~ racao * temperatura`. A segunda inclui os dois efeitos principais e sua interação.
+No R, essas duas perguntas podem ser escritas como `resposta ~ racao` e `resposta ~ racao * temperatura`. A segunda inclui os dois efeitos principais e sua interação.
 
 ## Bloco
 
-O bloco é uma fonte de variação **conhecida e indesejada**, que você não consegue eliminar mas
-consegue organizar.
+O bloco é uma fonte de variação **conhecida e indesejada**, que você não consegue eliminar mas consegue organizar.
 
-Suponha juvenis criados em seis bandejas de berçário, e que as bandejas difiram entre si por
-posição, fluxo e iluminação. Em vez de espalhar os tratamentos ao acaso por todas elas e deixar a
-diferença entre bandejas engordar o resíduo, você garante que **cada bandeja receba todos os
-tratamentos**, sorteando as posições dentro dela.
+Suponha juvenis criados em seis bandejas de berçário, e que as bandejas difiram entre si por posição, fluxo e iluminação. Em vez de espalhar os tratamentos ao acaso por todas elas e deixar a diferença entre bandejas engordar o resíduo, você garante que **cada bandeja receba todos os tratamentos**, sorteando as posições dentro dela.
 
-A variação entre bandejas passa a ser atribuída ao bloco e sai do resíduo. O efeito do tratamento
-fica mais fácil de detectar, sem coletar um dado a mais. O modelo correspondente pode ser escrito
-como `resposta ~ racao + bandeja`, mantendo os dois papéis científicos distintos apesar de ambos
-aparecerem na parte sistemática.
+A variação entre bandejas passa a ser atribuída ao bloco e sai do resíduo. O efeito do tratamento fica mais fácil de detectar, sem coletar um dado a mais. O modelo correspondente pode ser escrito como `resposta ~ racao + bandeja`, mantendo os dois papéis científicos distintos apesar de ambos aparecerem na parte sistemática.
 
-Como o agrupamento organiza a alocação, ele precisa existir antes dela. Blocos definidos no
-planejamento são controle local; grupos formados depois de ver os dados são seleção de resultado, e
-retiram do teste a interpretação que ele teria.
+Como o agrupamento organiza a alocação, ele precisa existir antes dela. Blocos definidos no planejamento são controle local; grupos formados depois de ver os dados são seleção de resultado, e retiram do teste a interpretação que ele teria.
 
 ## Covariável
 
-A covariável é uma medida contínua registrada em cada unidade, que afeta a resposta e não é o que
-você quer comparar.
+A covariável é uma medida contínua registrada em cada unidade, que afeta a resposta e não é o que você quer comparar.
 
-Se os juvenis entraram no experimento com pesos iniciais diferentes, o peso final vai refletir isso
-junto com o efeito da ração. Medir o peso inicial de cada indivíduo permite comparar as rações
-**em um mesmo peso de partida**, em vez de comparar médias brutas que misturam as duas coisas.
+Se os juvenis entraram no experimento com pesos iniciais diferentes, o peso final vai refletir isso junto com o efeito da ração. Medir o peso inicial de cada indivíduo permite comparar as rações **em um mesmo peso de partida**, em vez de comparar médias brutas que misturam as duas coisas.
 
-O ajuste é escrito como `resposta ~ racao + peso_inicial`: a ração representa a comparação e o peso
-inicial define a condição na qual ela é feita.
+O ajuste é escrito como `resposta ~ racao + peso_inicial`: a ração representa a comparação e o peso inicial define a condição na qual ela é feita.
 
-A lógica é a mesma do bloco, retirar do resíduo uma variação conhecida, mas o instrumento é
-diferente: em vez de agrupar unidades parecidas, mede-se a característica de cada uma. A figura
-abaixo põe as duas estratégias lado a lado.
+A lógica é a mesma do bloco, retirar do resíduo uma variação conhecida, mas o instrumento é diferente: em vez de agrupar unidades parecidas, mede-se a característica de cada uma. A figura abaixo põe as duas estratégias lado a lado.
 
 ```{r}
 #| echo: false
@@ -129,31 +102,23 @@ p_cov <- ggplot(inicial, aes(x = peso_inicial, y = resposta, colour = grupo)) +
 patchwork::wrap_plots(p_bloco, p_cov, ncol = 2, guides = "collect")
 ```
 
-Nos dois painéis existe o mesmo efeito de tratamento, de 3 unidades. E nos dois ele estaria
-escondido se a variação de fundo, entre bandejas ou entre pesos iniciais, tivesse sido ignorada.
+Nos dois painéis existe o mesmo efeito de tratamento, de 3 unidades. E nos dois ele estaria escondido se a variação de fundo, entre bandejas ou entre pesos iniciais, tivesse sido ignorada.
 
 # A fórmula não decide nada
 
-Este é o ponto que costuma confundir. As fórmulas `resposta ~ racao + bandeja` e
-`resposta ~ racao + peso_inicial` têm exatamente a mesma forma algébrica, embora uma use um
-agrupamento planejado e a outra uma medida contínua.
+Este é o ponto que costuma confundir. As fórmulas `resposta ~ racao + bandeja` e `resposta ~ racao + peso_inicial` têm exatamente a mesma forma algébrica, embora uma use um agrupamento planejado e a outra uma medida contínua.
 
-O R as ajusta pelo mesmo procedimento, e a tabela de saída também se parece. Nada nelas informa qual
-variável foi sorteada, qual foi agrupada e qual foi medida. Essa informação existe apenas no
-delineamento, e é você quem a carrega até a interpretação.
+O R as ajusta pelo mesmo procedimento, e a tabela de saída também se parece. Nada nelas informa qual variável foi sorteada, qual foi agrupada e qual foi medida. Essa informação existe apenas no delineamento, e é você quem a carrega até a interpretação.
 
 # Três modelos parecidos, três perguntas diferentes
 
-Escrever os modelos lado a lado deixa a semelhança formal ainda mais evidente. Para um fator com
-níveis $i$, o modelo mais simples é
+Escrever os modelos lado a lado deixa a semelhança formal ainda mais evidente. Para um fator com níveis $i$, o modelo mais simples é
 
 $$
 Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
 $$
 
-$\alpha_i$ representa a diferença entre o nível $i$ e a referência definida pela parametrização.
-Quando o fator foi aleatorizado, essa diferença pode ser interpretada causalmente para as unidades e
-condições representadas pelo experimento.
+$\alpha_i$ representa a diferença entre o nível $i$ e a referência definida pela parametrização. Quando o fator foi aleatorizado, essa diferença pode ser interpretada causalmente para as unidades e condições representadas pelo experimento.
 
 Com bloco, acrescentamos uma diferença para cada grupo de controle local:
 
@@ -161,8 +126,7 @@ $$
 Y_{ij}=\mu+\alpha_i+\beta_j+\varepsilon_{ij}.
 $$
 
-$\beta_j$ ajuda a explicar a resposta, mas não é uma comparação causal entre bandejas. A inclusão
-do bloco muda a régua residual e compara tratamentos dentro da estrutura usada na aleatorização.
+$\beta_j$ ajuda a explicar a resposta, mas não é uma comparação causal entre bandejas. A inclusão do bloco muda a régua residual e compara tratamentos dentro da estrutura usada na aleatorização.
 
 Com covariável contínua $X$, o modelo aditivo é
 
@@ -170,12 +134,9 @@ $$
 Y_i=\beta_0+\beta_1X_i+\alpha_{g(i)}+\varepsilon_i.
 $$
 
-$\beta_1$ descreve a mudança esperada em $Y$ por unidade de $X$, mantendo o grupo constante.
-$\alpha_{g(i)}$ compara grupos em um mesmo valor de $X$. Esses são **efeitos parciais**: cada
-coeficiente é interpretado depois de considerar os outros termos do modelo.
+$\beta_1$ descreve a mudança esperada em $Y$ por unidade de $X$, mantendo o grupo constante. $\alpha_{g(i)}$ compara grupos em um mesmo valor de $X$. Esses são **efeitos parciais**: cada coeficiente é interpretado depois de considerar os outros termos do modelo.
 
-Ajustados aos dois conjuntos da figura anterior, os modelos com bloco e com covariável produzem
-tabelas de coeficientes com estrutura diferente, embora o comando seja quase o mesmo.
+Ajustados aos dois conjuntos da figura anterior, os modelos com bloco e com covariável produzem tabelas de coeficientes com estrutura diferente, embora o comando seja quase o mesmo.
 
 ```{r}
 #| code-fold: true
@@ -193,27 +154,19 @@ bind_rows(
 )
 ```
 
-No modelo com bloco, cada bandeja recebe seu próprio coeficiente, e são cinco deles para seis
-bandejas. No modelo com covariável, uma única inclinação descreve o efeito do peso inicial em toda a
-faixa medida. Em ambos, o coeficiente de `grupo` é o que responde à pergunta do estudo, e vale cerca
-de 3 unidades, como esperado pela construção dos dados.
+No modelo com bloco, cada bandeja recebe seu próprio coeficiente, e são cinco deles para seis bandejas. No modelo com covariável, uma única inclinação descreve o efeito do peso inicial em toda a faixa medida. Em ambos, o coeficiente de `grupo` é o que responde à pergunta do estudo, e vale cerca de 3 unidades, como esperado pela construção dos dados.
 
 ## Como ler um coeficiente parcial
 
-A expressão "mantendo constante" merece um exame mais cuidadoso, porque ela sugere uma operação que
-não é a que o modelo realiza. Em regressão múltipla,
+A expressão "mantendo constante" merece um exame mais cuidadoso, porque ela sugere uma operação que não é a que o modelo realiza. Em regressão múltipla,
 
 $$
 Y_i=\beta_0+\beta_1X_{1i}+\beta_2X_{2i}+\varepsilon_i,
 $$
 
-$\beta_1$ descreve a diferença esperada em $Y$ para uma unidade adicional de $X_1$ **mantendo
-$X_2$ constante**. Essa frase não significa que o programa encontrou pares perfeitamente iguais em
-$X_2$; significa que o modelo usa a variação de $X_1$ que não é explicada linearmente por $X_2$.
+$\beta_1$ descreve a diferença esperada em $Y$ para uma unidade adicional de $X_1$ **mantendo $X_2$ constante**. Essa frase não significa que o programa encontrou pares perfeitamente iguais em $X_2$; significa que o modelo usa a variação de $X_1$ que não é explicada linearmente por $X_2$.
 
-Uma forma de tornar isso visível é retirar de $X_1$ sua previsão por $X_2$, retirar de $Y$ sua
-previsão por $X_2$ e relacionar os dois conjuntos de resíduos. A inclinação resultante é a mesma
-$\hat\beta_1$ do modelo múltiplo.
+Uma forma de tornar isso visível é retirar de $X_1$ sua previsão por $X_2$, retirar de $Y$ sua previsão por $X_2$ e relacionar os dois conjuntos de resíduos. A inclinação resultante é a mesma $\hat\beta_1$ do modelo múltiplo.
 
 ```{r}
 #| code-fold: true
@@ -251,42 +204,28 @@ inclinacao_residuos <- formata(
 )
 ```
 
-A inclinação da reta da figura é `r inclinacao_residuos`, e o coeficiente de `temperatura` no modelo
-múltiplo é `r inclinacao_multipla`. As duas coincidem, e essa coincidência é o conteúdo da expressão
-"controlar por": comparar a parte de $X_1$ que ainda varia depois do ajuste, e não apagar
-magicamente diferenças entre unidades.
+A inclinação da reta da figura é `r inclinacao_residuos`, e o coeficiente de `temperatura` no modelo múltiplo é `r inclinacao_multipla`. As duas coincidem, e essa coincidência é o conteúdo da expressão "controlar por": comparar a parte de $X_1$ que ainda varia depois do ajuste, e não apagar magicamente diferenças entre unidades.
 
 # Quando uma covariável não serve para ajustar
 
-Nem toda variável medida pode entrar no modelo como covariável. Três condições costumam decidir a
-questão, e nenhuma delas é verificada automaticamente pelo programa.
+Nem toda variável medida pode entrar no modelo como covariável. Três condições costumam decidir a questão, e nenhuma delas é verificada automaticamente pelo programa.
 
 ## A variável precisa existir antes do tratamento
 
-Uma boa covariável de ajuste é medida antes da intervenção, prevê a resposta e não é consequência
-do tratamento. Peso inicial satisfaz esses critérios; ganho de peso medido durante o experimento pode
-estar no caminho pelo qual a ração atua. Ajustar por uma consequência remove parte do efeito ou cria
-associação artificial.
+Uma boa covariável de ajuste é medida antes da intervenção, prevê a resposta e não é consequência do tratamento. Peso inicial satisfaz esses critérios; ganho de peso medido durante o experimento pode estar no caminho pelo qual a ração atua. Ajustar por uma consequência remove parte do efeito ou cria associação artificial.
 
-Se $T$ é tratamento, $M$ uma medida causada por $T$ e $Y$ a resposta, o caminho $T\to M\to Y$ faz
-parte do efeito total. Condicionar em $M$ bloqueia esse caminho e responde a uma pergunta sobre
-efeito direto, que é uma pergunta diferente da original. Se $M$ também recebe causas não medidas de
-$Y$, o condicionamento pode até abrir uma associação artificial. A temporalidade da variável precisa
-ser conhecida antes de incluí-la por conveniência.
+Se $T$ é tratamento, $M$ uma medida causada por $T$ e $Y$ a resposta, o caminho $T\to M\to Y$ faz parte do efeito total. Condicionar em $M$ bloqueia esse caminho e responde a uma pergunta sobre efeito direto, que é uma pergunta diferente da original. Se $M$ também recebe causas não medidas de $Y$, o condicionamento pode até abrir uma associação artificial. A temporalidade da variável precisa ser conhecida antes de incluí-la por conveniência.
 
 ::: {.callout-tip appearance="minimal" title="Árvore de decisão científica"}
 1. A condição foi atribuída para responder à pergunta? Trate-a como fator.
 2. Foi usada antes da alocação para agrupar unidades semelhantes? Trate-a como bloco.
 3. Foi medida antes do tratamento e ajuda a prever a resposta? Pode ser covariável.
-4. Foi medida depois ou pode ser consequência do tratamento? Não ajuste sem redefinir explicitamente
-   o efeito que deseja estimar.
+4. Foi medida depois ou pode ser consequência do tratamento? Não ajuste sem redefinir explicitamente o efeito que deseja estimar.
 :::
 
 ## Os grupos precisam se sobrepor na covariável
 
-A segunda condição diz respeito à faixa de valores observada em cada grupo. Se apenas indivíduos
-leves recebem a ração A e apenas indivíduos pesados recebem B, o modelo precisa extrapolar para
-comparar rações no mesmo peso. Uma equação ajustada não cria a informação que falta nessa região.
+A segunda condição diz respeito à faixa de valores observada em cada grupo. Se apenas indivíduos leves recebem a ração A e apenas indivíduos pesados recebem B, o modelo precisa extrapolar para comparar rações no mesmo peso. Uma equação ajustada não cria a informação que falta nessa região.
 
 ```{r}
 #| echo: false
@@ -311,53 +250,27 @@ ggplot(suporte, aes(x = peso, y = linha, colour = grupo)) +
   theme_bw(base_size = 11)
 ```
 
-No painel da esquerda os dois grupos ocupam faixas semelhantes de peso inicial, e a comparação a um
-peso fixo se apoia em unidades realmente observadas. No painel da direita, grupo e peso inicial
-estão quase confundidos: "manter peso constante" passa a depender principalmente da forma linear
-assumida. Erros padrão crescem e pequenas mudanças de modelo podem alterar muito o contraste.
-Restringir a análise à região comum muda a população-alvo, mas costuma ser mais transparente que
-extrapolar.
+No painel da esquerda os dois grupos ocupam faixas semelhantes de peso inicial, e a comparação a um peso fixo se apoia em unidades realmente observadas. No painel da direita, grupo e peso inicial estão quase confundidos: "manter peso constante" passa a depender principalmente da forma linear assumida. Erros padrão crescem e pequenas mudanças de modelo podem alterar muito o contraste. Restringir a análise à região comum muda a população-alvo, mas costuma ser mais transparente que extrapolar.
 
 ## Colinearidade e forma da relação
 
-A terceira condição diz respeito à relação entre as próprias variáveis explicativas. Quando duas
-covariáveis são fortemente relacionadas, há **multicolinearidade**. O modelo pode prever bem a
-resposta, mas separar seus coeficientes parciais se torna instável: erros padrão aumentam e os
-sinais podem mudar com pequenas alterações da amostra. Isso não é corrigido escolhendo a variável
-com menor valor de p; é preciso perguntar quais efeitos parciais têm apoio e significado científico.
+A terceira condição diz respeito à relação entre as próprias variáveis explicativas. Quando duas covariáveis são fortemente relacionadas, há **multicolinearidade**. O modelo pode prever bem a resposta, mas separar seus coeficientes parciais se torna instável: erros padrão aumentam e os sinais podem mudar com pequenas alterações da amostra. Isso não é corrigido escolhendo a variável com menor valor de p; é preciso perguntar quais efeitos parciais têm apoio e significado científico.
 
-Por fim, a relação entre covariável e resposta deve ser aproximadamente linear na escala usada, com
-variação residual comparável entre grupos. Se a inclinação difere entre tratamentos, aparece uma
-interação e o efeito do fator passa a depender do valor da covariável, situação em que um único
-número deixa de descrever a comparação.
+Por fim, a relação entre covariável e resposta deve ser aproximadamente linear na escala usada, com variação residual comparável entre grupos. Se a inclinação difere entre tratamentos, aparece uma interação e o efeito do fator passa a depender do valor da covariável, situação em que um único número deixa de descrever a comparação.
 
 ::: {.callout-warning appearance="minimal" title="O que não se faz com bloco e covariável"}
-Não se relata o efeito de bloco como resultado do estudo. Dizer "a bandeja 6 difere da bandeja 1"
-descreve o berçário, não o experimento.
+Não se relata o efeito de bloco como resultado do estudo. Dizer "a bandeja 6 difere da bandeja 1" descreve o berçário, não o experimento.
 
-Não se ajusta por uma covariável **medida depois** do tratamento e que pode ter sido afetada por
-ele. Nesse caso o ajuste remove parte do próprio efeito que se quer estimar.
+Não se ajusta por uma covariável **medida depois** do tratamento e que pode ter sido afetada por ele. Nesse caso o ajuste remove parte do próprio efeito que se quer estimar.
 :::
 
-A temperatura do início desta leitura continua sendo a mesma medida, registrada com o mesmo
-instrumento, guardada na mesma coluna. O que decide seu papel é uma informação que não está na
-planilha: se ela foi sorteada, agrupada ou apenas observada. Vale insistir que essa informação não é
-recuperável depois. Um fator costuma ser categórico, mas uma dose controlada também pode ser
-representada continuamente; um bloco costuma ser categórico, mas pode nascer de faixas de uma medida
-contínua; uma covariável costuma ser contínua, mas outras variáveis prévias também podem funcionar
-como ajustes. O papel vem da pergunta, da temporalidade e da forma de alocação, e é ele que
-determina se um coeficiente pode ser lido como resultado, como controle ou como condição de
-comparação.
+A temperatura do início desta leitura continua sendo a mesma medida, registrada com o mesmo instrumento, guardada na mesma coluna. O que decide seu papel é uma informação que não está na planilha: se ela foi sorteada, agrupada ou apenas observada. Vale insistir que essa informação não é recuperável depois. Um fator costuma ser categórico, mas uma dose controlada também pode ser representada continuamente; um bloco costuma ser categórico, mas pode nascer de faixas de uma medida contínua; uma covariável costuma ser contínua, mas outras variáveis prévias também podem funcionar como ajustes. O papel vem da pergunta, da temporalidade e da forma de alocação, e é ele que determina se um coeficiente pode ser lido como resultado, como controle ou como condição de comparação.
 
-# Para saber mais
-
-- [Introdução a matrizes](https://fcopf.github.io/mead/content/multivariada-numerica/intro-matrizes.html){target="_blank"} (MEAD),
-  onde a formulação matricial mostra fator, bloco e covariável ocupando colunas da mesma matriz de
-  delineamento.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Introdução a matrizes](https://fcopf.github.io/mead/content/multivariada-numerica/intro-matrizes.html){target="_blank"} (MEAD), onde a formulação matricial mostra fator, bloco e covariável ocupando colunas da mesma matriz de delineamento.
+:::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Um estudo compara duas dietas em tanques instalados em dois galpões. Se o pesquisador sorteou os
-  tanques entre galpões, o galpão é bloco. E se ele colocou uma dieta em cada galpão?
-- Uma variável contínua pode ser usada como bloco, agrupando as unidades em faixas de valor. O que
-  se perde ao fazer isso, em vez de usá-la como covariável?
+- Um estudo compara duas dietas em tanques instalados em dois galpões. Se o pesquisador sorteou os tanques entre galpões, o galpão é bloco. E se ele colocou uma dieta em cada galpão?
+- Uma variável contínua pode ser usada como bloco, agrupando as unidades em faixas de valor. O que se perde ao fazer isso, em vez de usá-la como covariável?
 :::

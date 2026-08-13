@@ -19,13 +19,9 @@ format:
 
 # Objetivo desta prática
 
-A [leitura desta semana](../pre-reading/pread-replicacao-unidades.qmd) mostrou que peixes do mesmo
-tanque não são réplicas e que a análise deve ser feita no nível da unidade experimental. Você viu a
-estrutura do problema.
+A [leitura desta semana](../pre-reading/pread-replicacao-unidades.qmd) mostrou que peixes do mesmo tanque não são réplicas e que a análise deve ser feita no nível da unidade experimental. Você viu a estrutura do problema.
 
-O que a leitura não mediu é o **preço** de errar esse nível. Hoje você vai medir duas coisas: com que
-frequência a análise errada anuncia um efeito que não existe, e de que depende, afinal, o erro padrão
-da análise correta.
+O que a leitura não mediu é o **preço** de errar esse nível. Hoje você vai medir duas coisas: com que frequência a análise errada anuncia um efeito que não existe, e de que depende, afinal, o erro padrão da análise correta.
 
 O objetivo em R é escrever uma **função** e repetir um experimento inteiro centenas de vezes.
 
@@ -44,11 +40,9 @@ library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-Duas dietas para juvenis de robalo. Oito tanques: quatro recebem a dieta comum, quatro a enriquecida.
-Quinze peixes em cada tanque. Cento e vinte medidas de comprimento, e a dieta sorteada **oito vezes**.
+Duas dietas para juvenis de robalo. Oito tanques: quatro recebem a dieta comum, quatro a enriquecida. Quinze peixes em cada tanque. Cento e vinte medidas de comprimento, e a dieta sorteada **oito vezes**.
 
-Vamos construir esse experimento no computador, em dois passos, para saber exatamente qual é a
-verdade. Primeiro cada tanque recebe o seu próprio desvio:
+Vamos construir esse experimento no computador, em dois passos, para saber exatamente qual é a verdade. Primeiro cada tanque recebe o seu próprio desvio:
 
 ```{r}
 efeito_dieta <- 0             # nenhuma diferença entre as dietas
@@ -65,8 +59,7 @@ tanques <- tibble(
 tanques
 ```
 
-Repare que **`efeito_dieta` vale zero**: as duas dietas são idênticas. Toda diferença entre tanques
-vem do `rnorm()` da última linha, ou seja, do acaso de cada tanque.
+Repare que **`efeito_dieta` vale zero**: as duas dietas são idênticas. Toda diferença entre tanques vem do `rnorm()` da última linha, ou seja, do acaso de cada tanque.
 
 Agora os peixes, sorteados em torno da média do seu tanque:
 
@@ -85,20 +78,16 @@ ggplot(peixes, aes(x = factor(tanque), y = comprimento, colour = dieta)) +
   labs(x = "Tanque", y = "Comprimento (cm)", colour = "Dieta")
 ```
 
-`slice(rep(1:8, each = 15))` repete cada linha de tanque 15 vezes, criando 15 peixes por tanque, e
-`n()` devolve o número de linhas da tabela naquele momento — aqui, 120.
+`slice(rep(1:8, each = 15))` repete cada linha de tanque 15 vezes, criando 15 peixes por tanque, e `n()` devolve o número de linhas da tabela naquele momento — aqui, 120.
 
 # Duas análises dos mesmos peixes
 
-A tentação é resumir cada dieta com todos os seus peixes. A alternativa é primeiro reduzir cada
-tanque a um valor, porque é o tanque que recebeu a dieta.
+A tentação é resumir cada dieta com todos os seus peixes. A alternativa é primeiro reduzir cada tanque a um valor, porque é o tanque que recebeu a dieta.
 
 ::: {.callout-tip appearance="minimal" title="Complete"}
-No bloco abaixo falta, dentro de `group_by()`, a coluna que corresponde a **uma atribuição
-independente de dieta**.
+No bloco abaixo falta, dentro de `group_by()`, a coluna que corresponde a **uma atribuição independente de dieta**.
 
-Escreva o bloco no seu script com a coluna que você escolheu. Se a tabela resultante não tiver
-**oito** linhas, a coluna não foi a certa.
+Escreva o bloco no seu script com a coluna que você escolheu. Se a tabela resultante não tiver **oito** linhas, a coluna não foi a certa.
 
 ```r
 medias_tanque <- peixes |>
@@ -114,8 +103,7 @@ medias_tanque <- peixes |>
   summarise(media = mean(comprimento), .groups = "drop")
 ```
 
-Com as duas tabelas em mãos, aplicamos a **mesma** conta da Prática 03 — erro padrão e intervalo de
-95% — em cada uma delas:
+Com as duas tabelas em mãos, aplicamos a **mesma** conta da Prática 03 — erro padrão e intervalo de 95% — em cada uma delas:
 
 ```{r}
 por_peixe <- peixes |>
@@ -136,19 +124,16 @@ bind_rows(por_peixe, por_tanque) |>
 ```
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-As duas análises descrevem exatamente os mesmos peixes e prometem precisões muito diferentes. Compare
-a coluna `ep` das duas.
+As duas análises descrevem exatamente os mesmos peixes e prometem precisões muito diferentes. Compare a coluna `ep` das duas.
 
 E lembre que `efeito_dieta` é zero: qualquer separação entre as dietas, aqui, é acaso.
 :::
 
 # Com que frequência cada análise dá um alarme falso?
 
-Um experimento só não decide nada: cada execução sorteia tanques diferentes. A pergunta certa é sobre
-o comportamento **a longo prazo** de cada análise.
+Um experimento só não decide nada: cada execução sorteia tanques diferentes. A pergunta certa é sobre o comportamento **a longo prazo** de cada análise.
 
-Como a dieta não faz nada, sempre que os dois intervalos de uma análise **não se sobrepõem** nós
-anunciaríamos uma diferença que não existe. Vamos medir com que frequência isso acontece.
+Como a dieta não faz nada, sempre que os dois intervalos de uma análise **não se sobrepõem** nós anunciaríamos uma diferença que não existe. Vamos medir com que frequência isso acontece.
 
 ```{r}
 limites <- function(valores) {
@@ -159,9 +144,7 @@ limites <- function(valores) {
 separados <- function(a, b) limites(a)[1] > limites(b)[2] || limites(b)[1] > limites(a)[2]
 ```
 
-`function()` cria um comando novo: os nomes entre parênteses são os valores que ele recebe e a última
-linha é o que ele devolve. `limites()` guarda a conta da Prática 03; `separados()` responde `TRUE`
-quando os dois intervalos não se tocam.
+`function()` cria um comando novo: os nomes entre parênteses são os valores que ele recebe e a última linha é o que ele devolve. `limites()` guarda a conta da Prática 03; `separados()` responde `TRUE` quando os dois intervalos não se tocam.
 
 ```{r}
 alarmes <- replicate(300, {
@@ -191,18 +174,14 @@ c(peixes = mean(alarmes["peixes", ]), tanques = mean(alarmes["tanques", ]))
 ```
 
 ::: {.callout-tip appearance="minimal" title="Interprete"}
-Anote as duas proporções da sua execução. São 300 experimentos **sem efeito nenhum**: tudo o que
-aparece ali é alarme falso.
+Anote as duas proporções da sua execução. São 300 experimentos **sem efeito nenhum**: tudo o que aparece ali é alarme falso.
 
-Uma das duas análises se comporta como um procedimento de 95% de confiança deveria se comportar. A
-outra, não.
+Uma das duas análises se comporta como um procedimento de 95% de confiança deveria se comportar. A outra, não.
 :::
 
 # De que depende o erro padrão de cada análise?
 
-Se medir mais peixes por tanque resolvesse o problema, bastaria trabalhar mais. Vamos verificar,
-repetindo o experimento com três quantidades de peixes por tanque e olhando os dois erros padrão.
-Como cada execução varia, cada valor é a média de 100 experimentos.
+Se medir mais peixes por tanque resolvesse o problema, bastaria trabalhar mais. Vamos verificar, repetindo o experimento com três quantidades de peixes por tanque e olhando os dois erros padrão. Como cada execução varia, cada valor é a média de 100 experimentos.
 
 ```{r}
 ep_medio <- function(m) {
@@ -225,21 +204,17 @@ bind_rows(ep_medio(15), ep_medio(50), ep_medio(150))
 ```
 
 ::: {.callout-tip appearance="minimal" title="Interprete"}
-Leia a tabela coluna a coluna. `ep_peixes` cai quando se mede mais peixes por tanque. `ep_tanques`
-praticamente não se move.
+Leia a tabela coluna a coluna. `ep_peixes` cai quando se mede mais peixes por tanque. `ep_tanques` praticamente não se move.
 
-Ou seja: `ep_tanques` **não depende** de quantos peixes foram medidos. De que ele depende, então? O
-bloco seguinte pede que você descubra.
+Ou seja: `ep_tanques` **não depende** de quantos peixes foram medidos. De que ele depende, então? O bloco seguinte pede que você descubra.
 :::
 
 # Sua vez
 
-Em toda a função `ep_medio()`, o número de tanques está fixo em **8**. Ele aparece em quatro lugares:
-duas vezes como `1:8`, uma vez dentro de `rnorm(8, ...)` e uma vez em `sqrt(8)`.
+Em toda a função `ep_medio()`, o número de tanques está fixo em **8**. Ele aparece em quatro lugares: duas vezes como `1:8`, uma vez dentro de `rnorm(8, ...)` e uma vez em `sqrt(8)`.
 
 ::: {.callout-tip appearance="minimal" title="Adapte a função"}
-Reescreva a função para que ela receba **dois** valores: o número de peixes por tanque e o número de
-tanques.
+Reescreva a função para que ela receba **dois** valores: o número de peixes por tanque e o número de tanques.
 
 ```r
 ep_medio2 <- function(m, k) {
@@ -247,16 +222,13 @@ ep_medio2 <- function(m, k) {
 }
 ```
 
-Confira se funcionou: `ep_medio2(15, 8)` deve devolver números parecidos com os da linha de 15 peixes
-da tabela anterior. Acrescente também `k` ao vetor de saída, para que a tabela mostre quantos tanques
-foram usados.
+Confira se funcionou: `ep_medio2(15, 8)` deve devolver números parecidos com os da linha de 15 peixes da tabela anterior. Acrescente também `k` ao vetor de saída, para que a tabela mostre quantos tanques foram usados.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
 Você vai comparar **8 tanques** com **16 tanques**, mantendo 15 peixes em cada um.
 
-Antes de executar, escreva no script, como comentário, o que espera que aconteça com **cada uma das
-duas colunas** de erro padrão. Elas se movem juntas? Só uma se move? Nenhuma?
+Antes de executar, escreva no script, como comentário, o que espera que aconteça com **cada uma das duas colunas** de erro padrão. Elas se movem juntas? Só uma se move? Nenhuma?
 :::
 
 ```r
@@ -265,21 +237,13 @@ bind_rows(ep_medio2(15, 8), ep_medio2(15, 16))
 
 # Entrega
 
-Salve o script `pr-replicacao.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
-(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
-script, como comentários iniciados por `#`.
+Salve o script `pr-replicacao.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por `#`.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
-1. a base da aula: a simulação com `efeito_dieta <- 0`, o gráfico por tanque, a tabela com as duas
-   análises e as duas proporções de alarme falso;
-2. **a função `ep_medio2()` escrita por você** e a tabela comparando 8 e 16 tanques com 15 peixes,
-   precedida da sua previsão sobre as duas colunas;
-3. em comentários, uma recomendação de delineamento: uma colega vai repetir este experimento e pode
-   escolher entre **dobrar o número de tanques** ou **dobrar o número de peixes por tanque**. O que
-   você recomenda, e de quanto foi a redução do erro padrão relevante nos **seus** números?
-4. em comentários, 2 a 3 frases explicando por que a análise com 120 peixes deu tantos alarmes falsos
-   num experimento em que a dieta não fazia nada. Cite os **dois valores da coluna `ep`** que você
-   obteve na tabela das duas análises e diga qual variação cada um deles mediu.
+1. a base da aula: a simulação com `efeito_dieta <- 0`, o gráfico por tanque, a tabela com as duas análises e as duas proporções de alarme falso;
+2. **a função `ep_medio2()` escrita por você** e a tabela comparando 8 e 16 tanques com 15 peixes, precedida da sua previsão sobre as duas colunas;
+3. em comentários, uma recomendação de delineamento: uma colega vai repetir este experimento e pode escolher entre **dobrar o número de tanques** ou **dobrar o número de peixes por tanque**. O que você recomenda, e de quanto foi a redução do erro padrão relevante nos **seus** números?
+4. em comentários, 2 a 3 frases explicando por que a análise com 120 peixes deu tantos alarmes falsos num experimento em que a dieta não fazia nada. Cite os **dois valores da coluna `ep`** que você obteve na tabela das duas análises e diga qual variação cada um deles mediu.
 :::
 
 ::: {.callout-tip appearance="minimal" title="O que será avaliado"}
@@ -291,11 +255,9 @@ script, como comentários iniciados por `#`.
 - [ ] cada gráfico tem eixos com nome e unidade.
 :::
 
-# Para saber mais
-
-- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html){target="_blank"}
-  (MEAD) — para rever a diferença entre unidade amostral e unidade de medição.
-- O artigo de Hurlbert [@hurlbert1984] é a referência clássica sobre pseudorreplicação, com dezenas
-  de exemplos de delineamentos ecológicos publicados.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Descrevendo populações e amostras](https://fcopf.github.io/mead/content/amostragem/pop-amostra.html){target="_blank"} (MEAD) — para rever a diferença entre unidade amostral e unidade de medição.
+- O artigo de Hurlbert [@hurlbert1984] é a referência clássica sobre pseudorreplicação, com dezenas de exemplos de delineamentos ecológicos publicados.
+:::
 
 # Referências

@@ -4,12 +4,7 @@ number-sections: false
 toc: false
 ---
 
-As Práticas em R são o centro da unidade curricular, em que você importa dados, faz gráficos, resume
-estatísticas descritivas e simula experimentos para testar suposições. Há uma prática para cada uma
-das dez semanas com aula presencial. Antes de cada encontro, leia a
-[Leitura prévia](../pre-reading/index.qmd) da semana, pois ela traz o contexto teórico que a prática
-pressupõe. Nas semanas sem aula presencial, a investigação continua em uma
-[Atividade extraclasse](../assignment/index.qmd).
+As Práticas em R são o centro da unidade curricular, em que você importa dados, faz gráficos, resume estatísticas descritivas e simula experimentos para testar suposições. Há uma prática para cada uma das dez semanas com aula presencial. Antes de cada encontro, leia a [Leitura prévia](../pre-reading/index.qmd) da semana, pois ela traz o contexto teórico que a prática pressupõe. Nas semanas sem aula presencial, a investigação continua em uma [Atividade extraclasse](../assignment/index.qmd).
 
 ::: {.catalogo-materiais}
 

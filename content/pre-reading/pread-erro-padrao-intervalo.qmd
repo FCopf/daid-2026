@@ -26,67 +26,45 @@ theme_set(theme_bw(base_size = 12))
 
 Uma equipe coleta 20 mexilhões de um costão, mede um por um e calcula a média: 4,9 cm.
 
-Sabemos que esse número não é o comprimento médio do costão. Se outra equipe repetisse o trabalho,
-chegaria a outro valor, e a coleção dessas respostas possíveis tem uma largura própria. O problema
-prático é que ninguém repete o trabalho duas mil vezes. Você tem uma coleta, um número, e precisa
-informar alguma coisa sobre a confiança que ele merece.
+Sabemos que esse número não é o comprimento médio do costão. Se outra equipe repetisse o trabalho, chegaria a outro valor, e a coleção dessas respostas possíveis tem uma largura própria. O problema prático é que ninguém repete o trabalho duas mil vezes. Você tem uma coleta, um número, e precisa informar alguma coisa sobre a confiança que ele merece.
 
-A pergunta desta leitura é justamente essa: **como medir o espalhamento de um procedimento que
-foi executado uma única vez?**
+A pergunta desta leitura é justamente essa: **como medir o espalhamento de um procedimento que foi executado uma única vez?**
 
 # O erro padrão
 
-A saída é surpreendentemente econômica. A própria amostra já contém a informação necessária, e ela
-se resume em uma conta:
+A saída é surpreendentemente econômica. A própria amostra já contém a informação necessária, e ela se resume em uma conta:
 
 $$EP = \frac{s}{\sqrt{n}}$$
 
 onde $s$ é o desvio-padrão dos valores da amostra e $n$ é o número de unidades amostrais.
 
-Esse número é o **erro padrão da média**, e ele estima o quanto a média variaria se o estudo fosse
-repetido.
+Esse número é o **erro padrão da média**, e ele estima o quanto a média variaria se o estudo fosse repetido.
 
-Repare no que a fórmula diz. O erro padrão **cresce** quando os indivíduos variam mais: quanto mais
-heterogêneo o costão, mais instável a estimativa. E **cai** quando a amostra aumenta, mas cai com a
-raiz de $n$, o que tem uma consequência prática incômoda: para reduzir a incerteza pela metade é
-preciso quadruplicar a coleta.
+Repare no que a fórmula diz. O erro padrão **cresce** quando os indivíduos variam mais: quanto mais heterogêneo o costão, mais instável a estimativa. E **cai** quando a amostra aumenta, mas cai com a raiz de $n$, o que tem uma consequência prática incômoda: para reduzir a incerteza pela metade é preciso quadruplicar a coleta.
 
 ::: {.callout-warning appearance="minimal" title="Erro padrão e desvio-padrão medem coisas diferentes"}
-O **desvio-padrão** descreve quanto os mexilhões variam entre si. É uma característica do costão, e
-não muda quando você coleta mais.
+O **desvio-padrão** descreve quanto os mexilhões variam entre si. É uma característica do costão, e não muda quando você coleta mais.
 
-O **erro padrão** descreve quanto a *média de uma amostra* variaria de coleta para coleta. É uma
-característica do estudo, e encolhe conforme a amostra cresce.
+O **erro padrão** descreve quanto a *média de uma amostra* variaria de coleta para coleta. É uma característica do estudo, e encolhe conforme a amostra cresce.
 
 Informar um pelo outro é um erro comum, e ele muda a conclusão por um fator de $\sqrt{n}$.
 :::
 
 # De um número para um intervalo
 
-Se a média de uma amostra quase nunca acerta o valor da população, informar só a média é informar
-pouco. É mais honesto informar uma **faixa** de valores compatíveis com o que foi observado.
+Se a média de uma amostra quase nunca acerta o valor da população, informar só a média é informar pouco. É mais honesto informar uma **faixa** de valores compatíveis com o que foi observado.
 
-É isso que faz um **intervalo de confiança**: em vez de "a média é 4,9 cm", ele diz algo como
-"a média está entre 4,5 e 5,3 cm". O intervalo se constrói a partir da média e do erro padrão,
+É isso que faz um **intervalo de confiança**: em vez de "a média é 4,9 cm", ele diz algo como "a média está entre 4,5 e 5,3 cm". O intervalo se constrói a partir da média e do erro padrão,
 
 $$\bar{x} \pm t \times EP$$
 
-e portanto encolhe quando a amostra cresce e alarga quando os indivíduos variam mais. Falta explicar
-de onde sai o multiplicador $t$, que depende do nível de confiança escolhido e do tamanho da amostra.
+e portanto encolhe quando a amostra cresce e alarga quando os indivíduos variam mais. Falta explicar de onde sai o multiplicador $t$, que depende do nível de confiança escolhido e do tamanho da amostra.
 
 ## Por que aparece a distribuição t?
 
-Se o desvio-padrão populacional $\sigma$ fosse conhecido, a média padronizada seguiria a distribuição
-normal e o intervalo seria $\bar{x}\pm z_{1-\alpha/2}\sigma/\sqrt n$. Essa situação é rara em estudos
-novos. Na prática substituímos $\sigma$ pelo desvio-padrão amostral $s$, e essa segunda estimativa
-introduz uma incerteza adicional, sobretudo em amostras pequenas. Usar $z$ enquanto se substitui
-$\sigma$ por $s$ ignora essa incerteza e produz intervalos estreitos demais.
+Se o desvio-padrão populacional $\sigma$ fosse conhecido, a média padronizada seguiria a distribuição normal e o intervalo seria $\bar{x}\pm z_{1-\alpha/2}\sigma/\sqrt n$. Essa situação é rara em estudos novos. Na prática substituímos $\sigma$ pelo desvio-padrão amostral $s$, e essa segunda estimativa introduz uma incerteza adicional, sobretudo em amostras pequenas. Usar $z$ enquanto se substitui $\sigma$ por $s$ ignora essa incerteza e produz intervalos estreitos demais.
 
-A distribuição **t de Student** existe justamente para incorporá-la, por meio de caudas mais largas
-que as da normal. Para uma amostra de $n$ unidades, os graus de liberdade são $gl=n-1$. Perdemos um
-grau de liberdade porque os desvios em relação à média amostral precisam somar zero. Com poucos graus
-de liberdade, o valor crítico t é maior e o intervalo fica mais largo. Conforme $n$ cresce, $s$ se
-estabiliza e a distribuição t se aproxima da normal.
+A distribuição **t de Student** existe justamente para incorporá-la, por meio de caudas mais largas que as da normal. Para uma amostra de $n$ unidades, os graus de liberdade são $gl=n-1$. Perdemos um grau de liberdade porque os desvios em relação à média amostral precisam somar zero. Com poucos graus de liberdade, o valor crítico t é maior e o intervalo fica mais largo. Conforme $n$ cresce, $s$ se estabiliza e a distribuição t se aproxima da normal.
 
 ```{r}
 #| echo: false
@@ -112,25 +90,19 @@ ggplot(grade, aes(x = x, y = densidade, colour = distribuicao)) +
   labs(x = "Valor padronizado", y = "Densidade", colour = NULL)
 ```
 
-A curva com três graus de liberdade tem pico mais baixo e caudas mais pesadas; com trinta, já é
-quase indistinguível da normal. Convém lembrar que uma densidade não atribui probabilidade a um ponto
-isolado: probabilidades são áreas sob a curva. No intervalo bilateral, $t_{1-\alpha/2,n-1}$ deixa
-área $\alpha/2$ em cada cauda e área $1-\alpha$ entre os dois valores críticos.
+A curva com três graus de liberdade tem pico mais baixo e caudas mais pesadas; com trinta, já é quase indistinguível da normal. Convém lembrar que uma densidade não atribui probabilidade a um ponto isolado: probabilidades são áreas sob a curva. No intervalo bilateral, $t_{1-\alpha/2,n-1}$ deixa área $\alpha/2$ em cada cauda e área $1-\alpha$ entre os dois valores críticos.
 
-Com isso, a fórmula geral do intervalo bilateral de confiança $100(1-\alpha)\%$ para a média fica
-completa:
+Com isso, a fórmula geral do intervalo bilateral de confiança $100(1-\alpha)\%$ para a média fica completa:
 
 $$
 \bar{x}\pm t_{1-\alpha/2,\,n-1}\frac{s}{\sqrt{n}}.
 $$
 
-O termo à direita de $\bar{x}$ é a **margem de erro**. Em 95% de confiança, $\alpha=0,05$ e cada
-cauda da distribuição fica com 0,025. A largura total do intervalo é duas vezes a margem de erro.
+O termo à direita de $\bar{x}$ é a **margem de erro**. Em 95% de confiança, $\alpha=0,05$ e cada cauda da distribuição fica com 0,025. A largura total do intervalo é duas vezes a margem de erro.
 
 ## O cálculo, termo a termo
 
-Vale executar a fórmula uma vez de maneira explícita, porque cada linha do código corresponde a um
-dos elementos discutidos acima.
+Vale executar a fórmula uma vez de maneira explícita, porque cada linha do código corresponde a um dos elementos discutidos acima.
 
 ```{r}
 #| code-fold: true
@@ -148,34 +120,19 @@ c(
 )
 ```
 
-Nesse exemplo, $n=8$ e $gl=7$. O código calcula $\bar x$, depois $s/\sqrt n$, consulta o quantil de t
-e finalmente soma e subtrai a margem. O comando `t.test(comprimentos)$conf.int` aplica exatamente a
-mesma lógica; a conta manual é útil porque deixa visível o papel separado de variabilidade, tamanho
-amostral e nível de confiança. Alterar `0.975` para `0.95` produziria um intervalo bilateral de 90%,
-pois sobrariam 5% em cada cauda. Alterar apenas o número sem repensar a área é uma fonte comum de
-erro.
+Nesse exemplo, $n=8$ e $gl=7$. O código calcula $\bar x$, depois $s/\sqrt n$, consulta o quantil de t e finalmente soma e subtrai a margem. O comando `t.test(comprimentos)$conf.int` aplica exatamente a mesma lógica; a conta manual é útil porque deixa visível o papel separado de variabilidade, tamanho amostral e nível de confiança. Alterar `0.975` para `0.95` produziria um intervalo bilateral de 90%, pois sobrariam 5% em cada cauda. Alterar apenas o número sem repensar a área é uma fonte comum de erro.
 
 ## Compatibilidade e intervalos unilaterais
 
-Obtido o intervalo, resta saber o que ele afirma. Os valores dentro dele são aqueles que não entram
-em conflito forte com a amostra sob o modelo adotado. Isso não significa que todos sejam igualmente
-plausíveis nem que valores externos sejam impossíveis. A fronteira depende de uma convenção de
-cobertura, do erro padrão e dos pressupostos.
+Obtido o intervalo, resta saber o que ele afirma. Os valores dentro dele são aqueles que não entram em conflito forte com a amostra sob o modelo adotado. Isso não significa que todos sejam igualmente plausíveis nem que valores externos sejam impossíveis. A fronteira depende de uma convenção de cobertura, do erro padrão e dos pressupostos.
 
-Intervalos unilaterais respondem a perguntas diferentes. Um limite inferior de 95% usa
-$\bar x-t_{0,95,n-1}EP$ e se estende até infinito; ele é adequado quando apenas estabelecer um mínimo
-tem significado científico. A escolha entre unilateral e bilateral deve ocorrer antes de olhar os
-dados, não depois de observar em qual direção ficou a média.
+Intervalos unilaterais respondem a perguntas diferentes. Um limite inferior de 95% usa $\bar x-t_{0,95,n-1}EP$ e se estende até infinito; ele é adequado quando apenas estabelecer um mínimo tem significado científico. A escolha entre unilateral e bilateral deve ocorrer antes de olhar os dados, não depois de observar em qual direção ficou a média.
 
 # O que os 95% prometem
 
-Aqui está o ponto que exige mais cuidado de toda a leitura. O intervalo não é uma promessa sobre a
-sua amostra específica: é um **procedimento** que, aplicado repetidamente, acerta em uma proporção
-conhecida das vezes.
+Aqui está o ponto que exige mais cuidado de toda a leitura. O intervalo não é uma promessa sobre a sua amostra específica: é um **procedimento** que, aplicado repetidamente, acerta em uma proporção conhecida das vezes.
 
-Para enxergar isso, vale fazer o que não se pode fazer na vida real: inventar um costão cujo
-comprimento médio sabemos ser exatamente 5 cm, repetir a coleta cem vezes e olhar os cem
-intervalos.
+Para enxergar isso, vale fazer o que não se pode fazer na vida real: inventar um costão cujo comprimento médio sabemos ser exatamente 5 cm, repetir a coleta cem vezes e olhar os cem intervalos.
 
 ```{r}
 #| echo: false
@@ -217,44 +174,29 @@ ggplot(intervalos, aes(y = id, x = media, colour = cobre)) +
 n_falhas <- sum(intervalos$cobre == "não contém")
 ```
 
-Nesta simulação, o número de intervalos que **não** contêm o valor real foi `r n_falhas`, de 100.
-Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população.
-É por isso que o procedimento se chama "intervalo de 95% de confiança".
+Nesta simulação, o número de intervalos que **não** contêm o valor real foi `r n_falhas`, de 100. Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população. É por isso que o procedimento se chama "intervalo de 95% de confiança".
 
-Os intervalos laranja não foram calculados de forma diferente dos azuis. Ninguém errou a medição
-neles. Eles são a fração de coletas que, pelo sorteio, caiu longe demais do centro.
+Os intervalos laranja não foram calculados de forma diferente dos azuis. Ninguém errou a medição neles. Eles são a fração de coletas que, pelo sorteio, caiu longe demais do centro.
 
 ::: {.callout-warning appearance="minimal" title="A confiança é do procedimento, não do intervalo"}
 Com uma amostra só, **você nunca sabe se está em um intervalo azul ou laranja**.
 
-Por isso a frase "há 95% de probabilidade de a média estar neste intervalo" não descreve o que foi
-calculado. O que se sabe é a taxa de acerto do método quando ele é usado repetidamente.
+Por isso a frase "há 95% de probabilidade de a média estar neste intervalo" não descreve o que foi calculado. O que se sabe é a taxa de acerto do método quando ele é usado repetidamente.
 :::
 
-Essa propriedade explica por que o intervalo merece ser informado junto com a média. Um intervalo
-estreito e um intervalo largo em torno do mesmo valor dizem coisas muito diferentes sobre o que o
-estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa apenas a estimativa pontual.
-Um intervalo largo não é um resultado ruim: é um resultado honesto sobre um estudo pequeno ou sobre
-uma população heterogênea. O que seria ruim é apresentar a média sozinha e deixar quem lê supor uma
-precisão que os dados não têm.
+Essa propriedade explica por que o intervalo merece ser informado junto com a média. Um intervalo estreito e um intervalo largo em torno do mesmo valor dizem coisas muito diferentes sobre o que o estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa apenas a estimativa pontual. Um intervalo largo não é um resultado ruim: é um resultado honesto sobre um estudo pequeno ou sobre uma população heterogênea. O que seria ruim é apresentar a média sozinha e deixar quem lê supor uma precisão que os dados não têm.
 
 # O que determina a largura
 
-Se a largura carrega tanta informação, convém saber o que a controla. Há três maneiras de alterá-la.
-Aumentar o nível de confiança exige um valor crítico maior e alarga o intervalo. Aumentar a
-variabilidade $s$ aumenta o erro padrão. Aumentar $n$ estreita o intervalo, mas com retorno
-decrescente por causa de $\sqrt{n}$.
+Se a largura carrega tanta informação, convém saber o que a controla. Há três maneiras de alterá-la. Aumentar o nível de confiança exige um valor crítico maior e alarga o intervalo. Aumentar a variabilidade $s$ aumenta o erro padrão. Aumentar $n$ estreita o intervalo, mas com retorno decrescente por causa de $\sqrt{n}$.
 
-Essas três relações permitem inverter o problema e planejar a coleta. Se desejamos uma margem de erro
-máxima $E$ e temos uma estimativa prévia de $\sigma$, um primeiro planejamento usa
+Essas três relações permitem inverter o problema e planejar a coleta. Se desejamos uma margem de erro máxima $E$ e temos uma estimativa prévia de $\sigma$, um primeiro planejamento usa
 
 $$
 n\approx\left(\frac{z_{1-\alpha/2}\sigma}{E}\right)^2,
 $$
 
-arredondando sempre para cima. O valor de $\sigma$ pode vir de literatura comparável ou de um estudo
-piloto. A fórmula supõe observações independentes e funciona como ponto de partida; perdas, desenho
-por conglomerados e população finita precisam ser considerados no plano real.
+arredondando sempre para cima. O valor de $\sigma$ pode vir de literatura comparável ou de um estudo piloto. A fórmula supõe observações independentes e funciona como ponto de partida; perdas, desenho por conglomerados e população finita precisam ser considerados no plano real.
 
 ```{r}
 #| echo: false
@@ -281,53 +223,26 @@ ggplot(planejamento, aes(x = n, y = margem, colour = variabilidade,
        colour = "Variabilidade", linetype = "Confiança")
 ```
 
-Todas as curvas caem rapidamente no início e depois quase estacionam, o que mostra graficamente o
-retorno decrescente de $\sqrt{n}$. Um exemplo numérico fecha o raciocínio: com $\sigma=1{,}4$ cm,
-confiança de 95% e margem desejada de 0,25 cm, a fórmula fornece
-$n\approx(1{,}96\times1{,}4/0{,}25)^2=120{,}5$, portanto planejamos pelo menos 121 unidades. Se o
-estudo piloto tiver poucas unidades, sua estimativa de $\sigma$ também é incerta; uma escolha
-prudente usa valor conservador e acrescenta margem para perdas.
+Todas as curvas caem rapidamente no início e depois quase estacionam, o que mostra graficamente o retorno decrescente de $\sqrt{n}$. Um exemplo numérico fecha o raciocínio: com $\sigma=1{,}4$ cm, confiança de 95% e margem desejada de 0,25 cm, a fórmula fornece $n\approx(1{,}96\times1{,}4/0{,}25)^2=120{,}5$, portanto planejamos pelo menos 121 unidades. Se o estudo piloto tiver poucas unidades, sua estimativa de $\sigma$ também é incerta; uma escolha prudente usa valor conservador e acrescenta margem para perdas.
 
-Quando a amostra representa fração grande de uma população finita, a correção populacional pode
-reduzir o tamanho necessário. Em conglomerados, ocorre o contrário: a semelhança entre unidades do
-mesmo grupo aumenta o tamanho exigido. Planejamento não é apenas aplicar uma fórmula; é alinhar
-precisão, desenho e recursos disponíveis.
+Quando a amostra representa fração grande de uma população finita, a correção populacional pode reduzir o tamanho necessário. Em conglomerados, ocorre o contrário: a semelhança entre unidades do mesmo grupo aumenta o tamanho exigido. Planejamento não é apenas aplicar uma fórmula; é alinhar precisão, desenho e recursos disponíveis.
 
 # Quando o procedimento é confiável
 
-Toda essa construção repousa sobre pressupostos, e vale saber quais são. O intervalo t para a média
-supõe unidades independentes, seleção compatível com a população de interesse e ausência de
-distorções graves. Com amostras pequenas, assimetria forte e valores extremos podem comprometer a
-cobertura efetiva. Com amostras maiores, o Teorema Central do Limite torna o procedimento mais
-robusto, mas não corrige viés de seleção, pseudorreplicação nem erro sistemático de medição.
+Toda essa construção repousa sobre pressupostos, e vale saber quais são. O intervalo t para a média supõe unidades independentes, seleção compatível com a população de interesse e ausência de distorções graves. Com amostras pequenas, assimetria forte e valores extremos podem comprometer a cobertura efetiva. Com amostras maiores, o Teorema Central do Limite torna o procedimento mais robusto, mas não corrige viés de seleção, pseudorreplicação nem erro sistemático de medição.
 
-Antes de interpretar um intervalo, portanto, convém verificar se a população está definida e a
-amostra a representa, se a independência vale no nível correto, se a unidade de análise é coerente
-com o desenho, se a forma da distribuição é compatível com o tamanho amostral, se valores extremos
-foram investigados e se a estimativa de variabilidade corresponde ao plano de coleta. Nenhum desses
-pontos é verificado pela fórmula: intervalos tratam da incerteza amostral sob um modelo, não ampliam
-a população representada pela amostra e não substituem a avaliação do delineamento.
+Antes de interpretar um intervalo, portanto, convém verificar se a população está definida e a amostra a representa, se a independência vale no nível correto, se a unidade de análise é coerente com o desenho, se a forma da distribuição é compatível com o tamanho amostral, se valores extremos foram investigados e se a estimativa de variabilidade corresponde ao plano de coleta. Nenhum desses pontos é verificado pela fórmula: intervalos tratam da incerteza amostral sob um modelo, não ampliam a população representada pela amostra e não substituem a avaliação do delineamento.
 
-Há ainda uma distinção que costuma passar despercebida, entre **intervalo de confiança da média** e
-**intervalo de previsão para uma unidade**. O primeiro estima um centro populacional e encolhe com
-$n$. O segundo precisa incluir a variação dos próprios indivíduos e, por isso, é muito mais largo.
-Confundir os dois transforma uma afirmação precisa sobre uma média em uma previsão excessivamente
-otimista sobre o próximo organismo.
+Há ainda uma distinção que costuma passar despercebida, entre **intervalo de confiança da média** e **intervalo de previsão para uma unidade**. O primeiro estima um centro populacional e encolhe com $n$. O segundo precisa incluir a variação dos próprios indivíduos e, por isso, é muito mais largo. Confundir os dois transforma uma afirmação precisa sobre uma média em uma previsão excessivamente otimista sobre o próximo organismo.
 
-A pergunta inicial pedia medir o espalhamento de um procedimento executado uma única vez. A resposta
-tem duas partes. O erro padrão traduz a variabilidade observada na amostra em variabilidade esperada
-da estimativa; o intervalo transforma esse número em uma faixa cuja taxa de acerto é conhecida a
-longo prazo. Nenhuma das duas descreve o costão diretamente: as duas descrevem a qualidade do
-procedimento com que o estudamos.
+A pergunta inicial pedia medir o espalhamento de um procedimento executado uma única vez. A resposta tem duas partes. O erro padrão traduz a variabilidade observada na amostra em variabilidade esperada da estimativa; o intervalo transforma esse número em uma faixa cuja taxa de acerto é conhecida a longo prazo. Nenhuma das duas descreve o costão diretamente: as duas descrevem a qualidade do procedimento com que o estudamos.
 
-# Para saber mais
-
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [Probabilidades na distribuição normal](https://fcopf.github.io/mead/content/distribuicao-normal/distribuicao-normal-probabilidade.html){target="_blank"} (MEAD)
 - [O modelo bayesiano: outra forma de expressar incerteza](https://fcopf.github.io/mead/content/intro-bayes/intro-bayes-modelo-bayesiano.html){target="_blank"} (MEAD)
+:::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Duas equipes obtêm intervalos que se sobrepõem quase inteiramente. Isso é sinal de que erraram a
-  medição, ou é o resultado esperado?
-- Uma equipe informa média 4,9 cm sem nenhum intervalo. Que informação está faltando para alguém
-  avaliar o resultado?
+- Duas equipes obtêm intervalos que se sobrepõem quase inteiramente. Isso é sinal de que erraram a medição, ou é o resultado esperado?
+- Uma equipe informa média 4,9 cm sem nenhum intervalo. Que informação está faltando para alguém avaliar o resultado?
 :::

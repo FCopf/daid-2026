@@ -4,10 +4,7 @@ number-sections: false
 toc: false
 ---
 
-Nas cinco semanas sem aula presencial, a investigação continua em casa. Cada atividade extraclasse
-parte da [Leitura prévia](../pre-reading/index.qmd) da própria semana e leva a pergunta um passo
-adiante, com a mesma exigência das [Práticas em R](../computer-lab/index.qmd): rodar do início ao
-fim em uma sessão nova do R e produzir a sua própria entrega.
+Nas cinco semanas sem aula presencial, a investigação continua em casa. Cada atividade extraclasse parte da [Leitura prévia](../pre-reading/index.qmd) da própria semana e leva a pergunta um passo adiante, com a mesma exigência das [Práticas em R](../computer-lab/index.qmd): rodar do início ao fim em uma sessão nova do R e produzir a sua própria entrega.
 
 ::: {.catalogo-materiais}
 

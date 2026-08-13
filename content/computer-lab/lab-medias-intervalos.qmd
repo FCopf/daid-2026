@@ -19,17 +19,11 @@ format:
 
 # Objetivo desta prática
 
-A [leitura desta semana](../pre-reading/pread-erro-padrao-intervalo.qmd) mostrou cem intervalos de
-confiança e contou quantos continham o valor real. Você viu que o procedimento acerta cerca de 95%
-das vezes.
+A [leitura desta semana](../pre-reading/pread-erro-padrao-intervalo.qmd) mostrou cem intervalos de confiança e contou quantos continham o valor real. Você viu que o procedimento acerta cerca de 95% das vezes.
 
-Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de **acertar com
-certa frequência**, ele tem uma **largura** — e é a largura que diz se o estudo estabeleceu alguma
-coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das
-duas muda.
+Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de **acertar com certa frequência**, ele tem uma **largura** — e é a largura que diz se o estudo estabeleceu alguma coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das duas muda.
 
-O objetivo em R é construir um experimento de verificação: gerar muitas coletas, calcular um
-intervalo para cada uma e resumir o desempenho do procedimento.
+O objetivo em R é construir um experimento de verificação: gerar muitas coletas, calcular um intervalo para cada uma e resumir o desempenho do procedimento.
 
 ::: {.callout-note appearance="minimal" title="Como a hora será usada"}
 - **5 min** abrir o RStudio, criar o script e ler a proposta;
@@ -46,9 +40,7 @@ library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário:
-**inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de
-antemão, podemos verificar se o método acerta, e com que frequência.
+Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário: **inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de antemão, podemos verificar se o método acerta, e com que frequência.
 
 Os parâmetros ficam no início do script, para serem fáceis de mudar depois:
 
@@ -69,11 +61,9 @@ mean(amostra)
 sd(amostra)
 ```
 
-A média observada não é exatamente 5, e não deveria ser: são 20 mexilhões sorteados, não o costão
-inteiro.
+A média observada não é exatamente 5, e não deveria ser: são 20 mexilhões sorteados, não o costão inteiro.
 
-A leitura mostrou que o espalhamento dessas médias, entre coletas repetidas, pode ser estimado a
-partir de **uma única amostra**, pela fórmula do erro padrão:
+A leitura mostrou que o espalhamento dessas médias, entre coletas repetidas, pode ser estimado a partir de **uma única amostra**, pela fórmula do erro padrão:
 
 $$EP = \frac{s}{\sqrt{n}}$$
 
@@ -94,8 +84,7 @@ erro_padrao <- sd(amostra) / sqrt(n)
 erro_padrao
 ```
 
-Com a média e o erro padrão, construímos o **intervalo de confiança de 95%**. A função `qt()` fornece
-o multiplicador da distribuição t, que depende dos graus de liberdade ($n - 1$):
+Com a média e o erro padrão, construímos o **intervalo de confiança de 95%**. A função `qt()` fornece o multiplicador da distribuição t, que depende dos graus de liberdade ($n - 1$):
 
 ```{r}
 multiplicador <- qt(0.975, df = n - 1)
@@ -106,13 +95,11 @@ superior <- mean(amostra) + multiplicador * erro_padrao
 c(inferior, superior)
 ```
 
-Este é o intervalo **desta** coleta. Ele contém 5 cm, ou não contém; e com uma amostra só você nunca
-saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.
+Este é o intervalo **desta** coleta. Ele contém 5 cm, ou não contém; e com uma amostra só você nunca saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.
 
 # Duas propriedades do procedimento
 
-Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas
-medidas: a **proporção que contém o valor real** e a **largura média** dos intervalos.
+Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas medidas: a **proporção que contém o valor real** e a **largura média** dos intervalos.
 
 ```{r}
 coletas <- tibble(
@@ -144,28 +131,22 @@ resumo_20 <- intervalos |>
 resumo_20
 ```
 
-Duas observações sobre o código. A coluna `cobre` guarda `TRUE` ou `FALSE` para cada intervalo, e a
-média de um vetor lógico é a proporção de `TRUE`. A coluna `largura` é simplesmente a distância entre
-os dois limites.
+Duas observações sobre o código. A coluna `cobre` guarda `TRUE` ou `FALSE` para cada intervalo, e a média de um vetor lógico é a proporção de `TRUE`. A coluna `largura` é simplesmente a distância entre os dois limites.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-A cobertura obtida não será exatamente 95%: são 200 coletas sorteadas, e essa proporção também varia
-de execução para execução. Rode o bloco mais uma vez para ver o número oscilar.
+A cobertura obtida não será exatamente 95%: são 200 coletas sorteadas, e essa proporção também varia de execução para execução. Rode o bloco mais uma vez para ver o número oscilar.
 :::
 
 # Sua vez
 
-Você tem o desempenho do procedimento para amostras de 20 mexilhões. Falta saber o que acontece
-quando a amostra muda de tamanho.
+Você tem o desempenho do procedimento para amostras de 20 mexilhões. Falta saber o que acontece quando a amostra muda de tamanho.
 
 ::: {.callout-tip appearance="minimal" title="Escolha"}
-Escolha um segundo tamanho de amostra, diferente de 20: pode ser **5**, **10**, **50** ou **100**.
-Registre a escolha no script.
+Escolha um segundo tamanho de amostra, diferente de 20: pode ser **5**, **10**, **50** ou **100**. Registre a escolha no script.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
-O resumo tem duas colunas. Antes de executar qualquer coisa, escreva no script, como comentário, o
-que você espera que aconteça com **cada uma delas** quando o tamanho da amostra mudar:
+O resumo tem duas colunas. Antes de executar qualquer coisa, escreva no script, como comentário, o que você espera que aconteça com **cada uma delas** quando o tamanho da amostra mudar:
 
 - a **cobertura** vai subir, descer ou ficar parecida?
 - a **largura média** vai subir, descer ou ficar parecida?
@@ -173,8 +154,7 @@ que você espera que aconteça com **cada uma delas** quando o tamanho da amostr
 As duas respostas não são iguais. Registre as duas antes de olhar.
 :::
 
-Para produzir o segundo resultado, **duplique no seu script** o bloco dos 200 intervalos, trocando o
-valor de `n` no início e guardando o resumo com outro nome:
+Para produzir o segundo resultado, **duplique no seu script** o bloco dos 200 intervalos, trocando o valor de `n` no início e guardando o resumo com outro nome:
 
 ```r
 n <- ____            # o tamanho que você escolheu
@@ -196,31 +176,21 @@ bind_rows(resumo_20, resumo_meu)
 ```
 
 ::: {.callout-warning appearance="minimal" title="Cuidado com a ordem"}
-Todo o bloco usa o objeto `n`. Se você mudar `n` e não reexecutar as linhas que vêm depois, a tabela
-sairá com números misturados de dois tamanhos diferentes.
+Todo o bloco usa o objeto `n`. Se você mudar `n` e não reexecutar as linhas que vêm depois, a tabela sairá com números misturados de dois tamanhos diferentes.
 
-Por isso o script precisa rodar **do início ao fim em sessão nova** antes de ser enviado: é assim que
-você garante que cada resumo corresponde ao `n` que está escrito ao lado dele.
+Por isso o script precisa rodar **do início ao fim em sessão nova** antes de ser enviado: é assim que você garante que cada resumo corresponde ao `n` que está escrito ao lado dele.
 :::
 
 # Entrega
 
-Salve o script `pr-medias-intervalos.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R
-(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio
-script, como comentários iniciados por `#`.
+Salve o script `pr-medias-intervalos.R` com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por `#`.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
 1. a base da aula: uma amostra, o erro padrão completado por você e o intervalo de 95% dessa coleta;
-2. **a tabela com as duas linhas**, uma para `n = 20` e outra para o tamanho que você escolheu, com
-   as duas previsões registradas em comentário **antes** dela;
+2. **a tabela com as duas linhas**, uma para `n = 20` e outra para o tamanho que você escolheu, com as duas previsões registradas em comentário **antes** dela;
 3. em comentários, uma frase dizendo **qual das duas colunas mudou e qual não mudou**, e por quê;
-4. em comentários, 3 a 4 frases respondendo, **com os seus dois pares de números**: dois estudos
-   informam intervalos de 95% para a mesma população, um com amostra grande e outro com amostra
-   pequena. Os dois acertam com a mesma frequência? Então o que exatamente o estudo maior comprou com
-   o esforço extra de coleta?
-5. em comentários, uma conta: partindo do `n = 20`, quantos mexilhões seriam necessários para obter
-   um intervalo com **metade** da largura obtida ali? Use as suas duas larguras para conferir se a
-   sua resposta é coerente com o que você observou.
+4. em comentários, 3 a 4 frases respondendo, **com os seus dois pares de números**: dois estudos informam intervalos de 95% para a mesma população, um com amostra grande e outro com amostra pequena. Os dois acertam com a mesma frequência? Então o que exatamente o estudo maior comprou com o esforço extra de coleta?
+5. em comentários, uma conta: partindo do `n = 20`, quantos mexilhões seriam necessários para obter um intervalo com **metade** da largura obtida ali? Use as suas duas larguras para conferir se a sua resposta é coerente com o que você observou.
 :::
 
 ::: {.callout-tip appearance="minimal" title="O que será avaliado"}
@@ -233,9 +203,7 @@ script, como comentários iniciados por `#`.
 - [ ] a conta do item 5 aparece e é coerente com as duas larguras que você mediu.
 :::
 
-# Para saber mais
-
-- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"}
-  (MEAD) — procure a seção sobre a margem de erro, se quiser rever de onde sai o multiplicador `qt()`.
-- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"}
-  (MEAD) — para rever por que o erro padrão cai com a raiz de $n$.
+::: {.callout-tip appearance="minimal" title="Leitura adicional"}
+- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"} (MEAD) — procure a seção sobre a margem de erro, se quiser rever de onde sai o multiplicador `qt()`.
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"} (MEAD) — para rever por que o erro padrão cai com a raiz de $n$.
+:::
