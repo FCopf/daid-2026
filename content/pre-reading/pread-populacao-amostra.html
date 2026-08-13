@@ -84,9 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -484,7 +484,7 @@ Figura&nbsp;1: Valores das unidades da população e médias obtidas ao repetir 
 </div>
 </div>
 </div>
-<p>A média populacional desta simulação é 7,82 espécies. A amostra de 45 estações que sorteamos produziu a estimativa 7,67, próxima mas não idêntica. O histograma estreito das médias não afirma que as estações se tornaram homogêneas. Ele mostra que uma média de 45 unidades é bem mais estável que uma unidade isolada, com desvio-padrão de 0,52 espécies entre as repetições. É essa nuvem de estimativas que permite dizer se o estimador está centrado no parâmetro e quão preciso é o procedimento.</p>
+<p>A média populacional desta simulação é 7,97 espécies. A amostra de 45 estações que sorteamos produziu a estimativa 7,40, próxima mas não idêntica. O histograma estreito das médias não afirma que as estações se tornaram homogêneas. Ele mostra que uma média de 45 unidades é bem mais estável que uma unidade isolada, com desvio-padrão de 0,53 espécies entre as repetições. É essa nuvem de estimativas que permite dizer se o estimador está centrado no parâmetro e quão preciso é o procedimento.</p>
 </section>
 </section>
 <section id="quatro-maneiras-de-construir-uma-amostra-probabilística" class="level1" data-number="2">
@@ -510,21 +510,21 @@ Figura&nbsp;1: Valores das unidades da população e médias obtidas ao repetir 
 <pre><code># A tibble: 15 × 2
    estacao setor        
      &lt;int&gt; &lt;chr&gt;        
- 1       1 exposto      
- 2      43 abrigado     
- 3      32 abrigado     
- 4       9 exposto      
- 5      18 intermediário
- 6      22 intermediário
- 7       3 exposto      
- 8      42 abrigado     
- 9      10 exposto      
-10      19 intermediário
-11       4 exposto      
-12      37 abrigado     
-13      29 intermediário
-14       7 exposto      
-15      21 intermediário</code></pre>
+ 1      13 exposto      
+ 2       4 exposto      
+ 3      33 abrigado     
+ 4      26 intermediário
+ 5      39 abrigado     
+ 6      38 abrigado     
+ 7      30 intermediário
+ 8      43 abrigado     
+ 9      29 intermediário
+10       7 exposto      
+11      12 exposto      
+12      31 abrigado     
+13      14 exposto      
+14      19 intermediário
+15      35 abrigado     </code></pre>
 </div>
 </div>
 <p>O argumento <code>replace = FALSE</code> representa amostragem <strong>sem reposição</strong>, em que uma estação sorteada não pode ser novamente selecionada. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma vez. A amostragem com reposição simplifica modelos probabilísticos, mas a amostragem sem reposição descreve melhor muitos levantamentos de campo. Quando <span class="math inline">\(n\)</span> é uma fração pequena de <span class="math inline">\(N\)</span>, a diferença entre os dois esquemas é pequena, mas quando a fração é grande, amostrar sem reposição reduz a incerteza.</p>
@@ -603,7 +603,7 @@ Figura&nbsp;3: Estimativas da riqueza média da região obtidas por duas estrat�
 </div>
 </div>
 </div>
-<p>As duas estratégias acertam <strong>em média</strong>, porque os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de 0,78 espécies, e as por praias inteiras, de 1,62.</p>
+<p>As duas estratégias acertam <strong>em média</strong>, porque os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de 0,67 espécies, e as por praias inteiras, de 1,41.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

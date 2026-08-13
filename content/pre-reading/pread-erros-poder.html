@@ -103,9 +103,9 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -524,7 +524,7 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>poder_estimado <span class="ot">&lt;-</span> <span class="fu">mean</span>(detectar)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>A estrutura é a mesma da distribuição nula, com uma diferença essencial. Aqui os dois grupos são gerados com médias <strong>diferentes</strong>, porque queremos saber o que acontece quando o efeito existe. Cada repetição pergunta se o procedimento rejeitou <span class="math inline">\(H_0\)</span>, e a média dos valores lógicos estima <span class="math inline">\(P(\text{rejeitar }H_0\mid H_A)\)</span>. Com 15 placas por grupo, esta execução detectou o efeito em 47% das vezes.</p>
+<p>A estrutura é a mesma da distribuição nula, com uma diferença essencial. Aqui os dois grupos são gerados com médias <strong>diferentes</strong>, porque queremos saber o que acontece quando o efeito existe. Cada repetição pergunta se o procedimento rejeitou <span class="math inline">\(H_0\)</span>, e a média dos valores lógicos estima <span class="math inline">\(P(\text{rejeitar }H_0\mid H_A)\)</span>. Com 15 placas por grupo, esta execução detectou o efeito em 42% das vezes.</p>
 <p>Repetindo o mesmo cálculo para vários tamanhos de amostra, obtemos a curva de poder da <a href="#fig-poder-n" class="quarto-xref">Figura&nbsp;1</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -540,7 +540,7 @@ Figura&nbsp;1: Proporção de experimentos que detectam um efeito real de 1,4 cm
 </div>
 </div>
 </div>
-<p>Repare no canto esquerdo da <a href="#fig-poder-n" class="quarto-xref">Figura&nbsp;1</a>. Com 15 placas por grupo, o efeito de 1,4 cm foi detectado em cerca de 44% dos experimentos, embora ele exista em todos eles. Um estudo desse tamanho falha na maioria das vezes, e quando falha não produz nenhum aviso de que falhou.</p>
+<p>Repare no canto esquerdo da <a href="#fig-poder-n" class="quarto-xref">Figura&nbsp;1</a>. Com 15 placas por grupo, o efeito de 1,4 cm foi detectado em cerca de 50% dos experimentos, embora ele exista em todos eles. Um estudo desse tamanho falha na maioria das vezes, e quando falha não produz nenhum aviso de que falhou.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O poder se decide antes, não depois">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

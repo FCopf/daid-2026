@@ -84,9 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -460,11 +460,11 @@ window.Quarto = {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(amostra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.249996</code></pre>
+<pre><code>[1] 4.89941</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(amostra)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7120146</code></pre>
+<pre><code>[1] 0.837998</code></pre>
 </div>
 </div>
 <p>A média observada não é exatamente 5, e não deveria ser, porque são 20 mexilhões sorteados, não o costão inteiro.</p>
@@ -487,7 +487,7 @@ window.Quarto = {
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>erro_padrao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1592113</code></pre>
+<pre><code>[1] 0.187382</code></pre>
 </div>
 </div>
 <p>Com a média e o erro padrão, construímos o <strong>intervalo de confiança de 95%</strong>. A função <code>qt()</code> fornece o multiplicador da distribuição t, que depende dos graus de liberdade (<span class="math inline">\(n - 1\)</span>):</p>
@@ -499,7 +499,7 @@ window.Quarto = {
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(inferior, superior)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.916763 4.583229</code></pre>
+<pre><code>[1] 4.507215 5.291605</code></pre>
 </div>
 </div>
 <p>Este é o intervalo <strong>desta</strong> coleta. Ele contém 5 cm, ou não contém, e com uma amostra só você nunca saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.</p>
@@ -539,7 +539,7 @@ window.Quarto = {
 <pre><code># A tibble: 1 × 3
   mexilhoes_por_amostra cobertura largura_media
                   &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-1                    20     0.955         0.898</code></pre>
+1                    20     0.965         0.917</code></pre>
 </div>
 </div>
 <p>Duas observações sobre o código. A coluna <code>cobre</code> guarda <code>TRUE</code> ou <code>FALSE</code> para cada intervalo, e a média de um vetor lógico é a proporção de <code>TRUE</code>. A coluna <code>largura</code> é simplesmente a distância entre os dois limites.</p>

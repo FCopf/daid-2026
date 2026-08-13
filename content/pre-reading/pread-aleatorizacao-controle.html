@@ -103,9 +103,9 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -465,7 +465,7 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </div>
 </div>
 </div>
-<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,13 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,37 cm.</p>
+<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,11 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,36 cm.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -527,25 +527,25 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
    tanque dieta      
     &lt;int&gt; &lt;chr&gt;      
  1      1 comum      
- 2      2 enriquecida
- 3      3 enriquecida
- 4      4 enriquecida
- 5      5 comum      
- 6      6 comum      
- 7      7 comum      
- 8      8 enriquecida
- 9      9 comum      
-10     10 comum      
+ 2      2 comum      
+ 3      3 comum      
+ 4      4 comum      
+ 5      5 enriquecida
+ 6      6 enriquecida
+ 7      7 enriquecida
+ 8      8 comum      
+ 9      9 enriquecida
+10     10 enriquecida
 11     11 enriquecida
 12     12 comum      
-13     13 comum      
-14     14 comum      
+13     13 enriquecida
+14     14 enriquecida
 15     15 enriquecida
-16     16 enriquecida
+16     16 comum      
 17     17 comum      
-18     18 enriquecida
+18     18 comum      
 19     19 enriquecida
-20     20 enriquecida</code></pre>
+20     20 comum      </code></pre>
 </div>
 </div>
 <p>O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima, e a função <code>sample()</code> apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.</p>

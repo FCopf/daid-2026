@@ -84,9 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -446,24 +446,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 18 × 4
    bloco placa media_esperada recrutas
    &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
- 1     1 A               24       25.1
- 2     1 B               26.5     26.3
- 3     1 C               29       28.7
- 4     2 A               28       28.4
- 5     2 B               30.5     29.7
- 6     2 C               33       31.9
- 7     3 A               32       30.6
- 8     3 B               34.5     33.3
- 9     3 C               37       38.1
-10     4 A               36       34.5
-11     4 B               38.5     37.3
-12     4 C               41       41.9
-13     5 A               40       40.4
-14     5 B               42.5     41.3
-15     5 C               45       44.3
-16     6 A               44       43.6
-17     6 B               46.5     46.4
-18     6 C               49       49.4</code></pre>
+ 1     1 A               24       22.4
+ 2     1 B               26.5     26.5
+ 3     1 C               29       26.1
+ 4     2 A               28       24.7
+ 5     2 B               30.5     32.8
+ 6     2 C               33       32.6
+ 7     3 A               32       32.1
+ 8     3 B               34.5     33.7
+ 9     3 C               37       37.9
+10     4 A               36       36.1
+11     4 B               38.5     40.7
+12     4 C               41       41.2
+13     5 A               40       38.6
+14     5 B               42.5     41.5
+15     5 C               45       43.8
+16     6 A               44       44.7
+17     6 B               46.5     46.1
+18     6 C               49       50.0</code></pre>
 </div>
 </div>
 <p>Leia a linha da <code>media_esperada</code>, em que cada faixa acrescenta <code>gradiente</code> recrutas, a placa B rende <code>efeito_B</code> a mais que a A, a C rende <code>efeito_C</code>, e o <code>rnorm()</code> acrescenta o que sobra.</p>
@@ -507,8 +507,8 @@ Figura&nbsp;1: Recrutamento nas seis faixas de altura. Dentro de cada faixa est�
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_bloco)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-placa        2   85.7   42.83   0.768  0.481
-Residuals   15  836.5   55.77               </code></pre>
+placa        2   95.1   47.53   0.734  0.497
+Residuals   15  971.6   64.77               </code></pre>
 </div>
 </div>
 <p>O valor de p não indica efeito nenhum, e o efeito existe, porque nós o colocamos ali.</p>
@@ -548,9 +548,9 @@ Residuals   15  836.5   55.77               </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_bloco)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-placa          2   85.7   42.83   47.02 8.20e-06 ***
-factor(bloco)  5  827.4  165.48  181.66 1.77e-09 ***
-Residuals     10    9.1    0.91                     
+placa          2   95.1   47.53   23.50 0.000166 ***
+factor(bloco)  5  951.4  190.27   94.06 4.47e-08 ***
+Residuals     10   20.2    2.02                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>

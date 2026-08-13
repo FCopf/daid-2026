@@ -103,9 +103,9 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -551,24 +551,24 @@ Tabela&nbsp;1: ANOVA do delineamento em blocos completos aleatorizados.
 <tr class="odd">
 <td style="text-align: left;">placa</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">2.655</td>
-<td style="text-align: right;">1.327</td>
-<td style="text-align: right;">22.647</td>
-<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">2.341</td>
+<td style="text-align: right;">1.171</td>
+<td style="text-align: right;">7.965</td>
+<td style="text-align: right;">0.02</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">bloco</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">11.280</td>
-<td style="text-align: right;">3.760</td>
-<td style="text-align: right;">64.152</td>
-<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">16.188</td>
+<td style="text-align: right;">5.396</td>
+<td style="text-align: right;">36.713</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residuals</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">0.352</td>
-<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.882</td>
+<td style="text-align: right;">0.147</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
 </tr>
@@ -674,11 +674,11 @@ Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_fatorial)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>                Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-algas            1 19.906  19.906 137.055 1.03e-12 ***
-nutriente        2  2.849   1.425   9.809 0.000528 ***
-algas:nutriente  2  1.982   0.991   6.822 0.003615 ** 
-Residuals       30  4.357   0.145                     
+<pre><code>                Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+algas            1 20.432  20.432 125.661 3.0e-12 ***
+nutriente        2  2.831   1.415   8.705 0.00104 ** 
+algas:nutriente  2  4.629   2.314  14.233 4.5e-05 ***
+Residuals       30  4.878   0.163                    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -713,21 +713,21 @@ Tabela&nbsp;2: Médias por combinação e efeito de algas dentro de cada nutrien
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">NH4</td>
-<td style="text-align: right;">2.00</td>
-<td style="text-align: right;">4.15</td>
-<td style="text-align: right;">2.15</td>
+<td style="text-align: right;">1.85</td>
+<td style="text-align: right;">4.37</td>
+<td style="text-align: right;">2.52</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NO3</td>
-<td style="text-align: right;">2.30</td>
-<td style="text-align: right;">3.42</td>
-<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">2.29</td>
+<td style="text-align: right;">3.29</td>
+<td style="text-align: right;">0.99</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">PO3</td>
-<td style="text-align: right;">1.81</td>
-<td style="text-align: right;">3.00</td>
-<td style="text-align: right;">1.19</td>
+<td style="text-align: right;">1.92</td>
+<td style="text-align: right;">2.92</td>
+<td style="text-align: right;">1.01</td>
 </tr>
 </tbody>
 </table>

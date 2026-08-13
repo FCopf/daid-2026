@@ -84,9 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -438,7 +438,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Rows: 32
 Columns: 2
 $ tratamento  &lt;fct&gt; BACK, BACK, BACK, BACK, BACK, BACK, BACK, BACK, LOW, LOW, …
-$ diversidade &lt;dbl&gt; 1.3895514, 1.0662399, 2.7913339, 2.0371937, 2.5140254, 1.4…</code></pre>
+$ diversidade &lt;dbl&gt; 1.476582, 2.173651, 1.970093, 2.337738, 1.300071, 1.472176…</code></pre>
 </div>
 </div>
 <p>Repare no que acabamos de escrever, porque as quatro médias verdadeiras são <strong>iguais</strong>. Neste experimento o tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.</p>
@@ -467,9 +467,11 @@ Figura&nbsp;1: Diversidade nos quatro tratamentos de um experimento construído 
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_nulo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-tratamento   3  1.067  0.3558   1.162  0.342
-Residuals   28  8.574  0.3062               </code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+tratamento   3  1.012  0.3373   2.333 0.0956 .
+Residuals   28  4.049  0.1446                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <p>A tabela traz os graus de liberdade (<code>Df</code>), a soma de quadrados (<code>Sum Sq</code>), o quadrado médio (<code>Mean Sq</code>), a razão F e o valor de p.&nbsp;A linha <code>tratamento</code> é a variação entre grupos, e <code>Residuals</code> é a variação dentro dos grupos.</p>

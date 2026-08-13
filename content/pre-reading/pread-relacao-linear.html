@@ -103,9 +103,9 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -541,18 +541,18 @@ lm(formula = riqueza ~ altura, data = dados_precisos)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--1.91201 -0.85698 -0.01882  0.66087  2.50079 
+-2.01385 -0.67680 -0.05096  0.74612  1.94142 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   7.0103     0.1624   43.16   &lt;2e-16 ***
-altura       -3.0244     0.1166  -25.94   &lt;2e-16 ***
+(Intercept)   6.7529     0.1441   46.85   &lt;2e-16 ***
+altura       -2.7756     0.1095  -25.34   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.105 on 58 degrees of freedom
-Multiple R-squared:  0.9207,    Adjusted R-squared:  0.9193 
-F-statistic:   673 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.9899 on 58 degrees of freedom
+Multiple R-squared:  0.9171,    Adjusted R-squared:  0.9157 
+F-statistic:   642 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste da reta em R</summary>
@@ -560,8 +560,8 @@ F-statistic:   673 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
-(Intercept)  6.685138  7.335414
-altura      -3.257742 -2.791019</code></pre>
+(Intercept)  6.464446  7.041448
+altura      -2.994877 -2.556321</code></pre>
 </div>
 </div>
 <p><code>lm()</code> estima os coeficientes, <code>summary()</code> informa erros padrão, testes e <span class="math inline">\(R^2\)</span>, e <code>confint()</code> fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.</p>
@@ -750,7 +750,7 @@ Figura&nbsp;5: Relação espécie-área em escala original e logarítmica. A cur
 </div>
 </div>
 </div>
-<p>A inclinação estimada na escala logarítmica foi 0,31, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta, porque <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
+<p>A inclinação estimada na escala logarítmica foi 0,33, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta, porque <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
 </section>
 </section>
 <section id="duas-incertezas-de-previsão" class="level1" data-number="5">

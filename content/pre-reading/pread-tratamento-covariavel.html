@@ -84,9 +84,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-bc0792566bf400d1277807c364f947af.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-12da577b797b4dda68e111dca36e2217.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-fa8baa8160edf0321b3fdc2e329fbe8d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f331ef72c0fd47caf9fb9c2286cafbec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -508,9 +508,9 @@ Y=\beta_0+\beta_1X+\beta_2G+\beta_3XG+\varepsilon.
 
 Model 1: biomassa ~ comprimento_c + mes
 Model 2: biomassa ~ comprimento_c * mes
-  Res.Df    RSS Df  Sum of Sq      F Pr(&gt;F)
-1    117 1.8092                            
-2    116 1.8090  1 0.00027895 0.0179 0.8938</code></pre>
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    117 1.9983                           
+2    116 1.9876  1  0.010672 0.6229 0.4316</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste e as médias ajustadas no R</summary>
@@ -528,11 +528,11 @@ Model 2: biomassa ~ comprimento_c * mes
 <pre><code># A tibble: 2 × 4
   mes         fit   lwr   upr
   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 fevereiro  1.13  1.08  1.17
-2 abril      1.31  1.26  1.35</code></pre>
+1 fevereiro  1.19  1.14  1.23
+2 abril      1.32  1.27  1.36</code></pre>
 </div>
 </div>
-<p>A comparação entre os dois modelos avalia a interação, e os dados desta simulação foram gerados com inclinações iguais, de modo que ela normalmente não se justifica. As previsões no comprimento centralizado zero, isto é, em 21,1 mm, são as <strong>médias ajustadas</strong>. Elas representam médias modeladas em uma condição comum, não médias de uma população artificial em que todos os indivíduos tenham exatamente aquele comprimento. A diferença entre as duas previsões é o contraste ajustado, e aqui vale 0,178 g.</p>
+<p>A comparação entre os dois modelos avalia a interação, e os dados desta simulação foram gerados com inclinações iguais, de modo que ela normalmente não se justifica. As previsões no comprimento centralizado zero, isto é, em 21,2 mm, são as <strong>médias ajustadas</strong>. Elas representam médias modeladas em uma condição comum, não médias de uma população artificial em que todos os indivíduos tenham exatamente aquele comprimento. A diferença entre as duas previsões é o contraste ajustado, e aqui vale 0,132 g.</p>
 <p>Formalmente, no modelo aditivo as médias ajustadas em <span class="math inline">\(x_0\)</span> são</p>
 <p><span class="math display">\[
 \widehat\mu_{fev}(x_0)=\hat\beta_0+\hat\beta_1x_0,
@@ -562,7 +562,7 @@ Figura&nbsp;2: Diferenças bruta e ajustada entre meses. O ajuste compara os gru
 </div>
 </div>
 </div>
-<p>Na <a href="#fig-bruta-ajustada" class="quarto-xref">Figura&nbsp;2</a>, a diferença bruta estimada foi 0,80 g e a ajustada, 0,22 g. A distância entre os dois resultados não é uma correção cosmética, porque a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.</p>
+<p>Na <a href="#fig-bruta-ajustada" class="quarto-xref">Figura&nbsp;2</a>, a diferença bruta estimada foi 0,77 g e a ajustada, 0,23 g. A distância entre os dois resultados não é uma correção cosmética, porque a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.</p>
 </section>
 </section>
 <section id="pressupostos-que-sustentam-o-ajuste" class="level1" data-number="3">
