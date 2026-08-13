@@ -24,17 +24,17 @@ theme_set(theme_bw(base_size = 12))
 
 # Quando aparece um terceiro grupo
 
-Comparar dois grupos é uma operação bem definida: existe uma diferença, existe uma régua para julgá-la, existe um resultado.
+Comparar dois grupos é uma operação bem definida, porque existe uma diferença, existe uma régua para julgá-la e existe um resultado.
 
 Agora suponha que o experimento tenha **três**. Um estudo em mesocosmos mede a concentração de três nutrientes na água, e a pergunta é se eles diferem entre si.
 
-A saída óbvia é fazer o que já se sabe fazer, três vezes: comparar o primeiro com o segundo, o primeiro com o terceiro, o segundo com o terceiro. Três testes, três valores de p, e pronto.
+A saída óbvia é fazer o que já se sabe fazer, três vezes, comparando o primeiro com o segundo, o primeiro com o terceiro e o segundo com o terceiro. Três testes, três valores de p, e pronto.
 
 Essa saída tem um problema, e ele não é pequeno.
 
 # Cada teste traz o seu próprio alarme falso
 
-Um teste a 5% é um procedimento que, quando não há efeito nenhum, ainda assim acusa diferença em cerca de 5% das vezes. Esses 5% não são um defeito: são o preço combinado de antemão para poder decidir a partir de dados que variam.
+Um teste a 5% é um procedimento que, quando não há efeito nenhum, ainda assim acusa diferença em cerca de 5% das vezes. Esses 5% não são um defeito, e sim o preço combinado de antemão para poder decidir a partir de dados que variam.
 
 O problema é que esse preço é cobrado **por teste**. Fazendo três testes em grupos idênticos, há três oportunidades de o acaso produzir um resultado chamativo, e basta que uma delas aconteça para alguém anunciar uma descoberta. Como os pares compartilham grupos, essas oportunidades são relacionadas, mas o risco do conjunto ainda cresce.
 
@@ -87,7 +87,7 @@ alarme_3 <- formatC(100 * curva$alarme[curva$grupos == 3], format = "f", digits 
 alarme_6 <- formatC(100 * curva$alarme[curva$grupos == 6], format = "f", digits = 0, decimal.mark = ",")
 ```
 
-Com três grupos idênticos, cerca de `r alarme_3`% dos experimentos desta simulação produziram ao menos um par "diferente". Com seis grupos, `r alarme_6`%.
+Na @fig-inflacao, com três grupos idênticos, cerca de `r alarme_3`% dos experimentos desta simulação produziram ao menos um par "diferente". Com seis grupos, `r alarme_6`%.
 
 Nenhum grupo difere de nenhum outro em nenhuma dessas simulações. A diferença anunciada seria inteiramente fabricada pelo procedimento de análise.
 
@@ -101,13 +101,13 @@ Fazer muitos testes mantém a primeira e infla a segunda.
 
 ## A conta por trás da inflação
 
-A curva simulada pode ser antecipada por um cálculo simples, ao menos em um caso idealizado. Se $m$ testes fossem independentes e cada um tivesse risco $\alpha$ de alarme falso, a chance de nenhum alarme seria $(1-\alpha)^m$. Logo, a probabilidade de pelo menos um seria
+A curva da @fig-inflacao pode ser antecipada por um cálculo simples, ao menos em um caso idealizado. Se $m$ testes fossem independentes e cada um tivesse risco $\alpha$ de alarme falso, a chance de nenhum alarme seria $(1-\alpha)^m$. Logo, a probabilidade de pelo menos um seria
 
 $$
 \operatorname{FWER}=1-(1-\alpha)^m.
 $$
 
-A sigla vem de *familywise error rate*, a taxa de erro da família de testes. Com três testes a 5%, essa conta resulta em $1-0,95^3\approx0,143$, cerca de 14,3%, valor próximo ao que a simulação produziu. A aproximação não é exata porque comparações entre as mesmas médias não são independentes: cada grupo participa de vários pares. A simulação preserva essa dependência e por isso estima diretamente a taxa correta.
+A sigla vem de *familywise error rate*, a taxa de erro da família de testes. Com três testes a 5%, essa conta resulta em $1-0,95^3\approx0,143$, cerca de 14,3%, valor próximo ao que a simulação produziu. A aproximação não é exata porque comparações entre as mesmas médias não são independentes, já que cada grupo participa de vários pares. A simulação preserva essa dependência e por isso estima diretamente a taxa correta.
 
 Vale ver de onde vem a fórmula, porque ela é um caso da probabilidade de uma união. Se $A_i$ é o evento "o teste $i$ produz alarme falso", queremos $P(A_1\cup\cdots\cup A_m)$. Para dois eventos,
 
@@ -127,7 +127,7 @@ Ela afirma que a taxa familiar nunca ultrapassa a soma dos riscos individuais, e
 
 Antes das correções, vale entender o mecanismo que produz a inflação, porque ele reaparece em muitas situações além desta.
 
-Quando três testes são feitos e o resultado relatado é o mais chamativo dos três, o número informado não é o valor de p de um teste: é o **mínimo** de três valores de p. E mínimos de vários sorteios se concentram perto de zero mesmo quando cada sorteio isolado é bem comportado.
+Quando três testes são feitos e o resultado relatado é o mais chamativo dos três, o número informado não é o valor de p de um teste, e sim o **mínimo** de três valores de p. E mínimos de vários sorteios se concentram perto de zero mesmo quando cada sorteio isolado é bem comportado.
 
 ```{r}
 #| echo: false
@@ -151,7 +151,7 @@ ggplot(minimos, aes(x = menor_p)) +
   theme_bw(base_size = 11)
 ```
 
-No painel superior, com um único teste sob hipótese nula, os valores de p se distribuem uniformemente entre 0 e 1, e apenas 5% caem abaixo da linha. Nos painéis seguintes, o menor valor de p da família se acumula progressivamente à esquerda: com vinte testes, quase toda a distribuição está abaixo de 0,05. O mesmo raciocínio vale para quem testa vários nutrientes, várias espécies ou várias praias e relata só o que se destacou. Quanto mais coisas se olha, mais fácil encontrar alguma.
+No painel superior da @fig-minimo-p, com um único teste sob hipótese nula, os valores de p se distribuem uniformemente entre 0 e 1, e apenas 5% caem abaixo da linha. Nos painéis seguintes, o menor valor de p da família se acumula progressivamente à esquerda, e com vinte testes quase toda a distribuição está abaixo de 0,05. O mesmo raciocínio vale para quem testa vários nutrientes, várias espécies ou várias praias e relata só o que se destacou. Quanto mais coisas se olha, mais fácil encontrar alguma.
 
 # A saída é mudar a pergunta
 
@@ -161,7 +161,7 @@ Diante disso, a correção não é fazer os mesmos testes com mais cuidado. É f
 
 Uma pergunta só, um teste só, um risco de alarme falso só. Se a resposta for que os grupos não se distinguem do que o acaso produz, a investigação para aí. Se for que se distinguem, aí sim vale descobrir quais deles.
 
-A ordem importa: primeiro a pergunta global, depois as comparações específicas. E é justamente para essa segunda etapa que existem procedimentos capazes de considerar quantas comparações estão sendo feitas.
+A ordem importa, vindo primeiro a pergunta global e depois as comparações específicas. E é justamente para essa segunda etapa que existem procedimentos capazes de considerar quantas comparações estão sendo feitas.
 
 # Depois da pergunta global, quais grupos diferem?
 
@@ -176,7 +176,7 @@ C=\sum_{i=1}^{k}c_i\bar{y}_i,
 \qquad \sum_{i=1}^{k}c_i=0.
 $$
 
-A restrição sobre os coeficientes garante que o contraste meça uma diferença, e não um nível geral: se todas as médias fossem iguais, $C$ valeria zero qualquer que fosse a escala das medidas.
+A restrição sobre os coeficientes garante que o contraste meça uma diferença, e não um nível geral. Se todas as médias fossem iguais, $C$ valeria zero qualquer que fosse a escala das medidas.
 
 Um exemplo torna a ideia concreta. Para quatro médias $\bar y_C,\bar y_1,\bar y_2,\bar y_3$, comparar o controle com a média dos tratamentos usa coeficientes $(-1,1/3,1/3,1/3)$, ou seja,
 
@@ -187,14 +187,14 @@ $$
 Em desenho balanceado com $n_g$ unidades por grupo e quadrado médio residual $QM_e$, seu erro padrão é
 
 $$
-EP(C)=\sqrt{QM_e\sum_{i=1}^{k}\frac{c_i^2}{n_g}}.
+s_C=\sqrt{QM_e\sum_{i=1}^{k}\frac{c_i^2}{n_g}}.
 $$
 
 Os coeficientes expressam a pergunta antes de qualquer cálculo, e multiplicá-los todos pela mesma constante muda a escala do contraste, mas não sua estatística padronizada. Perguntas planejadas limitam o número de testes e costumam ter mais poder. Comparações escolhidas depois de olhar médias, gráficos ou valores de p pertencem a uma família exploratória maior e precisam de controle simultâneo. Chamar uma comparação de planejada depois de observar o resultado não desfaz a seleção.
 
 ## Bonferroni, Tukey e Holm
 
-Quando a família é exploratória, alguma correção é necessária. A correção de **Bonferroni** é a aplicação direta da desigualdade vista antes: ela controla a taxa familiar para qualquer conjunto de $m$ testes, comparando cada valor de p com $\alpha/m$ ou, de modo equivalente, ajustando $p_{ajustado}=\min(mp,1)$. É simples e válida mesmo com dependência, ao custo de ser conservadora quando há muitas comparações.
+Quando a família é exploratória, alguma correção é necessária. A correção de **Bonferroni** é a aplicação direta da desigualdade vista antes, e controla a taxa familiar para qualquer conjunto de $m$ testes, comparando cada valor de p com $\alpha/m$ ou, de modo equivalente, ajustando $p_{ajustado}=\min(mp,1)$. É simples e válida mesmo com dependência, ao custo de ser conservadora quando há muitas comparações.
 
 ```{r}
 #| code-fold: true
@@ -208,7 +208,7 @@ tibble(
 )
 ```
 
-Os três valores originais foram multiplicados por 3, o número de comparações. O primeiro par continua abaixo de 0,05 depois do ajuste; o segundo, que parecia significativo, deixa de ser.
+Os três valores originais foram multiplicados por 3, o número de comparações. O primeiro par continua abaixo de 0,05 depois do ajuste, enquanto o segundo, que parecia significativo, deixa de ser.
 
 O procedimento de **Tukey** foi construído especificamente para todas as comparações entre pares de médias depois de uma ANOVA. Ele usa a amplitude studentizada $q$, que considera simultaneamente a maior separação entre médias. Em um desenho balanceado, a diferença mínima de Tukey é
 
@@ -248,13 +248,13 @@ ggplot(tukey, aes(x = diff, y = fct_reorder(comparacao, diff))) +
   labs(x = "Diferença entre médias e IC simultâneo de 95%", y = NULL)
 ```
 
-Cada linha da figura corresponde a um par de tratamentos, com a diferença estimada e seu intervalo simultâneo. Os pares cujo intervalo cruza a linha do zero não são distinguidos ao nível familiar de 5%. Apresentar o resultado assim, e não como uma lista de letras ou de decisões, preserva direção, magnitude e incerteza de cada comparação.
+Cada linha da @fig-tukey corresponde a um par de tratamentos, com a diferença estimada e seu intervalo simultâneo. Os pares cujo intervalo cruza a linha do zero não são distinguidos ao nível familiar de 5%. Apresentar o resultado assim, e não como uma lista de letras ou de decisões, preserva direção, magnitude e incerteza de cada comparação.
 
-Um terceiro procedimento, o de **Holm**, também controla a taxa familiar e costuma ser menos conservador que Bonferroni em famílias gerais: ele ordena os valores de p e aplica limites progressivamente menos rígidos. A escolha entre os três segue a família de perguntas, e não o método que devolve mais resultados abaixo de 0,05. Bonferroni e Holm servem para famílias quaisquer definidas pelo pesquisador; Tukey é mais eficiente quando a família é exatamente o conjunto de todos os pares. Nenhum deles corrige a prática de testar muitas respostas e relatar apenas a família mais favorável.
+Um terceiro procedimento, o de **Holm**, também controla a taxa familiar e costuma ser menos conservador que Bonferroni em famílias gerais, porque ordena os valores de p e aplica limites progressivamente menos rígidos. A escolha entre os três segue a família de perguntas, e não o método que devolve mais resultados abaixo de 0,05. Bonferroni e Holm servem para famílias quaisquer definidas pelo pesquisador, ao passo que Tukey é mais eficiente quando a família é exatamente o conjunto de todos os pares. Nenhum deles corrige a prática de testar muitas respostas e relatar apenas a família mais favorável.
 
 Convém acrescentar que o teste global e os testes entre pares não são logicamente idênticos. Em situações limítrofes, uma ANOVA pode não rejeitar a hipótese global enquanto um contraste planejado bem direcionado é preciso o bastante para detectar o efeito, ou o inverso. A sequência global seguida de Tukey é uma estratégia coerente para explorar todos os pares, mas perguntas planejadas devem ser declaradas e analisadas como tais.
 
-O terceiro grupo do início, portanto, não acrescenta apenas mais uma comparação: ele muda a natureza da pergunta. Enquanto havia dois grupos, a diferença entre eles era a pergunta inteira. Com três ou mais, a pergunta passa a ser sobre o conjunto, e o risco de erro precisa ser controlado no nível do conjunto. Decidir isso antes de olhar os dados é o que separa uma análise de uma busca por resultados.
+O terceiro grupo do início, portanto, não acrescenta apenas mais uma comparação. Ele muda a natureza da pergunta. Enquanto havia dois grupos, a diferença entre eles era a pergunta inteira. Com três ou mais, a pergunta passa a ser sobre o conjunto, e o risco de erro precisa ser controlado no nível do conjunto. Decidir isso antes de olhar os dados é o que separa uma análise de uma busca por resultados.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 Quinn e Keough [@quinn2002] dedicam um capítulo às comparações múltiplas, com a comparação detalhada entre os procedimentos citados aqui e outros métodos disponíveis.

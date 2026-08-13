@@ -19,7 +19,7 @@ format:
 
 # Três papéis, uma mesma fórmula
 
-Fator, bloco e covariável entram todos com `+` ou `*` na fórmula do modelo, e o R os ajusta pelo mesmo procedimento. O que os separa não está na fórmula: o fator é o que se quer testar, enquanto bloco e covariável são retirados do resíduo para tornar o teste mais sensível.
+Fator, bloco e covariável entram todos com `+` ou `*` na fórmula do modelo, e o R os ajusta pelo mesmo procedimento. O que os separa não está na fórmula. O fator é o que se quer testar, enquanto bloco e covariável são retirados do resíduo para tornar o teste mais sensível.
 
 Esta atividade pede que você reconheça esse papel em situações novas, e que mostre no R o que acontece quando ele é ignorado.
 
@@ -39,7 +39,7 @@ Cada situação abaixo descreve um estudo. Para cada uma, decida o papel de cada
 
 # Uma simulação para a situação 1
 
-A simulação a seguir reproduz a estrutura da situação 1: três rações, testadas em tanques distribuídos por salas com temperaturas diferentes.
+A simulação a seguir reproduz a estrutura da situação 1, com três rações testadas em tanques distribuídos por salas com temperaturas diferentes.
 
 ```{r}
 experimento <- tibble(
@@ -59,7 +59,7 @@ summary(com_sala)
 ```
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-Nesta simulação `racao` não tem efeito nenhum (a média não depende de `racao`). Ainda assim, compare o quadrado médio residual dos dois modelos: tratar a sala como se ela não existisse muda a régua usada para julgar a ração?
+Nesta simulação `racao` não tem efeito nenhum (a média não depende de `racao`). Ainda assim, compare o quadrado médio residual dos dois modelos e verifique se tratar a sala como se ela não existisse muda a régua usada para julgar a ração.
 :::
 
 # Entrega

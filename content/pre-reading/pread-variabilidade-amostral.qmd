@@ -56,6 +56,7 @@ A Lei dos Grandes Números afirma que $\hat p_m$ se aproxima de $P(A)$ quando $m
 #| fig-cap: "Frequência acumulada do evento comprimento maior que 6 cm. A linha marca sua probabilidade no modelo populacional."
 #| fig-alt: "Curva irregular que oscila bastante no início e se estabiliza perto de uma linha horizontal conforme aumenta o número de sorteios."
 #| fig-height: 3.6
+set.seed(4)
 numero_sorteios <- 3000
 media_populacional <- 5
 desvio_populacional <- 1
@@ -80,7 +81,7 @@ ggplot(sorteios, aes(x = repeticao, y = frequencia_acumulada)) +
   labs(x = "Número de sorteios", y = "Frequência acumulada")
 ```
 
-Nos primeiros sorteios a frequência oscila bastante e depois se aproxima da linha de referência. É essa estabilização que permite que a simulação seja utilizada como uma ferramenta de estudo.
+Na @fig-lei-grandes-numeros, a frequência oscila bastante nos primeiros sorteios e depois se aproxima da linha de referência. É essa estabilização que permite que a simulação seja utilizada como uma ferramenta de estudo.
 
 ## Duas mil coletas de mexilhões
 
@@ -145,7 +146,7 @@ med_min <- formata(faixa_medias[1], 1)
 med_max <- formata(faixa_medias[2], 1)
 ```
 
-O gráfico da esquerda mostra o que você veria se medisse 2000 mexilhões um a um. Nesta simulação, os comprimentos foram de `r ind_min` a `r ind_max` cm. O da direita mostra as **médias** de amostras de n = 20, que ficaram entre `r med_min` e `r med_max` cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.
+O painel esquerdo da @fig-duas-distribuicoes mostra o que você veria se medisse 2000 mexilhões um a um. Nesta simulação, os comprimentos foram de `r ind_min` a `r ind_max` cm. O painel direito mostra as **médias** de amostras de n = 20, que ficaram entre `r med_min` e `r med_max` cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.
 
 ::: {.callout-note appearance="minimal" title="Duas distribuições diferentes"}
 A distribuição da **esquerda** descreve como variam os *indivíduos* da população.
@@ -194,7 +195,7 @@ n100_min <- formata(faixa_n100$minimo, 1)
 n100_max <- formata(faixa_n100$maximo, 1)
 ```
 
-Com 5 mexilhões por amostra, as médias desta simulação foram de `r n5_min` a `r n5_max` cm. Com amostras desse tamanho, duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre `r n100_min` e `r n100_max` cm. A conclusão que podemos tirar é que **amostras maiores não mudam a população, mas mudam a nossa incerteza sobre ela.**
+Na @fig-tamanho-amostra, com 5 mexilhões por amostra, as médias desta simulação foram de `r n5_min` a `r n5_max` cm. Com amostras desse tamanho, duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre `r n100_min` e `r n100_max` cm. A conclusão que podemos tirar é que **amostras maiores não mudam a população, mas mudam a nossa incerteza sobre ela.**
 
 # Um resultado que não depende dos mexilhões
 
@@ -209,10 +210,12 @@ $$
 A primeira igualdade diz que a média amostral é um estimador não enviesado de $\mu$, é a tradução formal do fato de os histogramas simulados ficarem centrados no valor correto. A segunda diz que a variância das médias é a variância dos indivíduos dividida por $n$, e é a tradução formal do estreitamento observado quando $n$ aumentou de 5 para 100. Portanto, o desvio-padrão da distribuição amostral, chamado **erro padrão**, é
 
 $$
-EP(\bar{X})=\frac{\sigma}{\sqrt{n}}.
+\sigma_{\bar{x}}=\frac{\sigma}{\sqrt{n}}.
 $$
 
-É a raiz quadrada no denominador que explica por que dobrar $n$ não reduz a incerteza pela metade. Para obter metade do erro padrão, é necessário multiplicar $n$ por quatro. Essa mesma raiz quadrada explica por que a redução da incerteza é mais rápida quando a amostra ainda é pequena e por que, em amostras já grandes, aumentar ainda mais o tamanho amostral traz ganhos cada vez menores de precisão.
+O subscrito indica de qual quantidade estamos medindo o espalhamento. Enquanto $\sigma$ descreve a variação entre mexilhões individuais, $\sigma_{\bar{x}}$ descreve a variação da média amostral entre estudos repetidos.
+
+É a raiz quadrada no denominador que explica por que dobrar $n$ não reduz a incerteza pela metade. Para obter metade do erro padrão, é necessário multiplicar $n$ por quatro. Essa mesma raiz quadrada explica por que a redução da incerteza é mais rápida quando a amostra ainda é pequena e por que, em amostras já grandes, aumentar ainda mais o tamanho amostral traz ganhos cada vez menores de precisão. A @fig-erro-padrao-n mostra esse comportamento.
 
 ```{r}
 #| echo: false
@@ -276,7 +279,7 @@ em que $\Phi$ é a função de distribuição acumulada normal padrão. As expre
 
 # A forma da população e a velocidade do TCL
 
-A afirmação de que a normalidade "melhora com $n$" fica mais concreta quando partimos de uma população claramente não normal. Quando a população já é normal, a média amostral é exatamente normal para qualquer $n$. Quando a população é assimétrica, a normalidade é uma aproximação. O gráfico seguinte parte de uma população exponencial, limitada por zero e com cauda longa à direita.
+A afirmação de que a normalidade "melhora com $n$" fica mais concreta quando partimos de uma população claramente não normal. Quando a população já é normal, a média amostral é exatamente normal para qualquer $n$. Quando a população é assimétrica, a normalidade é uma aproximação. A @fig-tcl-assimetria parte de uma população exponencial, limitada por zero e com cauda longa à direita.
 
 ```{r}
 #| echo: false
@@ -316,7 +319,7 @@ A cauda longa persiste nas médias de duas observações, atenua-se com dez e pr
 Uma distribuição amostral estreita pode estar centrada no valor errado quando há viés de seleção. O TCL descreve a forma da variação aleatória sob o mecanismo amostral assumido e não é capaz de recuperar unidades excluídas, tornar as observações independentes ou remover erros sistemáticos.
 :::
 
-As duas equipes do início continuam com médias diferentes, e nada nesta leitura mudou esse fato. No entanto, entendemos agora que essa diferença é um resultado previsível de um procedimento cujo comportamento pode ser descrito como centrado em $\mu$ e com dispersão $\sigma/\sqrt{n}$.
+As duas equipes do início continuam com médias diferentes, e nada nesta leitura mudou esse fato. No entanto, entendemos agora que essa diferença é um resultado previsível de um procedimento cujo comportamento pode ser descrito como centrado em $\mu$ e com dispersão $\sigma_{\bar{x}}=\sigma/\sqrt{n}$.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [A distribuição normal](https://fcopf.github.io/mead/topics/distribuicao-normal.html){target="_blank"}

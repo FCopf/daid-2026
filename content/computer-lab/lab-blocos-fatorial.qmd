@@ -19,9 +19,9 @@ format:
 
 # Objetivo desta prática
 
-A [leitura desta semana](../pre-reading/pread-blocos-interacao.qmd) fecha com uma frase que vale guardar: acrescentar um termo ao modelo **retira do resíduo uma variação que tem nome**, e o que muda entre bloco e interação não é a conta, é o estatuto científico do termo.
+A [leitura desta semana](../pre-reading/pread-blocos-interacao.qmd) fecha com uma frase que vale guardar, de que acrescentar um termo ao modelo **retira do resíduo uma variação que tem nome**, e o que muda entre bloco e interação não é a conta, é o estatuto científico do termo.
 
-Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do gradiente, o tamanho do efeito e o ruído — e vai descobrir, tentando, que a intuição mais comum sobre "como tornar um efeito detectável" falha neste delineamento.
+Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do gradiente, o tamanho do efeito e o ruído, e vai descobrir, tentando, que a intuição mais comum sobre "como tornar um efeito detectável" falha neste delineamento.
 
 O objetivo em R é comparar modelos que diferem por um único termo e ler o que acontece com o resíduo.
 
@@ -65,9 +65,9 @@ experimento <- tibble(
 experimento
 ```
 
-Leia a linha da `media_esperada`: cada faixa acrescenta `gradiente` recrutas, a placa B rende `efeito_B` a mais que a A, a C rende `efeito_C`, e o `rnorm()` acrescenta o que sobra.
+Leia a linha da `media_esperada`, em que cada faixa acrescenta `gradiente` recrutas, a placa B rende `efeito_B` a mais que a A, a C rende `efeito_C`, e o `rnorm()` acrescenta o que sobra.
 
-Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer.
+Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer na @fig-blocos-gradiente.
 
 ```{r}
 #| label: fig-blocos-gradiente
@@ -91,7 +91,7 @@ sem_bloco <- aov(recrutas ~ placa, data = experimento)
 summary(sem_bloco)
 ```
 
-O valor de p não indica efeito nenhum — e o efeito existe, porque nós o colocamos ali.
+O valor de p não indica efeito nenhum, e o efeito existe, porque nós o colocamos ali.
 
 ::: {.callout-tip appearance="minimal" title="Preveja"}
 Vamos acrescentar o bloco ao modelo. Antes de executar, escreva no script duas previsões separadas:
@@ -119,7 +119,7 @@ com_bloco <- aov(recrutas ~ placa + factor(bloco), data = experimento)
 summary(com_bloco)
 ```
 
-Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado: a variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.
+Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado, porque a variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.
 
 ::: {.callout-note appearance="minimal" title="O bloco não é um resultado"}
 Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difere da faixa 1" seria descrever o costão, não o experimento. O bloco entra no modelo para retirar variação conhecida do resíduo, não para ser interpretado.
@@ -129,7 +129,7 @@ Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difer
 
 ## O desafio: faça o modelo errado funcionar
 
-O modelo `sem_bloco` não detectou o efeito da placa. Ele pode passar a detectar — sem que o bloco entre na fórmula — se o experimento for outro.
+O modelo `sem_bloco` não detectou o efeito da placa. Ele pode passar a detectar, sem que o bloco entre na fórmula, se o experimento for outro.
 
 ::: {.callout-tip appearance="minimal" title="A regra do desafio"}
 Mude **um único** dos cinco parâmetros do início (`gradiente`, `efeito_B`, `efeito_C`, `ruido`, `n_blocos`), gere o experimento de novo e ajuste `sem_bloco`. O objetivo é obter um valor de p abaixo de 0,05 **no modelo que ignora o bloco**.
@@ -143,14 +143,14 @@ Duas exigências:
 ::: {.callout-tip appearance="minimal" title="Preveja antes de tentar"}
 Antes de mexer em qualquer coisa, escreva no script qual parâmetro você aposta que resolve, e por quê.
 
-Vale a pena pensar na régua: no modelo `sem_bloco`, o que exatamente está dentro do `Mean Sq` residual? Reduzir o `ruido` diminui esse resíduo o suficiente?
+Vale a pena pensar na régua. No modelo `sem_bloco`, o que exatamente está dentro do `Mean Sq` residual? Reduzir o `ruido` diminui esse resíduo o suficiente?
 :::
 
 ## Um segundo fator, no mesmo costão
 
-Agora um experimento diferente no mesmo local: sem gradiente de altura, mas com as placas instaladas em duas **orientações**, norte e sul, com quatro réplicas por combinação.
+Agora um experimento diferente no mesmo local, sem gradiente de altura, mas com as placas instaladas em duas **orientações**, norte e sul, com quatro réplicas por combinação.
 
-Aqui a segunda variável não é um incômodo: é uma pergunta científica. E ela permite algo que o bloco não permitia — perguntar se o efeito da placa **depende** da orientação.
+Aqui a segunda variável não é um incômodo, e sim uma pergunta científica. E ela permite algo que o bloco não permitia, que é perguntar se o efeito da placa **depende** da orientação.
 
 ```r
 efeito_interacao <- ____   # escolha e registre: quanto a placa C rende a mais, no sul

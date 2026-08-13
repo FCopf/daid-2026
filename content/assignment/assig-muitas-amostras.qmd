@@ -52,7 +52,7 @@ sd(medias_10)
 sd(medias_30)
 ```
 
-`sample(rikz$Richness, size = 10)` sorteia 10 valores da coluna de riqueza; `mean()` calcula a média deles; `replicate(1000, ...)` faz isso mil vezes.
+`sample(rikz$Richness, size = 10)` sorteia 10 valores da coluna de riqueza, `mean()` calcula a média deles e `replicate(1000, ...)` faz isso mil vezes.
 
 ```{r}
 #| label: fig-muitas-amostras-tamanhos
@@ -71,7 +71,7 @@ ggplot(simulacoes, aes(x = media)) +
 ```
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-As duas distribuições ficam centradas aproximadamente no mesmo lugar, mas uma é bem mais estreita que a outra. Qual, e por quê?
+Na @fig-muitas-amostras-tamanhos, as duas distribuições ficam centradas aproximadamente no mesmo lugar, mas uma é bem mais estreita que a outra. Qual, e por quê?
 :::
 
 # Entrega

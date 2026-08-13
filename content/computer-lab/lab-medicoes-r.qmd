@@ -21,7 +21,7 @@ format:
 
 A [leitura desta semana](../pre-reading/pread-dados-unidades-variacao.qmd) apresentou uma tabela de poças de maré, a média, o desvio-padrão e o histograma das medidas. Você viu esses objetos **prontos**.
 
-Hoje você vai construí-los. O objetivo é operar o R: guardar valores em objetos, montar uma tabela, resumi-la por grupo, desenhar um gráfico e pedir ao computador que gere novas medidas.
+Hoje você vai construí-los. O objetivo é operar o R, guardando valores em objetos, montando uma tabela, resumindo-a por grupo, desenhando um gráfico e pedindo ao computador que gere novas medidas.
 
 Ao final, você entrega um script com **a sua própria tabela de poças** e **três simulações comparadas**, acompanhadas de duas previsões que você registra antes de ver os resultados.
 
@@ -45,7 +45,7 @@ A primeira carrega o conjunto de pacotes que usaremos o semestre inteiro. A segu
 ::: {.callout-tip appearance="minimal" collapse="true" title="Dica: e se der erro?"}
 Se aparecer `there is no package called 'tidyverse'`, instale-o uma única vez com `install.packages("tidyverse")` e execute o `library()` novamente.
 
-Leia sempre a mensagem inteira antes de pedir ajuda: quase todo erro em R nomeia o objeto ou a função que causou o problema.
+Leia sempre a mensagem inteira antes de pedir ajuda, porque quase todo erro em R nomeia o objeto ou a função que causou o problema.
 :::
 
 Comece o script com um cabeçalho de identificação. Ele será exigido em todas as práticas do semestre:
@@ -59,7 +59,7 @@ Comece o script com um cabeçalho de identificação. Ele será exigido em todas
 
 # Guardar medidas em um objeto
 
-Você mediu a temperatura da água em cinco poças de um costão e anotou: 25,4; 25,9; 24,8; 26,3; 25,1 °C.
+Você mediu a temperatura da água em cinco poças de um costão e anotou os valores 25,4, 25,9, 24,8, 26,3 e 25,1 °C.
 
 No R, guardamos valores dentro de **objetos**. A seta `<-` faz essa atribuição e `c()` junta vários números em um **vetor**:
 
@@ -99,7 +99,7 @@ pocas <- tibble(
 pocas
 ```
 
-A saída mostra o tipo de cada coluna: `<dbl>` para números com casas decimais, `<int>` para inteiros, `<chr>` para texto. `glimpse()` dá a mesma informação de forma compacta:
+A saída mostra o tipo de cada coluna, com `<dbl>` para números com casas decimais, `<int>` para inteiros e `<chr>` para texto. `glimpse()` dá a mesma informação de forma compacta:
 
 ```{r}
 glimpse(pocas)
@@ -117,7 +117,7 @@ O símbolo `|>` é o **pipe**: ele leva o valor da esquerda para o primeiro argu
 pocas |> mutate(diferenca = temperatura - mean(temperatura))
 ```
 
-A coluna nova mostra quanto cada poça se afasta da média: valores negativos são poças mais frias que a média, positivos são mais quentes.
+A coluna nova mostra quanto cada poça se afasta da média, com valores negativos para poças mais frias que a média e positivos para as mais quentes.
 
 Para resumir por grupo, combine `group_by()` com `summarise()`:
 
@@ -131,9 +131,9 @@ pocas |>
   )
 ```
 
-O `desvio` aparece como `NA` onde há uma única poça: não é possível medir espalhamento com um único valor. Guarde isso, porque você vai precisar decidir quantas poças colocar em cada grupo daqui a pouco.
+O `desvio` aparece como `NA` onde há uma única poça, porque não é possível medir espalhamento com um único valor. Guarde isso, porque você vai precisar decidir quantas poças colocar em cada grupo daqui a pouco.
 
-Números resumem; gráficos revelam. Todo gráfico do `ggplot2` tem três partes: os dados, o mapeamento entre variáveis e eixos (`aes`) e a forma de desenhar (`geom_`):
+Números resumem e gráficos revelam. Todo gráfico do `ggplot2` tem três partes, que são os dados, o mapeamento entre variáveis e eixos (`aes`) e a forma de desenhar (`geom_`), como na @fig-medicoes-dispersao:
 
 ```{r}
 #| label: fig-medicoes-dispersao
@@ -155,7 +155,7 @@ Aqui entra a ferramenta que usaremos o semestre inteiro. A função `rnorm()` so
 rnorm(5, mean = 25.5, sd = 0.6)
 ```
 
-Os três argumentos são explícitos: **quantos** valores gerar, qual a **média** e qual o **desvio-padrão**. Execute essa linha algumas vezes seguidas: cada execução produz cinco números diferentes, e é essa a ideia de "voltar ao costão e medir outras cinco poças".
+Os três argumentos são explícitos, indicando **quantos** valores gerar, qual a **média** e qual o **desvio-padrão**. Execute essa linha algumas vezes seguidas e note que cada execução produz cinco números diferentes, e é essa a ideia de "voltar ao costão e medir outras cinco poças".
 
 ::: {.callout-tip appearance="minimal" collapse="true" title="Dica: por que o meu resultado é diferente do meu colega?"}
 Quando é preciso que um sorteio se repita exatamente igual, o R oferece a função `set.seed()`, que fixa o ponto de partida do sorteio.
@@ -163,7 +163,7 @@ Quando é preciso que um sorteio se repita exatamente igual, o R oferece a funç
 **Não vamos usá-la nesta unidade curricular.** A variação entre execuções é justamente o que queremos observar. Se o seu número for diferente do número do colega ao lado, isso é o resultado esperado, não um erro. O que precisa coincidir entre vocês é a interpretação, não o valor sorteado.
 :::
 
-Agora vamos gerar trinta poças e olhar como elas se distribuem:
+Agora vamos gerar trinta poças e olhar como elas se distribuem na @fig-medicoes-histograma:
 
 ```{r}
 #| label: fig-medicoes-histograma
@@ -183,7 +183,7 @@ ggplot(simuladas, aes(x = temperatura)) +
 Pedimos média 25,5 °C, mas a média das trinta poças sorteadas não sai exatamente 25,5. Para medir esse desencontro precisamos da **distância** entre o valor pedido e o valor obtido, sem que o sinal atrapalhe.
 
 ::: {.callout-tip appearance="minimal" title="Complete"}
-A função `abs()` devolve o valor absoluto, isto é, descarta o sinal: `abs(-0.3)` vale `0.3`.
+A função `abs()` devolve o valor absoluto, isto é, descarta o sinal, de modo que `abs(-0.3)` vale `0.3`.
 
 Escreva no seu script a linha que calcula a distância entre a média das poças simuladas e 25,5:
 
@@ -214,7 +214,7 @@ minhas_pocas <- tibble(
 ```
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de calcular"}
-Olhe os números que **você** escolheu e escreva no script, como comentário: qual dos dois grupos de sombreamento terá a maior temperatura média, e por quanto, aproximadamente?
+Olhe os números que **você** escolheu e escreva no script, como comentário, qual dos dois grupos de sombreamento terá a maior temperatura média, e por quanto, aproximadamente.
 
 Só depois calcule o resumo por grupo, com `group_by()` e `summarise()`, como na seção anterior. Acertou?
 :::
@@ -232,18 +232,18 @@ Para cada cenário, produza o histograma e calcule a distância até 25,5 com a 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
 Antes de executar os três cenários, escreva no script qual deles você espera que produza a **menor** distância até 25,5, e por quê.
 
-Depois rode os três. Se a sua previsão não se confirmar, não apague nada: rode os três cenários mais uma vez e observe se a ordem entre eles se mantém. Explicar por que ela mudou vale tanto quanto ter acertado.
+Depois rode os três. Se a sua previsão não se confirmar, não apague nada. Rode os três cenários mais uma vez e observe se a ordem entre eles se mantém. Explicar por que ela mudou vale tanto quanto ter acertado.
 :::
 
 # Entrega
 
-Salve o script `pr-medicoes.R` com o cabeçalho de identificação preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por `#`, logo abaixo da conta a que se referem.
+Salve o script `pr-medicoes.R` com o cabeçalho de identificação preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. Se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por `#`, logo abaixo da conta a que se referem.
 
 ::: {.callout-important appearance="minimal" title="Entregue"}
 1. a base da aula: o vetor `temperatura`, a tabela `pocas` e o gráfico de dispersão;
 2. **a sua tabela de seis poças**, com a previsão sobre os dois grupos de sombreamento registrada em comentário **antes** do resumo, e o resumo por `sombreamento` que a confirma ou desmente;
 3. **os três cenários de simulação**, cada um com o seu histograma e a sua distância até 25,5, precedidos da previsão sobre qual ficaria mais perto;
-4. em comentários, 2 a 3 frases respondendo, **com os seus três números**: o que aproximou mais a média de 25,5 — aumentar o número de poças ou usar um desvio-padrão menor? Diga também o que aconteceu com a **largura** dos histogramas.
+4. em comentários, 2 a 3 frases respondendo, **com os seus três números**, o que aproximou mais a média de 25,5, se aumentar o número de poças ou usar um desvio-padrão menor. Diga também o que aconteceu com a **largura** dos histogramas.
 :::
 
 ::: {.callout-tip appearance="minimal" title="O que será avaliado"}

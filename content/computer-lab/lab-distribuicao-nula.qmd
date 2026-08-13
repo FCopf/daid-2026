@@ -19,11 +19,11 @@ format:
 
 # Objetivo desta prática
 
-Um experimento comparou dois substratos para o assentamento de larvas de mexilhão: doze placas para cada substrato, e uma diferença observada de **1,4 cm** entre as médias.
+Um experimento comparou dois substratos para o assentamento de larvas de mexilhão, com doze placas para cada substrato e uma diferença observada de **1,4 cm** entre as médias.
 
-A [leitura desta semana](../pre-reading/pread-modelo-nulo-evidencia.qmd) construiu o mundo sem efeito para esse experimento e contou quantas vezes o acaso sozinho produz 1,4 cm. Ela também deixou um aviso: a distribuição nula **não descreve o mexilhão, descreve o experimento**.
+A [leitura desta semana](../pre-reading/pread-modelo-nulo-evidencia.qmd) construiu o mundo sem efeito para esse experimento e contou quantas vezes o acaso sozinho produz 1,4 cm. Ela também deixou um aviso, de que a distribuição nula **não descreve o mexilhão, descreve o experimento**.
 
-Hoje você vai levar esse aviso a sério e responder a uma pergunta de planejamento que a leitura não responde: **quantas placas por grupo seriam necessárias para que 1,4 cm deixasse de ser um resultado banal?**
+Hoje você vai levar esse aviso a sério e responder a uma pergunta de planejamento que a leitura não responde. **Quantas placas por grupo seriam necessárias para que 1,4 cm deixasse de ser um resultado banal?**
 
 O objetivo em R é transformar uma conta em uma função reutilizável e usá-la para procurar um delineamento.
 
@@ -44,7 +44,7 @@ theme_set(theme_bw(base_size = 12))
 
 # O processo nulo, uma vez
 
-A hipótese nula não é uma opinião: é uma receita que se executa. Para este experimento ela diz que os dois substratos são idênticos, com média 10,2 cm e desvio-padrão 2 cm entre placas.
+A hipótese nula não é uma opinião, e sim uma receita que se executa. Para este experimento ela diz que os dois substratos são idênticos, com média 10,2 cm e desvio-padrão 2 cm entre placas.
 
 ```{r}
 substrato_a <- rnorm(12, mean = 10.2, sd = 2)
@@ -53,9 +53,9 @@ substrato_b <- rnorm(12, mean = 10.2, sd = 2)
 mean(substrato_b) - mean(substrato_a)
 ```
 
-As duas linhas usam a **mesma** média. Ainda assim a diferença não é zero. Execute o bloco cinco vezes seguidas e observe o tamanho das diferenças que aparecem: é isso que o acaso consegue fazer sozinho neste experimento.
+As duas linhas usam a **mesma** média. Ainda assim a diferença não é zero. Execute o bloco cinco vezes seguidas e observe o tamanho das diferenças que aparecem, porque é isso que o acaso consegue fazer sozinho neste experimento.
 
-Para contar quantas dessas diferenças são "tão extremas quanto 1,4 cm", precisamos descartar o sinal, porque uma diferença de −1,4 é tão extrema quanto uma de +1,4. A função `abs()` faz isso: `abs(-1.4)` vale `1.4`. E `mean()` aplicado a comparações lógicas devolve a proporção de `TRUE`: `mean(c(TRUE, FALSE, TRUE, TRUE))` vale `0.75`.
+Para contar quantas dessas diferenças são "tão extremas quanto 1,4 cm", precisamos descartar o sinal, porque uma diferença de −1,4 é tão extrema quanto uma de +1,4. A função `abs()` faz isso, de modo que `abs(-1.4)` vale `1.4`. E `mean()` aplicado a comparações lógicas devolve a proporção de `TRUE`, de modo que `mean(c(TRUE, FALSE, TRUE, TRUE))` vale `0.75`.
 
 # Uma função para qualquer delineamento
 
@@ -75,7 +75,7 @@ proporcao_extremos <- function(n_placas, desvio) {
 }
 ```
 
-A estrutura é a mesma da função `ep_medio()` da Prática 04: os argumentos entram entre parênteses e a última linha é o que a função devolve.
+A estrutura é a mesma da função `ep_medio()` da Prática 04, em que os argumentos entram entre parênteses e a última linha é o que a função devolve.
 
 Antes de usar a função para qualquer coisa, confira se ela está correta. O experimento original tinha 12 placas por grupo e desvio-padrão 2, e a leitura desta semana informa a proporção que esse delineamento produz:
 
@@ -86,7 +86,7 @@ proporcao_extremos(12, 2)
 ::: {.callout-tip appearance="minimal" title="Confira"}
 Compare o valor de `proporcao` com o que a leitura obteve para o mesmo delineamento. Os dois números não serão idênticos, porque cada execução sorteia experimentos diferentes, mas devem ficar próximos.
 
-Se o seu valor estiver muito distante, revise a função: o erro mais comum é usar médias diferentes nas duas chamadas de `rnorm()`, o que deixa de representar um mundo **sem** efeito.
+Se o seu valor estiver muito distante, revise a função, porque o erro mais comum é usar médias diferentes nas duas chamadas de `rnorm()`, o que deixa de representar um mundo **sem** efeito.
 :::
 
 # Sua vez
@@ -96,7 +96,7 @@ Se o seu valor estiver muito distante, revise a função: o erro mais comum é u
 Com 12 placas por grupo, uma diferença de 1,4 cm é um resultado comum sob a hipótese nula. Aumentando o número de placas, a distribuição nula se estreita e a mesma diferença se torna rara.
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de procurar"}
-Escreva no script, como comentário, o seu palpite: quantas placas por grupo seriam necessárias para que a proporção caísse abaixo de **0,05**? Registre um número antes de testar qualquer coisa.
+Escreva no script, como comentário, o seu palpite de quantas placas por grupo seriam necessárias para que a proporção caísse abaixo de **0,05**. Registre um número antes de testar qualquer coisa.
 :::
 
 Teste **pelo menos três** valores diferentes de `n_placas`, mantendo o desvio em 2, e junte os resultados em uma tabela:
@@ -109,7 +109,7 @@ bind_rows(
 )
 ```
 
-Continue testando até localizar, com a precisão que der no tempo da aula, o **menor** número de placas por grupo que leva a proporção abaixo de 0,05. Mantenha na tabela **todos** os valores testados, inclusive os que ficaram longe: é o caminho da busca que mostra o seu raciocínio.
+Continue testando até localizar, com a precisão que der no tempo da aula, o **menor** número de placas por grupo que leva a proporção abaixo de 0,05. Mantenha na tabela **todos** os valores testados, inclusive os que ficaram longe, porque é o caminho da busca que mostra o seu raciocínio.
 
 ::: {.callout-warning appearance="minimal" title="A proporção também varia"}
 Cada chamada da função sorteia 4000 experimentos novos, então o resultado oscila um pouco. Se um valor cair muito perto de 0,05, rode-o mais uma vez antes de decidir.
@@ -122,14 +122,14 @@ O desvio-padrão de 2 cm descreve o quanto as placas variam entre si. Em um cost
 ::: {.callout-tip appearance="minimal" title="Escolha e preveja"}
 Escolha um desvio-padrão **maior que 2** e registre-o no script.
 
-Antes de rodar, escreva: o número de placas que você encontrou continua bastando? Se não, a necessidade aumenta pouco ou muito?
+Antes de rodar, escreva se o número de placas que você encontrou continua bastando. Se não, a necessidade aumenta pouco ou muito?
 :::
 
 Refaça o teste com o seu desvio, ao menos para o `n` que você havia encontrado, e ajuste a busca até voltar a ficar abaixo de 0,05.
 
 ## O gráfico do seu delineamento
 
-Desenhe a distribuição nula do delineamento que você encontrou, com uma linha marcando a diferença observada de 1,4 cm. O bloco abaixo é um modelo para adaptar: troque `____` pelos seus valores.
+Desenhe a distribuição nula do delineamento que você encontrou, com uma linha marcando a diferença observada de 1,4 cm. O bloco abaixo é um modelo para adaptar, então troque `____` pelos seus valores.
 
 ```r
 diferencas <- replicate(

@@ -26,15 +26,15 @@ theme_set(theme_bw(base_size = 12))
 
 Uma equipe coleta moluscos em um banco de areia em dois meses diferentes e mede a biomassa de cada indivíduo. A média de fevereiro é claramente menor que a de abril.
 
-Antes de falar em efeito do mês, uma pergunta: **os moluscos dos dois meses tinham o mesmo tamanho?**
+Antes de falar em efeito do mês, cabe uma pergunta. **Os moluscos dos dois meses tinham o mesmo tamanho?**
 
 Biomassa cresce com o comprimento da concha. Se os indivíduos de fevereiro eram menores, parte da diferença (talvez toda ela) é uma diferença de tamanho, não de mês.
 
-O comprimento aqui é uma **covariável**: uma medida contínua, registrada em cada unidade, que afeta a resposta e não é o que queremos comparar.
+O comprimento aqui é uma **covariável**, ou seja, uma medida contínua, registrada em cada unidade, que afeta a resposta e não é o que queremos comparar.
 
 # Comparar em condições equivalentes
 
-A ideia central é simples: em vez de comparar as médias brutas, comparar os meses **em um mesmo comprimento de concha**.
+A ideia central é simples, porque em vez de comparar as médias brutas, comparamos os meses **em um mesmo comprimento de concha**.
 
 ```{r}
 #| echo: false
@@ -66,25 +66,25 @@ ggplot(moluscos, aes(x = comprimento, y = biomassa, colour = mes)) +
   labs(x = "Comprimento da concha (mm)", y = "Biomassa (g)", colour = "Mês")
 ```
 
-A figura mostra o problema e a solução ao mesmo tempo. Os dois grupos ocupam faixas diferentes de comprimento, e por isso a comparação das médias brutas mistura mês e tamanho. Mas as duas retas podem ser lidas em um comprimento comum, e a distância vertical entre elas nesse ponto é o **efeito ajustado do mês**.
+A @fig-ajuste mostra o problema e a solução ao mesmo tempo. Os dois grupos ocupam faixas diferentes de comprimento, e por isso a comparação das médias brutas mistura mês e tamanho. Mas as duas retas podem ser lidas em um comprimento comum, e a distância vertical entre elas nesse ponto é o **efeito ajustado do mês**.
 
 ::: {.callout-note appearance="minimal" title="Análise de covariância"}
 A **ANCOVA** ajusta um modelo com um fator categórico e uma covariável contínua:
 
 $$\text{biomassa} = \beta_0 + \beta_1 \times \text{comprimento} + \text{efeito do mês} + \varepsilon$$
 
-Ela responde a duas perguntas ao mesmo tempo: como a resposta varia com a covariável, e quanto os grupos diferem **depois de descontar** essa variação.
+Ela responde a duas perguntas ao mesmo tempo, que são como a resposta varia com a covariável e quanto os grupos diferem **depois de descontar** essa variação.
 :::
 
 ## Modelos aditivo e com interação
 
-Escrever o modelo com precisão exige duas decisões: onde fica a origem da covariável e se as duas retas compartilham a mesma inclinação. Defina $G=0$ para fevereiro, $G=1$ para abril e $X$ como comprimento centralizado em um valor comum. O modelo aditivo de ANCOVA é
+Escrever o modelo com precisão exige duas decisões, que são onde fica a origem da covariável e se as duas retas compartilham a mesma inclinação. Defina $G=0$ para fevereiro, $G=1$ para abril e $X$ como comprimento centralizado em um valor comum. O modelo aditivo de ANCOVA é
 
 $$
 Y=\beta_0+\beta_1X+\beta_2G+\varepsilon.
 $$
 
-$\beta_1$ é a inclinação compartilhada e $\beta_2$ é a diferença ajustada entre meses no valor em que $X=0$. A centralização é o que dá sentido a $\beta_2$: sem ela, o coeficiente compararia os meses em uma concha de comprimento zero.
+$\beta_1$ é a inclinação compartilhada e $\beta_2$ é a diferença ajustada entre meses no valor em que $X=0$. A centralização é o que dá sentido a $\beta_2$, porque sem ela o coeficiente compararia os meses em uma concha de comprimento zero.
 
 A premissa de inclinações comuns não é automática e pode ser examinada acrescentando um termo:
 
@@ -92,7 +92,7 @@ $$
 Y=\beta_0+\beta_1X+\beta_2G+\beta_3XG+\varepsilon.
 $$
 
-Aqui $\beta_3$ mede a diferença de inclinações. Comparar os dois modelos avalia se a interação reduz o resíduo o suficiente para justificar uma relação distinta em cada mês. A decisão não deve depender apenas de um limiar: gráfico, intervalo de $\beta_3$, precisão e consequência biológica também importam.
+Aqui $\beta_3$ mede a diferença de inclinações. Comparar os dois modelos avalia se a interação reduz o resíduo o suficiente para justificar uma relação distinta em cada mês. A decisão não deve depender apenas de um limiar, porque gráfico, intervalo de $\beta_3$, precisão e consequência biológica também importam.
 
 ::: {.callout-warning appearance="minimal" title="Um efeito ajustado só existe se as retas forem paralelas"}
 O modelo aditivo resume o mês em **um** número, e isso só faz sentido se a biomassa crescer com o comprimento na mesma taxa nos dois meses.
@@ -149,7 +149,7 @@ $$
 Sua diferença é $\hat\beta_2$ para qualquer $x_0$, o que reafirma que o efeito ajustado é um número único apenas sob paralelismo. No modelo com interação, a diferença se torna $\hat\beta_2+\hat\beta_3x_0$. Em ambos os casos, o erro padrão de um contraste $L\hat\beta$ é
 
 $$
-EP(L\hat\beta)=\sqrt{L\widehat{\operatorname{Var}}(\hat\beta)L'},
+s_{L\hat\beta}=\sqrt{L\widehat{\operatorname{Var}}(\hat\beta)L'},
 $$
 
 o que preserva as covariâncias entre os coeficientes. Subtrair limites de dois intervalos de confiança separados não produz o intervalo correto para a diferença.
@@ -209,11 +209,11 @@ bruta_txt <- formata(comparacoes$estimativa[1], 2)
 ajustada_txt <- formata(comparacoes$estimativa[2], 2)
 ```
 
-A diferença bruta estimada foi `r bruta_txt` g e a ajustada, `r ajustada_txt` g. A distância entre os dois resultados não é uma correção cosmética: a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.
+Na @fig-bruta-ajustada, a diferença bruta estimada foi `r bruta_txt` g e a ajustada, `r ajustada_txt` g. A distância entre os dois resultados não é uma correção cosmética, porque a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.
 
 # Pressupostos que sustentam o ajuste
 
-O efeito ajustado é uma quantidade modelada, e por isso depende das suposições do modelo. Além da independência das unidades, a ANCOVA requer relação aproximadamente linear dentro de cada grupo, variância residual comparável, resíduos adequados e suporte comum da covariável. O modelo aditivo exige ainda homogeneidade de inclinações. Esses pressupostos devem ser avaliados nos resíduos e na distribuição conjunta de $X$, grupo e resposta, que é o que os três painéis abaixo reúnem.
+O efeito ajustado é uma quantidade modelada, e por isso depende das suposições do modelo. Além da independência das unidades, a ANCOVA requer relação aproximadamente linear dentro de cada grupo, variância residual comparável, resíduos adequados e suporte comum da covariável. O modelo aditivo exige ainda homogeneidade de inclinações. Esses pressupostos devem ser avaliados nos resíduos e na distribuição conjunta de $X$, grupo e resposta, que é o que os três painéis da @fig-diagnosticos reúnem.
 
 ```{r}
 #| echo: false
@@ -259,7 +259,7 @@ p_qq <- ggplot(diagnostico, aes(sample = residuo)) +
 patchwork::wrap_plots(p_suporte, p_residuo, p_qq, ncol = 1)
 ```
 
-O primeiro painel é o mais específico da ANCOVA: as duas densidades precisam se sobrepor, porque é na região comum que a comparação ajustada tem apoio empírico. Os outros dois repetem os diagnósticos já usados na regressão e na análise de variância. Além desses gráficos, compare o modelo aditivo ao modelo com interação e inspecione observações influentes. Uma interação imprecisa não comprova homogeneidade; o intervalo para $\beta_3$ informa quais diferenças de inclinação ainda são compatíveis com os dados.
+O primeiro painel é o mais específico da ANCOVA, porque as duas densidades precisam se sobrepor, já que é na região comum que a comparação ajustada tem apoio empírico. Os outros dois repetem os diagnósticos já usados na regressão e na análise de variância. Além desses gráficos, compare o modelo aditivo ao modelo com interação e inspecione observações influentes. Uma interação imprecisa não comprova homogeneidade, e o intervalo para $\beta_3$ informa quais diferenças de inclinação ainda são compatíveis com os dados.
 
 ## Quando o ajuste tenta criar uma comparação inexistente
 
@@ -269,7 +269,7 @@ O pressuposto de suporte comum merece um exame à parte, porque sua violação n
 Não escolha a média geral da covariável apenas porque o software a oferece. Primeiro calcule a interseção das faixas dos grupos. Se ela for vazia ou sustentada por pouquíssimas unidades, restrinja a população-alvo, colete dados adicionais ou reconheça que o contraste não é identificável com o desenho disponível.
 :::
 
-Há ainda uma advertência sobre a escolha da covariável. Testar muitas opções e ficar com a que produz o resultado mais conveniente altera a estimativa e o valor de p de modo oportunista. A escolha deve vir da biologia, da temporalidade e do plano de análise. Covariáveis medidas antes do tratamento podem aumentar a precisão; variáveis causadas pelo tratamento podem ser mediadoras, e ajustar por elas muda a pergunta para um efeito direto condicionado.
+Há ainda uma advertência sobre a escolha da covariável. Testar muitas opções e ficar com a que produz o resultado mais conveniente altera a estimativa e o valor de p de modo oportunista. A escolha deve vir da biologia, da temporalidade e do plano de análise. Covariáveis medidas antes do tratamento podem aumentar a precisão, ao passo que variáveis causadas pelo tratamento podem ser mediadoras, e ajustar por elas muda a pergunta para um efeito direto condicionado.
 
 # A mesma família de modelos
 
@@ -285,7 +285,7 @@ Resta um ponto que decide o alcance das conclusões, e ele não é estatístico.
 
 Se o mês tivesse sido **sorteado** para cada molusco (o que é impossível, mas serve de referência), qualquer outra diferença entre os grupos estaria distribuída ao acaso, e o efeito ajustado poderia ser lido como efeito causal.
 
-Como os meses são condições observadas, os grupos podem diferir em muitas outras coisas: temperatura da água, disponibilidade de alimento, fase reprodutiva, profundidade de coleta. Ajustar pelo comprimento remove **apenas** a diferença devida ao comprimento.
+Como os meses são condições observadas, os grupos podem diferir em muitas outras coisas, como temperatura da água, disponibilidade de alimento, fase reprodutiva e profundidade de coleta. Ajustar pelo comprimento remove **apenas** a diferença devida ao comprimento.
 
 ::: {.callout-warning appearance="minimal" title="O que o ajuste estatístico faz e não faz"}
 Ajustar por uma covariável torna a comparação mais justa em relação **àquela** variável.
@@ -293,7 +293,7 @@ Ajustar por uma covariável torna a comparação mais justa em relação **àque
 Não substitui a aleatorização e não elimina as demais diferenças entre grupos que ninguém mediu. Em estudos observacionais, o resultado é uma associação ajustada, não uma demonstração de causa.
 :::
 
-A pergunta que abriu esta leitura, se os moluscos de fevereiro realmente pesam menos, recebeu uma resposta condicional, e essa forma de resposta é o resumo do semestre inteiro. Eles pesam menos em média, e pesam menos também quando comparados a um mesmo comprimento, mas a segunda afirmação vale somente na faixa em que os dois meses foram observados, somente se as retas forem paralelas e somente como associação, porque ninguém sorteou o mês de nascimento de um molusco. Cada uma dessas ressalvas veio de uma decisão tomada antes da análise: o que foi medido, quantas unidades entraram, como foram selecionadas e o que ficou de fora. É essa cadeia, do delineamento à conclusão, que a unidade curricular procurou tornar visível.
+A pergunta que abriu esta leitura, se os moluscos de fevereiro realmente pesam menos, recebeu uma resposta condicional, e essa forma de resposta é o resumo do semestre inteiro. Eles pesam menos em média, e pesam menos também quando comparados a um mesmo comprimento, mas a segunda afirmação vale somente na faixa em que os dois meses foram observados, somente se as retas forem paralelas e somente como associação, porque ninguém sorteou o mês de nascimento de um molusco. Cada uma dessas ressalvas veio de uma decisão tomada antes da análise, sobre o que foi medido, quantas unidades entraram, como foram selecionadas e o que ficou de fora. É essa cadeia, do delineamento à conclusão, que a unidade curricular procurou tornar visível.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
 - [Regressão linear bayesiana](https://fcopf.github.io/mead/content/modelos-regressao-bayes/regressao-linear-bayesiana.html){target="_blank"} (MEAD)

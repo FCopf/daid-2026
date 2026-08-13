@@ -24,11 +24,11 @@ theme_set(theme_bw(base_size = 12))
 
 # Quando o preditor não tem níveis
 
-Até aqui as comparações envolviam categorias: duas dietas, quatro concentrações, dois substratos. Mas muitas perguntas nas Ciências do Mar não têm essa forma.
+Até aqui as comparações envolviam categorias, como duas dietas, quatro concentrações ou dois substratos. Mas muitas perguntas nas Ciências do Mar não têm essa forma.
 
 *A riqueza de espécies diminui conforme a altura da estação em relação à maré?*
 
-Aqui não há grupos. A altura é uma medida contínua: cada estação tem o seu valor, e não existem "níveis de altura" a comparar. Precisamos de uma descrição que funcione para **qualquer** valor do preditor.
+Aqui não há grupos. A altura é uma medida contínua, de modo que cada estação tem o seu valor e não existem "níveis de altura" a comparar. Precisamos de uma descrição que funcione para **qualquer** valor do preditor.
 
 # A reta como processo gerador
 
@@ -42,7 +42,7 @@ Os dois números têm significado concreto.
 
 O **intercepto** $\beta_0$ é a riqueza esperada quando a altura vale zero. Ele só é interpretável se o valor zero fizer sentido e estiver dentro da faixa observada.
 
-A **inclinação** $\beta_1$ é o que realmente responde à pergunta: quanto a riqueza esperada muda quando a altura aumenta em uma unidade. Seu sinal indica a direção, seu valor indica a magnitude, e sua unidade é a da resposta dividida pela do preditor, espécies por metro, por exemplo.
+A **inclinação** $\beta_1$ é o que realmente responde à pergunta, ou seja, quanto a riqueza esperada muda quando a altura aumenta em uma unidade. Seu sinal indica a direção, seu valor indica a magnitude, e sua unidade é a da resposta dividida pela do preditor, espécies por metro, por exemplo.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
 A reta descreve o **centro** da resposta, não cada observação. Nenhuma estação precisa cair sobre a reta, assim como nenhum peixe precisa ter exatamente o comprimento médio do seu tanque.
@@ -57,7 +57,7 @@ $$\text{riqueza} = \underbrace{\beta_0 + \beta_1 \times \text{altura}}_{\text{pa
 
 A parte sistemática diz onde está o centro para cada altura. O termo $\varepsilon$ representa tudo o que faz uma estação específica ficar acima ou abaixo desse centro.
 
-Escrever o modelo assim permite **gerar dados**: escolha valores de altura, calcule o centro para cada um, sorteie um desvio em torno dele. É o que torna a regressão um modelo generativo, e não apenas uma linha traçada sobre pontos. A figura abaixo usa esse procedimento duas vezes, com a mesma reta e magnitudes diferentes de $\varepsilon$.
+Escrever o modelo assim permite **gerar dados**, escolhendo valores de altura, calculando o centro para cada um e sorteando um desvio em torno dele. É o que torna a regressão um modelo generativo, e não apenas uma linha traçada sobre pontos. A @fig-mesma-reta usa esse procedimento duas vezes, com a mesma reta e magnitudes diferentes de $\varepsilon$.
 
 ```{r}
 #| echo: false
@@ -82,17 +82,17 @@ ggplot(cenarios_reta, aes(x = altura, y = riqueza)) +
   labs(x = "Altura em relação à maré (m)", y = "Riqueza de espécies")
 ```
 
-Os dois painéis vêm da **mesma** reta. A relação sistemática é idêntica; o que muda é o quanto as observações se afastam dela. À esquerda a relação salta aos olhos; à direita ela existe, mas exige mais dados para ser estimada com precisão.
+Os dois painéis da @fig-mesma-reta vêm da **mesma** reta. A relação sistemática é idêntica, e o que muda é o quanto as observações se afastam dela. À esquerda a relação salta aos olhos, enquanto à direita ela existe, mas exige mais dados para ser estimada com precisão.
 
-Guarde isso: uma inclinação forte e uma relação *aparentemente* forte não são a mesma coisa.
+Guarde isso, uma inclinação forte e uma relação *aparentemente* forte não são a mesma coisa.
 
 # Da reta verdadeira à reta estimada
 
 No mundo real, $\beta_0$ e $\beta_1$ são desconhecidos. Temos apenas as estações medidas, e a partir delas estimamos uma reta.
 
-O critério mais usado é o dos **mínimos quadrados**: entre todas as retas possíveis, escolher a que torna mínima a soma dos quadrados das distâncias verticais entre cada ponto e a reta.
+O critério mais usado é o dos **mínimos quadrados**, que escolhe, entre todas as retas possíveis, a que torna mínima a soma dos quadrados das distâncias verticais entre cada ponto e a reta.
 
-Essas distâncias são os **resíduos**: o que sobrou depois de descontar a parte explicada pela altura. Elevá-las ao quadrado faz com que desvios grandes pesem desproporcionalmente, o que também significa que um único ponto muito afastado pode puxar a reta inteira.
+Essas distâncias são os **resíduos**, isto é, o que sobrou depois de descontar a parte explicada pela altura. Elevá-las ao quadrado faz com que desvios grandes pesem desproporcionalmente, o que também significa que um único ponto muito afastado pode puxar a reta inteira.
 
 Esse critério tem solução analítica. Para observações $(x_i,y_i)$, as estimativas de mínimos quadrados são
 
@@ -117,7 +117,7 @@ $$
 r=\frac{s_{XY}}{s_Xs_Y},
 $$
 
-e varia de -1 a 1. As duas quantidades compartilham o mesmo numerador, mas descrevem coisas diferentes: covariância e correlação são simétricas, pois trocar $X$ e $Y$ não muda seu sentido, enquanto a regressão não é. Escolher $Y$ como resposta define quais distâncias são minimizadas e qual variável será prevista. Vale acrescentar que correlação alta não demonstra causalidade, pois uma terceira variável, uma tendência temporal ou a seleção das unidades pode produzir a associação.
+e varia de -1 a 1. As duas quantidades compartilham o mesmo numerador, mas descrevem coisas diferentes. Covariância e correlação são simétricas, pois trocar $X$ e $Y$ não muda seu sentido, enquanto a regressão não é. Escolher $Y$ como resposta define quais distâncias são minimizadas e qual variável será prevista. Vale acrescentar que correlação alta não demonstra causalidade, pois uma terceira variável, uma tendência temporal ou a seleção das unidades pode produzir a associação.
 
 No R, todo esse procedimento cabe em uma função:
 
@@ -133,7 +133,7 @@ summary(ajuste_reta)
 confint(ajuste_reta)
 ```
 
-`lm()` estima os coeficientes; `summary()` informa erros padrão, testes e $R^2$; e `confint()` fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.
+`lm()` estima os coeficientes, `summary()` informa erros padrão, testes e $R^2$, e `confint()` fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.
 
 ## Um cálculo aplicado, do ponto à reta
 
@@ -176,7 +176,7 @@ tibble(
 )
 ```
 
-O código calcula $SP_{XY}=\sum(x_i-\bar x)(y_i-\bar y)$ e $SQ_X=\sum(x_i-\bar x)^2$, obtém $\hat\beta_1=SP_{XY}/SQ_X$ e então o intercepto. Os três somatórios permitem verificar $SQ_{Total}=SQ_{Reg}+SQ_{Res}$, e a última coluna mostra que o quadrado da correlação reproduz o $R^2$ neste modelo simples com intercepto. A figura seguinte representa essa mesma partição graficamente, estação por estação.
+O código calcula $SP_{XY}=\sum(x_i-\bar x)(y_i-\bar y)$ e $SQ_X=\sum(x_i-\bar x)^2$, obtém $\hat\beta_1=SP_{XY}/SQ_X$ e então o intercepto. Os três somatórios permitem verificar $SQ_{Total}=SQ_{Reg}+SQ_{Res}$, e a última coluna mostra que o quadrado da correlação reproduz o $R^2$ neste modelo simples com intercepto. A @fig-rikz-particao representa essa mesma partição graficamente, estação por estação.
 
 ```{r}
 #| echo: false
@@ -195,11 +195,11 @@ ggplot(rikz_calculo, aes(x = nap, y = riqueza)) +
   labs(x = "Índice NAP", y = "Riqueza de espécies")
 ```
 
-O segmento verde de uma estação é o desvio explicado $\hat y_i-\bar y$; o laranja é o resíduo $y_i-\hat y_i$. A soma dos dois reconstrói a distância entre o ponto e a linha tracejada da média geral. A decomposição ocorre nos quadrados desses comprimentos, não na simples soma de seus valores absolutos.
+Na @fig-rikz-particao, o segmento verde de uma estação é o desvio explicado $\hat y_i-\bar y$, e o laranja é o resíduo $y_i-\hat y_i$. A soma dos dois reconstrói a distância entre o ponto e a linha tracejada da média geral. A decomposição ocorre nos quadrados desses comprimentos, não na simples soma de seus valores absolutos.
 
 ## Quanto da variação a reta explica
 
-A figura anterior já sugere a resposta: se os segmentos verdes forem longos e os laranja curtos, a reta descreve bem os dados. Assim como na análise de variância, a variação total da resposta se parte em duas, a parte descrita pela reta e a parte residual. A proporção descrita é o **coeficiente de determinação**:
+A @fig-rikz-particao já sugere a resposta, porque se os segmentos verdes forem longos e os laranja curtos, a reta descreve bem os dados. Assim como na análise de variância, a variação total da resposta se parte em duas, a parte descrita pela reta e a parte residual. A proporção descrita é o **coeficiente de determinação**:
 
 $$R^2 = \frac{\text{variação descrita pela reta}}{\text{variação total}}$$
 
@@ -225,7 +225,7 @@ $$
 R^2=\frac{SQ_{Reg}}{SQ_{Total}}=1-\frac{SQ_{Res}}{SQ_{Total}}.
 $$
 
-Na regressão linear simples com intercepto, $R^2=r^2$. Essa igualdade não torna regressão e correlação equivalentes: apenas mostra que compartilham a mesma medida de associação linear nesse caso. Convém lembrar ainda que $R^2$ depende da faixa de $X$ observada; restringir essa faixa pode reduzi-lo sem alterar em nada o processo biológico subjacente.
+Na regressão linear simples com intercepto, $R^2=r^2$. Essa igualdade não torna regressão e correlação equivalentes, e apenas mostra que compartilham a mesma medida de associação linear nesse caso. Convém lembrar ainda que $R^2$ depende da faixa de $X$ observada, e restringir essa faixa pode reduzi-lo sem alterar em nada o processo biológico subjacente.
 
 ## Incerteza da inclinação
 
@@ -238,19 +238,19 @@ $$
 em que o divisor é $n-2$ porque dois parâmetros foram estimados a partir dos dados. O erro padrão da inclinação é então
 
 $$
-EP(\hat\beta_1)=
+s_{\hat\beta_1}=
 \frac{s_e}{\sqrt{\sum_i(x_i-\bar{x})^2}}.
 $$
 
-Ele diminui quando há menos variação residual, mais observações ou maior dispersão de $X$. Note que o denominador recompensa preditores bem espalhados: medir alturas muito parecidas entre si torna a inclinação difícil de estimar. Espalhar $X$ apenas com pontos extremos artificiais não é solução, pois aumenta o risco de extrapolação e de influência excessiva de poucas observações.
+Ele diminui quando há menos variação residual, mais observações ou maior dispersão de $X$. Note que o denominador recompensa preditores bem espalhados, pois medir alturas muito parecidas entre si torna a inclinação difícil de estimar. Espalhar $X$ apenas com pontos extremos artificiais não é solução, pois aumenta o risco de extrapolação e de influência excessiva de poucas observações.
 
 Com o erro padrão em mãos, testar $H_0:\beta_1=0$ segue a estrutura já conhecida:
 
 $$
-t=\frac{\hat\beta_1}{EP(\hat\beta_1)},
+t=\frac{\hat\beta_1}{s_{\hat\beta_1}},
 $$
 
-com $n-2$ graus de liberdade, e o intervalo é $\hat\beta_1\pm t_{1-\alpha/2,n-2}EP(\hat\beta_1)$. A ANOVA da regressão testa a mesma hipótese por $F=QM_{Reg}/QM_{Res}$; com um único preditor, $F=t^2$, do mesmo modo que ocorre na comparação entre dois grupos.
+com $n-2$ graus de liberdade, e o intervalo é $\hat\beta_1\pm t_{1-\alpha/2,n-2}\,s_{\hat\beta_1}$. A ANOVA da regressão testa a mesma hipótese por $F=QM_{Reg}/QM_{Res}$, e com um único preditor, $F=t^2$, do mesmo modo que ocorre na comparação entre dois grupos.
 
 # A forma linear é uma hipótese
 
@@ -289,7 +289,7 @@ p2 <- ggplot(residuos, aes(x = x, y = residuo)) +
 patchwork::wrap_plots(p1, p2, ncol = 1)
 ```
 
-À esquerda, os resíduos se espalham sem padrão em torno de zero: a reta captou o que havia para captar. À direita, eles desenham um U nítido, sinal de que a relação não é reta, ainda que o $R^2$ possa ser alto.
+À esquerda da @fig-residuos-forma, os resíduos se espalham sem padrão em torno de zero, porque a reta captou o que havia para captar. À direita, eles desenham um U nítido, sinal de que a relação não é reta, ainda que o $R^2$ possa ser alto.
 
 O gráfico de resíduos é a ferramenta mais barata e mais informativa de toda a modelagem. Ele revela curvatura, dispersão que cresce com o preditor e pontos isolados que dominam o ajuste.
 
@@ -310,7 +310,7 @@ $$
 h_{ii}=\frac{1}{n}+\frac{(x_i-\bar x)^2}{\sum_j(x_j-\bar x)^2}.
 $$
 
-O primeiro termo é comum a todas as observações; o segundo cresce nas extremidades da faixa observada. Sinalizar não significa apagar. Primeiro se verifica erro de registro, mecanismo de medição e população representada; qualquer exclusão precisa de justificativa científica. Não existe um limiar universal que a autorize, e valores de referência como $4/n$ para a distância de Cook funcionam apenas como sinal para inspeção.
+O primeiro termo é comum a todas as observações, enquanto o segundo cresce nas extremidades da faixa observada. Sinalizar não significa apagar. Primeiro se verifica erro de registro, mecanismo de medição e população representada, e qualquer exclusão precisa de justificativa científica. Não existe um limiar universal que a autorize, e valores de referência como $4/n$ para a distância de Cook funcionam apenas como sinal para inspeção.
 
 ```{r}
 #| echo: false
@@ -340,7 +340,7 @@ ggplot(diagnostico, aes(x = x, y = y, size = cook, colour = alavancagem)) +
   theme_bw(base_size = 11)
 ```
 
-O ponto isolado à direita reúne as duas condições: está longe dos demais no eixo do preditor, o que lhe dá alavancagem alta, e não acompanha a tendência dos outros, o que lhe dá resíduo grande. O resultado é uma distância de Cook muito maior que a das demais observações, e uma reta que se inclina para acomodá-lo.
+Na @fig-influencia, o ponto isolado à direita reúne as duas condições, porque está longe dos demais no eixo do preditor, o que lhe dá alavancagem alta, e não acompanha a tendência dos outros, o que lhe dá resíduo grande. O resultado é uma distância de Cook muito maior que a das demais observações, e uma reta que se inclina para acomodá-lo.
 
 ## Quando outra escala torna a relação linear
 
@@ -350,9 +350,9 @@ $$
 \log(Y)=\log(a)+b\log(X),
 $$
 
-uma relação linear em escala logarítmica. Nesse modelo, $b$ descreve elasticidade: a mudança percentual aproximada em $Y$ para uma mudança percentual em $X$.
+uma relação linear em escala logarítmica. Nesse modelo, $b$ descreve elasticidade, ou seja, a mudança percentual aproximada em $Y$ para uma mudança percentual em $X$.
 
-Uma relação espécie-área é o exemplo clássico: $S=cA^z$, em que $S$ é riqueza, $A$ é área, $c$ é a riqueza esperada quando $A=1$ e $z$ controla a velocidade de crescimento. Na escala logarítmica, o intercepto é $\log(c)$ e a inclinação é $z$.
+Uma relação espécie-área é o exemplo clássico, com $S=cA^z$, em que $S$ é riqueza, $A$ é área, $c$ é a riqueza esperada quando $A=1$ e $z$ controla a velocidade de crescimento. Na escala logarítmica, o intercepto é $\log(c)$ e a inclinação é $z$, como mostra a @fig-potencia.
 
 ```{r}
 #| echo: false
@@ -389,7 +389,7 @@ coef_potencia <- coef(lm(log_riqueza ~ log_area, data = especie_area))
 z_estimado <- formatC(coef_potencia[["log_area"]], format = "f", digits = 2, decimal.mark = ",")
 ```
 
-A inclinação estimada na escala logarítmica foi `r z_estimado`, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p. Há ainda um detalhe na volta: $\exp(\widehat{\log Y})$ estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.
+A inclinação estimada na escala logarítmica foi `r z_estimado`, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p. Há ainda um detalhe na volta, porque $\exp(\widehat{\log Y})$ estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.
 
 # Duas incertezas de previsão
 
@@ -397,10 +397,10 @@ Uma reta ajustada permite prever, e é preciso distinguir duas perguntas que par
 
 Um **intervalo de previsão** descreve uma nova unidade individual. Além da incerteza da reta, inclui a variação residual da própria unidade e por isso é sempre mais largo. Confundir os dois produz previsões individuais otimistas demais.
 
-A diferença aparece diretamente nas fórmulas. Para a média em $x_0$, o erro padrão é
+A diferença aparece diretamente nas fórmulas. Escrevendo $\hat\mu_0=\widehat{E(Y\mid x_0)}$ para a média estimada em $x_0$, o erro padrão é
 
 $$
-EP\{\widehat{E(Y\mid x_0)}\}
+s_{\hat\mu_0}
 =s_e\sqrt{\frac{1}{n}+\frac{(x_0-\bar x)^2}{\sum_i(x_i-\bar x)^2}}.
 $$
 
@@ -438,11 +438,11 @@ ggplot(estacoes, aes(x = altura, y = riqueza)) +
   labs(x = "Altura em relação à maré", y = "Riqueza")
 ```
 
-A faixa escura, estreita, é a banda de confiança para a média; a faixa clara, bem mais larga, é a banda de previsão. Repare que praticamente todos os pontos observados caem dentro da segunda, e apenas alguns dentro da primeira, o que é exatamente o esperado: a banda de confiança não descreve onde caem as estações, e sim onde está a reta. No R, as duas são obtidas pela mesma função, `predict()`, mudando o argumento `interval` de `"confidence"` para `"prediction"`.
+Na @fig-bandas, a faixa escura e estreita é a banda de confiança para a média, e a faixa clara, bem mais larga, é a banda de previsão. Repare que praticamente todos os pontos observados caem dentro da segunda, e apenas alguns dentro da primeira, o que é exatamente o esperado, porque a banda de confiança não descreve onde caem as estações, e sim onde está a reta. No R, as duas são obtidas pela mesma função, `predict()`, mudando o argumento `interval` de `"confidence"` para `"prediction"`.
 
 # Interpolar não é extrapolar
 
-Um último cuidado fecha o percurso. A reta foi estimada dentro da faixa de alturas efetivamente medidas. Usá-la para prever a riqueza em uma altura muito além dessa faixa é supor que a relação continua a mesma onde ninguém observou, uma suposição que os dados não sustentam. As bandas da figura anterior já alargam nas extremidades da faixa observada; fora dela, deixam de ter significado, porque a incerteza sobre a própria forma da relação não é representada por nenhuma delas.
+Um último cuidado fecha o percurso. A reta foi estimada dentro da faixa de alturas efetivamente medidas. Usá-la para prever a riqueza em uma altura muito além dessa faixa é supor que a relação continua a mesma onde ninguém observou, uma suposição que os dados não sustentam. As bandas da @fig-bandas já alargam nas extremidades da faixa observada, e fora dela deixam de ter significado, porque a incerteza sobre a própria forma da relação não é representada por nenhuma delas.
 
 A pergunta do início pedia uma descrição que funcionasse para qualquer valor do preditor, e a reta fornece exatamente isso, com três ressalvas que percorreram toda a leitura. Ela descreve o centro, e não as observações. Ela é uma hipótese sobre a forma da relação, verificável nos resíduos. E ela vale apenas na faixa em que houve medição. Dentro desses limites, dois números, intercepto e inclinação, resumem um processo gerador completo, e é esse mesmo modelo que passará a acomodar grupos, blocos e covariáveis nas leituras seguintes.
 

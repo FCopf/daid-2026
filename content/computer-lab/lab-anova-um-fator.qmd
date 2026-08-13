@@ -21,7 +21,7 @@ format:
 
 A [leitura desta semana](../pre-reading/pread-fontes-variacao-anova.qmd) mostrou dois experimentos com **as mesmas médias** e conclusões opostas, e explicou que a razão F compara duas fontes de variação.
 
-Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você **define os parâmetros** que os geram: quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz F subir e o que faz F descer — e só então aplica o procedimento a dados reais de contaminação por zinco.
+Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você **define os parâmetros** que os geram, quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz F subir e o que faz F descer, e só então aplica o procedimento a dados reais de contaminação por zinco.
 
 O objetivo em R é escrever um modelo como processo gerador, ajustar `aov()` e ler as comparações par a par.
 
@@ -60,7 +60,7 @@ experimento <- tibble(
 glimpse(experimento)
 ```
 
-Repare no que acabamos de escrever: as quatro médias verdadeiras são **iguais**. Neste experimento o tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.
+Repare no que acabamos de escrever, porque as quatro médias verdadeiras são **iguais**. Neste experimento o tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.
 
 ```{r}
 #| label: fig-anova-simulado
@@ -73,7 +73,7 @@ ggplot(experimento, aes(x = tratamento, y = diversidade)) +
   labs(x = "Tratamento", y = "Diversidade")
 ```
 
-Ainda assim as quatro caixas não ficam alinhadas: são 32 canais sorteados. A pergunta da ANOVA é se essa separação é grande **em comparação com** o espalhamento dentro dos grupos.
+Ainda assim as quatro caixas da @fig-anova-simulado não ficam alinhadas, porque são 32 canais sorteados. A pergunta da ANOVA é se essa separação é grande **em comparação com** o espalhamento dentro dos grupos.
 
 A fórmula `diversidade ~ tratamento` lê-se "diversidade em função de tratamento", a mesma notação da Prática 06:
 
@@ -83,12 +83,12 @@ modelo_nulo <- aov(diversidade ~ tratamento, data = experimento)
 summary(modelo_nulo)
 ```
 
-A tabela traz os graus de liberdade (`Df`), a soma de quadrados (`Sum Sq`), o quadrado médio (`Mean Sq`), a razão F e o valor de p. A linha `tratamento` é a variação entre grupos; `Residuals` é a variação dentro dos grupos.
+A tabela traz os graus de liberdade (`Df`), a soma de quadrados (`Sum Sq`), o quadrado médio (`Mean Sq`), a razão F e o valor de p. A linha `tratamento` é a variação entre grupos, e `Residuals` é a variação dentro dos grupos.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
 Como as quatro médias verdadeiras são iguais, as duas linhas estão medindo a mesma coisa e F fica em torno de **1**.
 
-Execute o bloco da simulação e o `summary()` mais duas vezes. F muda bastante de uma execução para outra, e ocasionalmente fica bem acima de 1 — sem que nada tenha mudado no experimento. É o mesmo alarme falso da Prática 05, agora medido por F.
+Execute o bloco da simulação e o `summary()` mais duas vezes. F muda bastante de uma execução para outra, e ocasionalmente fica bem acima de 1, sem que nada tenha mudado no experimento. É o mesmo alarme falso da Prática 05, agora medido por F.
 :::
 
 # Sua vez, parte 1: mova o F
@@ -96,20 +96,20 @@ Execute o bloco da simulação e o `summary()` mais duas vezes. F muda bastante 
 ::: {.callout-tip appearance="minimal" title="Escolha e preveja"}
 Escolha **as suas quatro médias verdadeiras**, com pelo menos uma diferente das demais, e registre-as no script. Mantenha `desvio_dentro <- 0.5` por enquanto.
 
-Antes de rodar, escreva como comentário: o F ficará perto de 1 ou bem acima? Por quê?
+Antes de rodar, escreva como comentário se o F ficará perto de 1 ou bem acima, e por quê.
 :::
 
 Troque o vetor `medias_verdadeiras` pelos seus valores, gere de novo o experimento e ajuste o modelo.
 
 ::: {.callout-tip appearance="minimal" title="O desafio"}
-Agora mude **um único parâmetro** — só as médias, ou só `desvio_dentro`, ou só `n_por_grupo` — de modo a levar o F na **direção oposta** à que você acabou de obter.
+Agora mude **um único parâmetro**, seja só as médias, só `desvio_dentro` ou só `n_por_grupo`, de modo a levar o F na **direção oposta** à que você acabou de obter.
 
-Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de `summary()`. Rode cada versão duas vezes antes de concluir: uma execução isolada pode enganar.
+Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de `summary()`. Rode cada versão duas vezes antes de concluir, porque uma execução isolada pode enganar.
 :::
 
 # Os dados reais: quatro concentrações de zinco
 
-Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco: `BACK` (concentração de fundo, o controle), `LOW`, `MED` e `HIGH`.
+Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco, que são `BACK` (concentração de fundo, o controle), `LOW`, `MED` e `HIGH`.
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/medley.csv"
@@ -128,7 +128,7 @@ modelo <- aov(DIVERSITY ~ ZINC, data = algas)
 summary(modelo)
 ```
 
-O valor de p responde a **uma** pergunta: "as quatro médias são todas iguais?". Ele não diz quais concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares ajustando para o número de comparações:
+O valor de p responde a **uma** pergunta, "as quatro médias são todas iguais?". Ele não diz quais concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares ajustando para o número de comparações:
 
 ```{r}
 TukeyHSD(modelo)
@@ -137,7 +137,7 @@ TukeyHSD(modelo)
 Cada linha é um par. `diff` é a diferença entre as médias, `lwr` e `upr` delimitam o intervalo de confiança dessa diferença, e `p adj` é o valor de p ajustado. Um par cujo intervalo **contém o zero** não mostra diferença detectável.
 
 ::: {.callout-tip appearance="minimal" title="Leia a tabela antes de seguir"}
-Percorra as seis linhas e anote quais pares **não** contêm o zero. Guarde essa lista: ela é a chave do próximo bloco.
+Percorra as seis linhas e anote quais pares **não** contêm o zero. Guarde essa lista, porque ela é a chave do próximo bloco.
 :::
 
 # Sua vez, parte 2: de onde vem o F?
@@ -147,7 +147,7 @@ O F da tabela completa resume as quatro concentrações em um número só. Vamos
 ::: {.callout-tip appearance="minimal" title="Escolha e preveja"}
 Escolha **uma** das quatro concentrações para remover da análise e registre a escolha no script.
 
-Antes de rodar, escreva: com três grupos em vez de quatro, o F vai **subir ou descer**? Use a tabela de Tukey que você acabou de ler para justificar em uma frase.
+Antes de rodar, escreva se, com três grupos em vez de quatro, o F vai **subir ou descer**. Use a tabela de Tukey que você acabou de ler para justificar em uma frase.
 :::
 
 ```r
@@ -160,7 +160,7 @@ summary(aov(DIVERSITY ~ ZINC, data = algas_reduzido))
 
 `fct_drop()` elimina o nível que ficou sem observações depois do `filter()`. Sem ele, o R continuaria esperando quatro grupos.
 
-Compare a nova tabela com a completa: graus de liberdade, F e valor de p.
+Compare a nova tabela com a completa, olhando graus de liberdade, F e valor de p.
 
 # Entrega
 

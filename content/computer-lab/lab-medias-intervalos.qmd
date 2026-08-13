@@ -21,9 +21,9 @@ format:
 
 A [leitura desta semana](../pre-reading/pread-erro-padrao-intervalo.qmd) mostrou cem intervalos de confiança e contou quantos continham o valor real. Você viu que o procedimento acerta cerca de 95% das vezes.
 
-Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de **acertar com certa frequência**, ele tem uma **largura** — e é a largura que diz se o estudo estabeleceu alguma coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das duas muda.
+Um intervalo, porém, tem duas propriedades, e a leitura só mediu uma delas. Além de **acertar com certa frequência**, ele tem uma **largura**, e é a largura que diz se o estudo estabeleceu alguma coisa. Hoje você vai medir as duas ao mesmo tempo, em dois tamanhos de amostra, e descobrir qual das duas muda.
 
-O objetivo em R é construir um experimento de verificação: gerar muitas coletas, calcular um intervalo para cada uma e resumir o desempenho do procedimento.
+O objetivo em R é construir um experimento de verificação, gerando muitas coletas, calculando um intervalo para cada uma e resumindo o desempenho do procedimento.
 
 ::: {.callout-note appearance="minimal" title="Como a hora será usada"}
 - **5 min** abrir o RStudio, criar o script e ler a proposta;
@@ -40,7 +40,7 @@ library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário: **inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de antemão, podemos verificar se o método acerta, e com que frequência.
+Com dados reais nunca sabemos o valor que estamos estimando. Aqui vamos fazer o contrário e **inventar** um costão cujo comprimento médio dos mexilhões é exatamente 5 cm. Sabendo a resposta de antemão, podemos verificar se o método acerta, e com que frequência.
 
 Os parâmetros ficam no início do script, para serem fáceis de mudar depois:
 
@@ -61,14 +61,14 @@ mean(amostra)
 sd(amostra)
 ```
 
-A média observada não é exatamente 5, e não deveria ser: são 20 mexilhões sorteados, não o costão inteiro.
+A média observada não é exatamente 5, e não deveria ser, porque são 20 mexilhões sorteados, não o costão inteiro.
 
 A leitura mostrou que o espalhamento dessas médias, entre coletas repetidas, pode ser estimado a partir de **uma única amostra**, pela fórmula do erro padrão:
 
-$$EP = \frac{s}{\sqrt{n}}$$
+$$s_{\bar{x}} = \frac{s}{\sqrt{n}}$$
 
 ::: {.callout-tip appearance="minimal" title="Complete"}
-Traduza a fórmula para o R. `sd(amostra)` é o $s$; falta o denominador.
+Traduza a fórmula para o R. `sd(amostra)` é o $s$, e falta o denominador.
 
 ```r
 erro_padrao <- sd(amostra) / sqrt(____)
@@ -95,11 +95,11 @@ superior <- mean(amostra) + multiplicador * erro_padrao
 c(inferior, superior)
 ```
 
-Este é o intervalo **desta** coleta. Ele contém 5 cm, ou não contém; e com uma amostra só você nunca saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.
+Este é o intervalo **desta** coleta. Ele contém 5 cm, ou não contém, e com uma amostra só você nunca saberia qual dos dois casos ocorreu. Para julgar o procedimento, é preciso repeti-lo.
 
 # Duas propriedades do procedimento
 
-Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas medidas: a **proporção que contém o valor real** e a **largura média** dos intervalos.
+Vamos construir 200 coletas, calcular um intervalo para cada uma e resumir o conjunto por duas medidas, a **proporção que contém o valor real** e a **largura média** dos intervalos.
 
 ```{r}
 coletas <- tibble(
@@ -142,7 +142,7 @@ A cobertura obtida não será exatamente 95%: são 200 coletas sorteadas, e essa
 Você tem o desempenho do procedimento para amostras de 20 mexilhões. Falta saber o que acontece quando a amostra muda de tamanho.
 
 ::: {.callout-tip appearance="minimal" title="Escolha"}
-Escolha um segundo tamanho de amostra, diferente de 20: pode ser **5**, **10**, **50** ou **100**. Registre a escolha no script.
+Escolha um segundo tamanho de amostra, diferente de 20, entre **5**, **10**, **50** ou **100**. Registre a escolha no script.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}
@@ -178,7 +178,7 @@ bind_rows(resumo_20, resumo_meu)
 ::: {.callout-warning appearance="minimal" title="Cuidado com a ordem"}
 Todo o bloco usa o objeto `n`. Se você mudar `n` e não reexecutar as linhas que vêm depois, a tabela sairá com números misturados de dois tamanhos diferentes.
 
-Por isso o script precisa rodar **do início ao fim em sessão nova** antes de ser enviado: é assim que você garante que cada resumo corresponde ao `n` que está escrito ao lado dele.
+Por isso o script precisa rodar **do início ao fim em sessão nova** antes de ser enviado, porque é assim que você garante que cada resumo corresponde ao `n` que está escrito ao lado dele.
 :::
 
 # Entrega

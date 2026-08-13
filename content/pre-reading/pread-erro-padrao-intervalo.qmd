@@ -24,57 +24,55 @@ theme_set(theme_bw(base_size = 12))
 
 # Você tem uma amostra, não duas mil
 
-Uma equipe coleta 20 mexilhões de um costão, mede um por um e calcula a média: 4,9 cm.
+Uma equipe coleta 20 mexilhões de um costão, mede um por um e calcula a média de **4,9 cm**.
 
-Sabemos que esse número não é o comprimento médio do costão. Se outra equipe repetisse o trabalho, chegaria a outro valor, e a coleção dessas respostas possíveis tem uma largura própria. O problema prático é que ninguém repete o trabalho duas mil vezes. Você tem uma coleta, um número, e precisa informar alguma coisa sobre a confiança que ele merece.
+Sabemos que esse número não é o comprimento médio do costão. Se outra equipe repetisse o trabalho, chegaria a outro valor, e a coleção dessas respostas possíveis tem uma largura própria. O problema prático é que ninguém repete o trabalho duas mil vezes. Você tem apenas uma coleta e um número médio, e precisa informar alguma coisa sobre o grau de confiança que tem nesse valor.
 
-A pergunta desta leitura é justamente essa: **como medir o espalhamento de um procedimento que foi executado uma única vez?**
+A pergunta desta leitura é **como medir o espalhamento de um procedimento que foi executado uma única vez?**
 
 # O erro padrão
 
-A saída é surpreendentemente econômica. A própria amostra já contém a informação necessária, e ela se resume em uma conta:
+A saída é extrair da própria amostra a informação necessária, contida na expressão a seguir.
 
-$$EP = \frac{s}{\sqrt{n}}$$
+$$s_{\bar{x}} = \frac{s}{\sqrt{n}}$$
 
 onde $s$ é o desvio-padrão dos valores da amostra e $n$ é o número de unidades amostrais.
 
-Esse número é o **erro padrão da média**, e ele estima o quanto a média variaria se o estudo fosse repetido.
+Esse número é o **erro padrão da média**. Ele estima o quanto a média iria variar se o estudo fosse repetido muitas vezes. O subscrito lembra de qual quantidade estamos medindo o espalhamento, a média $\bar{x}$, e não os indivíduos.
 
-Repare no que a fórmula diz. O erro padrão **cresce** quando os indivíduos variam mais: quanto mais heterogêneo o costão, mais instável a estimativa. E **cai** quando a amostra aumenta, mas cai com a raiz de $n$, o que tem uma consequência prática incômoda: para reduzir a incerteza pela metade é preciso quadruplicar a coleta.
+Repare no que a fórmula diz. O erro padrão **cresce** com o valor de $s$, ou seja, quando os indivíduos variam mais entre si. Portanto, quanto mais heterogêneo o costão, mais instável a estimativa. Por outro lado, o número **cai** quando a amostra $n$ aumenta, proporcionalmente à raiz de $n$. Isso tem uma consequência prática. Para reduzir a incerteza pela metade é preciso quadruplicar a coleta. Deste modo, aumentar ainda mais o tamanho de uma amostra que já é grande tem pouco efeito sobre a redução do $s_{\bar{x}}$.
 
 ::: {.callout-warning appearance="minimal" title="Erro padrão e desvio-padrão medem coisas diferentes"}
 O **desvio-padrão** descreve quanto os mexilhões variam entre si. É uma característica do costão, e não muda quando você coleta mais.
 
-O **erro padrão** descreve quanto a *média de uma amostra* variaria de coleta para coleta. É uma característica do estudo, e encolhe conforme a amostra cresce.
-
-Informar um pelo outro é um erro comum, e ele muda a conclusão por um fator de $\sqrt{n}$.
+O **erro padrão** descreve quanto a *média de uma amostra* variaria de coleta para coleta. É uma característica do estudo, e diminui conforme a amostra cresce.
 :::
 
 # De um número para um intervalo
 
-Se a média de uma amostra quase nunca acerta o valor da população, informar só a média é informar pouco. É mais honesto informar uma **faixa** de valores compatíveis com o que foi observado.
+Se a média de uma amostra quase nunca acerta o valor da população, informar só a média não é suficiente. É necessário informar também uma **faixa** de valores que seja compatível com o que foi observado.
 
-É isso que faz um **intervalo de confiança**: em vez de "a média é 4,9 cm", ele diz algo como "a média está entre 4,5 e 5,3 cm". O intervalo se constrói a partir da média e do erro padrão,
+O **intervalo de confiança** tem esse papel e pode ser calculado pela expressão a seguir.
 
-$$\bar{x} \pm t \times EP$$
+$$IC = \bar{x} \pm t \times s_{\bar{x}}$$
 
-e portanto encolhe quando a amostra cresce e alarga quando os indivíduos variam mais. Falta explicar de onde sai o multiplicador $t$, que depende do nível de confiança escolhido e do tamanho da amostra.
+Assim, o $IC$ encolhe quando a amostra cresce e se alarga quando os indivíduos variam mais. Falta explicar o que significa o multiplicador $t$, que depende do nível de confiança escolhido e do tamanho da amostra.
 
-## Por que aparece a distribuição t?
+## O que é a distribuição t?
 
-Se o desvio-padrão populacional $\sigma$ fosse conhecido, a média padronizada seguiria a distribuição normal e o intervalo seria $\bar{x}\pm z_{1-\alpha/2}\sigma/\sqrt n$. Essa situação é rara em estudos novos. Na prática substituímos $\sigma$ pelo desvio-padrão amostral $s$, e essa segunda estimativa introduz uma incerteza adicional, sobretudo em amostras pequenas. Usar $z$ enquanto se substitui $\sigma$ por $s$ ignora essa incerteza e produz intervalos estreitos demais.
+Se o desvio-padrão populacional $\sigma$ fosse conhecido, a média padronizada seguiria a distribuição normal e o intervalo seria $\bar{x}\pm z_{1-\alpha/2}\sigma/\sqrt n$. Na prática, substituímos $\sigma$ pelo desvio-padrão amostral $s$, e essa segunda estimativa introduz uma incerteza adicional, sobretudo em amostras pequenas. Usar $z$ enquanto se substitui $\sigma$ por $s$ ignora essa incerteza e produz intervalos estreitos demais.
 
-A distribuição **t de Student** existe justamente para incorporá-la, por meio de caudas mais largas que as da normal. Para uma amostra de $n$ unidades, os graus de liberdade são $gl=n-1$. Perdemos um grau de liberdade porque os desvios em relação à média amostral precisam somar zero. Com poucos graus de liberdade, o valor crítico t é maior e o intervalo fica mais largo. Conforme $n$ cresce, $s$ se estabiliza e a distribuição t se aproxima da normal.
+A distribuição **t de Student** existe para incorporar essa incerteza adicional, por meio de caudas mais largas que as da distribuição normal, como mostra a @fig-normal-t. Para uma amostra de $n$ unidades, os graus de liberdade são $gl=n-1$. Perdemos um grau de liberdade porque os desvios em relação à média amostral precisam somar zero. Com poucos graus de liberdade, o intervalo fica mais largo. Conforme $n$ cresce, $s$ se estabiliza e a distribuição t se aproxima da normal.
 
 ```{r}
 #| echo: false
 #| label: fig-normal-t
 #| fig-cap: "Densidades normal padrão e t de Student. Com poucos graus de liberdade, a t concentra mais probabilidade nas caudas."
-#| fig-alt: "Curvas simétricas centradas em zero. A t com três graus de liberdade tem pico mais baixo e caudas mais largas; com dez e trinta graus de liberdade aproxima-se da curva normal."
+#| fig-alt: "Curvas simétricas centradas em zero. A t com três graus de liberdade tem pico mais baixo e caudas mais largas. Com dez e trinta graus de liberdade, aproxima-se da curva normal."
 #| fig-height: 4
 grade <- crossing(
   x = seq(-4, 4, length.out = 600),
-  distribuicao = c("Normal", "t, gl = 3", "t, gl = 10", "t, gl = 30")
+  distribuicao = c("Normal (z)", "t, gl = 3", "t, gl = 10", "t, gl = 30")
 ) |>
   mutate(
     densidade = case_when(
@@ -90,56 +88,144 @@ ggplot(grade, aes(x = x, y = densidade, colour = distribuicao)) +
   labs(x = "Valor padronizado", y = "Densidade", colour = NULL)
 ```
 
-A curva com três graus de liberdade tem pico mais baixo e caudas mais pesadas; com trinta, já é quase indistinguível da normal. Convém lembrar que uma densidade não atribui probabilidade a um ponto isolado: probabilidades são áreas sob a curva. No intervalo bilateral, $t_{1-\alpha/2,n-1}$ deixa área $\alpha/2$ em cada cauda e área $1-\alpha$ entre os dois valores críticos.
+Na @fig-normal-t, a curva com três graus de liberdade tem pico mais baixo e caudas mais longas, enquanto a curva com trinta graus de liberdade é quase indistinguível da normal. Convém lembrar que uma densidade não atribui probabilidade a um ponto isolado. Probabilidades são áreas sob a curva. No intervalo bilateral, $t_{1-\alpha/2,n-1}$ deixa área $\alpha/2$ em cada cauda e área $1-\alpha$ entre os dois valores críticos.
 
-Com isso, a fórmula geral do intervalo bilateral de confiança $100(1-\alpha)\%$ para a média fica completa:
+Com isso, a fórmula geral do intervalo bilateral de confiança $100(1-\alpha)\%$ para a média fica completa.
 
 $$
 \bar{x}\pm t_{1-\alpha/2,\,n-1}\frac{s}{\sqrt{n}}.
 $$
 
-O termo à direita de $\bar{x}$ é a **margem de erro**. Em 95% de confiança, $\alpha=0,05$ e cada cauda da distribuição fica com 0,025. A largura total do intervalo é duas vezes a margem de erro.
+O termo à direita de $\bar{x}$ é a **margem de erro** $E = t_{1-\alpha/2,\,n-1}\frac{s}{\sqrt{n}}$. Em um intervalo de 95% de confiança, $\alpha=0,05$ e cada cauda da distribuição fica com 0,025. A largura total do intervalo é duas vezes a margem de erro.
 
-## O cálculo, termo a termo
+Para fixar essas ideias com números concretos, considere uma amostra de $n=10$ observações ($gl=9$) e um intervalo de 95% de confiança ($\alpha=0,05$). A @fig-t-critico mostra os valores críticos $\pm t_{0{,}975,\,9}$, que dividem a densidade em três áreas. A região central concentra 95% da probabilidade, e as duas caudas ficam com 2,5% cada uma.
+
+```{r}
+#| echo: false
+#| label: fig-t-critico
+#| fig-cap: "Distribuição t de Student com gl = 9 (n = 10) para um intervalo de 95% de confiança. As linhas tracejadas marcam os valores críticos ±t. A área central sombreada corresponde a 1 - α = 0,95, e cada cauda sombreada corresponde a α/2 = 0,025."
+#| fig-alt: "Curva de densidade t com nove graus de liberdade. Duas linhas verticais tracejadas marcam os valores críticos aproximadamente -2,262 e 2,262. A região central entre essas linhas está sombreada em cinza e soma 0,95 de área. As duas caudas além das linhas estão sombreadas em azul e somam 0,05 de área no total, 0,025 em cada uma."
+#| fig-height: 4
+gl <- 9
+alfa <- 0.05
+t_critico <- qt(1 - alfa / 2, df = gl)
+
+curva_t <- tibble(x = seq(-4, 4, length.out = 600)) |>
+  mutate(densidade = dt(x, df = gl))
+
+cauda_esq <- curva_t |> filter(x <= -t_critico)
+cauda_dir <- curva_t |> filter(x >= t_critico)
+centro <- curva_t |> filter(x >= -t_critico, x <= t_critico)
+
+rotulo_t <- gsub("\\.", ",", sprintf("%.3f", t_critico))
+
+ggplot(curva_t, aes(x = x, y = densidade)) +
+  geom_ribbon(data = centro, aes(ymin = 0, ymax = densidade, fill = "Centro (1 - α = 0,95)")) +
+  geom_ribbon(data = cauda_esq, aes(ymin = 0, ymax = densidade, fill = "Cauda (α/2 = 0,025)")) +
+  geom_ribbon(data = cauda_dir, aes(ymin = 0, ymax = densidade, fill = "Cauda (α/2 = 0,025)")) +
+  geom_line(linewidth = 0.7) +
+  geom_vline(xintercept = c(-t_critico, t_critico), linetype = "dashed") +
+  annotate("text", x = 0, y = max(curva_t$densidade) * 0.5,
+           label = "1 - α = 0,95", size = 4) +
+  annotate("text", x = -(t_critico + 4) / 2, y = 0.05,
+           label = "α/2 = 0,025", size = 3.5) +
+  annotate("text", x = (t_critico + 4) / 2, y = 0.05,
+           label = "α/2 = 0,025", size = 3.5) +
+  scale_x_continuous(
+    breaks = c(-4, -t_critico, 0, t_critico, 4),
+    labels = c("-4", paste0("-", rotulo_t), "0", rotulo_t, "4")
+  ) +
+  scale_fill_manual(values = c(
+    "Centro (1 - α = 0,95)" = "grey85",
+    "Cauda (α/2 = 0,025)" = "steelblue"
+  )) +
+  labs(x = "Valor de t", y = "Densidade", fill = NULL) +
+  theme(legend.position = "bottom")
+```
+
+::: {.callout-tip appearance="minimal" title="Intervalos unilaterais"}
+Em intervalos **bilaterais**, como o exposto anteriormente, a incerteza é dividida em duas caudas iguais, e o valor crítico $t_{1-\alpha/2,\,gl}$ deixa $\alpha/2$ de área em cada lado, como na @fig-t-critico.
+
+Um intervalo pode ser definido como **unilateral**, concentrando toda a área $\alpha$ em uma única cauda. Isso muda dois elementos da @fig-t-critico. O valor crítico passa a ser $t_{1-\alpha,\,gl}$, menor do que $t_{1-\alpha/2,\,gl}$, porque a mesma probabilidade $\alpha$ agora está de um só lado. Além disso, o intervalo perde um dos limites e se torna $(-\infty,\ \bar x + t_{1-\alpha,\,gl}\,s_{\bar{x}}]$ ou $[\bar x - t_{1-\alpha,\,gl}\,s_{\bar{x}},\ +\infty)$, conforme o lado escolhido.
+
+Para o exemplo com $gl=9$ e $\alpha=0,05$, no caso bilateral $t_{0{,}975,9}\approx 2,262$, enquanto no caso unilateral $t_{0{,}95,9}\approx 1,833$, com toda a área concentrada de um só lado, como na @fig-t-unilateral.
+
+```{r}
+#| echo: false
+#| label: fig-t-unilateral
+#| fig-cap: "Distribuição t de Student com gl = 9 (n = 10) para um intervalo unilateral de 95% de confiança. A linha tracejada marca o valor crítico t. A área à esquerda corresponde a 1 - α = 0,95, e a cauda à direita corresponde a α = 0,05."
+#| fig-alt: "Curva de densidade t com nove graus de liberdade. Uma única linha vertical tracejada marca o valor crítico aproximadamente 1,833. A região à esquerda dessa linha está sombreada em cinza e soma 0,95 de área. A cauda à direita está sombreada em azul e soma 0,05 de área."
+#| fig-height: 4
+gl <- 9
+alfa <- 0.05
+t_critico_uni <- qt(1 - alfa, df = gl)
+
+curva_t_uni <- tibble(x = seq(-4, 4, length.out = 600)) |>
+  mutate(densidade = dt(x, df = gl))
+
+area_esq <- curva_t_uni |> filter(x <= t_critico_uni)
+cauda_dir <- curva_t_uni |> filter(x >= t_critico_uni)
+
+rotulo_t_uni <- gsub("\\.", ",", sprintf("%.3f", t_critico_uni))
+
+ggplot(curva_t_uni, aes(x = x, y = densidade)) +
+  geom_ribbon(data = area_esq, aes(ymin = 0, ymax = densidade, fill = "Área (1 - α = 0,95)")) +
+  geom_ribbon(data = cauda_dir, aes(ymin = 0, ymax = densidade, fill = "Cauda (α = 0,05)")) +
+  geom_line(linewidth = 0.7) +
+  geom_vline(xintercept = t_critico_uni, linetype = "dashed") +
+  annotate("text", x = 0, y = max(curva_t_uni$densidade) * 0.5,
+           label = "1 - α = 0,95", size = 4) +
+  annotate("text", x = (t_critico_uni + 4) / 2, y = 0.05,
+           label = "α = 0,05", size = 3.5) +
+  scale_x_continuous(
+    breaks = c(-4, 0, t_critico_uni, 4),
+    labels = c("-4", "0", rotulo_t_uni, "4")
+  ) +
+  scale_fill_manual(values = c(
+    "Área (1 - α = 0,95)" = "grey85",
+    "Cauda (α = 0,05)" = "steelblue"
+  )) +
+  labs(x = "Valor de t", y = "Densidade", fill = NULL) +
+  theme(legend.position = "bottom")
+```
+:::
+
+## O cálculo do intervalo de confiança
 
 Vale executar a fórmula uma vez de maneira explícita, porque cada linha do código corresponde a um dos elementos discutidos acima.
 
 ```{r}
 #| code-fold: true
-#| code-summary: "Ver o cálculo do intervalo em R"
+#| code-summary: "Cálculo do intervalo de confiança em R"
 comprimentos <- c(4.2, 5.0, 5.1, 4.7, 5.4, 4.8, 5.3, 4.9)
 n <- length(comprimentos)
 media <- mean(comprimentos)
 erro_padrao <- sd(comprimentos) / sqrt(n)
 critico <- qt(0.975, df = n - 1)
-
+margem_de_erro = critico * erro_padrao
 c(
   media = media,
-  inferior = media - critico * erro_padrao,
-  superior = media + critico * erro_padrao
+  margem_de_erro = margem_de_erro,
+  ic_inferior = media - margem_de_erro,
+  ic_superior = media + margem_de_erro
 )
 ```
 
-Nesse exemplo, $n=8$ e $gl=7$. O código calcula $\bar x$, depois $s/\sqrt n$, consulta o quantil de t e finalmente soma e subtrai a margem. O comando `t.test(comprimentos)$conf.int` aplica exatamente a mesma lógica; a conta manual é útil porque deixa visível o papel separado de variabilidade, tamanho amostral e nível de confiança. Alterar `0.975` para `0.95` produziria um intervalo bilateral de 90%, pois sobrariam 5% em cada cauda. Alterar apenas o número sem repensar a área é uma fonte comum de erro.
+Nesse exemplo, $n=8$ e $gl=7$. O código calcula $\bar x$, depois $s/\sqrt n$, consulta o quantil de t e finalmente soma e subtrai a margem. O comando `t.test(comprimentos)$conf.int` aplica exatamente a mesma lógica. A conta manual é útil porque deixa visível o papel separado de variabilidade, tamanho amostral e nível de confiança. Alterar `0.975` para `0.95` produziria um intervalo bilateral de 90%, pois sobrariam 5% em cada cauda. Alterar apenas o número sem repensar a área é uma fonte comum de erro.
 
-## Compatibilidade e intervalos unilaterais
+# O que o intervalo a 95% significa?
 
-Obtido o intervalo, resta saber o que ele afirma. Os valores dentro dele são aqueles que não entram em conflito forte com a amostra sob o modelo adotado. Isso não significa que todos sejam igualmente plausíveis nem que valores externos sejam impossíveis. A fronteira depende de uma convenção de cobertura, do erro padrão e dos pressupostos.
+O intervalo de confiança é um **procedimento** que, aplicado repetidamente, tem como objetivo acertar os limites da média populacional $\mu$ com uma probabilidade conhecida.
 
-Intervalos unilaterais respondem a perguntas diferentes. Um limite inferior de 95% usa $\bar x-t_{0,95,n-1}EP$ e se estende até infinito; ele é adequado quando apenas estabelecer um mínimo tem significado científico. A escolha entre unilateral e bilateral deve ocorrer antes de olhar os dados, não depois de observar em qual direção ficou a média.
-
-# O que os 95% prometem
-
-Aqui está o ponto que exige mais cuidado de toda a leitura. O intervalo não é uma promessa sobre a sua amostra específica: é um **procedimento** que, aplicado repetidamente, acerta em uma proporção conhecida das vezes.
-
-Para enxergar isso, vale fazer o que não se pode fazer na vida real: inventar um costão cujo comprimento médio sabemos ser exatamente 5 cm, repetir a coleta cem vezes e olhar os cem intervalos.
+Para ilustrar isso, vale fazer uma simulação computacional que não seria possível reproduzir na vida real. Vamos inventar um costão cujo comprimento médio de mexilhões seja $\mu = 5$ cm, com desvio padrão $\sigma = 1$ cm, repetir a coleta cem vezes, calcular o intervalo de 95% de confiança para cada uma das cem coletas e comparar os limites de cada intervalo com o valor de $\mu$.
 
 ```{r}
 #| echo: false
 #| label: fig-cobertura
 #| fig-cap: "Intervalos de 95% calculados em 100 amostras de 20 mexilhões cada. A linha vertical é a média real da população (5 cm). Em laranja, os intervalos que não a contêm."
-#| fig-alt: "Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros; alguns, destacados em laranja, ficam inteiramente de um dos lados."
+#| fig-alt: "Cem segmentos horizontais empilhados, cada um representando um intervalo de confiança. A grande maioria cruza a linha vertical em 5 centímetros. Alguns, destacados em laranja, ficam inteiramente de um dos lados."
 #| fig-height: 5
+set.seed(6)
 amostras <- tibble(
   id = rep(1:100, each = 20),
   valor = rnorm(100 * 20, mean = 5, sd = 1)
@@ -174,35 +260,37 @@ ggplot(intervalos, aes(y = id, x = media, colour = cobre)) +
 n_falhas <- sum(intervalos$cobre == "não contém")
 ```
 
-Nesta simulação, o número de intervalos que **não** contêm o valor real foi `r n_falhas`, de 100. Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população. É por isso que o procedimento se chama "intervalo de 95% de confiança".
+Note na @fig-cobertura que, na maior parte das vezes em que calculamos o intervalo de confiança para uma determinada coleta, o valor verdadeiro da população está abrangido entre os limites superior e inferior, o que está ilustrado em <span style="color: #0072B2;">azul</span>. Alguns intervalos (<span style="color: #D55E00;">laranja</span>), no entanto, estão acima ou abaixo de $\mu$. Nesta simulação, o número de intervalos que **não** contêm o valor real foi `r n_falhas`, de 100. Se repetíssemos isso indefinidamente, cerca de 95% dos intervalos conteriam a média da população, e 5% não a conteriam. É por isso que o procedimento se chama "intervalo de 95% de confiança".
 
-Os intervalos laranja não foram calculados de forma diferente dos azuis. Ninguém errou a medição neles. Eles são a fração de coletas que, pelo sorteio, caiu longe demais do centro.
+::: {.callout-warning appearance="minimal" title="A confiança é do procedimento amostral"}
 
-::: {.callout-warning appearance="minimal" title="A confiança é do procedimento, não do intervalo"}
-Com uma amostra só, **você nunca sabe se está em um intervalo azul ou laranja**.
+Com uma amostra só, **você nunca sabe com certeza se seu intervalo abrange ou não a média populacional**.
 
-Por isso a frase "há 95% de probabilidade de a média estar neste intervalo" não descreve o que foi calculado. O que se sabe é a taxa de acerto do método quando ele é usado repetidamente.
+Os intervalos laranja não resultam de um erro de procedimento. São simplesmente consequência de uma amostra particular, obtida a partir de um conjunto populacional maior que, por acaso, contém unidades muito distantes da média populacional. O objetivo do intervalo de confiança é justamente nos dar, de forma deliberada, uma **medida de incerteza** conhecida. Assim, ao calculá-lo, podemos dizer que nosso intervalo particular tem uma probabilidade de 95% de abranger a média populacional que queremos estimar.
+
 :::
 
-Essa propriedade explica por que o intervalo merece ser informado junto com a média. Um intervalo estreito e um intervalo largo em torno do mesmo valor dizem coisas muito diferentes sobre o que o estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa apenas a estimativa pontual. Um intervalo largo não é um resultado ruim: é um resultado honesto sobre um estudo pequeno ou sobre uma população heterogênea. O que seria ruim é apresentar a média sozinha e deixar quem lê supor uma precisão que os dados não têm.
+A média amostral nos dá uma estimativa **pontual**, enquanto o intervalo de confiança nos dá uma estimativa **intervalar**. Um intervalo estreito e um intervalo largo em torno do mesmo valor dizem coisas muito diferentes sobre o que o estudo conseguiu estabelecer, e nenhuma delas aparece quando se informa apenas a estimativa pontual. Um intervalo largo não é um resultado ruim. É apenas um resultado honesto sobre um estudo pequeno ou sobre uma população muito heterogênea.
 
-# O que determina a largura
+# Antecipando a precisão desejada
 
-Se a largura carrega tanta informação, convém saber o que a controla. Há três maneiras de alterá-la. Aumentar o nível de confiança exige um valor crítico maior e alarga o intervalo. Aumentar a variabilidade $s$ aumenta o erro padrão. Aumentar $n$ estreita o intervalo, mas com retorno decrescente por causa de $\sqrt{n}$.
+Convém saber o que controla a largura do intervalo. Sua expressão mostra que há três maneiras de reduzi-lo. A primeira é reduzir o valor crítico de t, o que reduz o nível de confiança. A segunda é aumentar $n$, o que estreita o intervalo proporcionalmente a $\sqrt{n}$. A terceira é reduzir o desvio padrão amostral $s$, o que reduz o erro padrão.
 
-Essas três relações permitem inverter o problema e planejar a coleta. Se desejamos uma margem de erro máxima $E$ e temos uma estimativa prévia de $\sigma$, um primeiro planejamento usa
+Dessas três, somente as duas primeiras estão sob o controle do pesquisador, que pode definir tanto o valor crítico que deseja adotar quanto o tamanho $n$ da amostra. A magnitude do desvio padrão é uma propriedade das unidades amostrais, no exemplo dos mexilhões, uma propriedade dos comprimentos individuais.
+
+Sabendo disso, podemos inverter o problema e **planejar a coleta**. Se desejamos uma margem de erro $E$ e temos uma estimativa prévia de $\sigma$, um primeiro planejamento usaria a expressão a seguir.
 
 $$
 n\approx\left(\frac{z_{1-\alpha/2}\sigma}{E}\right)^2,
 $$
 
-arredondando sempre para cima. O valor de $\sigma$ pode vir de literatura comparável ou de um estudo piloto. A fórmula supõe observações independentes e funciona como ponto de partida; perdas, desenho por conglomerados e população finita precisam ser considerados no plano real.
+para pré-determinar o tamanho amostral necessário para atingir essa margem de erro. O valor de $\sigma$ pode vir de literatura comparável ou de um estudo piloto. A fórmula supõe observações independentes e funciona como ponto de partida para entender valores de $n$ desejáveis e possíveis de se obter na prática.
 
 ```{r}
 #| echo: false
 #| label: fig-planejamento
 #| fig-cap: "Margem de erro planejada em função do tamanho da amostra para dois desvios-padrão e dois níveis de confiança."
-#| fig-alt: "Quatro curvas decrescentes. Maior desvio-padrão e maior confiança produzem margens mais altas; todas caem rapidamente no início e depois mais devagar."
+#| fig-alt: "Quatro curvas decrescentes. Maior desvio-padrão e maior confiança produzem margens mais altas. Todas caem rapidamente no início e depois mais devagar."
 #| fig-height: 4.5
 planejamento <- crossing(
   n = 5:200,
@@ -223,23 +311,23 @@ ggplot(planejamento, aes(x = n, y = margem, colour = variabilidade,
        colour = "Variabilidade", linetype = "Confiança")
 ```
 
-Todas as curvas caem rapidamente no início e depois quase estacionam, o que mostra graficamente o retorno decrescente de $\sqrt{n}$. Um exemplo numérico fecha o raciocínio: com $\sigma=1{,}4$ cm, confiança de 95% e margem desejada de 0,25 cm, a fórmula fornece $n\approx(1{,}96\times1{,}4/0{,}25)^2=120{,}5$, portanto planejamos pelo menos 121 unidades. Se o estudo piloto tiver poucas unidades, sua estimativa de $\sigma$ também é incerta; uma escolha prudente usa valor conservador e acrescenta margem para perdas.
+Na @fig-planejamento, todas as curvas caem rapidamente no início e depois quase estacionam. Por exemplo, com $\sigma=1{,}4$ cm, confiança de 95% e margem de erro desejada de 0,25 cm, a fórmula fornece $n\approx(1{,}96\times1{,}4/0{,}25)^2=120{,}5$, portanto planejamos pelo menos 121 unidades. Se o estudo piloto tiver poucas unidades, sua estimativa de $\sigma$ também é incerta e uma escolha prudente seria testar valores de $\sigma$ acima e abaixo para entender o efeito sobre o $n$ a ser adotado.
 
-Quando a amostra representa fração grande de uma população finita, a correção populacional pode reduzir o tamanho necessário. Em conglomerados, ocorre o contrário: a semelhança entre unidades do mesmo grupo aumenta o tamanho exigido. Planejamento não é apenas aplicar uma fórmula; é alinhar precisão, desenho e recursos disponíveis.
+Quando a amostra representa fração grande de uma população finita, a correção populacional pode reduzir o tamanho necessário. Quando fazemos amostragem por conglomerados (por exemplo, sorteando algumas praias e aumentando o número de unidades em cada uma), ocorre o contrário. A semelhança entre unidades do mesmo grupo aumenta o tamanho $n$ exigido. A estratégia de amostragem e de seleção das unidades, portanto, têm efeito sobre a precisão do experimento e precisam ser consideradas no planejamento.
 
 # Quando o procedimento é confiável
 
-Toda essa construção repousa sobre pressupostos, e vale saber quais são. O intervalo t para a média supõe unidades independentes, seleção compatível com a população de interesse e ausência de distorções graves. Com amostras pequenas, assimetria forte e valores extremos podem comprometer a cobertura efetiva. Com amostras maiores, o Teorema Central do Limite torna o procedimento mais robusto, mas não corrige viés de seleção, pseudorreplicação nem erro sistemático de medição.
+Toda essa construção repousa sobre pressupostos. O intervalo t para a média, por exemplo, supõe unidades independentes, seleção compatível com a população de interesse e ausência de distorções graves. Com amostras pequenas, assimetria forte e valores extremos podem comprometer a cobertura efetiva. Com amostras maiores, o Teorema Central do Limite torna o procedimento mais robusto, mas não corrige viés de seleção, pseudorreplicação nem erro sistemático de medição.
 
-Antes de interpretar um intervalo, portanto, convém verificar se a população está definida e a amostra a representa, se a independência vale no nível correto, se a unidade de análise é coerente com o desenho, se a forma da distribuição é compatível com o tamanho amostral, se valores extremos foram investigados e se a estimativa de variabilidade corresponde ao plano de coleta. Nenhum desses pontos é verificado pela fórmula: intervalos tratam da incerteza amostral sob um modelo, não ampliam a população representada pela amostra e não substituem a avaliação do delineamento.
+Antes de interpretar um intervalo, portanto, convém verificar se a população está definida e a amostra a representa, se as unidades são coerentes com o desenho adotado e se são selecionadas de forma independente, se o formato da distribuição é altamente assimétrico, qual é o efeito de valores extremos e se a estimativa de variabilidade é coerente. Planejar um experimento passa por compreender como esses elementos interferem na precisão e acurácia do estudo.
 
-Há ainda uma distinção que costuma passar despercebida, entre **intervalo de confiança da média** e **intervalo de previsão para uma unidade**. O primeiro estima um centro populacional e encolhe com $n$. O segundo precisa incluir a variação dos próprios indivíduos e, por isso, é muito mais largo. Confundir os dois transforma uma afirmação precisa sobre uma média em uma previsão excessivamente otimista sobre o próximo organismo.
+Há ainda uma distinção que costuma passar despercebida entre **intervalo de confiança da média** e **intervalo de previsão para uma unidade**. O primeiro estima um centro populacional e encolhe com $n$. O segundo precisa incluir a variação dos próprios indivíduos e, por isso, é muito mais largo. Confundir os dois transforma uma afirmação precisa sobre uma média em uma previsão excessivamente otimista sobre o próximo organismo.
 
-A pergunta inicial pedia medir o espalhamento de um procedimento executado uma única vez. A resposta tem duas partes. O erro padrão traduz a variabilidade observada na amostra em variabilidade esperada da estimativa; o intervalo transforma esse número em uma faixa cuja taxa de acerto é conhecida a longo prazo. Nenhuma das duas descreve o costão diretamente: as duas descrevem a qualidade do procedimento com que o estudamos.
+A pergunta inicial pedia que medíssemos o espalhamento de um procedimento executado uma única vez. Esse espalhamento depende do erro padrão que traduz a variabilidade observada na amostra em variabilidade esperada da estimativa e do intervalo de confiança, que transforma esse número em uma faixa cuja taxa de acerto é conhecida a longo prazo.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
-- [Probabilidades na distribuição normal](https://fcopf.github.io/mead/content/distribuicao-normal/distribuicao-normal-probabilidade.html){target="_blank"} (MEAD)
-- [O modelo bayesiano: outra forma de expressar incerteza](https://fcopf.github.io/mead/content/intro-bayes/intro-bayes-modelo-bayesiano.html){target="_blank"} (MEAD)
+- [Distribuição das médias amostrais](https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html){target="_blank"}
+- [Estimando a média populacional](https://fcopf.github.io/mead/content/inferencia-estatistica/int-conf.html){target="_blank"}
 :::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}

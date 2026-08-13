@@ -21,7 +21,7 @@ format:
 
 A [leitura desta semana](../pre-reading/pread-replicacao-unidades.qmd) mostrou que peixes do mesmo tanque não são réplicas e que a análise deve ser feita no nível da unidade experimental. Você viu a estrutura do problema.
 
-O que a leitura não mediu é o **preço** de errar esse nível. Hoje você vai medir duas coisas: com que frequência a análise errada anuncia um efeito que não existe, e de que depende, afinal, o erro padrão da análise correta.
+O que a leitura não mediu é o **preço** de errar esse nível. Hoje você vai medir duas coisas, com que frequência a análise errada anuncia um efeito que não existe e de que depende, afinal, o erro padrão da análise correta.
 
 O objetivo em R é escrever uma **função** e repetir um experimento inteiro centenas de vezes.
 
@@ -40,7 +40,7 @@ library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 ```
 
-Duas dietas para juvenis de robalo. Oito tanques: quatro recebem a dieta comum, quatro a enriquecida. Quinze peixes em cada tanque. Cento e vinte medidas de comprimento, e a dieta sorteada **oito vezes**.
+Duas dietas para juvenis de robalo, em oito tanques, dos quais quatro recebem a dieta comum e quatro a enriquecida. Quinze peixes em cada tanque. Cento e vinte medidas de comprimento, e a dieta sorteada **oito vezes**.
 
 Vamos construir esse experimento no computador, em dois passos, para saber exatamente qual é a verdade. Primeiro cada tanque recebe o seu próprio desvio:
 
@@ -59,9 +59,9 @@ tanques <- tibble(
 tanques
 ```
 
-Repare que **`efeito_dieta` vale zero**: as duas dietas são idênticas. Toda diferença entre tanques vem do `rnorm()` da última linha, ou seja, do acaso de cada tanque.
+Repare que **`efeito_dieta` vale zero**, ou seja, as duas dietas são idênticas. Toda diferença entre tanques vem do `rnorm()` da última linha, ou seja, do acaso de cada tanque.
 
-Agora os peixes, sorteados em torno da média do seu tanque:
+Agora os peixes, sorteados em torno da média do seu tanque, aparecem na @fig-replicacao-tanques:
 
 ```{r}
 #| label: fig-replicacao-tanques
@@ -78,7 +78,7 @@ ggplot(peixes, aes(x = factor(tanque), y = comprimento, colour = dieta)) +
   labs(x = "Tanque", y = "Comprimento (cm)", colour = "Dieta")
 ```
 
-`slice(rep(1:8, each = 15))` repete cada linha de tanque 15 vezes, criando 15 peixes por tanque, e `n()` devolve o número de linhas da tabela naquele momento — aqui, 120.
+`slice(rep(1:8, each = 15))` repete cada linha de tanque 15 vezes, criando 15 peixes por tanque, e `n()` devolve o número de linhas da tabela naquele momento, aqui 120.
 
 # Duas análises dos mesmos peixes
 
@@ -103,7 +103,7 @@ medias_tanque <- peixes |>
   summarise(media = mean(comprimento), .groups = "drop")
 ```
 
-Com as duas tabelas em mãos, aplicamos a **mesma** conta da Prática 03 — erro padrão e intervalo de 95% — em cada uma delas:
+Com as duas tabelas em mãos, aplicamos a **mesma** conta da Prática 03, com erro padrão e intervalo de 95%, em cada uma delas:
 
 ```{r}
 por_peixe <- peixes |>
@@ -126,12 +126,12 @@ bind_rows(por_peixe, por_tanque) |>
 ::: {.callout-tip appearance="minimal" title="Observe"}
 As duas análises descrevem exatamente os mesmos peixes e prometem precisões muito diferentes. Compare a coluna `ep` das duas.
 
-E lembre que `efeito_dieta` é zero: qualquer separação entre as dietas, aqui, é acaso.
+E lembre que `efeito_dieta` é zero, portanto qualquer separação entre as dietas, aqui, é acaso.
 :::
 
 # Com que frequência cada análise dá um alarme falso?
 
-Um experimento só não decide nada: cada execução sorteia tanques diferentes. A pergunta certa é sobre o comportamento **a longo prazo** de cada análise.
+Um experimento só não decide nada, porque cada execução sorteia tanques diferentes. A pergunta certa é sobre o comportamento **a longo prazo** de cada análise.
 
 Como a dieta não faz nada, sempre que os dois intervalos de uma análise **não se sobrepõem** nós anunciaríamos uma diferença que não existe. Vamos medir com que frequência isso acontece.
 
@@ -144,7 +144,7 @@ limites <- function(valores) {
 separados <- function(a, b) limites(a)[1] > limites(b)[2] || limites(b)[1] > limites(a)[2]
 ```
 
-`function()` cria um comando novo: os nomes entre parênteses são os valores que ele recebe e a última linha é o que ele devolve. `limites()` guarda a conta da Prática 03; `separados()` responde `TRUE` quando os dois intervalos não se tocam.
+`function()` cria um comando novo, em que os nomes entre parênteses são os valores que ele recebe e a última linha é o que ele devolve. `limites()` guarda a conta da Prática 03, e `separados()` responde `TRUE` quando os dois intervalos não se tocam.
 
 ```{r}
 alarmes <- replicate(300, {
@@ -206,15 +206,15 @@ bind_rows(ep_medio(15), ep_medio(50), ep_medio(150))
 ::: {.callout-tip appearance="minimal" title="Interprete"}
 Leia a tabela coluna a coluna. `ep_peixes` cai quando se mede mais peixes por tanque. `ep_tanques` praticamente não se move.
 
-Ou seja: `ep_tanques` **não depende** de quantos peixes foram medidos. De que ele depende, então? O bloco seguinte pede que você descubra.
+Ou seja, `ep_tanques` **não depende** de quantos peixes foram medidos. De que ele depende, então? O bloco seguinte pede que você descubra.
 :::
 
 # Sua vez
 
-Em toda a função `ep_medio()`, o número de tanques está fixo em **8**. Ele aparece em quatro lugares: duas vezes como `1:8`, uma vez dentro de `rnorm(8, ...)` e uma vez em `sqrt(8)`.
+Em toda a função `ep_medio()`, o número de tanques está fixo em **8**. Ele aparece em quatro lugares, sendo duas vezes como `1:8`, uma vez dentro de `rnorm(8, ...)` e uma vez em `sqrt(8)`.
 
 ::: {.callout-tip appearance="minimal" title="Adapte a função"}
-Reescreva a função para que ela receba **dois** valores: o número de peixes por tanque e o número de tanques.
+Reescreva a função para que ela receba **dois** valores, o número de peixes por tanque e o número de tanques.
 
 ```r
 ep_medio2 <- function(m, k) {
@@ -222,7 +222,7 @@ ep_medio2 <- function(m, k) {
 }
 ```
 
-Confira se funcionou: `ep_medio2(15, 8)` deve devolver números parecidos com os da linha de 15 peixes da tabela anterior. Acrescente também `k` ao vetor de saída, para que a tabela mostre quantos tanques foram usados.
+Para conferir se funcionou, `ep_medio2(15, 8)` deve devolver números parecidos com os da linha de 15 peixes da tabela anterior. Acrescente também `k` ao vetor de saída, para que a tabela mostre quantos tanques foram usados.
 :::
 
 ::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}

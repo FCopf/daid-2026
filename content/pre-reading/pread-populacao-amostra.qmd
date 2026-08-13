@@ -26,7 +26,7 @@ theme_set(theme_bw(base_size = 12))
 
 Uma equipe percorre o litoral e registra, em 45 estações distribuídas por nove praias, quantas espécies de invertebrados encontra em cada uma. Ao fim, a planilha tem 45 linhas.
 
-O foco do relatório, no entanto, não é sobre essas 45 estações. O foco é sobre as praias: quantas espécies uma estação daquele litoral costuma abrigar, se as praias se parecem entre si.
+O foco do relatório, no entanto, não é sobre essas 45 estações. O foco é sobre as praias, isto é, quantas espécies uma estação daquele litoral costuma abrigar e se as praias se parecem entre si.
 
 Se é desta forma, podemos nos perguntar **o que 45 estações permitem dizer sobre um litoral que tem milhares delas?**
 
@@ -40,7 +40,7 @@ A média das 45 estações medidas é um número exato e conhecido. A média de 
 
 Repare que a população não é definida pelos dados, **é definida pela pergunta**. Se a pergunta é sobre aquele litoral, a população são todas as estações do litoral. Se é sobre uma praia específica, a população encolhe, e as 5 estações daquela praia passam a ser a amostra.
 
-Definir a população antes de coletar evita a situação mais desconfortável da análise de dados: descobrir, no fim, que os dados respondem a uma pergunta diferente da que se queria fazer.
+Definir a população antes de coletar evita a situação mais desconfortável da análise de dados, que é descobrir, no fim, que os dados respondem a uma pergunta diferente da que se queria fazer.
 
 Definida a população, a incerteza passa a ser inevitável. Se todas as estações do litoral fossem idênticas, uma única medida bastaria. Como elas variam, cada amostra produz uma resposta um pouco diferente. Isso não é um defeito do levantamento, é a consequência de medir uma parte para falar do todo.
 
@@ -78,7 +78,7 @@ O divisor $n-1$ faz com que $s^2$ seja não enviesado para $\sigma^2$ sob amostr
 
 Vale insistir na diferença entre três conjuntos de valores que costumam ser confundidos. A **distribuição populacional** descreve os valores de todas as unidades da população. A **distribuição da amostra** descreve apenas os valores que entraram em uma coleta, e muda quando o sorteio muda. A **distribuição amostral**, por sua vez, não descreve unidades, descreve os resultados de uma estatística, como $\bar{x}$, quando o desenho de coleta é repetido muitas vezes. A primeira fala das unidades populacionais, a segunda das unidades observadas e a terceira do desempenho de um procedimento.
 
-É essa terceira distribuição que permite avaliar um estimador, porque ela mostra onde as estimativas se concentram e o quanto se espalham. A figura abaixo simula uma região com 450 estações e põe lado a lado a distribuição populacional, no painel de cima, e a distribuição amostral da média para amostras de 45 unidades, no painel de baixo.
+É essa terceira distribuição que permite avaliar um estimador, porque ela mostra onde as estimativas se concentram e o quanto se espalham. A @fig-populacao-estimadores simula uma região com 450 estações e põe lado a lado a distribuição populacional, no painel de cima, e a distribuição amostral da média para amostras de 45 unidades, no painel de baixo.
 
 ```{r}
 #| echo: false
@@ -154,7 +154,7 @@ cadastro_estacoes |>
   slice_sample(n = 15, replace = FALSE)
 ```
 
-O argumento `replace = FALSE` representa amostragem **sem reposição**, em que uma estação sorteada não pode ser novamente selecionada. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma vez. A amostragem com reposição simplifica modelos probabilísticos, mas a amostragem sem reposição descreve melhor muitos levantamentos de campo. Quando $n$ é uma fração pequena de $N$, a diferença entre os dois esquemas é pequena; quando a fração é grande, amostrar sem reposição reduz a incerteza.
+O argumento `replace = FALSE` representa amostragem **sem reposição**, em que uma estação sorteada não pode ser novamente selecionada. Com reposição, a unidade volta ao conjunto e pode ser selecionada mais de uma vez. A amostragem com reposição simplifica modelos probabilísticos, mas a amostragem sem reposição descreve melhor muitos levantamentos de campo. Quando $n$ é uma fração pequena de $N$, a diferença entre os dois esquemas é pequena, mas quando a fração é grande, amostrar sem reposição reduz a incerteza.
 
 ## O algoritmo revela o desenho amostral
 
@@ -164,7 +164,7 @@ Na estratificação proporcional, o tamanho da amostra em cada estrato acompanha
 
 No desenho por conglomerados, o sorteio não recai sobre as unidades individuais, e sim sobre o grupo. Sorteiam-se algumas praias e, dentro de cada uma sorteada, medem-se várias estações. Isso não equivale a uma amostragem aleatória simples de estações, porque medir todas as estações de uma mesma praia não transforma cada uma delas em um sorteio independente de praia, pois todas continuam amarradas ao mesmo sorteio inicial, o da praia.
 
-Os quatro desenhos produzem padrões espaciais visivelmente distintos.
+Os quatro desenhos produzem padrões espaciais visivelmente distintos, como mostra a @fig-desenhos.
 
 ```{r}
 #| echo: false
@@ -212,7 +212,7 @@ Os quatro desenhos custam quantias diferentes e produzem estimativas de qualidad
 
 Suponha que o orçamento permita visitar 15 estações. Podemos sortear **15 estações soltas** por toda a região, ou sortear **3 praias inteiras** e medir as 5 estações de cada uma. Nos dois casos são 15 estações e o mesmo esforço de medição, mas a segunda opção é bem mais barata, envolvendo menos deslocamento e menos dias de viagem.
 
-A figura abaixo repete as duas estratégias duas mil vezes em uma região onde as praias diferem bastante entre si. Como o código descreve a comparação inteira, ele fica disponível para leitura.
+A @fig-estrategias repete as duas estratégias duas mil vezes em uma região onde as praias diferem bastante entre si. Como o código descreve a comparação inteira, ele fica disponível para leitura.
 
 ```{r}
 #| code-fold: true
@@ -264,7 +264,7 @@ sd_soltas <- formata(espalhamento$desvio[1])
 sd_praias <- formata(espalhamento$desvio[2])
 ```
 
-As duas estratégias acertam **em média**: os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de `r sd_soltas` espécies, e as por praias inteiras, de `r sd_praias`.
+As duas estratégias acertam **em média**, porque os dois histogramas estão centrados no valor real. O que muda é a dispersão em torno dele. Nesta simulação, as estimativas por estações soltas variaram com desvio-padrão de `r sd_soltas` espécies, e as por praias inteiras, de `r sd_praias`.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
 As 15 estações de três praias inteiras trazem menos informação que 15 estações espalhadas, apesar de serem o mesmo número de medidas.
@@ -276,7 +276,7 @@ Vale notar o que a simulação não mostra. O desenho por conglomerados perde pr
 
 # Precisão e viés são falhas diferentes
 
-A escolha entre estações soltas e praias inteiras afeta a **precisão**, e a precisão melhora ao coletar mais unidades. Existe um problema diferente, que coletar mais não resolve. Se a equipe visitar apenas as praias de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra deixa de representar a região, e as estimativas passam a errar sistematicamente para o mesmo lado.
+A escolha entre estações soltas e praias inteiras afeta a **precisão**, e a precisão melhora ao coletar mais unidades. Existe, entretanto, um problema diferente, que não é resolvido ao se coletar mais amostras. Se a equipe visitar apenas as praias de acesso fácil, ou apenas as que já sabe serem interessantes, a amostra deixa de representar a região, e as estimativas passam a errar sistematicamente para o mesmo lado.
 
 ::: {.callout-warning appearance="minimal" title="Duas falhas que não se corrigem do mesmo jeito"}
 Uma amostra **imprecisa** produz estimativas espalhadas em torno do valor certo. Mais unidades amostrais resolvem.
@@ -286,7 +286,7 @@ Uma amostra **enviesada** produz estimativas concentradas em torno do valor erra
 
 O sorteio é o que protege contra a segunda falha. Ele não garante uma boa amostra em cada levantamento específico, mas garante que nenhuma característica da região seja sistematicamente favorecida ou excluída.
 
-As duas falhas recebem nomes próprios. **Precisão** descreve o espalhamento das estimativas repetidas, enquanto **acurácia** descreve a proximidade entre elas e o parâmetro. Uma estimativa pode ser muito precisa e pouco acurada quando o desenho repete de modo consistente uma seleção enviesada, e as quatro combinações possíveis aparecem na figura seguinte.
+As duas falhas recebem nomes próprios. **Precisão** descreve o espalhamento das estimativas repetidas, enquanto **acurácia** descreve a proximidade entre elas e o parâmetro. Uma estimativa pode ser muito precisa e pouco acurada quando o desenho repete de modo consistente uma seleção enviesada, e as quatro combinações possíveis aparecem na @fig-acuracia-precisao.
 
 ```{r}
 #| echo: false
@@ -315,7 +315,7 @@ ggplot(resultados, aes(x = estimativa, y = repeticao)) +
   theme_bw(base_size = 11)
 ```
 
-O painel inferior esquerdo é o mais perigoso na prática, pois possui estimativas muito concentradas, e concentradas no lugar errado. Como a média populacional é desconhecida, nenhuma medida interna aos dados evidencia essa situação, porque a amostra é coerente consigo mesma. Só o conhecimento do desenho de coleta revelaria o problema.
+O painel inferior esquerdo da @fig-acuracia-precisao é o mais perigoso na prática, pois possui estimativas muito concentradas, e concentradas no lugar errado. Como a média populacional é desconhecida, nenhuma medida interna aos dados evidencia essa situação, porque a amostra é coerente consigo mesma. Só o conhecimento do desenho de coleta revelaria o problema.
 
 ## Erro amostral e erro não amostral
 

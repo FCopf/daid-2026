@@ -42,7 +42,7 @@ theme_set(theme_bw(base_size = 12))
 
 # Um gerador para os três cenários
 
-Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em cada mês, e a diferença entre os meses cabe em **dois** números: quanto o segundo mês se desloca verticalmente, e quanto a sua inclinação difere.
+Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em cada mês, e a diferença entre os meses cabe em **dois** números, quanto o segundo mês se desloca verticalmente e quanto a sua inclinação difere.
 
 ```{r}
 gerar_dois_meses <- function(delta_intercepto, delta_inclinacao, n = 60, sigma = 0.2) {
@@ -59,7 +59,7 @@ gerar_dois_meses <- function(delta_intercepto, delta_inclinacao, n = 60, sigma =
 }
 ```
 
-A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três cenários são três combinações desses dois números:
+A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três cenários da @fig-ancova-cenarios são três combinações desses dois números:
 
 ```{r}
 #| label: fig-ancova-cenarios
@@ -83,12 +83,12 @@ ggplot(cenarios, aes(x = comprimento, y = biomassa, colour = mes)) +
 ::: {.callout-tip appearance="minimal" title="Identifique"}
 Olhe os argumentos das três chamadas e escreva no script, como comentário, qual parâmetro precisa ser **diferente de zero** para produzir cada cenário. São três frases curtas.
 
-Repare que "interceptos diferentes" e "inclinações diferentes" não são versões fortes e fracas da mesma coisa: são parâmetros distintos, e um pode existir sem o outro.
+Repare que "interceptos diferentes" e "inclinações diferentes" não são versões fortes e fracas da mesma coisa, e sim parâmetros distintos, de modo que um pode existir sem o outro.
 :::
 
 # Os dois modelos, e o que os separa
 
-Na fórmula, `+` supõe **uma inclinação só** para os dois meses; `*` permite que cada mês tenha a sua. Vamos ajustar os dois a um dos cenários e compará-los:
+Na fórmula, `+` supõe **uma inclinação só** para os dois meses, enquanto `*` permite que cada mês tenha a sua. Vamos ajustar os dois a um dos cenários e compará-los:
 
 ```{r}
 dados_c <- gerar_dois_meses(0, 0.05)
@@ -99,12 +99,12 @@ com_interacao <- lm(biomassa ~ comprimento * mes, data = dados_c)
 anova(aditivo, com_interacao)
 ```
 
-A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados; um valor grande indica que ficamos com ele, que é mais fácil de interpretar.
+A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados, e um valor grande indica que ficamos com ele, que é mais fácil de interpretar.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
 Estes dados foram gerados com `delta_inclinacao = 0.05`, isto é, com inclinações realmente diferentes. A tabela deveria detectar isso.
 
-Rode o bloco mais uma vez. O valor de p muda de execução para execução — a decisão é sobre um processo que varia, como tudo o que vimos neste semestre.
+Rode o bloco mais uma vez. O valor de p muda de execução para execução, e a decisão é sobre um processo que varia, como tudo o que vimos neste semestre.
 :::
 
 # Sua vez, parte 1: um cenário às cegas
@@ -116,18 +116,18 @@ Escolha **um** dos três cenários e gere os dados com os parâmetros correspond
 meus_dados <- gerar_dois_meses(____, ____)
 ```
 
-Ajuste os dois modelos, rode `anova()` e só então registre, em comentário: qual cenário você havia construído, e o que a tabela recuperou. Acertou?
+Ajuste os dois modelos, rode `anova()` e só então registre, em comentário, qual cenário você havia construído e o que a tabela recuperou. Acertou?
 :::
 
 ::: {.callout-tip appearance="minimal" title="Se sobrar tempo"}
 Repita o mesmo cenário aumentando `sigma` (por exemplo, `gerar_dois_meses(0, 0.05, sigma = 0.6)`) ou reduzindo `n`.
 
-A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo fenômeno do tema da Prática 06: um efeito que existe pode não ser detectado, e o resultado não avisa que isso aconteceu.
+A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo fenômeno do tema da Prática 06, em que um efeito que existe pode não ser detectado, e o resultado não avisa que isso aconteceu.
 :::
 
 # Sua vez, parte 2: lulas, dados reais
 
-Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (`DML`, em mm) e o peso dos testículos (`Testisweight`, em gramas). A pergunta biológica é sobre maturação: os machos de um mês têm testículos mais pesados do que os de outro?
+Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (`DML`, em mm) e o peso dos testículos (`Testisweight`, em gramas). A pergunta biológica é sobre maturação. Os machos de um mês têm testículos mais pesados do que os de outro?
 
 ```{r}
 url <- "https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Squid.txt"
@@ -146,7 +146,7 @@ dois_meses <- lulas |>
   mutate(mes = factor(MONTH), log_peso = log(Testisweight))
 ```
 
-Use `factor(MONTH)` e não rótulos escritos à mão: assim os níveis correspondem sempre aos meses que você filtrou.
+Use `factor(MONTH)` e não rótulos escritos à mão, porque assim os níveis correspondem sempre aos meses que você filtrou.
 
 O logaritmo do peso é necessário porque, na escala original, o espalhamento cresce muito nos animais maiores, o que violaria a suposição de variação constante.
 :::
@@ -160,9 +160,9 @@ dois_meses |>
 ```
 
 ::: {.callout-warning appearance="minimal" title="Sem faixa comum não existe comparação"}
-Os dois meses precisam cobrir uma faixa de comprimentos **sobreposta**. É só dentro dela que comparar os meses tem apoio nos dados; fora dela, o R calcula um número que nenhum molusco sustenta.
+Os dois meses precisam cobrir uma faixa de comprimentos **sobreposta**. É só dentro dela que comparar os meses tem apoio nos dados, porque fora dela o R calcula um número que nenhum molusco sustenta.
 
-Anote a faixa comum: o maior dos dois mínimos e o menor dos dois máximos.
+Anote a faixa comum, formada pelo maior dos dois mínimos e pelo menor dos dois máximos.
 :::
 
 Desenhe os pontos com uma reta por mês, ajuste os dois modelos e compare-os com `anova()`, exatamente como você fez com os dados simulados. Depois escolha **dois ou três comprimentos dentro da faixa comum** e obtenha as previsões:

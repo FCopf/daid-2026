@@ -30,7 +30,7 @@ theme_set(theme_bw(base_size = 12))
 
 # O estudo proposto
 
-Um pesquisador propõe o seguinte estudo: comparar a cobertura de algas em dois costões, um exposto e um abrigado. Em cada costão, ele lança 20 quadrados de 1 m² e mede a cobertura em cada um. Depois compara os dois costões com um teste t sobre as 40 medidas.
+Um pesquisador propõe o seguinte estudo, que é comparar a cobertura de algas em dois costões, um exposto e um abrigado. Em cada costão, ele lança 20 quadrados de 1 m² e mede a cobertura em cada um. Depois compara os dois costões com um teste t sobre as 40 medidas.
 
 Sua tarefa é **avaliar e redesenhar** esse estudo.
 

@@ -48,7 +48,7 @@ Repare que a terceira fonte não tem nada a ver com o cuidado da medição. Mesm
 
 # A unidade amostral e a tabela de dados
 
-Reconhecer que os valores variam ainda não diz o que cada valor representa. Antes de anotar qualquer número, é preciso responder: **o que o número descreve?**
+Reconhecer que os valores variam ainda não diz o que cada valor representa. Antes de anotar qualquer número, é preciso responder a uma pergunta, **o que o número descreve?**
 
 No exemplo, cada número descreve **uma poça de maré**. A poça é a *unidade amostral*, a unidade sobre a qual a medida é feita. Se estivéssemos pesando peixes, a unidade seria cada peixe. Se contássemos espécies em quadrados de 1 m² na praia, a unidade seria cada quadrado.
 
@@ -119,7 +119,7 @@ Um programa calcula a média de qualquer coluna numérica. Isso não torna a con
 
 # Centro, posição e espalhamento
 
-Sabendo que a temperatura é uma variável quantitativa contínua, podemos resumi-la. Cinco números são poucos para enxergar um padrão. Com trinta poças, a figura abaixo mostra o que costuma acontecer. Os valores se espalham em torno de um centro, a maioria perto dele e poucos bem longe.
+Sabendo que a temperatura é uma variável quantitativa contínua, podemos resumi-la. Cinco números são poucos para enxergar um padrão. Com trinta poças, a @fig-variacao-espalhamento mostra o que costuma acontecer. Os valores se espalham em torno de um centro, a maioria perto dele e poucos bem longe.
 
 ```{r}
 #| echo: false
@@ -154,7 +154,7 @@ $$
 
 Ela funciona como o ponto de equilíbrio dos valores e usa todas as observações. Por isso também é sensível a valores extremos. A **mediana** é o valor central depois de ordenar os dados e costuma representar melhor o centro de distribuições muito assimétricas. A **moda** é o valor ou categoria mais frequente e pode ser usada tanto com variáveis quantitativas quanto qualitativas.
 
-Além do centro, interessa localizar uma observação dentro do conjunto ordenado. Os **quartis** dividem os valores ordenados em quatro partes. O primeiro quartil, $Q_1$, deixa cerca de 25% das observações abaixo dele; a mediana, $Q_2$, deixa 50%; e $Q_3$, 75%. A distância $AIQ=Q_3-Q_1$ é a amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor a extremos que a amplitude total, calculada por máximo menos mínimo.
+Além do centro, interessa localizar uma observação dentro do conjunto ordenado. Os **quartis** dividem os valores ordenados em quatro partes. O primeiro quartil, $Q_1$, deixa cerca de 25% das observações abaixo dele, a mediana, $Q_2$, deixa 50%, e $Q_3$ deixa 75%. A distância $AIQ=Q_3-Q_1$ é a amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor a extremos que a amplitude total, calculada por máximo menos mínimo.
 
 O espalhamento pode ser medido pela **variância**. A variância amostral mede a média dos desvios quadráticos em relação a $\bar{x}$:
 
@@ -198,7 +198,7 @@ Neste conjunto todos os valores ocorrem uma vez, portanto não existe uma moda �
 
 Acompanhar a variância uma vez, valor por valor, deixa claro o que a fórmula faz. Para $25{,}4$, $25{,}9$, $24{,}8$, $26{,}3$ e $25{,}1$ °C, a média é 25,5 °C. Os desvios em relação à média são $-0{,}1$, $0{,}4$, $-0{,}7$, $0{,}8$ e $-0{,}4$ °C. A soma dos desvios é zero, por isso não podemos usá-la como medida de variação. Elevando-os ao quadrado, obtemos soma igual a 1,46 °C². Ao dividir por $n-1=4$, a variância é 0,365 °C² e o desvio-padrão é aproximadamente 0,604 °C.
 
-O cálculo separa três ideias: um centro estimado, os afastamentos de cada unidade e um resumo desses afastamentos. Ele também deixa explícitas as unidades. A variância está em °C²; o desvio-padrão volta a °C e pode ser comparado diretamente aos valores medidos.
+O cálculo separa três ideias, um centro estimado, os afastamentos de cada unidade e um resumo desses afastamentos. Ele também deixa explícitas as unidades. A variância está em °C², enquanto o desvio-padrão volta a °C e pode ser comparado diretamente aos valores medidos.
 
 # Da lista de valores à distribuição
 
@@ -206,7 +206,7 @@ Média e desvio-padrão comprimem trinta números em dois, e nessa compressão m
 
 ## Frequências de uma variável qualitativa
 
-Para uma variável qualitativa, a distribuição é descrita contando os níveis. A frequência absoluta $f_j$ é o número de unidades na categoria $j$; a frequência relativa é
+Para uma variável qualitativa, a distribuição é descrita contando os níveis. A frequência absoluta $f_j$ é o número de unidades na categoria $j$, e a frequência relativa é
 
 $$
 p_j=\frac{f_j}{n},
@@ -237,11 +237,11 @@ ggplot(tabela_sombra, aes(x = sombra, y = frequencia)) +
   labs(x = "Sombreamento", y = "Número de poças")
 ```
 
-As barras não se encostam porque baixo, médio e alto são categorias. A ordem é informativa, mas a distância visual entre baixo e médio não representa uma diferença numérica conhecida.
+As barras da @fig-frequencias-sombra não se encostam porque baixo, médio e alto são categorias. A ordem é informativa, mas a distância visual entre baixo e médio não representa uma diferença numérica conhecida.
 
 ## Classes, histogramas e boxplot
 
-Uma variável quantitativa contínua raramente repete valores, de modo que contar ocorrências uma a uma não produz um resumo útil. Agrupamos então os valores em classes. Se a classe $j$ tem limites $a_j$ e $a_{j+1}$, contamos as observações com $a_j\le x<a_{j+1}$. A escolha da largura modifica a aparência. Classes largas escondem detalhes e classes estreitas deixam o ruído amostral dominar. A figura abaixo representa os mesmos comprimentos de quatro maneiras.
+Uma variável quantitativa contínua raramente repete valores, de modo que contar ocorrências uma a uma não produz um resumo útil. Agrupamos então os valores em classes. Se a classe $j$ tem limites $a_j$ e $a_{j+1}$, contamos as observações com $a_j\le x<a_{j+1}$. A escolha da largura modifica a aparência. Classes largas escondem detalhes e classes estreitas deixam o ruído amostral dominar. A @fig-formas-distribuicao representa os mesmos comprimentos de quatro maneiras.
 
 ```{r}
 #| echo: false

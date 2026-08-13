@@ -4,7 +4,7 @@ number-sections: false
 toc: false
 ---
 
-Cada semana do cronograma tem a sua leitura prévia. Ela apresenta a ideia central do encontro a partir de um problema concreto e deve ser lida **antes** da aula ou da atividade extraclasse correspondente: tanto a [Prática em R](../computer-lab/index.qmd) quanto a [Atividade extraclasse](../assignment/index.qmd) partem do princípio de que esse contexto teórico já foi compreendido.
+Cada semana do cronograma tem a sua leitura prévia. Ela apresenta a ideia central do encontro a partir de um problema concreto e deve ser lida **antes** da aula ou da atividade extraclasse correspondente, porque tanto a [Prática em R](../computer-lab/index.qmd) quanto a [Atividade extraclasse](../assignment/index.qmd) partem do princípio de que esse contexto teórico já foi compreendido.
 
 ::: {.catalogo-materiais}
 
