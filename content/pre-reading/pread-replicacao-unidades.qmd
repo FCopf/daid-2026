@@ -24,26 +24,22 @@ theme_set(theme_bw(base_size = 12))
 
 # Um experimento com 60 peixes
 
-Uma pesquisadora quer saber se uma dieta enriquecida faz juvenis de robalo crescerem mais rápido.
+Uma pesquisadora quer saber se uma dieta enriquecida faz juvenis de robalo crescerem mais rápido e dispõe de 60 peixes para responder a essa pergunta.
 
-Ela monta o experimento com **dois tanques**. No tanque 1, todos os peixes recebem a dieta comum. No tanque 2, todos recebem a dieta enriquecida. Trinta peixes em cada tanque. Ao fim de seis semanas, ela mede o comprimento de cada peixe, num total de 60 medidas.
+Ela monta um experimento com **dois tanques** e sorteia qual deles receberá a dieta enriquecida e qual receberá a dieta comum. Em seguida, aloja 30 peixes no tanque 1, que recebem a dieta comum, e outros 30 no tanque 2, que recebem a dieta enriquecida. Ao fim de seis semanas, mede o comprimento de cada peixe, obtendo um total de 60 medidas.
 
-A dieta enriquecida apresenta média maior. A diferença é grande e o teste estatístico produz um resultado convincente.
-
-Só que o experimento não permite concluir nada sobre a dieta.
+A dieta enriquecida apresenta média maior e a diferença entre os grupos é grande. Ainda assim, o experimento conduzido dessa forma não permite nenhuma conclusão sobre a dieta.
 
 # Siga o tratamento até onde ele foi aplicado
 
-A pergunta que desmonta o problema é simples. **O sorteio da dieta foi feito quantas vezes?**
+Para entender o erro do experimento acima, precisamos nos perguntar **quantas vezes a dieta foi sorteada**. Neste caso, apenas duas. A dieta comum foi atribuída ao tanque 1 e a enriquecida ao tanque 2, mas nenhum peixe recebeu uma dieta individualmente, já que todos receberam a dieta *do seu tanque*.
 
-Duas. A dieta comum foi atribuída ao tanque 1 e a enriquecida ao tanque 2. Nenhum peixe recebeu uma dieta individualmente, pois cada peixe recebeu a dieta *do seu tanque*.
+O tratamento, portanto, foi aplicado ao **tanque**, e não ao peixe. O tanque é a **unidade experimental**, ou seja, *a menor unidade que recebeu uma atribuição independente de tratamento*.
 
-Isso significa que o tratamento foi aplicado ao **tanque**, não ao peixe. O tanque é a **unidade experimental**, ou seja, a menor unidade que recebeu uma atribuição independente de tratamento.
-
-Os 30 peixes de um tanque são **subamostras**, medidas repetidas dentro da mesma unidade experimental. Eles descrevem muito bem aquele tanque, mas não acrescentam nenhuma repetição independente do tratamento.
+Os 30 peixes de um mesmo tanque são **subamostras**, isto é, medidas repetidas dentro da mesma unidade experimental. Eles descrevem com precisão aquele tanque, mas não acrescentam nenhuma repetição independente do tratamento. O erro de delineamento neste exemplo foi tratar o peixe como se fosse a unidade que recebeu o tratamento, quando quem o recebeu foi o tanque.
 
 ::: {.callout-note appearance="minimal" title="Três papéis que não se misturam"}
-**Unidade experimental**: o que recebeu o tratamento por sorteio. É ela que se replica.
+**Unidade experimental**: a unidade que recebeu o tratamento por sorteio independente.
 
 **Subamostra**: medida repetida dentro de uma unidade experimental. Melhora a precisão da medida daquela unidade, mas não aumenta o número de réplicas.
 
@@ -52,29 +48,31 @@ Os 30 peixes de um tanque são **subamostras**, medidas repetidas dentro da mesm
 
 ## Cada papel corresponde a uma ação concreta
 
-Além desses três, há dois nomes úteis. A **unidade amostral** é a entidade selecionada pelo plano de amostragem, enquanto a **unidade de medição** é aquela sobre a qual o instrumento produz um valor. Em um experimento, a unidade observacional pode coincidir ou não com ambas. O vocabulário só é útil quando cada papel é ligado a uma ação concreta, como selecionar, atribuir tratamento, observar ou medir.
+A **unidade amostral** é a entidade selecionada pelo desenho experimental, enquanto a **unidade de medição** é aquela sobre a qual o instrumento produz um valor. Em um experimento, a **unidade observacional**, aquela sobre a qual se registra cada observação, pode coincidir ou não com as duas anteriores. O vocabulário só é útil quando cada papel é ligado a uma ação concreta, como selecionar, atribuir tratamento, observar ou medir. A cada uma dessas ações corresponde uma pergunta que identifica o papel no experimento dos tanques:
 
-| Papel | Pergunta de diagnóstico | Exemplo dos tanques |
+| Papel | Pergunta de diagnóstico | No experimento dos tanques |
 |---|---|---|
-| Unidade experimental | o que poderia receber outro tratamento independentemente? | tanque |
-| Unidade amostral | o que foi selecionado para representar a população? | tanque, se tanques foram sorteados |
-| Unidade observacional | sobre o que existe uma linha de observação? | peixe |
-| Unidade de medição | onde o instrumento foi aplicado? | peixe, ou cada leitura do peixe |
-| Subamostra | o que foi medido dentro de uma unidade maior? | peixes do mesmo tanque |
+| Unidade experimental | o que recebeu o tratamento por sorteio independente? | tanque, sorteado para uma das dietas |
+| Unidade amostral | o que foi selecionado para representar a população? | tanque, quando o sorteio é feito entre tanques |
+| Unidade observacional | sobre o que se registra cada observação? | peixe, uma linha da planilha por peixe |
+| Unidade de medição | sobre o que o instrumento produz um valor? | peixe, ou cada leitura feita no mesmo peixe |
+| Subamostra | o que foi medido repetidamente dentro de uma unidade maior? | os 30 peixes de um mesmo tanque |
 
-Esses papéis não são definidos pelo nome biológico da entidade. Um peixe pode ser unidade experimental se cada indivíduo receber uma dieta sorteada separadamente. O mesmo peixe passa a ser subamostra quando a dieta é distribuída ao tanque. Para reconhecer o nível correto em um estudo qualquer, três perguntas bastam:
+Um peixe pode ser unidade experimental se cada indivíduo receber uma dieta sorteada separadamente. O mesmo peixe passa a ser subamostra quando a dieta é distribuída ao tanque. Para reconhecer o nível correto em um estudo qualquer, devem ser feitas três perguntas:
 
 1. Qual entidade poderia ter recebido outro tratamento sem obrigar as demais a mudar?
 2. Em qual nível o tratamento foi sorteado?
 3. Qual fonte de variação deve servir de comparação para o efeito?
 
-A distinção reaparece no laboratório com outro vocabulário. **Réplicas biológicas** são unidades independentes que representam variação do sistema de interesse. **Réplicas técnicas** repetem a medição da mesma unidade, como três leituras da mesma amostra em um equipamento. Réplicas técnicas ajudam a estimar e reduzir erro de medição, mas não representam novos organismos, tanques ou locais.
+O mesmo raciocínio vale no laboratório, onde a repetição costuma estar no instrumento. Três leituras da mesma amostra em um equipamento são subamostras dessa amostra, exatamente como os 30 peixes eram subamostras do seu tanque. Elas ajudam a estimar e a reduzir o erro de medição, mas não representam novos organismos, tanques ou locais.
+
+Essas leituras podem entrar no modelo uma a uma ou ser resumidas em uma única média por amostra. As duas alternativas são defensáveis e a decisão depende da pergunta e do tipo de estudo, mas nenhuma delas transforma medidas repetidas em unidades que receberam o tratamento de forma independente.
 
 ```{r}
 #| echo: false
 #| label: fig-hierarquia
 #| fig-cap: "Estrutura de um experimento com duas dietas, quatro tanques por dieta e três peixes destacados por tanque."
-#| fig-alt: "Diagrama em níveis. No topo aparecem duas dietas; abaixo, quatro tanques por dieta; abaixo de cada tanque, três peixes."
+#| fig-alt: "Diagrama em níveis. No topo aparecem duas dietas. Abaixo delas, quatro tanques por dieta e, abaixo de cada tanque, três peixes."
 #| fig-height: 5
 hierarquia <- crossing(
   dieta = c("comum", "enriquecida"),
@@ -103,30 +101,32 @@ ggplot(hierarquia) +
                       guide = "none") +
   coord_cartesian(ylim = c(0.7, 3.2)) +
   labs(x = NULL, y = NULL) +
-  theme_bw(base_size = 11) +
+  theme_void(base_size = 11) +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
 ```
 
 A @fig-hierarquia deixa visível por que três peixes ligados ao mesmo tanque não equivalem a três tanques. O tratamento chega ao tanque, e as medidas de peixe estão aninhadas abaixo dele.
 
-Voltando ao experimento original, com dois tanques ele tem **uma réplica por tratamento**. E com uma réplica por tratamento, qualquer diferença entre tanques pode vir da dieta ou de qualquer outra coisa que diferencie os dois tanques, como temperatura, luz, aeração, posição na sala ou o acaso da distribuição inicial dos peixes. Não há como separar. O efeito da dieta está **confundido** com o efeito do tanque.
+Voltando ao experimento original, dois tanques significam apenas **uma réplica por tratamento**. Com uma única réplica, qualquer diferença observada pode vir da dieta ou de qualquer outra coisa que diferencie os dois tanques, como temperatura, luz, aeração, posição na sala ou o acaso da distribuição inicial dos peixes. Não há como separar esses efeitos, e dizemos que o efeito da dieta está **confundido** com o efeito do tanque.
 
 # Por que 60 medidas não resolvem
 
-É tentador pensar que 30 peixes por tratamento é bastante gente e que isso compensa. Não compensa, e vale entender por quê.
+É tentador pensar que 30 peixes por tratamento formam uma amostra grande o bastante para compensar a falha do delineamento.
 
-Medir mais peixes dentro do mesmo tanque reduz a incerteza sobre **a média daquele tanque**. Mas o que a pergunta exige é comparar dietas, e para isso precisamos saber quanto **tanques tratados da mesma forma** variam entre si. Com um tanque por dieta, essa variação nunca foi observada.
+Medir mais peixes dentro do mesmo tanque, porém, reduz a incerteza sobre **a média daquele tanque**, e o que a pergunta exige é comparar dietas. Para isso, precisamos saber quanto **tanques tratados da mesma forma** variam entre si, e com apenas um tanque por dieta essa variação não pode ser observada.
 
-Para ver as duas fontes de variação separadas, vale simular um experimento com oito tanques, quatro por dieta, e quinze peixes em cada um. A simulação é escrita em dois passos, que correspondem exatamente aos dois níveis do experimento. Primeiro sorteamos a média de cada tanque, depois sorteamos os peixes dentro dele.
+Para ver as duas fontes de variação separadas, vale a pena simular um experimento com oito tanques, quatro por dieta, e quinze peixes em cada um. A simulação é escrita em dois passos, que correspondem exatamente aos dois níveis do experimento. Primeiro sorteamos a média de cada tanque, depois sorteamos os peixes dentro dele.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Ver a simulação hierárquica de tanques e peixes"
 #| label: fig-duas-fontes
-#| fig-cap: "Comprimento de peixes em oito tanques. Cada ponto é um peixe; cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros."
-#| fig-alt: "Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados; as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta."
+#| fig-cap: "Comprimento de peixes em oito tanques. Cada ponto é um peixe e cada linha grossa é a média do tanque. Peixes do mesmo tanque se parecem entre si, e os tanques diferem uns dos outros."
+#| fig-alt: "Gráfico de pontos com oito colunas, uma por tanque, quatro de cada dieta. Dentro de cada coluna os pontos ficam agrupados, e as médias dos tanques variam visivelmente mesmo entre tanques da mesma dieta."
 #| fig-height: 3.8
-media_tanque <- c(rnorm(4, 10.0, 0.7), rnorm(4, 11.0, 0.7))
+
+set.seed(4)
+media_tanque <- c(rnorm(4, 10.0, 0.5), rnorm(4, 11.0, 0.5))
 
 peixes <- tibble(
   tanque = factor(rep(1:8, each = 15)),
@@ -145,9 +145,52 @@ ggplot(peixes, aes(x = tanque, y = comprimento, colour = dieta)) +
   scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00"))
 ```
 
-Repare em duas coisas na @fig-duas-fontes. Dentro de cada tanque, os peixes se parecem, e os pontos formam nuvens compactas. Entre tanques da **mesma dieta**, as médias já não coincidem, porque o tanque 1 e o tanque 3 receberam a mesma coisa e mesmo assim diferem.
+A @fig-duas-fontes mostra as duas fontes de variação lado a lado. Dentro de cada tanque, os peixes formam uma nuvem compacta de pontos, e essa dispersão é a variação **entre peixes do mesmo tanque**. Entre tanques que receberam a **mesma dieta**, as médias não coincidem, e essa diferença é a variação **entre unidades experimentais**. Como o sorteio foi feito no nível do tanque, é a segunda que serve de referência para julgar o efeito da dieta.
 
-Essa segunda variação é a régua correta para julgar o efeito da dieta. Um experimento com dois tanques a apaga por completo.
+Imagine agora que o experimento tivesse sido feito com apenas dois desses oito tanques, um por dieta. Se o sorteio tivesse indicado os tanques 2 e 5, a diferença entre as médias seria grande e concluiríamos que a dieta enriquecida faz os peixes crescerem mais (@fig-dois-tanques-1). Se tivesse indicado os tanques 4 e 7, as médias seriam praticamente iguais e concluiríamos que a dieta não tem efeito algum (@fig-dois-tanques-2).
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver o código dos dois experimentos possíveis"
+#| label: fig-dois-tanques
+#| fig-cap: "Dois experimentos de dois tanques extraídos da mesma simulação. A conclusão sobre a dieta muda conforme o par de tanques sorteado."
+#| fig-subcap:
+#|   - "Tanques 2 e 5, diferença grande entre as médias."
+#|   - "Tanques 4 e 7, médias praticamente iguais."
+#| fig-alt:
+#|   - "Gráfico de pontos com duas colunas, o tanque 2 da dieta comum e o tanque 5 da enriquecida. A média do tanque 5 está bem acima da do tanque 2."
+#|   - "Gráfico de pontos com duas colunas, o tanque 4 da dieta comum e o tanque 7 da enriquecida. As duas médias estão quase na mesma altura."
+#| layout-ncol: 2
+#| fig-height: 6
+
+limites_y <- range(peixes$comprimento)
+
+ggplot(filter(peixes, tanque %in% c(2, 5)),
+       aes(x = tanque, y = comprimento, colour = dieta)) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.6) +
+  geom_point(data = filter(medias, tanque %in% c(2, 5)),
+             aes(y = media), shape = 95, size = 14) +
+  coord_cartesian(ylim = limites_y) +
+  labs(x = "Tanque", y = "Comprimento (cm)", colour = "Dieta") +
+  scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00")) +
+  theme_bw(base_size = 20) +
+  theme(legend.position = "bottom")
+
+ggplot(filter(peixes, tanque %in% c(4, 7)),
+       aes(x = tanque, y = comprimento, colour = dieta)) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 1.6) +
+  geom_point(data = filter(medias, tanque %in% c(4, 7)),
+             aes(y = media), shape = 95, size = 14) +
+  coord_cartesian(ylim = limites_y) +
+  labs(x = "Tanque", y = "Comprimento (cm)", colour = "Dieta") +
+  scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00")) +
+  theme_bw(base_size = 20) +
+  theme(legend.position = "bottom")
+```
+
+Os dois painéis saíram do mesmo conjunto de dados, em que a dieta enriquecida de fato produz peixes maiores. Ainda assim, a conclusão se inverte conforme o par de tanques que entrou no experimento. Com um tanque por dieta, a diferença entre dietas chega misturada à diferença entre tanques, e nada nos dados permite separar as duas.
+
+O que falta ao experimento de dois tanques é justamente a régua da @fig-duas-fontes, ou seja, o quanto tanques tratados da mesma forma diferem entre si. Sem essa referência, não há como dizer se uma diferença observada é grande ou pequena.
 
 ## Quanta informação uma subamostra realmente acrescenta
 
@@ -169,11 +212,11 @@ A fórmula explica quantitativamente por que tratar observações correlacionada
 
 # Pseudorreplicação
 
-Analisar os 60 peixes como se fossem 60 réplicas independentes tem um nome, **pseudorreplicação**. O termo foi popularizado por Hurlbert [@hurlbert1984] justamente ao revisar experimentos ecológicos publicados, e o diagnóstico continua atual.
+Analisar os 60 peixes como se fossem 60 réplicas caracteriza a **pseudorreplicação**. O termo foi popularizado por Hurlbert [@hurlbert1984] justamente ao revisar experimentos ecológicos publicados.
 
-O sintoma é sempre o mesmo. O número de linhas da planilha é maior que o número de vezes que o tratamento foi realmente sorteado. O efeito prático também se repete, porque o erro padrão fica artificialmente pequeno, o intervalo de confiança fica estreito demais e o resultado parece mais convincente do que é.
+O sintoma é sempre o mesmo. O número de linhas da planilha é maior que o número de vezes que o tratamento foi realmente sorteado. O efeito prático também se repete, porque o erro padrão fica artificialmente pequeno, o intervalo de confiança fica estreito demais e as diferenças entre tratamentos parecem maiores do que são.
 
-Pseudorreplicação também ocorre sem tanques. Pontos muito próximos podem compartilhar o mesmo processo espacial, medidas sucessivas no mesmo organismo compartilham história e anos consecutivos podem estar ligados pela dinâmica da população. A dependência não é identificada apenas olhando a correlação observada. Ela começa no modo como as unidades foram geradas e selecionadas.
+Pseudorreplicação também ocorre em outras situações. Pontos muito próximos podem compartilhar o mesmo processo espacial, medidas sucessivas no mesmo organismo compartilham a história daquele indivíduo e anos consecutivos podem estar ligados pela dinâmica da população. A dependência não é identificada apenas olhando a correlação observada. Ela começa no modo como as unidades foram geradas e selecionadas.
 
 ::: {.callout-warning appearance="minimal" title="Um teste rápido antes de analisar"}
 Conte quantas vezes o tratamento foi atribuído. Esse é o seu número de unidades experimentais.
@@ -185,7 +228,7 @@ Se a análise usa mais observações do que isso, há subamostras entrando como 
 
 Identificado o problema, resta a solução, e ela costuma contrariar a intuição.
 
-O experimento dos dois tanques não melhora com 60 peixes por tanque, nem com 300. Cada peixe a mais refina a estimativa da média daquele tanque, e o que falta não é isso. Falta ter visto tanques tratados da mesma forma diferirem entre si.
+O experimento dos dois tanques não melhora com 60 peixes por tanque, nem com 300. Cada peixe a mais refina a estimativa da média daquele tanque, mas não informa sobre o efeito do tratamento.
 
 O que o experimento precisa é de **mais tanques**, ainda que menores e com menos peixes em cada um. Uma medida repetida barata não substitui uma unidade experimental cara.
 
@@ -211,12 +254,12 @@ A tabela resultante tem oito linhas, uma por unidade experimental, e é sobre el
 
 Modelos hierárquicos permitem conservar as medidas individuais e representar explicitamente a variação entre tanques e entre peixes. Essa abordagem é útil, mas não muda a exigência de desenho, porque os tratamentos ainda precisam de unidades experimentais replicadas. Nenhum modelo estatístico recupera uma fonte de variação que o experimento não observou.
 
-Subamostras continuam valiosas. Elas melhoram a média do tanque, permitem estudar heterogeneidade interna e protegem contra uma medição atípica. O erro está apenas em atribuir a elas o papel de réplicas independentes.
+Subamostras continuam valiosas. Elas melhoram a média do tanque, permitem estudar heterogeneidade interna e protegem contra uma medição atípica. O erro está apenas em atribuir a elas o papel de réplicas.
 
-O experimento do início tinha 60 medidas e duas réplicas. A confusão entre esses dois números é a origem de boa parte dos resultados que não se sustentam quando outra equipe tenta reproduzi-los. Contar réplicas, portanto, não é uma formalidade da análise, e sim a maneira de verificar se a pergunta feita em campo pode mesmo ser respondida pelos dados coletados.
+O experimento do início tinha 60 medidas e duas réplicas. A confusão entre esses dois números é a origem de boa parte dos resultados que não se sustentam quando outra equipe tenta reproduzi-los. Contar réplicas, portanto, não é uma formalidade da análise, e sim a maneira de verificar se a pergunta feita em campo ou em laboratório pode mesmo ser respondida pelos dados coletados.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
-- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"} (MEAD), com o tratamento formal de conglomerados, que é a versão amostral do problema discutido aqui.
+- [Amostrando uma população estatística](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html){target="_blank"}
 
 O artigo de Hurlbert [@hurlbert1984] permanece a leitura de referência sobre o tema e traz dezenas de exemplos reais de delineamentos ecológicos.
 :::
