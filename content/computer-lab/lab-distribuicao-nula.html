@@ -350,7 +350,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#o-gráfico-do-seu-delineamento" id="toc-o-gráfico-do-seu-delineamento" class="nav-link" data-scroll-target="#o-gráfico-do-seu-delineamento"><span class="header-section-number">5.3</span> O gráfico do seu delineamento</a></li>
   </ul></li>
   <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -379,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -393,9 +392,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="objetivo-desta-prática" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
-<p>Um experimento comparou dois substratos para o assentamento de larvas de mexilhão: doze placas para cada substrato, e uma diferença observada de <strong>1,4 cm</strong> entre as médias.</p>
-<p>A <a href="../../content/pre-reading/pread-modelo-nulo-evidencia.html">leitura desta semana</a> construiu o mundo sem efeito para esse experimento e contou quantas vezes o acaso sozinho produz 1,4 cm. Ela também deixou um aviso: a distribuição nula <strong>não descreve o mexilhão, descreve o experimento</strong>.</p>
-<p>Hoje você vai levar esse aviso a sério e responder a uma pergunta de planejamento que a leitura não responde: <strong>quantas placas por grupo seriam necessárias para que 1,4 cm deixasse de ser um resultado banal?</strong></p>
+<p>Um experimento comparou dois substratos para o assentamento de larvas de mexilhão, com doze placas para cada substrato e uma diferença observada de <strong>1,4 cm</strong> entre as médias.</p>
+<p>A <a href="../../content/pre-reading/pread-modelo-nulo-evidencia.html">leitura desta semana</a> construiu o mundo sem efeito para esse experimento e contou quantas vezes o acaso sozinho produz 1,4 cm. Ela também deixou um aviso, de que a distribuição nula <strong>não descreve o mexilhão, descreve o experimento</strong>.</p>
+<p>Hoje você vai levar esse aviso a sério e responder a uma pergunta de planejamento que a leitura não responde. <strong>Quantas placas por grupo seriam necessárias para que 1,4 cm deixasse de ser um resultado banal?</strong></p>
 <p>O objetivo em R é transformar uma conta em uma função reutilizável e usá-la para procurar um delineamento.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
 <div class="callout-header d-flex align-content-center">
@@ -425,18 +424,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="o-processo-nulo-uma-vez" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> O processo nulo, uma vez</h1>
-<p>A hipótese nula não é uma opinião: é uma receita que se executa. Para este experimento ela diz que os dois substratos são idênticos, com média 10,2 cm e desvio-padrão 2 cm entre placas.</p>
+<p>A hipótese nula não é uma opinião, e sim uma receita que se executa. Para este experimento ela diz que os dois substratos são idênticos, com média 10,2 cm e desvio-padrão 2 cm entre placas.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>substrato_a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>substrato_b <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(substrato_b) <span class="sc">-</span> <span class="fu">mean</span>(substrato_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1842741</code></pre>
+<pre><code>[1] 0.3211302</code></pre>
 </div>
 </div>
-<p>As duas linhas usam a <strong>mesma</strong> média. Ainda assim a diferença não é zero. Execute o bloco cinco vezes seguidas e observe o tamanho das diferenças que aparecem: é isso que o acaso consegue fazer sozinho neste experimento.</p>
-<p>Para contar quantas dessas diferenças são “tão extremas quanto 1,4 cm”, precisamos descartar o sinal, porque uma diferença de −1,4 é tão extrema quanto uma de +1,4. A função <code>abs()</code> faz isso: <code>abs(-1.4)</code> vale <code>1.4</code>. E <code>mean()</code> aplicado a comparações lógicas devolve a proporção de <code>TRUE</code>: <code>mean(c(TRUE, FALSE, TRUE, TRUE))</code> vale <code>0.75</code>.</p>
+<p>As duas linhas usam a <strong>mesma</strong> média. Ainda assim a diferença não é zero. Execute o bloco cinco vezes seguidas e observe o tamanho das diferenças que aparecem, porque é isso que o acaso consegue fazer sozinho neste experimento.</p>
+<p>Para contar quantas dessas diferenças são “tão extremas quanto 1,4 cm”, precisamos descartar o sinal, porque uma diferença de −1,4 é tão extrema quanto uma de +1,4. A função <code>abs()</code> faz isso, de modo que <code>abs(-1.4)</code> vale <code>1.4</code>. E <code>mean()</code> aplicado a comparações lógicas devolve a proporção de <code>TRUE</code>, de modo que <code>mean(c(TRUE, FALSE, TRUE, TRUE))</code> vale <code>0.75</code>.</p>
 </section>
 <section id="uma-função-para-qualquer-delineamento" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Uma função para qualquer delineamento</h1>
@@ -454,13 +453,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">proporcao =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas) <span class="sc">&gt;=</span> <span class="fl">1.4</span>))</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>A estrutura é a mesma da função <code>ep_medio()</code> da Prática 04: os argumentos entram entre parênteses e a última linha é o que a função devolve.</p>
+<p>A estrutura é a mesma da função <code>ep_medio()</code> da Prática 04, em que os argumentos entram entre parênteses e a última linha é o que a função devolve.</p>
 <p>Antes de usar a função para qualquer coisa, confira se ela está correta. O experimento original tinha 12 placas por grupo e desvio-padrão 2, e a leitura desta semana informa a proporção que esse delineamento produz:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proporcao_extremos</span>(<span class="dv">12</span>, <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>placas_por_grupo           desvio        proporcao 
-        12.00000          2.00000          0.08625 </code></pre>
+        12.00000          2.00000          0.09225 </code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Confira">
@@ -474,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Compare o valor de <code>proporcao</code> com o que a leitura obteve para o mesmo delineamento. Os dois números não serão idênticos, porque cada execução sorteia experimentos diferentes, mas devem ficar próximos.</p>
-<p>Se o seu valor estiver muito distante, revise a função: o erro mais comum é usar médias diferentes nas duas chamadas de <code>rnorm()</code>, o que deixa de representar um mundo <strong>sem</strong> efeito.</p>
+<p>Se o seu valor estiver muito distante, revise a função, porque o erro mais comum é usar médias diferentes nas duas chamadas de <code>rnorm()</code>, o que deixa de representar um mundo <strong>sem</strong> efeito.</p>
 </div>
 </div>
 </section>
@@ -493,7 +492,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Escreva no script, como comentário, o seu palpite: quantas placas por grupo seriam necessárias para que a proporção caísse abaixo de <strong>0,05</strong>? Registre um número antes de testar qualquer coisa.</p>
+<p>Escreva no script, como comentário, o seu palpite de quantas placas por grupo seriam necessárias para que a proporção caísse abaixo de <strong>0,05</strong>. Registre um número antes de testar qualquer coisa.</p>
 </div>
 </div>
 <p>Teste <strong>pelo menos três</strong> valores diferentes de <code>n_placas</code>, mantendo o desvio em 2, e junte os resultados em uma tabela:</p>
@@ -502,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(____, <span class="dv">2</span>),</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(____, <span class="dv">2</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Continue testando até localizar, com a precisão que der no tempo da aula, o <strong>menor</strong> número de placas por grupo que leva a proporção abaixo de 0,05. Mantenha na tabela <strong>todos</strong> os valores testados, inclusive os que ficaram longe: é o caminho da busca que mostra o seu raciocínio.</p>
+<p>Continue testando até localizar, com a precisão que der no tempo da aula, o <strong>menor</strong> número de placas por grupo que leva a proporção abaixo de 0,05. Mantenha na tabela <strong>todos</strong> os valores testados, inclusive os que ficaram longe, porque é o caminho da busca que mostra o seu raciocínio.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="A proporção também varia">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -531,14 +530,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container callout-body">
 <p>Escolha um desvio-padrão <strong>maior que 2</strong> e registre-o no script.</p>
-<p>Antes de rodar, escreva: o número de placas que você encontrou continua bastando? Se não, a necessidade aumenta pouco ou muito?</p>
+<p>Antes de rodar, escreva se o número de placas que você encontrou continua bastando. Se não, a necessidade aumenta pouco ou muito?</p>
 </div>
 </div>
 <p>Refaça o teste com o seu desvio, ao menos para o <code>n</code> que você havia encontrado, e ajuste a busca até voltar a ficar abaixo de 0,05.</p>
 </section>
 <section id="o-gráfico-do-seu-delineamento" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="o-gráfico-do-seu-delineamento"><span class="header-section-number">5.3</span> O gráfico do seu delineamento</h2>
-<p>Desenhe a distribuição nula do delineamento que você encontrou, com uma linha marcando a diferença observada de 1,4 cm. O bloco abaixo é um modelo para adaptar: troque <code>____</code> pelos seus valores.</p>
+<p>Desenhe a distribuição nula do delineamento que você encontrou, com uma linha marcando a diferença observada de 1,4 cm. O bloco abaixo é um modelo para adaptar, então troque <code>____</code> pelos seus valores.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diferencas <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4000</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">rnorm</span>(____, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> ____)) <span class="sc">-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(____, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> ____))</span>
@@ -594,12 +593,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html" target="_blank">Introdução ao teste de hipóteses</a> (MEAD) — procure a seção sobre a região de rejeição, para ver de onde vem o limiar de 0,05.</li>
 </ul>
+</div>
+</div>
 
 
 <!-- -->
@@ -1092,193 +1100,157 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>Um experimento comparou dois substratos para o assentamento de larvas de mexilhão: doze placas para</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>cada substrato, e uma diferença observada de **1,4 cm** entre as médias.</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-modelo-nulo-evidencia.qmd)</span> construiu o mundo sem efeito</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>para esse experimento e contou quantas vezes o acaso sozinho produz 1,4 cm. Ela também deixou um</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>aviso: a distribuição nula **não descreve o mexilhão, descreve o experimento**.</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>Hoje você vai levar esse aviso a sério e responder a uma pergunta de planejamento que a leitura não</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>responde: **quantas placas por grupo seriam necessárias para que 1,4 cm deixasse de ser um resultado</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>banal?**</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>O objetivo em R é transformar uma conta em uma função reutilizável e usá-la para procurar um</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>delineamento.</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>Um experimento comparou dois substratos para o assentamento de larvas de mexilhão, com doze placas para cada substrato e uma diferença observada de **1,4 cm** entre as médias.</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-modelo-nulo-evidencia.qmd)</span> construiu o mundo sem efeito para esse experimento e contou quantas vezes o acaso sozinho produz 1,4 cm. Ela também deixou um aviso, de que a distribuição nula **não descreve o mexilhão, descreve o experimento**.</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>Hoje você vai levar esse aviso a sério e responder a uma pergunta de planejamento que a leitura não responde. **Quantas placas por grupo seriam necessárias para que 1,4 cm deixasse de ser um resultado banal?**</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>O objetivo em R é transformar uma conta em uma função reutilizável e usá-la para procurar um delineamento.</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-distribuicao-nula.R`</span> com o cabeçalho de identificação e comece por:</span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="fu"># O processo nulo, uma vez</span></span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>A hipótese nula não é uma opinião: é uma receita que se executa. Para este experimento ela diz que os</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>dois substratos são idênticos, com média 10,2 cm e desvio-padrão 2 cm entre placas.</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>substrato_a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>substrato_b <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-distribuicao-nula.R`</span> com o cabeçalho de identificação e comece por:</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a><span class="fu"># O processo nulo, uma vez</span></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>A hipótese nula não é uma opinião, e sim uma receita que se executa. Para este experimento ela diz que os dois substratos são idênticos, com média 10,2 cm e desvio-padrão 2 cm entre placas.</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>substrato_a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>substrato_b <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(substrato_b) <span class="sc">-</span> <span class="fu">mean</span>(substrato_a)</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>As duas linhas usam a **mesma** média. Ainda assim a diferença não é zero. Execute o bloco cinco vezes seguidas e observe o tamanho das diferenças que aparecem, porque é isso que o acaso consegue fazer sozinho neste experimento.</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>Para contar quantas dessas diferenças são "tão extremas quanto 1,4 cm", precisamos descartar o sinal, porque uma diferença de −1,4 é tão extrema quanto uma de +1,4. A função <span class="in">`abs()`</span> faz isso, de modo que <span class="in">`abs(-1.4)`</span> vale <span class="in">`1.4`</span>. E <span class="in">`mean()`</span> aplicado a comparações lógicas devolve a proporção de <span class="in">`TRUE`</span>, de modo que <span class="in">`mean(c(TRUE, FALSE, TRUE, TRUE))`</span> vale <span class="in">`0.75`</span>.</span>
 <span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(substrato_b) <span class="sc">-</span> <span class="fu">mean</span>(substrato_a)</span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>As duas linhas usam a **mesma** média. Ainda assim a diferença não é zero. Execute o bloco cinco</span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>vezes seguidas e observe o tamanho das diferenças que aparecem: é isso que o acaso consegue fazer</span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>sozinho neste experimento.</span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>Para contar quantas dessas diferenças são "tão extremas quanto 1,4 cm", precisamos descartar o sinal,</span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>porque uma diferença de −1,4 é tão extrema quanto uma de +1,4. A função <span class="in">`abs()`</span> faz isso:</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="in">`abs(-1.4)`</span> vale <span class="in">`1.4`</span>. E <span class="in">`mean()`</span> aplicado a comparações lógicas devolve a proporção de <span class="in">`TRUE`</span>:</span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="in">`mean(c(TRUE, FALSE, TRUE, TRUE))`</span> vale <span class="in">`0.75`</span>.</span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma função para qualquer delineamento</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma função para qualquer delineamento</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>A leitura executou essa receita para 12 placas com desvio-padrão 2. Como queremos comparar **delineamentos**, vale escrever a receita uma única vez, deixando esses dois números como argumentos:</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>proporcao_extremos <span class="ot">&lt;-</span> <span class="cf">function</span>(n_placas, desvio) {</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>  diferencas <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4000</span>,</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">rnorm</span>(n_placas, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> desvio)) <span class="sc">-</span></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>(<span class="fu">rnorm</span>(n_placas, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> desvio))</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>A leitura executou essa receita para 12 placas com desvio-padrão 2. Como queremos comparar</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>**delineamentos**, vale escrever a receita uma única vez, deixando esses dois números como argumentos:</span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>proporcao_extremos <span class="ot">&lt;-</span> <span class="cf">function</span>(n_placas, desvio) {</span>
-<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>  diferencas <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4000</span>,</span>
-<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">rnorm</span>(n_placas, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> desvio)) <span class="sc">-</span></span>
-<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>(<span class="fu">rnorm</span>(n_placas, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> desvio))</span>
-<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">placas_por_grupo =</span> n_placas,</span>
-<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> desvio,</span>
-<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">proporcao =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas) <span class="sc">&gt;=</span> <span class="fl">1.4</span>))</span>
-<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="at">placas_por_grupo =</span> n_placas,</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> desvio,</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">proporcao =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas) <span class="sc">&gt;=</span> <span class="fl">1.4</span>))</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>A estrutura é a mesma da função <span class="in">`ep_medio()`</span> da Prática 04, em que os argumentos entram entre parênteses e a última linha é o que a função devolve.</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>Antes de usar a função para qualquer coisa, confira se ela está correta. O experimento original tinha 12 placas por grupo e desvio-padrão 2, e a leitura desta semana informa a proporção que esse delineamento produz:</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="fu">proporcao_extremos</span>(<span class="dv">12</span>, <span class="dv">2</span>)</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Confira"}</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>Compare o valor de <span class="in">`proporcao`</span> com o que a leitura obteve para o mesmo delineamento. Os dois números não serão idênticos, porque cada execução sorteia experimentos diferentes, mas devem ficar próximos.</span>
 <span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>A estrutura é a mesma da função <span class="in">`ep_medio()`</span> da Prática 04: os argumentos entram entre parênteses e a</span>
-<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>última linha é o que a função devolve.</span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>Se o seu valor estiver muito distante, revise a função, porque o erro mais comum é usar médias diferentes nas duas chamadas de <span class="in">`rnorm()`</span>, o que deixa de representar um mundo **sem** efeito.</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>Antes de usar a função para qualquer coisa, confira se ela está correta. O experimento original tinha</span>
-<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>12 placas por grupo e desvio-padrão 2, e a leitura desta semana informa a proporção que esse</span>
-<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>delineamento produz:</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="fu">## Procure o delineamento</span></span>
 <span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="fu">proporcao_extremos</span>(<span class="dv">12</span>, <span class="dv">2</span>)</span>
-<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>Com 12 placas por grupo, uma diferença de 1,4 cm é um resultado comum sob a hipótese nula. Aumentando o número de placas, a distribuição nula se estreita e a mesma diferença se torna rara.</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de procurar"}</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>Escreva no script, como comentário, o seu palpite de quantas placas por grupo seriam necessárias para que a proporção caísse abaixo de **0,05**. Registre um número antes de testar qualquer coisa.</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Confira"}</span>
-<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>Compare o valor de <span class="in">`proporcao`</span> com o que a leitura obteve para o mesmo delineamento. Os dois números</span>
-<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>não serão idênticos, porque cada execução sorteia experimentos diferentes, mas devem ficar próximos.</span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>Se o seu valor estiver muito distante, revise a função: o erro mais comum é usar médias diferentes</span>
-<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>nas duas chamadas de <span class="in">`rnorm()`</span>, o que deixa de representar um mundo **sem** efeito.</span>
-<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>Teste **pelo menos três** valores diferentes de <span class="in">`n_placas`</span>, mantendo o desvio em 2, e junte os resultados em uma tabela:</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(<span class="dv">12</span>, <span class="dv">2</span>),</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(____, <span class="dv">2</span>),</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(____, <span class="dv">2</span>)</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Procure o delineamento</span></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>Continue testando até localizar, com a precisão que der no tempo da aula, o **menor** número de placas por grupo que leva a proporção abaixo de 0,05. Mantenha na tabela **todos** os valores testados, inclusive os que ficaram longe, porque é o caminho da busca que mostra o seu raciocínio.</span>
 <span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>Com 12 placas por grupo, uma diferença de 1,4 cm é um resultado comum sob a hipótese nula. Aumentando</span>
-<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>o número de placas, a distribuição nula se estreita e a mesma diferença se torna rara.</span>
-<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de procurar"}</span>
-<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a>Escreva no script, como comentário, o seu palpite: quantas placas por grupo seriam necessárias para</span>
-<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>que a proporção caísse abaixo de **0,05**? Registre um número antes de testar qualquer coisa.</span>
-<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="A proporção também varia"}</span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>Cada chamada da função sorteia 4000 experimentos novos, então o resultado oscila um pouco. Se um valor cair muito perto de 0,05, rode-o mais uma vez antes de decidir.</span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## E se as placas forem mais heterogêneas?</span></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>O desvio-padrão de 2 cm descreve o quanto as placas variam entre si. Em um costão mais heterogêneo, esse número seria maior.</span>
 <span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>Teste **pelo menos três** valores diferentes de <span class="in">`n_placas`</span>, mantendo o desvio em 2, e junte os</span>
-<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>resultados em uma tabela:</span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a>Escolha um desvio-padrão **maior que 2** e registre-o no script.</span>
 <span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(<span class="dv">12</span>, <span class="dv">2</span>),</span>
-<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(____, <span class="dv">2</span>),</span>
-<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proporcao_extremos</span>(____, <span class="dv">2</span>)</span>
-<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a>Continue testando até localizar, com a precisão que der no tempo da aula, o **menor** número de placas</span>
-<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>por grupo que leva a proporção abaixo de 0,05. Mantenha na tabela **todos** os valores testados,</span>
-<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a>inclusive os que ficaram longe: é o caminho da busca que mostra o seu raciocínio.</span>
-<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="A proporção também varia"}</span>
-<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>Cada chamada da função sorteia 4000 experimentos novos, então o resultado oscila um pouco. Se um</span>
-<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>valor cair muito perto de 0,05, rode-o mais uma vez antes de decidir.</span>
-<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## E se as placas forem mais heterogêneas?</span></span>
-<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>O desvio-padrão de 2 cm descreve o quanto as placas variam entre si. Em um costão mais heterogêneo,</span>
-<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>esse número seria maior.</span>
-<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
-<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>Escolha um desvio-padrão **maior que 2** e registre-o no script.</span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>Antes de rodar, escreva se o número de placas que você encontrou continua bastando. Se não, a necessidade aumenta pouco ou muito?</span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>Refaça o teste com o seu desvio, ao menos para o <span class="in">`n`</span> que você havia encontrado, e ajuste a busca até voltar a ficar abaixo de 0,05.</span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## O gráfico do seu delineamento</span></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a>Desenhe a distribuição nula do delineamento que você encontrou, com uma linha marcando a diferença observada de 1,4 cm. O bloco abaixo é um modelo para adaptar, então troque <span class="in">`____`</span> pelos seus valores.</span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a>diferencas <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4000</span>,</span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">rnorm</span>(____, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> ____)) <span class="sc">-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(____, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> ____))</span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="at">d =</span> diferencas), <span class="fu">aes</span>(<span class="at">x =</span> d)) <span class="sc">+</span></span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">45</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">1.4</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diferença entre as médias (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a><span class="in">`geom_vline()`</span> acrescenta uma linha vertical na posição indicada por <span class="in">`xintercept`</span>.</span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
 <span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>Antes de rodar, escreva: o número de placas que você encontrou continua bastando? Se não, a</span>
-<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>necessidade aumenta pouco ou muito?</span>
-<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a>Refaça o teste com o seu desvio, ao menos para o <span class="in">`n`</span> que você havia encontrado, e ajuste a busca até</span>
-<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a>voltar a ficar abaixo de 0,05.</span>
-<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## O gráfico do seu delineamento</span></span>
-<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a>Desenhe a distribuição nula do delineamento que você encontrou, com uma linha marcando a diferença</span>
-<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>observada de 1,4 cm. O bloco abaixo é um modelo para adaptar: troque <span class="in">`____`</span> pelos seus valores.</span>
-<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>diferencas <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4000</span>,</span>
-<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">rnorm</span>(____, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> ____)) <span class="sc">-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(____, <span class="at">mean =</span> <span class="fl">10.2</span>, <span class="at">sd =</span> ____))</span>
-<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="at">d =</span> diferencas), <span class="fu">aes</span>(<span class="at">x =</span> d)) <span class="sc">+</span></span>
-<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">45</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">1.4</span>, <span class="at">colour =</span> <span class="st">"#D55E00"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
-<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diferença entre as médias (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span>
-<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a><span class="in">`geom_vline()`</span> acrescenta uma linha vertical na posição indicada por <span class="in">`xintercept`</span>.</span>
-<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-distribuicao-nula.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
-<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
-<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
-<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: a função <span class="in">`proporcao_extremos()`</span> e a conferência para 12 placas com desvio 2;</span>
-<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a tabela da busca**, com todos os valores de <span class="in">`n_placas`</span> testados e o menor deles que levou a</span>
-<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a>   proporção abaixo de 0,05, precedida do seu palpite inicial registrado em comentário;</span>
-<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**a busca refeita com o seu desvio-padrão**, com a previsão registrada antes e o novo número de</span>
-<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a>   placas necessário;</span>
-<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>o histograma da distribuição nula do delineamento que você encontrou, com a linha em 1,4 cm;</span>
-<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, 3 a 4 frases respondendo, **com os seus números**: uma colega vai repetir este</span>
-<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a>   experimento em um costão mais heterogêneo do que o original e quer detectar uma diferença de</span>
-<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a>   1,4 cm. Quantas placas por grupo você recomenda, e o que aconteceria se ela mantivesse as 12</span>
-<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a>   placas do estudo anterior?</span>
-<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a função devolve os três valores e reproduz aproximadamente o resultado da leitura para 12 e 2;</span>
-<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a tabela mostra **todos** os valores testados, não apenas o final;</span>
-<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** dos resultados correspondentes;</span>
-<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do desvio-padrão está registrada;</span>
-<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o histograma corresponde ao delineamento que você encontrou e tem eixos com nome e unidade;</span>
-<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a recomendação final cita os seus próprios números.</span>
-<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Introdução ao teste de hipóteses</span><span class="co">](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html)</span>{target="_blank"}</span>
-<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre a região de rejeição, para ver de onde vem o limiar de 0,05.</span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-distribuicao-nula.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: a função <span class="in">`proporcao_extremos()`</span> e a conferência para 12 placas com desvio 2;</span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a tabela da busca**, com todos os valores de <span class="in">`n_placas`</span> testados e o menor deles que levou a proporção abaixo de 0,05, precedida do seu palpite inicial registrado em comentário;</span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**a busca refeita com o seu desvio-padrão**, com a previsão registrada antes e o novo número de placas necessário;</span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>o histograma da distribuição nula do delineamento que você encontrou, com a linha em 1,4 cm;</span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, 3 a 4 frases respondendo, **com os seus números**: uma colega vai repetir este experimento em um costão mais heterogêneo do que o original e quer detectar uma diferença de 1,4 cm. Quantas placas por grupo você recomenda, e o que aconteceria se ela mantivesse as 12 placas do estudo anterior?</span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a função devolve os três valores e reproduz aproximadamente o resultado da leitura para 12 e 2;</span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a tabela mostra **todos** os valores testados, não apenas o final;</span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** dos resultados correspondentes;</span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do desvio-padrão está registrada;</span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o histograma corresponde ao delineamento que você encontrou e tem eixos com nome e unidade;</span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a recomendação final cita os seus próprios números.</span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
+<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Introdução ao teste de hipóteses</span><span class="co">](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html)</span>{target="_blank"} (MEAD) — procure a seção sobre a região de rejeição, para ver de onde vem o limiar de 0,05.</span>
+<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

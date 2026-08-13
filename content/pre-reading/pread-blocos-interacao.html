@@ -403,8 +403,7 @@ window.Quarto = {
   <li><a href="#balanceamento-células-vazias-e-ordem-dos-termos" id="toc-balanceamento-células-vazias-e-ordem-dos-termos" class="nav-link" data-scroll-target="#balanceamento-células-vazias-e-ordem-dos-termos"><span class="header-section-number">4.3</span> Balanceamento, células vazias e ordem dos termos</a></li>
   </ul></li>
   <li><a href="#duas-estruturas-uma-mesma-ideia" id="toc-duas-estruturas-uma-mesma-ideia" class="nav-link" data-scroll-target="#duas-estruturas-uma-mesma-ideia"><span class="header-section-number">5</span> Duas estruturas, uma mesma ideia</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -433,7 +432,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -447,7 +446,7 @@ window.Quarto = {
 
 <section id="um-costão-que-não-é-uniforme" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Um costão que não é uniforme</h1>
-<p>Você vai testar três tipos de placa de assentamento em um costão rochoso. O problema é que o costão tem um gradiente evidente: perto da linha d’água a superfície fica submersa quase o tempo todo; perto do topo, exposta ao sol por horas.</p>
+<p>Você vai testar três tipos de placa de assentamento em um costão rochoso. O problema é que o costão tem um gradiente evidente, porque perto da linha d’água a superfície fica submersa quase o tempo todo e perto do topo fica exposta ao sol por horas.</p>
 <p>Se você instalar as placas do tipo A na faixa inferior, as do tipo B no meio e as do tipo C no topo, o experimento está perdido antes de começar. Qualquer diferença entre as placas pode ser da placa ou da altura no costão, e <strong>não há análise capaz de separar as duas coisas depois</strong>.</p>
 <p>Esse é o problema do confundimento. E existem duas maneiras muito diferentes de lidar com um gradiente conhecido.</p>
 </section>
@@ -461,7 +460,7 @@ window.Quarto = {
 <section id="formar-blocos" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="formar-blocos"><span class="header-section-number">2.2</span> Formar blocos</h2>
 <p>A alternativa é reconhecer o gradiente e usá-lo a favor do experimento.</p>
-<p>Divida o costão em três faixas de altura. Dentro de <strong>cada faixa</strong>, instale uma placa de cada tipo, sorteando as posições. Cada faixa é um <strong>bloco</strong>: um conjunto de unidades parecidas entre si, onde todos os tratamentos aparecem.</p>
+<p>Divida o costão em três faixas de altura. Dentro de <strong>cada faixa</strong>, instale uma placa de cada tipo, sorteando as posições. Cada faixa é um <strong>bloco</strong>, ou seja, um conjunto de unidades parecidas entre si, onde todos os tratamentos aparecem, como mostra a <a href="#fig-alocacao-blocos" class="quarto-xref">Figura&nbsp;1</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-alocacao-blocos" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagrama com três faixas horizontais empilhadas, representando as alturas inferior, média e superior do costão. Em cada faixa há três quadrados coloridos, um para cada tipo de placa, em ordem diferente entre as faixas.">
@@ -476,8 +475,8 @@ Figura&nbsp;1: Alocação em três blocos de altura. Dentro de cada faixa, os tr
 </div>
 </div>
 </div>
-<p>Repare que cada faixa contém os três tipos de placa, em ordem diferente. O que muda na análise é o destino da variação devida à altura. Em vez de ficar no resíduo, ela é <strong>atribuída ao bloco</strong> e retirada dali. O resíduo passa a conter apenas o que sobra depois de descontar tratamento e bloco, e fica menor.</p>
-<p>O ganho é real: o mesmo efeito de tratamento se torna mais fácil de detectar, sem coletar um dado a mais.</p>
+<p>Repare que cada faixa da <a href="#fig-alocacao-blocos" class="quarto-xref">Figura&nbsp;1</a> contém os três tipos de placa, em ordem diferente. O que muda na análise é o destino da variação devida à altura. Em vez de ficar no resíduo, ela é <strong>atribuída ao bloco</strong> e retirada dali. O resíduo passa a conter apenas o que sobra depois de descontar tratamento e bloco, e fica menor.</p>
+<p>O ganho é real, porque o mesmo efeito de tratamento se torna mais fácil de detectar, sem coletar um dado a mais.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Bloco e tratamento não têm o mesmo papel">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -490,24 +489,24 @@ Figura&nbsp;1: Alocação em três blocos de altura. Dentro de cada faixa, os tr
 <div class="callout-body-container callout-body">
 <p>O <strong>tratamento</strong> é o que você quer comparar. Seus níveis foram sorteados para as unidades.</p>
 <p>O <strong>bloco</strong> é uma fonte de variação conhecida e indesejada, que você agrupa em vez de sortear. Ninguém sorteia qual faixa do costão será “superior”.</p>
-<p>Por isso não se interpreta o efeito de bloco como resultado do estudo: ele é um recurso de controle, não uma resposta.</p>
+<p>Por isso não se interpreta o efeito de bloco como resultado do estudo, pois ele é um recurso de controle, não uma resposta.</p>
 </div>
 </div>
-<p>Dessa diferença de papéis decorre uma exigência prática. Como o bloco organiza a alocação dos tratamentos, ele precisa ser definido no planejamento, antes de sortear as placas. Agrupar unidades depois de ver os dados, buscando faixas que tornem o resultado mais nítido, não é controle local: é seleção de resultado, e invalida a interpretação do teste.</p>
+<p>Dessa diferença de papéis decorre uma exigência prática. Como o bloco organiza a alocação dos tratamentos, ele precisa ser definido no planejamento, antes de sortear as placas. Agrupar unidades depois de ver os dados, buscando faixas que tornem o resultado mais nítido, não é controle local, e sim seleção de resultado, o que invalida a interpretação do teste.</p>
 </section>
 <section id="o-modelo-de-blocos-completos" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="o-modelo-de-blocos-completos"><span class="header-section-number">2.3</span> O modelo de blocos completos</h2>
-<p>O que a figura mostra pode ser escrito como modelo. Com <span class="math inline">\(t\)</span> tratamentos e <span class="math inline">\(b\)</span> blocos, uma observação do tratamento <span class="math inline">\(i\)</span> no bloco <span class="math inline">\(j\)</span> é</p>
+<p>O que a <a href="#fig-alocacao-blocos" class="quarto-xref">Figura&nbsp;1</a> mostra pode ser escrito como modelo. Com <span class="math inline">\(t\)</span> tratamentos e <span class="math inline">\(b\)</span> blocos, uma observação do tratamento <span class="math inline">\(i\)</span> no bloco <span class="math inline">\(j\)</span> é</p>
 <p><span class="math display">\[
 Y_{ij}=\mu+\tau_i+\beta_j+\varepsilon_{ij}.
 \]</span></p>
 <p><span class="math inline">\(\tau_i\)</span> representa o tratamento, <span class="math inline">\(\beta_j\)</span> representa a diferença sistemática do bloco e <span class="math inline">\(\varepsilon_{ij}\)</span> é o que resta. O termo <span class="math inline">\(\beta_j\)</span> é exatamente a parte da variação que, sem bloqueamento, estaria dentro de <span class="math inline">\(\varepsilon_{ij}\)</span>. Em um delineamento em blocos completos aleatorizados, todos os tratamentos aparecem uma vez em cada bloco e são sorteados dentro dele.</p>
-<p>A variação total se divide então em tratamento, bloco e resíduo. Os graus de liberdade são <span class="math inline">\(t-1\)</span> para tratamentos, <span class="math inline">\(b-1\)</span> para blocos e <span class="math inline">\((t-1)(b-1)\)</span> para o resíduo, totalizando <span class="math inline">\(tb-1\)</span>. Com uma observação por combinação, tratamento e bloco não podem ter interação estimada separadamente: essa variação fica no resíduo. Se uma interação entre tratamento e bloco for cientificamente esperada, é necessário replicar as combinações ou escolher outro desenho.</p>
+<p>A variação total se divide então em tratamento, bloco e resíduo. Os graus de liberdade são <span class="math inline">\(t-1\)</span> para tratamentos, <span class="math inline">\(b-1\)</span> para blocos e <span class="math inline">\((t-1)(b-1)\)</span> para o resíduo, totalizando <span class="math inline">\(tb-1\)</span>. Com uma observação por combinação, tratamento e bloco não podem ter interação estimada separadamente, e essa variação fica no resíduo. Se uma interação entre tratamento e bloco for cientificamente esperada, é necessário replicar as combinações ou escolher outro desenho.</p>
 <p>O bloqueamento ganha precisão quando a variação entre blocos é grande e unidades do mesmo bloco são parecidas. Se os blocos quase não diferem, o ganho é pequeno e alguns graus de liberdade foram usados sem reduzir muito o resíduo. Isso não introduz viés quando o desenho e o modelo estão corretos, mas mostra por que o critério de bloqueamento precisa de justificativa prévia.</p>
 </section>
 <section id="um-exemplo-completo-de-blocos" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="um-exemplo-completo-de-blocos"><span class="header-section-number">2.4</span> Um exemplo completo de blocos</h2>
-<p>Considere quatro faixas do costão e três tipos de placa. Cada linha da tabela analítica é uma placa, e cada bloco contém os três tratamentos. As médias mudam com a altura, mas a comparação entre placas é feita dentro de cada faixa. Na fórmula do modelo, o sinal <code>+</code> indica exatamente isso: placa e bloco entram como efeitos que se somam.</p>
+<p>Considere quatro faixas do costão e três tipos de placa. Cada linha da tabela analítica é uma placa, e cada bloco contém os três tratamentos. As médias mudam com a altura, mas a comparação entre placas é feita dentro de cada faixa. Na fórmula do modelo, o sinal <code>+</code> indica exatamente isso, ou seja, placa e bloco entram como efeitos que se somam.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver dados, modelo e tabela ANOVA em blocos</summary>
@@ -552,24 +551,24 @@ Tabela&nbsp;1: ANOVA do delineamento em blocos completos aleatorizados.
 <tr class="odd">
 <td style="text-align: left;">placa</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">5.710</td>
-<td style="text-align: right;">2.855</td>
-<td style="text-align: right;">30.477</td>
-<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">2.655</td>
+<td style="text-align: right;">1.327</td>
+<td style="text-align: right;">22.647</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">bloco</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">13.730</td>
-<td style="text-align: right;">4.577</td>
-<td style="text-align: right;">48.857</td>
+<td style="text-align: right;">11.280</td>
+<td style="text-align: right;">3.760</td>
+<td style="text-align: right;">64.152</td>
 <td style="text-align: right;">0.000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Residuals</td>
 <td style="text-align: right;">6</td>
-<td style="text-align: right;">0.562</td>
-<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">0.352</td>
+<td style="text-align: right;">0.059</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
 </tr>
@@ -580,7 +579,7 @@ Tabela&nbsp;1: ANOVA do delineamento em blocos completos aleatorizados.
 </figure>
 </div>
 </div>
-<p>O modelo usa <span class="math inline">\(t-1=2\)</span> graus de liberdade para placa, <span class="math inline">\(b-1=3\)</span> para bloco e <span class="math inline">\((t-1)(b-1)=6\)</span> para o resíduo, como previsto. Se ignorássemos o bloco, a diferença sistemática entre alturas seria misturada ao resíduo e a linha correspondente da tabela desapareceria, engordando a soma de quadrados residual. Incluí-lo não muda as comparações observadas dentro de cada faixa; muda a estimativa do ruído contra a qual elas são avaliadas.</p>
+<p>O modelo usa <span class="math inline">\(t-1=2\)</span> graus de liberdade para placa, <span class="math inline">\(b-1=3\)</span> para bloco e <span class="math inline">\((t-1)(b-1)=6\)</span> para o resíduo, como previsto. Se ignorássemos o bloco, a diferença sistemática entre alturas seria misturada ao resíduo e a linha correspondente da tabela desapareceria, engordando a soma de quadrados residual. Incluí-lo não muda as comparações observadas dentro de cada faixa, e sim a estimativa do ruído contra a qual elas são avaliadas.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Completo não significa replicado por célula">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -598,14 +597,14 @@ Tabela&nbsp;1: ANOVA do delineamento em blocos completos aleatorizados.
 </section>
 <section id="quando-há-dois-fatores-de-interesse" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Quando há dois fatores de interesse</h1>
-<p>O segundo problema é diferente. Agora você não tem um fator e um incômodo: você tem <strong>dois fatores que interessam de verdade</strong>.</p>
+<p>O segundo problema é diferente. Agora você não tem um fator e um incômodo, mas <strong>dois fatores que interessam de verdade</strong>.</p>
 <p>Suponha um experimento em mesocosmos onde interessam a presença de algas (com ou sem) e o tipo de nutriente adicionado (três tipos). Uma opção seria fazer dois experimentos separados. Combinar os dois fatores em um só experimento é melhor por dois motivos.</p>
-<p>O primeiro é econômico: as mesmas unidades servem às duas perguntas. O segundo é conceitual, e é o que realmente importa: só o experimento combinado permite descobrir se <strong>o efeito de um fator depende do outro</strong>.</p>
+<p>O primeiro é econômico, porque as mesmas unidades servem às duas perguntas. O segundo é conceitual, e é o que realmente importa, porque só o experimento combinado permite descobrir se <strong>o efeito de um fator depende do outro</strong>.</p>
 <p>Com 2 níveis de algas e 3 de nutriente, há <span class="math inline">\(2 \times 3 = 6\)</span> combinações. Um delineamento <strong>fatorial</strong> aloca unidades experimentais a todas elas.</p>
 </section>
 <section id="efeitos-principais-e-interação" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Efeitos principais e interação</h1>
-<p>Um experimento fatorial admite três desfechos qualitativamente distintos, e a maneira mais direta de reconhecê-los é representar as médias de cada combinação em um gráfico de linhas.</p>
+<p>Um experimento fatorial admite três desfechos qualitativamente distintos, e a maneira mais direta de reconhecê-los é representar as médias de cada combinação em um gráfico de linhas, como na <a href="#fig-interacao" class="quarto-xref">Figura&nbsp;2</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-interacao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três painéis lado a lado. No primeiro as linhas são horizontais e sobrepostas; no segundo são paralelas e deslocadas; no terceiro se cruzam.">
@@ -620,9 +619,9 @@ Figura&nbsp;2: Três resultados possíveis em um experimento fatorial. Cada pont
 </div>
 </div>
 </div>
-<p>No primeiro painel, adicionar algas não muda nada: as linhas são horizontais.</p>
-<p>No segundo, adicionar algas eleva a resposta <strong>na mesma medida</strong> para os três nutrientes. As linhas são paralelas. Nesse caso os dois fatores agem de forma independente, e faz sentido resumir cada um por um <strong>efeito principal</strong>: “algas aumentam a concentração em 1,2 unidade, seja qual for o nutriente”.</p>
-<p>No terceiro, as linhas se cruzam. Com NH4, adicionar algas aumenta muito a concentração; com NO3, diminui. Existe <strong>interação</strong>: o efeito de um fator depende do nível do outro.</p>
+<p>No primeiro painel da <a href="#fig-interacao" class="quarto-xref">Figura&nbsp;2</a>, adicionar algas não muda nada, e as linhas são horizontais.</p>
+<p>No segundo, adicionar algas eleva a resposta <strong>na mesma medida</strong> para os três nutrientes. As linhas são paralelas. Nesse caso os dois fatores agem de forma independente, e faz sentido resumir cada um por um <strong>efeito principal</strong>, como em “algas aumentam a concentração em 1,2 unidade, seja qual for o nutriente”.</p>
+<p>No terceiro, as linhas se cruzam. Com NH4, adicionar algas aumenta muito a concentração, enquanto com NO3 ela diminui. Existe <strong>interação</strong>, isto é, o efeito de um fator depende do nível do outro.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Com interação, o efeito principal engana">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -633,17 +632,17 @@ Figura&nbsp;2: Três resultados possíveis em um experimento fatorial. Cada pont
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>No terceiro painel, a média geral do efeito de algas seria pequena: os aumentos e as quedas quase se cancelam.</p>
+<p>No terceiro painel, a média geral do efeito de algas seria pequena, porque os aumentos e as quedas quase se cancelam.</p>
 <p>Dizer “algas quase não afetam a concentração” seria falso para todos os nutrientes individualmente. Quando há interação, é o padrão combinado que precisa ser descrito, não a média dos efeitos.</p>
 </div>
 </div>
 <section id="o-modelo-fatorial-e-sua-partição" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="o-modelo-fatorial-e-sua-partição"><span class="header-section-number">4.1</span> O modelo fatorial e sua partição</h2>
-<p>Os três cenários correspondem a valores diferentes de um mesmo termo do modelo. Para fatores <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>, com observação <span class="math inline">\(k\)</span> na combinação dos níveis <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>,</p>
+<p>Os três cenários da <a href="#fig-interacao" class="quarto-xref">Figura&nbsp;2</a> correspondem a valores diferentes de um mesmo termo do modelo. Para fatores <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>, com observação <span class="math inline">\(k\)</span> na combinação dos níveis <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span>,</p>
 <p><span class="math display">\[
 Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
 \]</span></p>
-<p><span class="math inline">\(\alpha_i\)</span> e <span class="math inline">\(\beta_j\)</span> são efeitos principais; <span class="math inline">\((\alpha\beta)_{ij}\)</span> é a interação, isto é, o desvio da combinação em relação ao que seria esperado pela simples soma dos dois efeitos. No primeiro painel da figura, <span class="math inline">\(\alpha_i\)</span> e <span class="math inline">\((\alpha\beta)_{ij}\)</span> são nulos; no segundo, apenas <span class="math inline">\((\alpha\beta)_{ij}\)</span> é nulo; no terceiro, nenhum dos dois.</p>
+<p><span class="math inline">\(\alpha_i\)</span> e <span class="math inline">\(\beta_j\)</span> são efeitos principais, enquanto <span class="math inline">\((\alpha\beta)_{ij}\)</span> é a interação, isto é, o desvio da combinação em relação ao que seria esperado pela simples soma dos dois efeitos. No primeiro painel da <a href="#fig-interacao" class="quarto-xref">Figura&nbsp;2</a>, <span class="math inline">\(\alpha_i\)</span> e <span class="math inline">\((\alpha\beta)_{ij}\)</span> são nulos, no segundo apenas <span class="math inline">\((\alpha\beta)_{ij}\)</span> é nulo, e no terceiro nenhum dos dois é nulo.</p>
 <p>Em um desenho balanceado com <span class="math inline">\(a\)</span> níveis de <span class="math inline">\(A\)</span>, <span class="math inline">\(b\)</span> níveis de <span class="math inline">\(B\)</span> e <span class="math inline">\(r\)</span> réplicas por combinação, os graus de liberdade são:</p>
 <ul>
 <li><span class="math inline">\(a-1\)</span> para <span class="math inline">\(A\)</span>;</li>
@@ -652,7 +651,7 @@ Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
 <li><span class="math inline">\(ab(r-1)\)</span> para o resíduo;</li>
 <li><span class="math inline">\(abr-1\)</span> no total.</li>
 </ul>
-<p>Replicação em cada célula é o que permite distinguir interação de variação residual. Uma única unidade por combinação produz médias, mas não fornece uma estimativa independente do erro dentro da célula. No R, a diferença em relação ao modelo de blocos está em uma única letra: o operador <code>*</code> substitui o <code>+</code>.</p>
+<p>Replicação em cada célula é o que permite distinguir interação de variação residual. Uma única unidade por combinação produz médias, mas não fornece uma estimativa independente do erro dentro da célula. No R, a diferença em relação ao modelo de blocos está em uma única letra, porque o operador <code>*</code> substitui o <code>+</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver um modelo fatorial em R</summary>
@@ -676,10 +675,10 @@ Y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-algas            1 11.454  11.454   96.19 7.18e-11 ***
-nutriente        2  4.228   2.114   17.75 8.18e-06 ***
-algas:nutriente  2  2.898   1.449   12.17 0.000135 ***
-Residuals       30  3.572   0.119                     
+algas            1 19.906  19.906 137.055 1.03e-12 ***
+nutriente        2  2.849   1.425   9.809 0.000528 ***
+algas:nutriente  2  1.982   0.991   6.822 0.003615 ** 
+Residuals       30  4.357   0.145                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -692,7 +691,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><span class="math display">\[
 I=(\mu_{22}-\mu_{12})-(\mu_{21}-\mu_{11}).
 \]</span></p>
-<p>O primeiro parêntese é o efeito de <span class="math inline">\(A\)</span> em um nível de <span class="math inline">\(B\)</span>; o segundo é o efeito de <span class="math inline">\(A\)</span> no outro nível. Se esses efeitos são iguais, <span class="math inline">\(I=0\)</span> e as linhas esperadas são paralelas. A interação não exige que as linhas se cruzem: qualquer mudança de inclinação entre os níveis já representa dependência.</p>
+<p>O primeiro parêntese é o efeito de <span class="math inline">\(A\)</span> em um nível de <span class="math inline">\(B\)</span>, e o segundo é o efeito de <span class="math inline">\(A\)</span> no outro nível. Se esses efeitos são iguais, <span class="math inline">\(I=0\)</span> e as linhas esperadas são paralelas. A interação não exige que as linhas se cruzem, pois qualquer mudança de inclinação entre os níveis já representa dependência.</p>
 <p>Quando a interação é relevante, descrevemos <strong>efeitos simples</strong>, como o efeito de algas dentro de cada nutriente. Aplicado aos dados simulados acima, esse cálculo produz uma coluna por diferença:</p>
 <div class="cell">
 <div id="tbl-efeitos-simples" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -714,21 +713,21 @@ Tabela&nbsp;2: Médias por combinação e efeito de algas dentro de cada nutrien
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">NH4</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">4.15</td>
 <td style="text-align: right;">2.15</td>
-<td style="text-align: right;">4.02</td>
-<td style="text-align: right;">1.87</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NO3</td>
-<td style="text-align: right;">2.75</td>
-<td style="text-align: right;">3.25</td>
-<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">2.30</td>
+<td style="text-align: right;">3.42</td>
+<td style="text-align: right;">1.12</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">PO3</td>
 <td style="text-align: right;">1.81</td>
-<td style="text-align: right;">2.82</td>
-<td style="text-align: right;">1.01</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">1.19</td>
 </tr>
 </tbody>
 </table>
@@ -737,26 +736,35 @@ Tabela&nbsp;2: Médias por combinação e efeito de algas dentro de cada nutrien
 </figure>
 </div>
 </div>
-<p>A coluna <code>efeito_algas</code> mostra que o acréscimo devido às algas é bem maior em NH4 do que nos demais nutrientes, que é a assinatura numérica da interação. Os efeitos simples devem vir com erros padrão ou intervalos, e a família de comparações precisa ser declarada. A tabela acima mostra a estimativa bruta para tornar a operação visível; a inferência usa o quadrado médio residual do modelo fatorial.</p>
+<p>A coluna <code>efeito_algas</code> mostra que o acréscimo devido às algas é bem maior em NH4 do que nos demais nutrientes, que é a assinatura numérica da interação. Os efeitos simples devem vir com erros padrão ou intervalos, e a família de comparações precisa ser declarada. A tabela acima mostra a estimativa bruta para tornar a operação visível, enquanto a inferência usa o quadrado médio residual do modelo fatorial.</p>
 </section>
 <section id="balanceamento-células-vazias-e-ordem-dos-termos" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="balanceamento-células-vazias-e-ordem-dos-termos"><span class="header-section-number">4.3</span> Balanceamento, células vazias e ordem dos termos</h2>
 <p>Toda a partição descrita até aqui pressupõe um desenho balanceado e completo, no qual os efeitos principais e a interação são separados de forma limpa. Com tamanhos diferentes entre células, as médias marginais passam a depender dos pesos atribuídos a elas. Uma célula vazia pode tornar certos efeitos não estimáveis e confundir fator com interação, e nessa situação a ordem dos termos e o tipo de soma de quadrados deixam de ser detalhes de software.</p>
-<p>O melhor reparo ocorre no delineamento: preencher todas as combinações, manter replicação suficiente e registrar perdas. Modelos podem acomodar desequilíbrio moderado, mas não inventam a comparação que uma combinação ausente impossibilitou.</p>
+<p>O melhor reparo ocorre no delineamento, preenchendo todas as combinações, mantendo replicação suficiente e registrando perdas. Modelos podem acomodar desequilíbrio moderado, mas não inventam a comparação que uma combinação ausente impossibilitou.</p>
 </section>
 </section>
 <section id="duas-estruturas-uma-mesma-ideia" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Duas estruturas, uma mesma ideia</h1>
 <p>Bloco e fatorial resolvem problemas diferentes, mas fazem a mesma coisa com a variação dos dados.</p>
 <p>No delineamento em blocos, a variação devida ao gradiente deixa de ficar no resíduo e passa a ser atribuída ao bloco. No fatorial, a variação devida ao segundo fator, e à combinação dos dois, deixa de ficar no resíduo e passa a ser atribuída a eles.</p>
-<p>Nos dois casos o resíduo encolhe, e o resíduo é a régua com que todo efeito é julgado. Reconhecer uma estrutura que existe no experimento é, quase sempre, a forma mais barata de tornar um efeito detectável. A diferença está no que se faz com o termo acrescentado: o efeito de bloco é descontado e não interpretado, enquanto o segundo fator e sua interação são exatamente aquilo que o estudo pretende descrever.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<p>Nos dois casos o resíduo encolhe, e o resíduo é a régua com que todo efeito é julgado. Reconhecer uma estrutura que existe no experimento é, quase sempre, a forma mais barata de tornar um efeito detectável. A diferença está no que se faz com o termo acrescentado, já que o efeito de bloco é descontado e não interpretado, enquanto o segundo fator e sua interação são exatamente aquilo que o estudo pretende descrever.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD), onde termos aditivos e de interação reaparecem com preditores contínuos.</li>
 </ul>
 <p>Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span> apresentam delineamentos em blocos e fatoriais com detalhamento das somas de quadrados em situações desbalanceadas.</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -774,14 +782,14 @@ Tabela&nbsp;2: Médias por combinação e efeito de algas dentro de cada nutrien
 </div>
 </div>
 </section>
-<section id="referências" class="level1" data-number="7">
+<section id="referências" class="level1" data-number="6">
 
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-quinn2002" class="csl-entry" role="listitem">
 Quinn, Gerry P., e Michael J. Keough. 2002. <em>Experimental Design and Data Analysis for Biologists</em>. Cambridge University Press.
 </div>

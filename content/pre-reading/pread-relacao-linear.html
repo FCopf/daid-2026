@@ -406,8 +406,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#duas-incertezas-de-previsão" id="toc-duas-incertezas-de-previsão" class="nav-link" data-scroll-target="#duas-incertezas-de-previsão"><span class="header-section-number">5</span> Duas incertezas de previsão</a></li>
   <li><a href="#interpolar-não-é-extrapolar" id="toc-interpolar-não-é-extrapolar" class="nav-link" data-scroll-target="#interpolar-não-é-extrapolar"><span class="header-section-number">6</span> Interpolar não é extrapolar</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">8</span> Referências</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -436,7 +435,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -450,9 +449,9 @@ window.Quarto = {
 
 <section id="quando-o-preditor-não-tem-níveis" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Quando o preditor não tem níveis</h1>
-<p>Até aqui as comparações envolviam categorias: duas dietas, quatro concentrações, dois substratos. Mas muitas perguntas nas Ciências do Mar não têm essa forma.</p>
+<p>Até aqui as comparações envolviam categorias, como duas dietas, quatro concentrações ou dois substratos. Mas muitas perguntas nas Ciências do Mar não têm essa forma.</p>
 <p><em>A riqueza de espécies diminui conforme a altura da estação em relação à maré?</em></p>
-<p>Aqui não há grupos. A altura é uma medida contínua: cada estação tem o seu valor, e não existem “níveis de altura” a comparar. Precisamos de uma descrição que funcione para <strong>qualquer</strong> valor do preditor.</p>
+<p>Aqui não há grupos. A altura é uma medida contínua, de modo que cada estação tem o seu valor e não existem “níveis de altura” a comparar. Precisamos de uma descrição que funcione para <strong>qualquer</strong> valor do preditor.</p>
 </section>
 <section id="a-reta-como-processo-gerador" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> A reta como processo gerador</h1>
@@ -462,7 +461,7 @@ window.Quarto = {
 <p><span class="math display">\[\text{riqueza esperada} = \beta_0 + \beta_1 \times \text{altura}\]</span></p>
 <p>Os dois números têm significado concreto.</p>
 <p>O <strong>intercepto</strong> <span class="math inline">\(\beta_0\)</span> é a riqueza esperada quando a altura vale zero. Ele só é interpretável se o valor zero fizer sentido e estiver dentro da faixa observada.</p>
-<p>A <strong>inclinação</strong> <span class="math inline">\(\beta_1\)</span> é o que realmente responde à pergunta: quanto a riqueza esperada muda quando a altura aumenta em uma unidade. Seu sinal indica a direção, seu valor indica a magnitude, e sua unidade é a da resposta dividida pela do preditor, espécies por metro, por exemplo.</p>
+<p>A <strong>inclinação</strong> <span class="math inline">\(\beta_1\)</span> é o que realmente responde à pergunta, ou seja, quanto a riqueza esperada muda quando a altura aumenta em uma unidade. Seu sinal indica a direção, seu valor indica a magnitude, e sua unidade é a da resposta dividida pela do preditor, espécies por metro, por exemplo.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -483,7 +482,7 @@ window.Quarto = {
 <p><span class="math display">\[\text{riqueza} = \underbrace{\beta_0 + \beta_1 \times \text{altura}}_{\text{parte sistemática}}
 + \underbrace{\varepsilon}_{\text{variação ao redor}}\]</span></p>
 <p>A parte sistemática diz onde está o centro para cada altura. O termo <span class="math inline">\(\varepsilon\)</span> representa tudo o que faz uma estação específica ficar acima ou abaixo desse centro.</p>
-<p>Escrever o modelo assim permite <strong>gerar dados</strong>: escolha valores de altura, calcule o centro para cada um, sorteie um desvio em torno dele. É o que torna a regressão um modelo generativo, e não apenas uma linha traçada sobre pontos. A figura abaixo usa esse procedimento duas vezes, com a mesma reta e magnitudes diferentes de <span class="math inline">\(\varepsilon\)</span>.</p>
+<p>Escrever o modelo assim permite <strong>gerar dados</strong>, escolhendo valores de altura, calculando o centro para cada um e sorteando um desvio em torno dele. É o que torna a regressão um modelo generativo, e não apenas uma linha traçada sobre pontos. A <a href="#fig-mesma-reta" class="quarto-xref">Figura&nbsp;1</a> usa esse procedimento duas vezes, com a mesma reta e magnitudes diferentes de <span class="math inline">\(\varepsilon\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-mesma-reta" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis com a mesma reta descendente. No painel da esquerda os pontos ficam colados à reta; no da direita se espalham amplamente ao redor dela.">
@@ -498,15 +497,15 @@ Figura&nbsp;1: Dados gerados pela mesma reta (intercepto 6,7 e inclinação -2,9
 </div>
 </div>
 </div>
-<p>Os dois painéis vêm da <strong>mesma</strong> reta. A relação sistemática é idêntica; o que muda é o quanto as observações se afastam dela. À esquerda a relação salta aos olhos; à direita ela existe, mas exige mais dados para ser estimada com precisão.</p>
-<p>Guarde isso: uma inclinação forte e uma relação <em>aparentemente</em> forte não são a mesma coisa.</p>
+<p>Os dois painéis da <a href="#fig-mesma-reta" class="quarto-xref">Figura&nbsp;1</a> vêm da <strong>mesma</strong> reta. A relação sistemática é idêntica, e o que muda é o quanto as observações se afastam dela. À esquerda a relação salta aos olhos, enquanto à direita ela existe, mas exige mais dados para ser estimada com precisão.</p>
+<p>Guarde isso, uma inclinação forte e uma relação <em>aparentemente</em> forte não são a mesma coisa.</p>
 </section>
 </section>
 <section id="da-reta-verdadeira-à-reta-estimada" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Da reta verdadeira à reta estimada</h1>
 <p>No mundo real, <span class="math inline">\(\beta_0\)</span> e <span class="math inline">\(\beta_1\)</span> são desconhecidos. Temos apenas as estações medidas, e a partir delas estimamos uma reta.</p>
-<p>O critério mais usado é o dos <strong>mínimos quadrados</strong>: entre todas as retas possíveis, escolher a que torna mínima a soma dos quadrados das distâncias verticais entre cada ponto e a reta.</p>
-<p>Essas distâncias são os <strong>resíduos</strong>: o que sobrou depois de descontar a parte explicada pela altura. Elevá-las ao quadrado faz com que desvios grandes pesem desproporcionalmente, o que também significa que um único ponto muito afastado pode puxar a reta inteira.</p>
+<p>O critério mais usado é o dos <strong>mínimos quadrados</strong>, que escolhe, entre todas as retas possíveis, a que torna mínima a soma dos quadrados das distâncias verticais entre cada ponto e a reta.</p>
+<p>Essas distâncias são os <strong>resíduos</strong>, isto é, o que sobrou depois de descontar a parte explicada pela altura. Elevá-las ao quadrado faz com que desvios grandes pesem desproporcionalmente, o que também significa que um único ponto muito afastado pode puxar a reta inteira.</p>
 <p>Esse critério tem solução analítica. Para observações <span class="math inline">\((x_i,y_i)\)</span>, as estimativas de mínimos quadrados são</p>
 <p><span class="math display">\[
 \hat\beta_1=
@@ -523,7 +522,7 @@ Figura&nbsp;1: Dados gerados pela mesma reta (intercepto 6,7 e inclinação -2,9
 <p><span class="math display">\[
 r=\frac{s_{XY}}{s_Xs_Y},
 \]</span></p>
-<p>e varia de -1 a 1. As duas quantidades compartilham o mesmo numerador, mas descrevem coisas diferentes: covariância e correlação são simétricas, pois trocar <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> não muda seu sentido, enquanto a regressão não é. Escolher <span class="math inline">\(Y\)</span> como resposta define quais distâncias são minimizadas e qual variável será prevista. Vale acrescentar que correlação alta não demonstra causalidade, pois uma terceira variável, uma tendência temporal ou a seleção das unidades pode produzir a associação.</p>
+<p>e varia de -1 a 1. As duas quantidades compartilham o mesmo numerador, mas descrevem coisas diferentes. Covariância e correlação são simétricas, pois trocar <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> não muda seu sentido, enquanto a regressão não é. Escolher <span class="math inline">\(Y\)</span> como resposta define quais distâncias são minimizadas e qual variável será prevista. Vale acrescentar que correlação alta não demonstra causalidade, pois uma terceira variável, uma tendência temporal ou a seleção das unidades pode produzir a associação.</p>
 <p>No R, todo esse procedimento cabe em uma função:</p>
 <div class="cell">
 <details class="code-fold">
@@ -541,19 +540,19 @@ Call:
 lm(formula = riqueza ~ altura, data = dados_precisos)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--2.7414 -0.5057  0.1130  0.4876  2.3751 
+     Min       1Q   Median       3Q      Max 
+-1.91201 -0.85698 -0.01882  0.66087  2.50079 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  6.77340    0.12778   53.01   &lt;2e-16 ***
-altura      -2.88120    0.09817  -29.35   &lt;2e-16 ***
+(Intercept)   7.0103     0.1624   43.16   &lt;2e-16 ***
+altura       -3.0244     0.1166  -25.94   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.9171 on 58 degrees of freedom
-Multiple R-squared:  0.9369,    Adjusted R-squared:  0.9358 
-F-statistic: 861.4 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.105 on 58 degrees of freedom
+Multiple R-squared:  0.9207,    Adjusted R-squared:  0.9193 
+F-statistic:   673 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste da reta em R</summary>
@@ -561,11 +560,11 @@ F-statistic: 861.4 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
-(Intercept)  6.517615  7.029177
-altura      -3.077704 -2.684688</code></pre>
+(Intercept)  6.685138  7.335414
+altura      -3.257742 -2.791019</code></pre>
 </div>
 </div>
-<p><code>lm()</code> estima os coeficientes; <code>summary()</code> informa erros padrão, testes e <span class="math inline">\(R^2\)</span>; e <code>confint()</code> fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.</p>
+<p><code>lm()</code> estima os coeficientes, <code>summary()</code> informa erros padrão, testes e <span class="math inline">\(R^2\)</span>, e <code>confint()</code> fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.</p>
 <section id="um-cálculo-aplicado-do-ponto-à-reta" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="um-cálculo-aplicado-do-ponto-à-reta"><span class="header-section-number">3.1</span> Um cálculo aplicado, do ponto à reta</h2>
 <p>Vale executar as fórmulas uma vez, sem <code>lm()</code>, para acompanhar cada parcela. Considere dez estações do conjunto RIKZ, com riqueza da macrofauna praial e o índice NAP de exposição às ondas, coletadas na costa da Holanda <span class="citation" data-cites="zuur2009">(<a href="#ref-zuur2009" role="doc-biblioref">Zuur et al. 2009</a>)</span>. Valores menores de NAP representam estações mais expostas.</p>
@@ -612,7 +611,7 @@ altura      -3.077704 -2.684688</code></pre>
 1       11.4      -1.90     124.         28.4       96.0 0.229     -0.478</code></pre>
 </div>
 </div>
-<p>O código calcula <span class="math inline">\(SP_{XY}=\sum(x_i-\bar x)(y_i-\bar y)\)</span> e <span class="math inline">\(SQ_X=\sum(x_i-\bar x)^2\)</span>, obtém <span class="math inline">\(\hat\beta_1=SP_{XY}/SQ_X\)</span> e então o intercepto. Os três somatórios permitem verificar <span class="math inline">\(SQ_{Total}=SQ_{Reg}+SQ_{Res}\)</span>, e a última coluna mostra que o quadrado da correlação reproduz o <span class="math inline">\(R^2\)</span> neste modelo simples com intercepto. A figura seguinte representa essa mesma partição graficamente, estação por estação.</p>
+<p>O código calcula <span class="math inline">\(SP_{XY}=\sum(x_i-\bar x)(y_i-\bar y)\)</span> e <span class="math inline">\(SQ_X=\sum(x_i-\bar x)^2\)</span>, obtém <span class="math inline">\(\hat\beta_1=SP_{XY}/SQ_X\)</span> e então o intercepto. Os três somatórios permitem verificar <span class="math inline">\(SQ_{Total}=SQ_{Reg}+SQ_{Res}\)</span>, e a última coluna mostra que o quadrado da correlação reproduz o <span class="math inline">\(R^2\)</span> neste modelo simples com intercepto. A <a href="#fig-rikz-particao" class="quarto-xref">Figura&nbsp;2</a> representa essa mesma partição graficamente, estação por estação.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-rikz-particao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de riqueza contra NAP com reta descendente, linha horizontal na média e segmentos verticais de duas cores decompondo os desvios de cada ponto.">
@@ -627,11 +626,11 @@ Figura&nbsp;2: Reta ajustada a dez estações RIKZ. Segmentos verdes mostram a p
 </div>
 </div>
 </div>
-<p>O segmento verde de uma estação é o desvio explicado <span class="math inline">\(\hat y_i-\bar y\)</span>; o laranja é o resíduo <span class="math inline">\(y_i-\hat y_i\)</span>. A soma dos dois reconstrói a distância entre o ponto e a linha tracejada da média geral. A decomposição ocorre nos quadrados desses comprimentos, não na simples soma de seus valores absolutos.</p>
+<p>Na <a href="#fig-rikz-particao" class="quarto-xref">Figura&nbsp;2</a>, o segmento verde de uma estação é o desvio explicado <span class="math inline">\(\hat y_i-\bar y\)</span>, e o laranja é o resíduo <span class="math inline">\(y_i-\hat y_i\)</span>. A soma dos dois reconstrói a distância entre o ponto e a linha tracejada da média geral. A decomposição ocorre nos quadrados desses comprimentos, não na simples soma de seus valores absolutos.</p>
 </section>
 <section id="quanto-da-variação-a-reta-explica" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="quanto-da-variação-a-reta-explica"><span class="header-section-number">3.2</span> Quanto da variação a reta explica</h2>
-<p>A figura anterior já sugere a resposta: se os segmentos verdes forem longos e os laranja curtos, a reta descreve bem os dados. Assim como na análise de variância, a variação total da resposta se parte em duas, a parte descrita pela reta e a parte residual. A proporção descrita é o <strong>coeficiente de determinação</strong>:</p>
+<p>A <a href="#fig-rikz-particao" class="quarto-xref">Figura&nbsp;2</a> já sugere a resposta, porque se os segmentos verdes forem longos e os laranja curtos, a reta descreve bem os dados. Assim como na análise de variância, a variação total da resposta se parte em duas, a parte descrita pela reta e a parte residual. A proporção descrita é o <strong>coeficiente de determinação</strong>:</p>
 <p><span class="math display">\[R^2 = \frac{\text{variação descrita pela reta}}{\text{variação total}}\]</span></p>
 <p>Um <span class="math inline">\(R^2\)</span> de 0,80 significa que 80% da variação na riqueza acompanha a variação na altura. Um valor alto indica pontos próximos da reta, não que a inclinação seja grande, nem que a altura <em>cause</em> a mudança na riqueza.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Duas informações diferentes">
@@ -658,7 +657,7 @@ Figura&nbsp;2: Reta ajustada a dez estações RIKZ. Segmentos verdes mostram a p
 <p><span class="math display">\[
 R^2=\frac{SQ_{Reg}}{SQ_{Total}}=1-\frac{SQ_{Res}}{SQ_{Total}}.
 \]</span></p>
-<p>Na regressão linear simples com intercepto, <span class="math inline">\(R^2=r^2\)</span>. Essa igualdade não torna regressão e correlação equivalentes: apenas mostra que compartilham a mesma medida de associação linear nesse caso. Convém lembrar ainda que <span class="math inline">\(R^2\)</span> depende da faixa de <span class="math inline">\(X\)</span> observada; restringir essa faixa pode reduzi-lo sem alterar em nada o processo biológico subjacente.</p>
+<p>Na regressão linear simples com intercepto, <span class="math inline">\(R^2=r^2\)</span>. Essa igualdade não torna regressão e correlação equivalentes, e apenas mostra que compartilham a mesma medida de associação linear nesse caso. Convém lembrar ainda que <span class="math inline">\(R^2\)</span> depende da faixa de <span class="math inline">\(X\)</span> observada, e restringir essa faixa pode reduzi-lo sem alterar em nada o processo biológico subjacente.</p>
 </section>
 <section id="incerteza-da-inclinação" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="incerteza-da-inclinação"><span class="header-section-number">3.3</span> Incerteza da inclinação</h2>
@@ -668,15 +667,15 @@ s_e^2=\frac{SQ_{Res}}{n-2},
 \]</span></p>
 <p>em que o divisor é <span class="math inline">\(n-2\)</span> porque dois parâmetros foram estimados a partir dos dados. O erro padrão da inclinação é então</p>
 <p><span class="math display">\[
-EP(\hat\beta_1)=
+s_{\hat\beta_1}=
 \frac{s_e}{\sqrt{\sum_i(x_i-\bar{x})^2}}.
 \]</span></p>
-<p>Ele diminui quando há menos variação residual, mais observações ou maior dispersão de <span class="math inline">\(X\)</span>. Note que o denominador recompensa preditores bem espalhados: medir alturas muito parecidas entre si torna a inclinação difícil de estimar. Espalhar <span class="math inline">\(X\)</span> apenas com pontos extremos artificiais não é solução, pois aumenta o risco de extrapolação e de influência excessiva de poucas observações.</p>
+<p>Ele diminui quando há menos variação residual, mais observações ou maior dispersão de <span class="math inline">\(X\)</span>. Note que o denominador recompensa preditores bem espalhados, pois medir alturas muito parecidas entre si torna a inclinação difícil de estimar. Espalhar <span class="math inline">\(X\)</span> apenas com pontos extremos artificiais não é solução, pois aumenta o risco de extrapolação e de influência excessiva de poucas observações.</p>
 <p>Com o erro padrão em mãos, testar <span class="math inline">\(H_0:\beta_1=0\)</span> segue a estrutura já conhecida:</p>
 <p><span class="math display">\[
-t=\frac{\hat\beta_1}{EP(\hat\beta_1)},
+t=\frac{\hat\beta_1}{s_{\hat\beta_1}},
 \]</span></p>
-<p>com <span class="math inline">\(n-2\)</span> graus de liberdade, e o intervalo é <span class="math inline">\(\hat\beta_1\pm t_{1-\alpha/2,n-2}EP(\hat\beta_1)\)</span>. A ANOVA da regressão testa a mesma hipótese por <span class="math inline">\(F=QM_{Reg}/QM_{Res}\)</span>; com um único preditor, <span class="math inline">\(F=t^2\)</span>, do mesmo modo que ocorre na comparação entre dois grupos.</p>
+<p>com <span class="math inline">\(n-2\)</span> graus de liberdade, e o intervalo é <span class="math inline">\(\hat\beta_1\pm t_{1-\alpha/2,n-2}\,s_{\hat\beta_1}\)</span>. A ANOVA da regressão testa a mesma hipótese por <span class="math inline">\(F=QM_{Reg}/QM_{Res}\)</span>, e com um único preditor, <span class="math inline">\(F=t^2\)</span>, do mesmo modo que ocorre na comparação entre dois grupos.</p>
 </section>
 </section>
 <section id="a-forma-linear-é-uma-hipótese" class="level1" data-number="4">
@@ -696,7 +695,7 @@ Figura&nbsp;3: À esquerda, dados realmente lineares. À direita, uma relação 
 </div>
 </div>
 </div>
-<p>À esquerda, os resíduos se espalham sem padrão em torno de zero: a reta captou o que havia para captar. À direita, eles desenham um U nítido, sinal de que a relação não é reta, ainda que o <span class="math inline">\(R^2\)</span> possa ser alto.</p>
+<p>À esquerda da <a href="#fig-residuos-forma" class="quarto-xref">Figura&nbsp;3</a>, os resíduos se espalham sem padrão em torno de zero, porque a reta captou o que havia para captar. À direita, eles desenham um U nítido, sinal de que a relação não é reta, ainda que o <span class="math inline">\(R^2\)</span> possa ser alto.</p>
 <p>O gráfico de resíduos é a ferramenta mais barata e mais informativa de toda a modelagem. Ele revela curvatura, dispersão que cresce com o preditor e pontos isolados que dominam o ajuste.</p>
 <section id="o-que-os-resíduos-precisam-sustentar" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="o-que-os-resíduos-precisam-sustentar"><span class="header-section-number">4.1</span> O que os resíduos precisam sustentar</h2>
@@ -712,7 +711,7 @@ Figura&nbsp;3: À esquerda, dados realmente lineares. À direita, uma relação 
 <p><span class="math display">\[
 h_{ii}=\frac{1}{n}+\frac{(x_i-\bar x)^2}{\sum_j(x_j-\bar x)^2}.
 \]</span></p>
-<p>O primeiro termo é comum a todas as observações; o segundo cresce nas extremidades da faixa observada. Sinalizar não significa apagar. Primeiro se verifica erro de registro, mecanismo de medição e população representada; qualquer exclusão precisa de justificativa científica. Não existe um limiar universal que a autorize, e valores de referência como <span class="math inline">\(4/n\)</span> para a distância de Cook funcionam apenas como sinal para inspeção.</p>
+<p>O primeiro termo é comum a todas as observações, enquanto o segundo cresce nas extremidades da faixa observada. Sinalizar não significa apagar. Primeiro se verifica erro de registro, mecanismo de medição e população representada, e qualquer exclusão precisa de justificativa científica. Não existe um limiar universal que a autorize, e valores de referência como <span class="math inline">\(4/n\)</span> para a distância de Cook funcionam apenas como sinal para inspeção.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-influencia" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Nuvem de pontos com reta ajustada. Um ponto distante no eixo horizontal aparece maior e com cor destacada por combinar alavancagem e resíduo.">
@@ -727,7 +726,7 @@ Figura&nbsp;4: Influência em uma regressão. O tamanho dos pontos representa a 
 </div>
 </div>
 </div>
-<p>O ponto isolado à direita reúne as duas condições: está longe dos demais no eixo do preditor, o que lhe dá alavancagem alta, e não acompanha a tendência dos outros, o que lhe dá resíduo grande. O resultado é uma distância de Cook muito maior que a das demais observações, e uma reta que se inclina para acomodá-lo.</p>
+<p>Na <a href="#fig-influencia" class="quarto-xref">Figura&nbsp;4</a>, o ponto isolado à direita reúne as duas condições, porque está longe dos demais no eixo do preditor, o que lhe dá alavancagem alta, e não acompanha a tendência dos outros, o que lhe dá resíduo grande. O resultado é uma distância de Cook muito maior que a das demais observações, e uma reta que se inclina para acomodá-lo.</p>
 </section>
 <section id="quando-outra-escala-torna-a-relação-linear" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="quando-outra-escala-torna-a-relação-linear"><span class="header-section-number">4.2</span> Quando outra escala torna a relação linear</h2>
@@ -735,8 +734,8 @@ Figura&nbsp;4: Influência em uma regressão. O tamanho dos pontos representa a 
 <p><span class="math display">\[
 \log(Y)=\log(a)+b\log(X),
 \]</span></p>
-<p>uma relação linear em escala logarítmica. Nesse modelo, <span class="math inline">\(b\)</span> descreve elasticidade: a mudança percentual aproximada em <span class="math inline">\(Y\)</span> para uma mudança percentual em <span class="math inline">\(X\)</span>.</p>
-<p>Uma relação espécie-área é o exemplo clássico: <span class="math inline">\(S=cA^z\)</span>, em que <span class="math inline">\(S\)</span> é riqueza, <span class="math inline">\(A\)</span> é área, <span class="math inline">\(c\)</span> é a riqueza esperada quando <span class="math inline">\(A=1\)</span> e <span class="math inline">\(z\)</span> controla a velocidade de crescimento. Na escala logarítmica, o intercepto é <span class="math inline">\(\log(c)\)</span> e a inclinação é <span class="math inline">\(z\)</span>.</p>
+<p>uma relação linear em escala logarítmica. Nesse modelo, <span class="math inline">\(b\)</span> descreve elasticidade, ou seja, a mudança percentual aproximada em <span class="math inline">\(Y\)</span> para uma mudança percentual em <span class="math inline">\(X\)</span>.</p>
+<p>Uma relação espécie-área é o exemplo clássico, com <span class="math inline">\(S=cA^z\)</span>, em que <span class="math inline">\(S\)</span> é riqueza, <span class="math inline">\(A\)</span> é área, <span class="math inline">\(c\)</span> é a riqueza esperada quando <span class="math inline">\(A=1\)</span> e <span class="math inline">\(z\)</span> controla a velocidade de crescimento. Na escala logarítmica, o intercepto é <span class="math inline">\(\log(c)\)</span> e a inclinação é <span class="math inline">\(z\)</span>, como mostra a <a href="#fig-potencia" class="quarto-xref">Figura&nbsp;5</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-potencia" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis dos mesmos dados. No primeiro a riqueza cresce como curva; no segundo os logaritmos se alinham aproximadamente em uma reta.">
@@ -751,16 +750,16 @@ Figura&nbsp;5: Relação espécie-área em escala original e logarítmica. A cur
 </div>
 </div>
 </div>
-<p>A inclinação estimada na escala logarítmica foi 0,30, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta: <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
+<p>A inclinação estimada na escala logarítmica foi 0,31, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta, porque <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
 </section>
 </section>
 <section id="duas-incertezas-de-previsão" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Duas incertezas de previsão</h1>
 <p>Uma reta ajustada permite prever, e é preciso distinguir duas perguntas que parecem a mesma. Para um valor <span class="math inline">\(x_0\)</span>, uma <strong>banda de confiança</strong> estima a média de todas as unidades com aquele valor. Ela é mais estreita perto de <span class="math inline">\(\bar{x}\)</span>, onde há mais informação sobre a posição da reta, e alarga nas extremidades.</p>
 <p>Um <strong>intervalo de previsão</strong> descreve uma nova unidade individual. Além da incerteza da reta, inclui a variação residual da própria unidade e por isso é sempre mais largo. Confundir os dois produz previsões individuais otimistas demais.</p>
-<p>A diferença aparece diretamente nas fórmulas. Para a média em <span class="math inline">\(x_0\)</span>, o erro padrão é</p>
+<p>A diferença aparece diretamente nas fórmulas. Escrevendo <span class="math inline">\(\hat\mu_0=\widehat{E(Y\mid x_0)}\)</span> para a média estimada em <span class="math inline">\(x_0\)</span>, o erro padrão é</p>
 <p><span class="math display">\[
-EP\{\widehat{E(Y\mid x_0)}\}
+s_{\hat\mu_0}
 =s_e\sqrt{\frac{1}{n}+\frac{(x_0-\bar x)^2}{\sum_i(x_i-\bar x)^2}}.
 \]</span></p>
 <p>Para uma nova unidade, acrescenta-se 1 dentro da raiz. Esse termo representa a variabilidade individual, que não desaparece mesmo que a reta seja conhecida com grande precisão, e é ele que mantém a banda de previsão larga mesmo com <span class="math inline">\(n\)</span> muito grande.</p>
@@ -778,19 +777,28 @@ Figura&nbsp;6: Reta estimada, banda de confiança para a média e banda de previ
 </div>
 </div>
 </div>
-<p>A faixa escura, estreita, é a banda de confiança para a média; a faixa clara, bem mais larga, é a banda de previsão. Repare que praticamente todos os pontos observados caem dentro da segunda, e apenas alguns dentro da primeira, o que é exatamente o esperado: a banda de confiança não descreve onde caem as estações, e sim onde está a reta. No R, as duas são obtidas pela mesma função, <code>predict()</code>, mudando o argumento <code>interval</code> de <code>"confidence"</code> para <code>"prediction"</code>.</p>
+<p>Na <a href="#fig-bandas" class="quarto-xref">Figura&nbsp;6</a>, a faixa escura e estreita é a banda de confiança para a média, e a faixa clara, bem mais larga, é a banda de previsão. Repare que praticamente todos os pontos observados caem dentro da segunda, e apenas alguns dentro da primeira, o que é exatamente o esperado, porque a banda de confiança não descreve onde caem as estações, e sim onde está a reta. No R, as duas são obtidas pela mesma função, <code>predict()</code>, mudando o argumento <code>interval</code> de <code>"confidence"</code> para <code>"prediction"</code>.</p>
 </section>
 <section id="interpolar-não-é-extrapolar" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Interpolar não é extrapolar</h1>
-<p>Um último cuidado fecha o percurso. A reta foi estimada dentro da faixa de alturas efetivamente medidas. Usá-la para prever a riqueza em uma altura muito além dessa faixa é supor que a relação continua a mesma onde ninguém observou, uma suposição que os dados não sustentam. As bandas da figura anterior já alargam nas extremidades da faixa observada; fora dela, deixam de ter significado, porque a incerteza sobre a própria forma da relação não é representada por nenhuma delas.</p>
+<p>Um último cuidado fecha o percurso. A reta foi estimada dentro da faixa de alturas efetivamente medidas. Usá-la para prever a riqueza em uma altura muito além dessa faixa é supor que a relação continua a mesma onde ninguém observou, uma suposição que os dados não sustentam. As bandas da <a href="#fig-bandas" class="quarto-xref">Figura&nbsp;6</a> já alargam nas extremidades da faixa observada, e fora dela deixam de ter significado, porque a incerteza sobre a própria forma da relação não é representada por nenhuma delas.</p>
 <p>A pergunta do início pedia uma descrição que funcionasse para qualquer valor do preditor, e a reta fornece exatamente isso, com três ressalvas que percorreram toda a leitura. Ela descreve o centro, e não as observações. Ela é uma hipótese sobre a forma da relação, verificável nos resíduos. E ela vale apenas na faixa em que houve medição. Dentro desses limites, dois números, intercepto e inclinação, resumem um processo gerador completo, e é esse mesmo modelo que passará a acomodar grupos, blocos e covariáveis nas leituras seguintes.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/regressao-linear/mmq-regressao-polinomial.html" target="_blank">Regressão polinomial pelo método dos mínimos quadrados</a> (MEAD)</li>
 <li><a href="https://fcopf.github.io/mead/content/funcoes-modelos/funcoes-potencia.html" target="_blank">Funções de potência</a> (MEAD)</li>
 </ul>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -808,14 +816,14 @@ Figura&nbsp;6: Reta estimada, banda de confiança para a média e banda de previ
 </div>
 </div>
 </section>
-<section id="referências" class="level1" data-number="8">
+<section id="referências" class="level1" data-number="7">
 
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">8 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-zuur2009" class="csl-entry" role="listitem">
 Zuur, Alain F., Elena N. Ieno, Neil J. Walker, Anatoly A. Saveliev, e Graham M. Smith. 2009. <em>Mixed Effects Models and Extensions in Ecology with R</em>. Springer. <a href="https://doi.org/10.1007/978-0-387-87458-6">https://doi.org/10.1007/978-0-387-87458-6</a>.
 </div>

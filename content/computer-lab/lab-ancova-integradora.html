@@ -346,7 +346,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sua-vez-parte-1-um-cenário-às-cegas" id="toc-sua-vez-parte-1-um-cenário-às-cegas" class="nav-link" data-scroll-target="#sua-vez-parte-1-um-cenário-às-cegas"><span class="header-section-number">5</span> Sua vez, parte 1: um cenário às cegas</a></li>
   <li><a href="#sua-vez-parte-2-lulas-dados-reais" id="toc-sua-vez-parte-2-lulas-dados-reais" class="nav-link" data-scroll-target="#sua-vez-parte-2-lulas-dados-reais"><span class="header-section-number">6</span> Sua vez, parte 2: lulas, dados reais</a></li>
   <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">7</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -375,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -420,7 +419,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="um-gerador-para-os-três-cenários" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Um gerador para os três cenários</h1>
-<p>Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em cada mês, e a diferença entre os meses cabe em <strong>dois</strong> números: quanto o segundo mês se desloca verticalmente, e quanto a sua inclinação difere.</p>
+<p>Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em cada mês, e a diferença entre os meses cabe em <strong>dois</strong> números, quanto o segundo mês se desloca verticalmente e quanto a sua inclinação difere.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gerar_dois_meses <span class="ot">&lt;-</span> <span class="cf">function</span>(delta_intercepto, delta_inclinacao, <span class="at">n =</span> <span class="dv">60</span>, <span class="at">sigma =</span> <span class="fl">0.2</span>) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
@@ -435,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três cenários são três combinações desses dois números:</p>
+<p>A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três cenários da <a href="#fig-ancova-cenarios" class="quarto-xref">Figura&nbsp;1</a> são três combinações desses dois números:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cenarios <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Uma reta só"</span>),</span>
@@ -473,13 +472,13 @@ Figura&nbsp;1: Os três cenários possíveis, gerados a partir dos mesmos dois p
 </div>
 <div class="callout-body-container callout-body">
 <p>Olhe os argumentos das três chamadas e escreva no script, como comentário, qual parâmetro precisa ser <strong>diferente de zero</strong> para produzir cada cenário. São três frases curtas.</p>
-<p>Repare que “interceptos diferentes” e “inclinações diferentes” não são versões fortes e fracas da mesma coisa: são parâmetros distintos, e um pode existir sem o outro.</p>
+<p>Repare que “interceptos diferentes” e “inclinações diferentes” não são versões fortes e fracas da mesma coisa, e sim parâmetros distintos, de modo que um pode existir sem o outro.</p>
 </div>
 </div>
 </section>
 <section id="os-dois-modelos-e-o-que-os-separa" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Os dois modelos, e o que os separa</h1>
-<p>Na fórmula, <code>+</code> supõe <strong>uma inclinação só</strong> para os dois meses; <code>*</code> permite que cada mês tenha a sua. Vamos ajustar os dois a um dos cenários e compará-los:</p>
+<p>Na fórmula, <code>+</code> supõe <strong>uma inclinação só</strong> para os dois meses, enquanto <code>*</code> permite que cada mês tenha a sua. Vamos ajustar os dois a um dos cenários e compará-los:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dados_c <span class="ot">&lt;-</span> <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -492,14 +491,14 @@ Figura&nbsp;1: Os três cenários possíveis, gerados a partir dos mesmos dois p
 
 Model 1: biomassa ~ comprimento + mes
 Model 2: biomassa ~ comprimento * mes
-  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-1    117 5.7110                                  
-2    116 4.9571  1   0.75392 17.642 5.257e-05 ***
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)    
+1    117 5.2316                                 
+2    116 4.0157  1    1.2159 35.122 3.25e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados; um valor grande indica que ficamos com ele, que é mais fácil de interpretar.</p>
+<p>A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados, e um valor grande indica que ficamos com ele, que é mais fácil de interpretar.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -511,7 +510,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <p>Estes dados foram gerados com <code>delta_inclinacao = 0.05</code>, isto é, com inclinações realmente diferentes. A tabela deveria detectar isso.</p>
-<p>Rode o bloco mais uma vez. O valor de p muda de execução para execução — a decisão é sobre um processo que varia, como tudo o que vimos neste semestre.</p>
+<p>Rode o bloco mais uma vez. O valor de p muda de execução para execução, e a decisão é sobre um processo que varia, como tudo o que vimos neste semestre.</p>
 </div>
 </div>
 </section>
@@ -529,7 +528,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="callout-body-container callout-body">
 <p>Escolha <strong>um</strong> dos três cenários e gere os dados com os parâmetros correspondentes, <strong>sem escrever ainda</strong> qual foi a sua escolha.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>meus_dados <span class="ot">&lt;-</span> <span class="fu">gerar_dois_meses</span>(____, ____)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Ajuste os dois modelos, rode <code>anova()</code> e só então registre, em comentário: qual cenário você havia construído, e o que a tabela recuperou. Acertou?</p>
+<p>Ajuste os dois modelos, rode <code>anova()</code> e só então registre, em comentário, qual cenário você havia construído e o que a tabela recuperou. Acertou?</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Se sobrar tempo">
@@ -543,13 +542,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <p>Repita o mesmo cenário aumentando <code>sigma</code> (por exemplo, <code>gerar_dois_meses(0, 0.05, sigma = 0.6)</code>) ou reduzindo <code>n</code>.</p>
-<p>A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo fenômeno do tema da Prática 06: um efeito que existe pode não ser detectado, e o resultado não avisa que isso aconteceu.</p>
+<p>A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo fenômeno do tema da Prática 06, em que um efeito que existe pode não ser detectado, e o resultado não avisa que isso aconteceu.</p>
 </div>
 </div>
 </section>
 <section id="sua-vez-parte-2-lulas-dados-reais" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Sua vez, parte 2: lulas, dados reais</h1>
-<p>Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (<code>DML</code>, em mm) e o peso dos testículos (<code>Testisweight</code>, em gramas). A pergunta biológica é sobre maturação: os machos de um mês têm testículos mais pesados do que os de outro?</p>
+<p>Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (<code>DML</code>, em mm) e o peso dos testículos (<code>Testisweight</code>, em gramas). A pergunta biológica é sobre maturação. Os machos de um mês têm testículos mais pesados do que os de outro?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Squid.txt"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -588,7 +587,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dois_meses <span class="ot">&lt;-</span> lulas <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MONTH <span class="sc">%in%</span> <span class="fu">c</span>(____, ____)) <span class="sc">|&gt;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">factor</span>(MONTH), <span class="at">log_peso =</span> <span class="fu">log</span>(Testisweight))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Use <code>factor(MONTH)</code> e não rótulos escritos à mão: assim os níveis correspondem sempre aos meses que você filtrou.</p>
+<p>Use <code>factor(MONTH)</code> e não rótulos escritos à mão, porque assim os níveis correspondem sempre aos meses que você filtrou.</p>
 <p>O logaritmo do peso é necessário porque, na escala original, o espalhamento cresce muito nos animais maiores, o que violaria a suposição de variação constante.</p>
 </div>
 </div>
@@ -606,8 +605,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Os dois meses precisam cobrir uma faixa de comprimentos <strong>sobreposta</strong>. É só dentro dela que comparar os meses tem apoio nos dados; fora dela, o R calcula um número que nenhum molusco sustenta.</p>
-<p>Anote a faixa comum: o maior dos dois mínimos e o menor dos dois máximos.</p>
+<p>Os dois meses precisam cobrir uma faixa de comprimentos <strong>sobreposta</strong>. É só dentro dela que comparar os meses tem apoio nos dados, porque fora dela o R calcula um número que nenhum molusco sustenta.</p>
+<p>Anote a faixa comum, formada pelo maior dos dois mínimos e pelo menor dos dois máximos.</p>
 </div>
 </div>
 <p>Desenhe os pontos com uma reta por mês, ajuste os dois modelos e compare-os com <code>anova()</code>, exatamente como você fez com os dados simulados. Depois escolha <strong>dois ou três comprimentos dentro da faixa comum</strong> e obtenha as previsões:</p>
@@ -687,12 +686,21 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Incluir <code>DML</code> no modelo remove a diferença devida ao comprimento, e só ela. Temperatura da água, alimento disponível, fase do ciclo reprodutivo e seletividade da pesca continuam misturados ao efeito estimado do mês.</p>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD) — procure a seção sobre interação entre um preditor contínuo e um fator, que é o modelo desta prática.</li>
 </ul>
+</div>
+</div>
 
 
 <!-- -->
@@ -1185,246 +1193,205 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>As leituras das duas últimas semanas</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>(<span class="co">[</span><span class="ot">retas paralelas</span><span class="co">](../pre-reading/pread-retas-paralelas.qmd)</span> e</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">tratamento e covariável</span><span class="co">](../pre-reading/pread-tratamento-covariavel.qmd)</span>) mostraram que duas retas só</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>podem se relacionar de três maneiras, e que as três cabem em uma única equação com quatro</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>coeficientes.</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>As leituras das duas últimas semanas (<span class="co">[</span><span class="ot">retas paralelas</span><span class="co">](../pre-reading/pread-retas-paralelas.qmd)</span> e <span class="co">[</span><span class="ot">tratamento e covariável</span><span class="co">](../pre-reading/pread-tratamento-covariavel.qmd)</span>) mostraram que duas retas só podem se relacionar de três maneiras, e que as três cabem em uma única equação com quatro coeficientes.</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>Nesta última prática você vai **construir** as três situações, escolhendo os parâmetros que produzem cada uma. Depois vai gerar uma delas sem dizer qual, e verificar se a comparação entre modelos consegue recuperar o cenário que você construiu. Só então aplica tudo isso a dados reais de lulas, com um par de meses escolhido por você.</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>O objetivo em R é escrever um gerador com dois parâmetros de interesse, comparar modelos aninhados com <span class="in">`anova()`</span> e transformar previsões de volta para a escala original.</span>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>Nesta última prática você vai **construir** as três situações, escolhendo os parâmetros que produzem</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>cada uma. Depois vai gerar uma delas sem dizer qual, e verificar se a comparação entre modelos</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>consegue recuperar o cenário que você construiu. Só então aplica tudo isso a dados reais de lulas, com</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>um par de meses escolhido por você.</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>O objetivo em R é escrever um gerador com dois parâmetros de interesse, comparar modelos aninhados com</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="in">`anova()`</span> e transformar previsões de volta para a escala original.</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever a conclusão final, rodar o script do início ao fim e enviar.</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
 <span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever a conclusão final, rodar o script do início ao fim e enviar.</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-ancova.R`</span> com o cabeçalho de identificação e comece por:</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um gerador para os três cenários</span></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>cada mês, e a diferença entre os meses cabe em **dois** números: quanto o segundo mês se desloca</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>verticalmente, e quanto a sua inclinação difere.</span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>gerar_dois_meses <span class="ot">&lt;-</span> <span class="cf">function</span>(delta_intercepto, delta_inclinacao, <span class="at">n =</span> <span class="dv">60</span>, <span class="at">sigma =</span> <span class="fl">0.2</span>) {</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">mes =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"mês 1"</span>, <span class="st">"mês 2"</span>), <span class="at">each =</span> n), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"mês 1"</span>, <span class="st">"mês 2"</span>)),</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">runif</span>(<span class="dv">2</span> <span class="sc">*</span> n, <span class="at">min =</span> <span class="dv">14</span>, <span class="at">max =</span> <span class="dv">30</span>)</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>      <span class="at">biomassa =</span> <span class="sc">-</span><span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> comprimento <span class="sc">+</span></span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(mes <span class="sc">==</span> <span class="st">"mês 2"</span>, delta_intercepto, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(mes <span class="sc">==</span> <span class="st">"mês 2"</span>, delta_inclinacao <span class="sc">*</span> comprimento, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três</span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>cenários são três combinações desses dois números:</span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ancova-cenarios</span></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Os três cenários possíveis, gerados a partir dos mesmos dois parâmetros."</span></span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.6</span></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>cenarios <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Uma reta só"</span>),</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="fl">0.35</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Interceptos diferentes"</span>),</span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="fl">0.05</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Inclinações diferentes"</span>)</span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="fu">fct_relevel</span>(cenario, <span class="st">"Uma reta só"</span>, <span class="st">"Interceptos diferentes"</span>))</span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cenarios, <span class="fu">aes</span>(<span class="at">x =</span> comprimento, <span class="at">y =</span> biomassa, <span class="at">colour =</span> mes)) <span class="sc">+</span></span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>, <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cenario) <span class="sc">+</span></span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento da concha (mm)"</span>, <span class="at">y =</span> <span class="st">"Biomassa (g)"</span>, <span class="at">colour =</span> <span class="st">"Mês"</span>)</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Identifique"}</span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>Olhe os argumentos das três chamadas e escreva no script, como comentário, qual parâmetro precisa ser</span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>**diferente de zero** para produzir cada cenário. São três frases curtas.</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-ancova.R`</span> com o cabeçalho de identificação e comece por:</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um gerador para os três cenários</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>Dois meses de coleta, moluscos medidos em comprimento e biomassa. A relação entre eles é uma reta em cada mês, e a diferença entre os meses cabe em **dois** números, quanto o segundo mês se desloca verticalmente e quanto a sua inclinação difere.</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>gerar_dois_meses <span class="ot">&lt;-</span> <span class="cf">function</span>(delta_intercepto, delta_inclinacao, <span class="at">n =</span> <span class="dv">60</span>, <span class="at">sigma =</span> <span class="fl">0.2</span>) {</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">mes =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"mês 1"</span>, <span class="st">"mês 2"</span>), <span class="at">each =</span> n), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"mês 1"</span>, <span class="st">"mês 2"</span>)),</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">runif</span>(<span class="dv">2</span> <span class="sc">*</span> n, <span class="at">min =</span> <span class="dv">14</span>, <span class="at">max =</span> <span class="dv">30</span>)</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">biomassa =</span> <span class="sc">-</span><span class="fl">0.8</span> <span class="sc">+</span> <span class="fl">0.09</span> <span class="sc">*</span> comprimento <span class="sc">+</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(mes <span class="sc">==</span> <span class="st">"mês 2"</span>, delta_intercepto, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>        <span class="fu">if_else</span>(mes <span class="sc">==</span> <span class="st">"mês 2"</span>, delta_inclinacao <span class="sc">*</span> comprimento, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>A função reaproveita a reta da Prática 09 e acrescenta os dois desvios do segundo mês. Agora os três cenários da @fig-ancova-cenarios são três combinações desses dois números:</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ancova-cenarios</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Os três cenários possíveis, gerados a partir dos mesmos dois parâmetros."</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.6</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>cenarios <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Uma reta só"</span>),</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="fl">0.35</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Interceptos diferentes"</span>),</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="fl">0.05</span>) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="st">"Inclinações diferentes"</span>)</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cenario =</span> <span class="fu">fct_relevel</span>(cenario, <span class="st">"Uma reta só"</span>, <span class="st">"Interceptos diferentes"</span>))</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cenarios, <span class="fu">aes</span>(<span class="at">x =</span> comprimento, <span class="at">y =</span> biomassa, <span class="at">colour =</span> mes)) <span class="sc">+</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.45</span>, <span class="at">size =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cenario) <span class="sc">+</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento da concha (mm)"</span>, <span class="at">y =</span> <span class="st">"Biomassa (g)"</span>, <span class="at">colour =</span> <span class="st">"Mês"</span>)</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Identifique"}</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>Olhe os argumentos das três chamadas e escreva no script, como comentário, qual parâmetro precisa ser **diferente de zero** para produzir cada cenário. São três frases curtas.</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>Repare que "interceptos diferentes" e "inclinações diferentes" não são versões fortes e fracas da mesma coisa, e sim parâmetros distintos, de modo que um pode existir sem o outro.</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a><span class="fu"># Os dois modelos, e o que os separa</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>Na fórmula, <span class="in">`+`</span> supõe **uma inclinação só** para os dois meses, enquanto <span class="in">`*`</span> permite que cada mês tenha a sua. Vamos ajustar os dois a um dos cenários e compará-los:</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>dados_c <span class="ot">&lt;-</span> <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)</span>
 <span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>Repare que "interceptos diferentes" e "inclinações diferentes" não são versões fortes e fracas da</span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>mesma coisa: são parâmetros distintos, e um pode existir sem o outro.</span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="fu"># Os dois modelos, e o que os separa</span></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>aditivo <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento <span class="sc">+</span> mes, <span class="at">data =</span> dados_c)</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>com_interacao <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento <span class="sc">*</span> mes, <span class="at">data =</span> dados_c)</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(aditivo, com_interacao)</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>Na fórmula, <span class="in">`+`</span> supõe **uma inclinação só** para os dois meses; <span class="in">`*`</span> permite que cada mês tenha a sua.</span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>Vamos ajustar os dois a um dos cenários e compará-los:</span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>dados_c <span class="ot">&lt;-</span> <span class="fu">gerar_dois_meses</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados, e um valor grande indica que ficamos com ele, que é mais fácil de interpretar.</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>Estes dados foram gerados com <span class="in">`delta_inclinacao = 0.05`</span>, isto é, com inclinações realmente diferentes. A tabela deveria detectar isso.</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>Rode o bloco mais uma vez. O valor de p muda de execução para execução, e a decisão é sobre um processo que varia, como tudo o que vimos neste semestre.</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>aditivo <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento <span class="sc">+</span> mes, <span class="at">data =</span> dados_c)</span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>com_interacao <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomassa <span class="sc">~</span> comprimento <span class="sc">*</span> mes, <span class="at">data =</span> dados_c)</span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(aditivo, com_interacao)</span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>A tabela testa se permitir uma segunda inclinação reduz a variação residual mais do que se esperaria</span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>por acaso. Um valor de p pequeno indica que o modelo aditivo é simples demais para estes dados; um</span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a>valor grande indica que ficamos com ele, que é mais fácil de interpretar.</span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>Estes dados foram gerados com <span class="in">`delta_inclinacao = 0.05`</span>, isto é, com inclinações realmente diferentes.</span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>A tabela deveria detectar isso.</span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>Rode o bloco mais uma vez. O valor de p muda de execução para execução — a decisão é sobre um</span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>processo que varia, como tudo o que vimos neste semestre.</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 1: um cenário às cegas</span></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Gere sem contar qual é"}</span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>Escolha **um** dos três cenários e gere os dados com os parâmetros correspondentes, **sem escrever ainda** qual foi a sua escolha.</span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>meus_dados <span class="ot">&lt;-</span> <span class="fu">gerar_dois_meses</span>(____, ____)</span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>Ajuste os dois modelos, rode <span class="in">`anova()`</span> e só então registre, em comentário, qual cenário você havia construído e o que a tabela recuperou. Acertou?</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Se sobrar tempo"}</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>Repita o mesmo cenário aumentando <span class="in">`sigma`</span> (por exemplo, <span class="in">`gerar_dois_meses(0, 0.05, sigma = 0.6)`</span>) ou reduzindo <span class="in">`n`</span>.</span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo fenômeno do tema da Prática 06, em que um efeito que existe pode não ser detectado, e o resultado não avisa que isso aconteceu.</span>
 <span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 1: um cenário às cegas</span></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 2: lulas, dados reais</span></span>
 <span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Gere sem contar qual é"}</span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>Escolha **um** dos três cenários e gere os dados com os parâmetros correspondentes, **sem escrever</span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>ainda** qual foi a sua escolha.</span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>meus_dados <span class="ot">&lt;-</span> <span class="fu">gerar_dois_meses</span>(____, ____)</span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>Ajuste os dois modelos, rode <span class="in">`anova()`</span> e só então registre, em comentário: qual cenário você havia</span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>construído, e o que a tabela recuperou. Acertou?</span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (<span class="in">`DML`</span>, em mm) e o peso dos testículos (<span class="in">`Testisweight`</span>, em gramas). A pergunta biológica é sobre maturação. Os machos de um mês têm testículos mais pesados do que os de outro?</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Squid.txt"</span></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>lulas <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>lulas <span class="sc">|&gt;</span> <span class="fu">count</span>(MONTH)</span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Se sobrar tempo"}</span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>Repita o mesmo cenário aumentando <span class="in">`sigma`</span> (por exemplo, <span class="in">`gerar_dois_meses(0, 0.05, sigma = 0.6)`</span>) ou</span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>reduzindo <span class="in">`n`</span>.</span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>A partir de que ponto a tabela deixa de recuperar o cenário que você sabe estar ali? É o mesmo</span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>fenômeno do tema da Prática 06: um efeito que existe pode não ser detectado, e o resultado não avisa</span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>que isso aconteceu.</span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha o seu par de meses"}</span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>Escolha **dois meses** e registre a escolha no script.</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>dois_meses <span class="ot">&lt;-</span> lulas <span class="sc">|&gt;</span></span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MONTH <span class="sc">%in%</span> <span class="fu">c</span>(____, ____)) <span class="sc">|&gt;</span></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">factor</span>(MONTH), <span class="at">log_peso =</span> <span class="fu">log</span>(Testisweight))</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 2: lulas, dados reais</span></span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`factor(MONTH)`</span> e não rótulos escritos à mão, porque assim os níveis correspondem sempre aos meses que você filtrou.</span>
 <span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>Uma série de coletas de lulas registrou, para cada indivíduo, o comprimento do manto (<span class="in">`DML`</span>, em mm) e</span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>o peso dos testículos (<span class="in">`Testisweight`</span>, em gramas). A pergunta biológica é sobre maturação: os machos</span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>de um mês têm testículos mais pesados do que os de outro?</span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Squid.txt"</span></span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>lulas <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>O logaritmo do peso é necessário porque, na escala original, o espalhamento cresce muito nos animais maiores, o que violaria a suposição de variação constante.</span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>Antes de qualquer modelo, a verificação obrigatória de uma comparação por covariável:</span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>dois_meses <span class="sc">|&gt;</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(mes) <span class="sc">|&gt;</span></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">minimo =</span> <span class="fu">min</span>(DML), <span class="at">maximo =</span> <span class="fu">max</span>(DML))</span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>lulas <span class="sc">|&gt;</span> <span class="fu">count</span>(MONTH)</span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Sem faixa comum não existe comparação"}</span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>Os dois meses precisam cobrir uma faixa de comprimentos **sobreposta**. É só dentro dela que comparar os meses tem apoio nos dados, porque fora dela o R calcula um número que nenhum molusco sustenta.</span>
 <span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha o seu par de meses"}</span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>Escolha **dois meses** e registre a escolha no script.</span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>Anote a faixa comum, formada pelo maior dos dois mínimos e pelo menor dos dois máximos.</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>dois_meses <span class="ot">&lt;-</span> lulas <span class="sc">|&gt;</span></span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MONTH <span class="sc">%in%</span> <span class="fu">c</span>(____, ____)) <span class="sc">|&gt;</span></span>
-<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">factor</span>(MONTH), <span class="at">log_peso =</span> <span class="fu">log</span>(Testisweight))</span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>Use <span class="in">`factor(MONTH)`</span> e não rótulos escritos à mão: assim os níveis correspondem sempre aos meses que</span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>você filtrou.</span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>O logaritmo do peso é necessário porque, na escala original, o espalhamento cresce muito nos animais</span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>maiores, o que violaria a suposição de variação constante.</span>
-<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>Antes de qualquer modelo, a verificação obrigatória de uma comparação por covariável:</span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>dois_meses <span class="sc">|&gt;</span></span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(mes) <span class="sc">|&gt;</span></span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">minimo =</span> <span class="fu">min</span>(DML), <span class="at">maximo =</span> <span class="fu">max</span>(DML))</span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Sem faixa comum não existe comparação"}</span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>Os dois meses precisam cobrir uma faixa de comprimentos **sobreposta**. É só dentro dela que comparar</span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>os meses tem apoio nos dados; fora dela, o R calcula um número que nenhum molusco sustenta.</span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>Anote a faixa comum: o maior dos dois mínimos e o menor dos dois máximos.</span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>Desenhe os pontos com uma reta por mês, ajuste os dois modelos e compare-os com <span class="in">`anova()`</span>, exatamente</span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>como você fez com os dados simulados. Depois escolha **dois ou três comprimentos dentro da faixa</span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>comum** e obtenha as previsões:</span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>comprimentos <span class="ot">&lt;-</span> <span class="fu">c</span>(____, ____)   <span class="co"># dentro da faixa comum</span></span>
-<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>novos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>  <span class="at">DML =</span> <span class="fu">rep</span>(comprimentos, <span class="at">each =</span> <span class="dv">2</span>),</span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>  <span class="at">mes =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">levels</span>(dois_meses<span class="sc">$</span>mes), <span class="at">times =</span> <span class="fu">length</span>(comprimentos)),</span>
-<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>               <span class="at">levels =</span> <span class="fu">levels</span>(dois_meses<span class="sc">$</span>mes))</span>
-<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>novos <span class="sc">|&gt;</span></span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">previsto_log =</span> <span class="fu">predict</span>(modelo_escolhido, <span class="at">newdata =</span> novos),</span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a>         <span class="at">previsto_g =</span> <span class="fu">exp</span>(previsto_log))</span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a><span class="in">`exp()`</span> desfaz o logaritmo e devolve o peso previsto em gramas, que é a escala em que a conclusão</span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>precisa ser escrita.</span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-ancova.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
-<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
-<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>o gerador e o gráfico dos três cenários, com as **três frases** identificando qual parâmetro</span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a>   produz cada um;</span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o seu cenário às cegas**: os parâmetros usados, a tabela de <span class="in">`anova()`</span> e o registro de qual</span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a>   cenário você havia construído e do que a tabela recuperou;</span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**o seu par de meses**: a tabela de faixas de <span class="in">`DML`</span> com a faixa comum anotada, o gráfico com uma</span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a>   reta por mês, os dois modelos e a comparação com <span class="in">`anova()`</span>;</span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>as previsões nos comprimentos que você escolheu, na escala original, em gramas;</span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, um parágrafo de 6 a 8 frases com a **conclusão final**, contendo:</span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>qual modelo você escolheu para o seu par de meses e por quê;</span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>a diferença entre os meses, dizendo **em qual comprimento** ela vale e de quanto ela é em gramas;</span>
-<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>uma frase sobre o que a faixa comum permitiu ou limitou;</span>
-<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>uma frase sobre o que este estudo **não** permite concluir, e por quê.</span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as três frases do item 1 associam corretamente parâmetro e cenário;</span>
-<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> no item 2, o cenário construído e o recuperado aparecem os dois, mesmo se não coincidirem;</span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o par de meses está registrado e os comprimentos escolhidos estão **dentro da faixa comum**;</span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha entre modelo aditivo e com interação é justificada pela tabela de <span class="in">`anova()`</span>;</span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão final menciona um comprimento concreto e uma diferença em gramas;</span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a última frase distingue associação de causa, com base no delineamento.</span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Ajustar não é aleatorizar"}</span>
-<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a>Ninguém sorteou quais lulas seriam coletadas em cada mês. O mês é uma condição **observada**, não um</span>
-<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a>tratamento atribuído.</span>
-<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>Incluir <span class="in">`DML`</span> no modelo remove a diferença devida ao comprimento, e só ela. Temperatura da água,</span>
-<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a>alimento disponível, fase do ciclo reprodutivo e seletividade da pesca continuam misturados ao efeito</span>
-<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>estimado do mês.</span>
-<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regressão linear múltipla</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html)</span>{target="_blank"}</span>
-<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre interação entre um preditor contínuo e um fator, que é o modelo desta</span>
-<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a>  prática.</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>Desenhe os pontos com uma reta por mês, ajuste os dois modelos e compare-os com <span class="in">`anova()`</span>, exatamente como você fez com os dados simulados. Depois escolha **dois ou três comprimentos dentro da faixa comum** e obtenha as previsões:</span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>comprimentos <span class="ot">&lt;-</span> <span class="fu">c</span>(____, ____)   <span class="co"># dentro da faixa comum</span></span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>novos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>  <span class="at">DML =</span> <span class="fu">rep</span>(comprimentos, <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>  <span class="at">mes =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">levels</span>(dois_meses<span class="sc">$</span>mes), <span class="at">times =</span> <span class="fu">length</span>(comprimentos)),</span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>               <span class="at">levels =</span> <span class="fu">levels</span>(dois_meses<span class="sc">$</span>mes))</span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>novos <span class="sc">|&gt;</span></span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">previsto_log =</span> <span class="fu">predict</span>(modelo_escolhido, <span class="at">newdata =</span> novos),</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>         <span class="at">previsto_g =</span> <span class="fu">exp</span>(previsto_log))</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a><span class="in">`exp()`</span> desfaz o logaritmo e devolve o peso previsto em gramas, que é a escala em que a conclusão precisa ser escrita.</span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-ancova.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>o gerador e o gráfico dos três cenários, com as **três frases** identificando qual parâmetro produz cada um;</span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o seu cenário às cegas**: os parâmetros usados, a tabela de <span class="in">`anova()`</span> e o registro de qual cenário você havia construído e do que a tabela recuperou;</span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**o seu par de meses**: a tabela de faixas de <span class="in">`DML`</span> com a faixa comum anotada, o gráfico com uma reta por mês, os dois modelos e a comparação com <span class="in">`anova()`</span>;</span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>as previsões nos comprimentos que você escolheu, na escala original, em gramas;</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, um parágrafo de 6 a 8 frases com a **conclusão final**, contendo:</span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>qual modelo você escolheu para o seu par de meses e por quê;</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>a diferença entre os meses, dizendo **em qual comprimento** ela vale e de quanto ela é em gramas;</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>uma frase sobre o que a faixa comum permitiu ou limitou;</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>uma frase sobre o que este estudo **não** permite concluir, e por quê.</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as três frases do item 1 associam corretamente parâmetro e cenário;</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> no item 2, o cenário construído e o recuperado aparecem os dois, mesmo se não coincidirem;</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o par de meses está registrado e os comprimentos escolhidos estão **dentro da faixa comum**;</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha entre modelo aditivo e com interação é justificada pela tabela de <span class="in">`anova()`</span>;</span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão final menciona um comprimento concreto e uma diferença em gramas;</span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a última frase distingue associação de causa, com base no delineamento.</span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Ajustar não é aleatorizar"}</span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a>Ninguém sorteou quais lulas seriam coletadas em cada mês. O mês é uma condição **observada**, não um tratamento atribuído.</span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>Incluir <span class="in">`DML`</span> no modelo remove a diferença devida ao comprimento, e só ela. Temperatura da água, alimento disponível, fase do ciclo reprodutivo e seletividade da pesca continuam misturados ao efeito estimado do mês.</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regressão linear múltipla</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html)</span>{target="_blank"} (MEAD) — procure a seção sobre interação entre um preditor contínuo e um fator, que é o modelo desta prática.</span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

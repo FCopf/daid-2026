@@ -346,7 +346,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#os-dados-reais-quatro-concentrações-de-zinco" id="toc-os-dados-reais-quatro-concentrações-de-zinco" class="nav-link" data-scroll-target="#os-dados-reais-quatro-concentrações-de-zinco"><span class="header-section-number">5</span> Os dados reais: quatro concentrações de zinco</a></li>
   <li><a href="#sua-vez-parte-2-de-onde-vem-o-f" id="toc-sua-vez-parte-2-de-onde-vem-o-f" class="nav-link" data-scroll-target="#sua-vez-parte-2-de-onde-vem-o-f"><span class="header-section-number">6</span> Sua vez, parte 2: de onde vem o F?</a></li>
   <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">7</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -375,7 +374,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -390,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="objetivo-desta-prática" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
 <p>A <a href="../../content/pre-reading/pread-fontes-variacao-anova.html">leitura desta semana</a> mostrou dois experimentos com <strong>as mesmas médias</strong> e conclusões opostas, e explicou que a razão F compara duas fontes de variação.</p>
-<p>Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você <strong>define os parâmetros</strong> que os geram: quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz F subir e o que faz F descer — e só então aplica o procedimento a dados reais de contaminação por zinco.</p>
+<p>Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você <strong>define os parâmetros</strong> que os geram, quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz F subir e o que faz F descer, e só então aplica o procedimento a dados reais de contaminação por zinco.</p>
 <p>O objetivo em R é escrever um modelo como processo gerador, ajustar <code>aov()</code> e ler as comparações par a par.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
 <div class="callout-header d-flex align-content-center">
@@ -439,10 +438,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Rows: 32
 Columns: 2
 $ tratamento  &lt;fct&gt; BACK, BACK, BACK, BACK, BACK, BACK, BACK, BACK, LOW, LOW, …
-$ diversidade &lt;dbl&gt; 1.8294388, 2.4040987, 1.6839832, 1.6716612, 1.6503250, 1.9…</code></pre>
+$ diversidade &lt;dbl&gt; 1.3895514, 1.0662399, 2.7913339, 2.0371937, 2.5140254, 1.4…</code></pre>
 </div>
 </div>
-<p>Repare no que acabamos de escrever: as quatro médias verdadeiras são <strong>iguais</strong>. Neste experimento o tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.</p>
+<p>Repare no que acabamos de escrever, porque as quatro médias verdadeiras são <strong>iguais</strong>. Neste experimento o tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(experimento, <span class="fu">aes</span>(<span class="at">x =</span> tratamento, <span class="at">y =</span> diversidade)) <span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
@@ -461,21 +460,19 @@ Figura&nbsp;1: Diversidade nos quatro tratamentos de um experimento construído 
 </div>
 </div>
 </div>
-<p>Ainda assim as quatro caixas não ficam alinhadas: são 32 canais sorteados. A pergunta da ANOVA é se essa separação é grande <strong>em comparação com</strong> o espalhamento dentro dos grupos.</p>
+<p>Ainda assim as quatro caixas da <a href="#fig-anova-simulado" class="quarto-xref">Figura&nbsp;1</a> não ficam alinhadas, porque são 32 canais sorteados. A pergunta da ANOVA é se essa separação é grande <strong>em comparação com</strong> o espalhamento dentro dos grupos.</p>
 <p>A fórmula <code>diversidade ~ tratamento</code> lê-se “diversidade em função de tratamento”, a mesma notação da Prática 06:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>modelo_nulo <span class="ot">&lt;-</span> <span class="fu">aov</span>(diversidade <span class="sc">~</span> tratamento, <span class="at">data =</span> experimento)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_nulo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
-tratamento   3  1.967  0.6558   3.078 0.0437 *
-Residuals   28  5.966  0.2131                 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+tratamento   3  1.067  0.3558   1.162  0.342
+Residuals   28  8.574  0.3062               </code></pre>
 </div>
 </div>
-<p>A tabela traz os graus de liberdade (<code>Df</code>), a soma de quadrados (<code>Sum Sq</code>), o quadrado médio (<code>Mean Sq</code>), a razão F e o valor de p.&nbsp;A linha <code>tratamento</code> é a variação entre grupos; <code>Residuals</code> é a variação dentro dos grupos.</p>
+<p>A tabela traz os graus de liberdade (<code>Df</code>), a soma de quadrados (<code>Sum Sq</code>), o quadrado médio (<code>Mean Sq</code>), a razão F e o valor de p.&nbsp;A linha <code>tratamento</code> é a variação entre grupos, e <code>Residuals</code> é a variação dentro dos grupos.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -487,7 +484,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <p>Como as quatro médias verdadeiras são iguais, as duas linhas estão medindo a mesma coisa e F fica em torno de <strong>1</strong>.</p>
-<p>Execute o bloco da simulação e o <code>summary()</code> mais duas vezes. F muda bastante de uma execução para outra, e ocasionalmente fica bem acima de 1 — sem que nada tenha mudado no experimento. É o mesmo alarme falso da Prática 05, agora medido por F.</p>
+<p>Execute o bloco da simulação e o <code>summary()</code> mais duas vezes. F muda bastante de uma execução para outra, e ocasionalmente fica bem acima de 1, sem que nada tenha mudado no experimento. É o mesmo alarme falso da Prática 05, agora medido por F.</p>
 </div>
 </div>
 </section>
@@ -504,7 +501,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <p>Escolha <strong>as suas quatro médias verdadeiras</strong>, com pelo menos uma diferente das demais, e registre-as no script. Mantenha <code>desvio_dentro &lt;- 0.5</code> por enquanto.</p>
-<p>Antes de rodar, escreva como comentário: o F ficará perto de 1 ou bem acima? Por quê?</p>
+<p>Antes de rodar, escreva como comentário se o F ficará perto de 1 ou bem acima, e por quê.</p>
 </div>
 </div>
 <p>Troque o vetor <code>medias_verdadeiras</code> pelos seus valores, gere de novo o experimento e ajuste o modelo.</p>
@@ -518,14 +515,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Agora mude <strong>um único parâmetro</strong> — só as médias, ou só <code>desvio_dentro</code>, ou só <code>n_por_grupo</code> — de modo a levar o F na <strong>direção oposta</strong> à que você acabou de obter.</p>
-<p>Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de <code>summary()</code>. Rode cada versão duas vezes antes de concluir: uma execução isolada pode enganar.</p>
+<p>Agora mude <strong>um único parâmetro</strong>, seja só as médias, só <code>desvio_dentro</code> ou só <code>n_por_grupo</code>, de modo a levar o F na <strong>direção oposta</strong> à que você acabou de obter.</p>
+<p>Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de <code>summary()</code>. Rode cada versão duas vezes antes de concluir, porque uma execução isolada pode enganar.</p>
 </div>
 </div>
 </section>
 <section id="os-dados-reais-quatro-concentrações-de-zinco" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Os dados reais: quatro concentrações de zinco</h1>
-<p>Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco: <code>BACK</code> (concentração de fundo, o controle), <code>LOW</code>, <code>MED</code> e <code>HIGH</code>.</p>
+<p>Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco, que são <code>BACK</code> (concentração de fundo, o controle), <code>LOW</code>, <code>MED</code> e <code>HIGH</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/medley.csv"</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -556,7 +553,7 @@ Residuals   30  6.516  0.2172
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>O valor de p responde a <strong>uma</strong> pergunta: “as quatro médias são todas iguais?”. Ele não diz quais concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares ajustando para o número de comparações:</p>
+<p>O valor de p responde a <strong>uma</strong> pergunta, “as quatro médias são todas iguais?”. Ele não diz quais concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares ajustando para o número de comparações:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -586,7 +583,7 @@ HIGH-MED  -0.44000000 -1.0373984  0.15739837 0.2095597</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Percorra as seis linhas e anote quais pares <strong>não</strong> contêm o zero. Guarde essa lista: ela é a chave do próximo bloco.</p>
+<p>Percorra as seis linhas e anote quais pares <strong>não</strong> contêm o zero. Guarde essa lista, porque ela é a chave do próximo bloco.</p>
 </div>
 </div>
 </section>
@@ -604,7 +601,7 @@ HIGH-MED  -0.44000000 -1.0373984  0.15739837 0.2095597</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <p>Escolha <strong>uma</strong> das quatro concentrações para remover da análise e registre a escolha no script.</p>
-<p>Antes de rodar, escreva: com três grupos em vez de quatro, o F vai <strong>subir ou descer</strong>? Use a tabela de Tukey que você acabou de ler para justificar em uma frase.</p>
+<p>Antes de rodar, escreva se, com três grupos em vez de quatro, o F vai <strong>subir ou descer</strong>. Use a tabela de Tukey que você acabou de ler para justificar em uma frase.</p>
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>algas_reduzido <span class="ot">&lt;-</span> algas <span class="sc">|&gt;</span></span>
@@ -613,7 +610,7 @@ HIGH-MED  -0.44000000 -1.0373984  0.15739837 0.2095597</code></pre>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(DIVERSITY <span class="sc">~</span> ZINC, <span class="at">data =</span> algas_reduzido))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>fct_drop()</code> elimina o nível que ficou sem observações depois do <code>filter()</code>. Sem ele, o R continuaria esperando quatro grupos.</p>
-<p>Compare a nova tabela com a completa: graus de liberdade, F e valor de p.</p>
+<p>Compare a nova tabela com a completa, olhando graus de liberdade, F e valor de p.</p>
 </section>
 <section id="entrega" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Entrega</h1>
@@ -657,12 +654,21 @@ HIGH-MED  -0.44000000 -1.0373984  0.15739837 0.2095597</code></pre>
 </ul>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/anova/anova-simples.html" target="_blank">Análise de variância de um fator</a> (MEAD) — procure a seção sobre a partição da soma de quadrados, para rever de onde saem os dois quadrados médios que formam o F.</li>
 </ul>
+</div>
+</div>
 
 
 <!-- -->
@@ -1155,209 +1161,173 @@ HIGH-MED  -0.44000000 -1.0373984  0.15739837 0.2095597</code></pre>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-fontes-variacao-anova.qmd)</span> mostrou dois experimentos com</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>**as mesmas médias** e conclusões opostas, e explicou que a razão F compara duas fontes de variação.</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você **define os</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>parâmetros** que os geram: quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>F subir e o que faz F descer — e só então aplica o procedimento a dados reais de contaminação por</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>zinco.</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>O objetivo em R é escrever um modelo como processo gerador, ajustar <span class="in">`aov()`</span> e ler as comparações</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>par a par.</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-anova.R`</span> com o cabeçalho de identificação e comece por:</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um experimento sem efeito nenhum</span></span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>Vamos construir um experimento com quatro tratamentos e oito canais em cada um, medindo a diversidade</span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>de algas. Os parâmetros ficam explícitos no início, para serem fáceis de mudar:</span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>medias_verdadeiras <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.8</span>, <span class="fl">1.8</span>, <span class="fl">1.8</span>, <span class="fl">1.8</span>)   <span class="co"># uma por tratamento</span></span>
-<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>desvio_dentro <span class="ot">&lt;-</span> <span class="fl">0.5</span>                          <span class="co"># variação entre canais do mesmo tratamento</span></span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>n_por_grupo <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">tratamento =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"BACK"</span>, <span class="st">"LOW"</span>, <span class="st">"MED"</span>, <span class="st">"HIGH"</span>), <span class="at">each =</span> n_por_grupo),</span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"BACK"</span>, <span class="st">"LOW"</span>, <span class="st">"MED"</span>, <span class="st">"HIGH"</span>)),</span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">diversidade =</span> <span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> n_por_grupo,</span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mean =</span> <span class="fu">rep</span>(medias_verdadeiras, <span class="at">each =</span> n_por_grupo),</span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sd =</span> desvio_dentro)</span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(experimento)</span>
-<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>Repare no que acabamos de escrever: as quatro médias verdadeiras são **iguais**. Neste experimento o</span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-fontes-variacao-anova.qmd)</span> mostrou dois experimentos com **as mesmas médias** e conclusões opostas, e explicou que a razão F compara duas fontes de variação.</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>Hoje você vai operar essas duas fontes. Em vez de receber os dados prontos, você **define os parâmetros** que os geram, quatro médias e um desvio-padrão. Girando esses botões, descobre o que faz F subir e o que faz F descer, e só então aplica o procedimento a dados reais de contaminação por zinco.</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>O objetivo em R é escrever um modelo como processo gerador, ajustar <span class="in">`aov()`</span> e ler as comparações par a par.</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-anova.R`</span> com o cabeçalho de identificação e comece por:</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um experimento sem efeito nenhum</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>Vamos construir um experimento com quatro tratamentos e oito canais em cada um, medindo a diversidade de algas. Os parâmetros ficam explícitos no início, para serem fáceis de mudar:</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>medias_verdadeiras <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.8</span>, <span class="fl">1.8</span>, <span class="fl">1.8</span>, <span class="fl">1.8</span>)   <span class="co"># uma por tratamento</span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>desvio_dentro <span class="ot">&lt;-</span> <span class="fl">0.5</span>                          <span class="co"># variação entre canais do mesmo tratamento</span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>n_por_grupo <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">tratamento =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"BACK"</span>, <span class="st">"LOW"</span>, <span class="st">"MED"</span>, <span class="st">"HIGH"</span>), <span class="at">each =</span> n_por_grupo),</span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"BACK"</span>, <span class="st">"LOW"</span>, <span class="st">"MED"</span>, <span class="st">"HIGH"</span>)),</span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">diversidade =</span> <span class="fu">rnorm</span>(<span class="dv">4</span> <span class="sc">*</span> n_por_grupo,</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mean =</span> <span class="fu">rep</span>(medias_verdadeiras, <span class="at">each =</span> n_por_grupo),</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sd =</span> desvio_dentro)</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(experimento)</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>Repare no que acabamos de escrever, porque as quatro médias verdadeiras são **iguais**. Neste experimento o tratamento não faz absolutamente nada, e sabemos disso porque fomos nós que o construímos.</span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-anova-simulado</span></span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Diversidade nos quatro tratamentos de um experimento construído sem efeito algum."</span></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
 <span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-anova-simulado</span></span>
-<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Diversidade nos quatro tratamentos de um experimento construído sem efeito algum."</span></span>
-<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(experimento, <span class="fu">aes</span>(<span class="at">x =</span> tratamento, <span class="at">y =</span> diversidade)) <span class="sc">+</span></span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.12</span>, <span class="at">size =</span> <span class="fl">2.2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tratamento"</span>, <span class="at">y =</span> <span class="st">"Diversidade"</span>)</span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>Ainda assim as quatro caixas não ficam alinhadas: são 32 canais sorteados. A pergunta da ANOVA é se</span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>essa separação é grande **em comparação com** o espalhamento dentro dos grupos.</span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>A fórmula <span class="in">`diversidade ~ tratamento`</span> lê-se "diversidade em função de tratamento", a mesma notação da</span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>Prática 06:</span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>modelo_nulo <span class="ot">&lt;-</span> <span class="fu">aov</span>(diversidade <span class="sc">~</span> tratamento, <span class="at">data =</span> experimento)</span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_nulo)</span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>A tabela traz os graus de liberdade (<span class="in">`Df`</span>), a soma de quadrados (<span class="in">`Sum Sq`</span>), o quadrado médio</span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>(<span class="in">`Mean Sq`</span>), a razão F e o valor de p. A linha <span class="in">`tratamento`</span> é a variação entre grupos; <span class="in">`Residuals`</span> é</span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>a variação dentro dos grupos.</span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(experimento, <span class="fu">aes</span>(<span class="at">x =</span> tratamento, <span class="at">y =</span> diversidade)) <span class="sc">+</span></span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.12</span>, <span class="at">size =</span> <span class="fl">2.2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tratamento"</span>, <span class="at">y =</span> <span class="st">"Diversidade"</span>)</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>Ainda assim as quatro caixas da @fig-anova-simulado não ficam alinhadas, porque são 32 canais sorteados. A pergunta da ANOVA é se essa separação é grande **em comparação com** o espalhamento dentro dos grupos.</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>A fórmula <span class="in">`diversidade ~ tratamento`</span> lê-se "diversidade em função de tratamento", a mesma notação da Prática 06:</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>modelo_nulo <span class="ot">&lt;-</span> <span class="fu">aov</span>(diversidade <span class="sc">~</span> tratamento, <span class="at">data =</span> experimento)</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_nulo)</span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>A tabela traz os graus de liberdade (<span class="in">`Df`</span>), a soma de quadrados (<span class="in">`Sum Sq`</span>), o quadrado médio (<span class="in">`Mean Sq`</span>), a razão F e o valor de p. A linha <span class="in">`tratamento`</span> é a variação entre grupos, e <span class="in">`Residuals`</span> é a variação dentro dos grupos.</span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a>Como as quatro médias verdadeiras são iguais, as duas linhas estão medindo a mesma coisa e F fica em torno de **1**.</span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>Execute o bloco da simulação e o <span class="in">`summary()`</span> mais duas vezes. F muda bastante de uma execução para outra, e ocasionalmente fica bem acima de 1, sem que nada tenha mudado no experimento. É o mesmo alarme falso da Prática 05, agora medido por F.</span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 1: mova o F</span></span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>Escolha **as suas quatro médias verdadeiras**, com pelo menos uma diferente das demais, e registre-as no script. Mantenha <span class="in">`desvio_dentro &lt;- 0.5`</span> por enquanto.</span>
 <span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>Como as quatro médias verdadeiras são iguais, as duas linhas estão medindo a mesma coisa e F fica em</span>
-<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>torno de **1**.</span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>Execute o bloco da simulação e o <span class="in">`summary()`</span> mais duas vezes. F muda bastante de uma execução para</span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>outra, e ocasionalmente fica bem acima de 1 — sem que nada tenha mudado no experimento. É o mesmo</span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>alarme falso da Prática 05, agora medido por F.</span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 1: mova o F</span></span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>Antes de rodar, escreva como comentário se o F ficará perto de 1 ou bem acima, e por quê.</span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>Troque o vetor <span class="in">`medias_verdadeiras`</span> pelos seus valores, gere de novo o experimento e ajuste o modelo.</span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O desafio"}</span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>Agora mude **um único parâmetro**, seja só as médias, só `desvio_dentro` ou só `n_por_grupo`, de modo a levar o F na **direção oposta** à que você acabou de obter.</span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de <span class="in">`summary()`</span>. Rode cada versão duas vezes antes de concluir, porque uma execução isolada pode enganar.</span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>Escolha **as suas quatro médias verdadeiras**, com pelo menos uma diferente das demais, e registre-as</span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>no script. Mantenha <span class="in">`desvio_dentro &lt;- 0.5`</span> por enquanto.</span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a><span class="fu"># Os dados reais: quatro concentrações de zinco</span></span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco, que são <span class="in">`BACK`</span> (concentração de fundo, o controle), <span class="in">`LOW`</span>, <span class="in">`MED`</span> e <span class="in">`HIGH`</span>.</span>
 <span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>Antes de rodar, escreva como comentário: o F ficará perto de 1 ou bem acima? Por quê?</span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>Troque o vetor <span class="in">`medias_verdadeiras`</span> pelos seus valores, gere de novo o experimento e ajuste o modelo.</span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/medley.csv"</span></span>
 <span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O desafio"}</span>
-<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>Agora mude **um único parâmetro** — só as médias, ou só <span class="in">`desvio_dentro`</span>, ou só <span class="in">`n_por_grupo`</span> — de</span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>modo a levar o F na **direção oposta** à que você acabou de obter.</span>
-<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>Registre no script qual parâmetro escolheu, o valor antigo, o valor novo e as duas tabelas de</span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">`summary()`</span>. Rode cada versão duas vezes antes de concluir: uma execução isolada pode enganar.</span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>algas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ZINC =</span> <span class="fu">fct_relevel</span>(ZINC, <span class="st">"BACK"</span>, <span class="st">"LOW"</span>, <span class="st">"MED"</span>, <span class="st">"HIGH"</span>))</span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>algas <span class="sc">|&gt;</span> <span class="fu">count</span>(ZINC)</span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="in">`fct_relevel()`</span> coloca os níveis na ordem que interessa, do menor para o maior zinco. Isso vale tanto para as tabelas quanto para o eixo dos gráficos.</span>
 <span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a><span class="fu"># Os dados reais: quatro concentrações de zinco</span></span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a>Um estudo mediu a diversidade de algas em canais sob quatro concentrações de zinco: <span class="in">`BACK`</span></span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>(concentração de fundo, o controle), <span class="in">`LOW`</span>, <span class="in">`MED`</span> e <span class="in">`HIGH`</span>.</span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">aov</span>(DIVERSITY <span class="sc">~</span> ZINC, <span class="at">data =</span> algas)</span>
 <span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/medley.csv"</span></span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>O valor de p responde a **uma** pergunta, "as quatro médias são todas iguais?". Ele não diz quais concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares ajustando para o número de comparações:</span>
 <span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>algas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ZINC =</span> <span class="fu">fct_relevel</span>(ZINC, <span class="st">"BACK"</span>, <span class="st">"LOW"</span>, <span class="st">"MED"</span>, <span class="st">"HIGH"</span>))</span>
-<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>algas <span class="sc">|&gt;</span> <span class="fu">count</span>(ZINC)</span>
+<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo)</span>
 <span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a><span class="in">`fct_relevel()`</span> coloca os níveis na ordem que interessa, do menor para o maior zinco. Isso vale tanto</span>
-<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>para as tabelas quanto para o eixo dos gráficos.</span>
-<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">aov</span>(DIVERSITY <span class="sc">~</span> ZINC, <span class="at">data =</span> algas)</span>
+<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>Cada linha é um par. <span class="in">`diff`</span> é a diferença entre as médias, <span class="in">`lwr`</span> e <span class="in">`upr`</span> delimitam o intervalo de confiança dessa diferença, e <span class="in">`p adj`</span> é o valor de p ajustado. Um par cujo intervalo **contém o zero** não mostra diferença detectável.</span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leia a tabela antes de seguir"}</span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>Percorra as seis linhas e anote quais pares **não** contêm o zero. Guarde essa lista, porque ela é a chave do próximo bloco.</span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 2: de onde vem o F?</span></span>
 <span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span>
-<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>O valor de p responde a **uma** pergunta: "as quatro médias são todas iguais?". Ele não diz quais</span>
-<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>concentrações diferem entre si. Para isso existe o teste de Tukey, que compara todos os pares</span>
-<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>ajustando para o número de comparações:</span>
-<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(modelo)</span>
-<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a>O F da tabela completa resume as quatro concentrações em um número só. Vamos descobrir quais grupos o sustentam.</span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
+<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>Escolha **uma** das quatro concentrações para remover da análise e registre a escolha no script.</span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>Antes de rodar, escreva se, com três grupos em vez de quatro, o F vai **subir ou descer**. Use a tabela de Tukey que você acabou de ler para justificar em uma frase.</span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>algas_reduzido <span class="ot">&lt;-</span> algas <span class="sc">|&gt;</span></span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ZINC <span class="sc">!=</span> <span class="st">"____"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ZINC =</span> <span class="fu">fct_drop</span>(ZINC))</span>
 <span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>Cada linha é um par. <span class="in">`diff`</span> é a diferença entre as médias, <span class="in">`lwr`</span> e <span class="in">`upr`</span> delimitam o intervalo de</span>
-<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a>confiança dessa diferença, e <span class="in">`p adj`</span> é o valor de p ajustado. Um par cujo intervalo **contém o zero**</span>
-<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>não mostra diferença detectável.</span>
-<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leia a tabela antes de seguir"}</span>
-<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>Percorra as seis linhas e anote quais pares **não** contêm o zero. Guarde essa lista: ela é a chave</span>
-<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a>do próximo bloco.</span>
-<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(DIVERSITY <span class="sc">~</span> ZINC, <span class="at">data =</span> algas_reduzido))</span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a><span class="in">`fct_drop()`</span> elimina o nível que ficou sem observações depois do <span class="in">`filter()`</span>. Sem ele, o R continuaria esperando quatro grupos.</span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>Compare a nova tabela com a completa, olhando graus de liberdade, F e valor de p.</span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
 <span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez, parte 2: de onde vem o F?</span></span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-anova.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
 <span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>O F da tabela completa resume as quatro concentrações em um número só. Vamos descobrir quais grupos</span>
-<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a>o sustentam.</span>
-<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
-<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a>Escolha **uma** das quatro concentrações para remover da análise e registre a escolha no script.</span>
-<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>Antes de rodar, escreva: com três grupos em vez de quatro, o F vai **subir ou descer**? Use a tabela</span>
-<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a>de Tukey que você acabou de ler para justificar em uma frase.</span>
-<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>algas_reduzido <span class="ot">&lt;-</span> algas <span class="sc">|&gt;</span></span>
-<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ZINC <span class="sc">!=</span> <span class="st">"____"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ZINC =</span> <span class="fu">fct_drop</span>(ZINC))</span>
-<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(DIVERSITY <span class="sc">~</span> ZINC, <span class="at">data =</span> algas_reduzido))</span>
-<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a><span class="in">`fct_drop()`</span> elimina o nível que ficou sem observações depois do <span class="in">`filter()`</span>. Sem ele, o R continuaria</span>
-<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>esperando quatro grupos.</span>
-<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>Compare a nova tabela com a completa: graus de liberdade, F e valor de p.</span>
-<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-anova.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
-<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
-<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
-<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**o seu experimento simulado**: as quatro médias que você escolheu, o gráfico e a tabela de</span>
-<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a>   <span class="in">`summary()`</span>, com a previsão sobre o F registrada em comentário **antes** dela;</span>
-<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o desafio**: o parâmetro que você mudou, os valores antigo e novo, as duas tabelas e uma frase</span>
-<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a>   explicando por que essa mudança moveu o F na direção pretendida;</span>
-<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a análise dos dados reais de zinco: a ANOVA completa e o teste de Tukey;</span>
-<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**o teste de robustez**: a concentração que você removeu, a previsão registrada antes, a nova</span>
-<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a>   tabela e a comparação com a completa;</span>
-<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, 3 a 4 frases respondendo, **com os seus números**: qual é a conclusão sobre o</span>
-<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a>   efeito do zinco, e o que a remoção que você fez revelou sobre quais grupos sustentavam o F da</span>
-<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a>   análise completa?</span>
-<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** das tabelas correspondentes;</span>
-<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> no desafio, **um só** parâmetro mudou entre as duas tabelas, e a mudança está registrada;</span>
-<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha da concentração removida está registrada e justificada pela tabela de Tukey;</span>
-<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão do item 5 cita valores de F ou de p obtidos por você;</span>
-<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade.</span>
-<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Análise de variância de um fator</span><span class="co">](https://fcopf.github.io/mead/content/anova/anova-simples.html)</span>{target="_blank"}</span>
-<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre a partição da soma de quadrados, para rever de onde saem os dois</span>
-<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a>  quadrados médios que formam o F.</span>
+<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**o seu experimento simulado**: as quatro médias que você escolheu, o gráfico e a tabela de `summary()`, com a previsão sobre o F registrada em comentário **antes** dela;</span>
+<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o desafio**: o parâmetro que você mudou, os valores antigo e novo, as duas tabelas e uma frase explicando por que essa mudança moveu o F na direção pretendida;</span>
+<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a análise dos dados reais de zinco: a ANOVA completa e o teste de Tukey;</span>
+<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**o teste de robustez**: a concentração que você removeu, a previsão registrada antes, a nova tabela e a comparação com a completa;</span>
+<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, 3 a 4 frases respondendo, **com os seus números**: qual é a conclusão sobre o efeito do zinco, e o que a remoção que você fez revelou sobre quais grupos sustentavam o F da análise completa?</span>
+<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** das tabelas correspondentes;</span>
+<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> no desafio, **um só** parâmetro mudou entre as duas tabelas, e a mudança está registrada;</span>
+<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha da concentração removida está registrada e justificada pela tabela de Tukey;</span>
+<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão do item 5 cita valores de F ou de p obtidos por você;</span>
+<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade.</span>
+<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
+<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Análise de variância de um fator</span><span class="co">](https://fcopf.github.io/mead/content/anova/anova-simples.html)</span>{target="_blank"} (MEAD) — procure a seção sobre a partição da soma de quadrados, para rever de onde saem os dois quadrados médios que formam o F.</span>
+<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

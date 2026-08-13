@@ -400,8 +400,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#terceira-decisão-o-que-manter-constante" id="toc-terceira-decisão-o-que-manter-constante" class="nav-link" data-scroll-target="#terceira-decisão-o-que-manter-constante"><span class="header-section-number">4</span> Terceira decisão: o que manter constante?</a></li>
   <li><a href="#nem-tudo-pode-ser-sorteado" id="toc-nem-tudo-pode-ser-sorteado" class="nav-link" data-scroll-target="#nem-tudo-pode-ser-sorteado"><span class="header-section-number">5</span> Nem tudo pode ser sorteado</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -430,7 +429,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -451,7 +450,7 @@ window.Quarto = {
 <section id="primeira-decisão-quantas-unidades-experimentais" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Primeira decisão: quantas unidades experimentais?</h1>
 <p>Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é atribuída ao tanque, não ao peixe. Quem se replica, portanto, é o tanque.</p>
-<p>Vale ver o que isso significa em números. A figura abaixo repete duas mil vezes um experimento em que <strong>as duas dietas são idênticas</strong>, variando apenas a distribuição dos 120 peixes, e guarda a diferença estimada entre as dietas em cada repetição.</p>
+<p>Vale ver o que isso significa em números. A <a href="#fig-alocacao" class="quarto-xref">Figura&nbsp;1</a> repete duas mil vezes um experimento em que <strong>as duas dietas são idênticas</strong>, variando apenas a distribuição dos 120 peixes, e guarda a diferença estimada entre as dietas em cada repetição.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-alocacao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero.">
@@ -466,7 +465,7 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </div>
 </div>
 </div>
-<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,19 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,38 cm.</p>
+<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,13 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,37 cm.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -478,7 +477,7 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </div>
 <div class="callout-body-container callout-body">
 <p>Nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a dieta foi sorteada de forma independente.</p>
-<p>Repare também que os quatro histogramas estão centrados em zero. Distribuir mal os peixes não faz o experimento errar para um lado: faz cada resultado ser muito mais instável, e portanto muito mais fácil de confundir com um efeito real.</p>
+<p>Repare também que os quatro histogramas estão centrados em zero. Distribuir mal os peixes não faz o experimento errar para um lado. Faz cada resultado ser muito mais instável, e portanto muito mais fácil de confundir com um efeito real.</p>
 </div>
 </div>
 <p>Isso não significa que subamostras sejam inúteis. Medir vários peixes por tanque produz uma média confiável <strong>daquele</strong> tanque, e isso melhora a estimativa. Só que o ganho satura rápido, enquanto cada tanque novo acrescenta uma repetição independente do tratamento.</p>
@@ -492,7 +491,7 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas: densidade irrealista, mais trabalho de manutenção, mais chance de perder unidades inteiras durante o experimento.</p>
+<p>Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas, como densidade irrealista, mais trabalho de manutenção e mais chance de perder unidades inteiras durante o experimento.</p>
 <p>A decisão é um equilíbrio, mas ele começa contando unidades experimentais, não observações.</p>
 </div>
 </div>
@@ -506,12 +505,12 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 <h1 data-number="3"><span class="header-section-number">3</span> Segunda decisão: quem recebe qual tratamento?</h1>
 <p>Definidos os tanques, resta atribuir as dietas. E essa atribuição precisa ser <strong>sorteada</strong>.</p>
 <p>Sortear não é uma formalidade burocrática. É o que impede que diferenças pré-existentes se alinhem com o tratamento. Se a pesquisadora escolher “os tanques mais claros para a dieta nova”, luz e dieta ficam confundidas para sempre, e nenhuma análise posterior separa as duas.</p>
-<p>O sorteio também cobre o que ninguém pensou em medir: a posição na sala, a idade da bomba de aeração, a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado.</p>
+<p>O sorteio também cobre o que ninguém pensou em medir, como a posição na sala, a idade da bomba de aeração e a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado.</p>
 <p>Vale escrever isso com um pouco mais de precisão. Se <span class="math inline">\(Y_i(0)\)</span> representa o resultado que o tanque <span class="math inline">\(i\)</span> teria sob a dieta comum e <span class="math inline">\(Y_i(1)\)</span> o resultado sob a dieta enriquecida, o efeito individual seria <span class="math inline">\(Y_i(1)-Y_i(0)\)</span>. Nunca observamos os dois resultados no mesmo tanque, porque cada tanque recebe uma única dieta. A alocação aleatória contorna esse impasse ao criar grupos comparáveis, de modo que o efeito médio pode ser estimado por</p>
 <p><span class="math display">\[
 \widehat\Delta=\bar Y_{enriquecida}-\bar Y_{comum}.
 \]</span></p>
-<p>O símbolo <span class="math inline">\(\widehat\Delta\)</span> é a diferença observada entre médias. Sob sorteio correto e ausência de interferência entre unidades, ela é centrada no efeito médio. A aleatorização não garante que toda característica fique exatamente balanceada em uma realização; garante que desequilíbrios não sejam sistematicamente produzidos pelo pesquisador e fornece base probabilística para a comparação.</p>
+<p>O símbolo <span class="math inline">\(\widehat\Delta\)</span> é a diferença observada entre médias. Sob sorteio correto e ausência de interferência entre unidades, ela é centrada no efeito médio. A aleatorização não garante que toda característica fique exatamente balanceada em uma realização, mas garante que desequilíbrios não sejam sistematicamente produzidos pelo pesquisador e fornece base probabilística para a comparação.</p>
 <p>Na prática, o sorteio balanceado é uma linha de código, e convém que seja registrada:</p>
 <div class="cell">
 <details class="code-fold">
@@ -527,29 +526,29 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 <pre><code># A tibble: 20 × 2
    tanque dieta      
     &lt;int&gt; &lt;chr&gt;      
- 1      1 enriquecida
- 2      2 comum      
+ 1      1 comum      
+ 2      2 enriquecida
  3      3 enriquecida
  4      4 enriquecida
  5      5 comum      
- 6      6 enriquecida
- 7      7 enriquecida
+ 6      6 comum      
+ 7      7 comum      
  8      8 enriquecida
  9      9 comum      
 10     10 comum      
-11     11 comum      
+11     11 enriquecida
 12     12 comum      
 13     13 comum      
-14     14 enriquecida
+14     14 comum      
 15     15 enriquecida
 16     16 enriquecida
-17     17 enriquecida
-18     18 comum      
-19     19 comum      
-20     20 comum      </code></pre>
+17     17 comum      
+18     18 enriquecida
+19     19 enriquecida
+20     20 enriquecida</code></pre>
 </div>
 </div>
-<p>O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima; a função <code>sample()</code> apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.</p>
+<p>O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima, e a função <code>sample()</code> apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Aleatorizar não é escolher sem critério">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -588,7 +587,7 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </tr>
 </tbody>
 </table>
-<p>Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral: vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.</p>
+<p>Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral, pois vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-confundimento" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira.">
@@ -603,11 +602,11 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </div>
 </div>
 </div>
-<p>No painel de baixo, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.</p>
+<p>No painel de baixo da <a href="#fig-confundimento" class="quarto-xref">Figura&nbsp;2</a>, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.</p>
 </section>
 <section id="quando-o-sorteio-precisa-respeitar-a-estrutura" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="quando-o-sorteio-precisa-respeitar-a-estrutura"><span class="header-section-number">3.2</span> Quando o sorteio precisa respeitar a estrutura</h2>
-<p>O painel inferior da figura sugere um refinamento do sorteio. Aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear <strong>dentro</strong> deles. Por exemplo, em cada prateleira da sala metade dos tanques recebe cada dieta. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.</p>
+<p>O painel inferior da <a href="#fig-confundimento" class="quarto-xref">Figura&nbsp;2</a> sugere um refinamento do sorteio. Aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear <strong>dentro</strong> deles. Por exemplo, em cada prateleira da sala metade dos tanques recebe cada dieta. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.</p>
 <p>Uma implementação completa cria os grupos primeiro e sorteia os rótulos separadamente em cada um:</p>
 <div class="cell">
 <details class="code-fold">
@@ -638,8 +637,8 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 8 prateleira 4 dieta nova     3</code></pre>
 </div>
 </div>
-<p>A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar <code>each = 3</code> altera a replicação por tratamento dentro de cada grupo; se o número de unidades for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.</p>
-<p>Esses grupos são blocos. O bloqueamento não transforma posição em tratamento de interesse; apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta e cada bloco deve permitir comparação entre os tratamentos.</p>
+<p>A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar <code>each = 3</code> altera a replicação por tratamento dentro de cada grupo. Se o número de unidades for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.</p>
+<p>Esses grupos são blocos. O bloqueamento não transforma posição em tratamento de interesse, apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta e cada bloco deve permitir comparação entre os tratamentos.</p>
 </section>
 <section id="sortear-unidades-e-sortear-tratamentos" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sortear-unidades-e-sortear-tratamentos"><span class="header-section-number">3.3</span> Sortear unidades e sortear tratamentos</h2>
@@ -652,8 +651,8 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 <p>A última decisão é sobre tudo aquilo que <strong>não</strong> é o tratamento.</p>
 <p>Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial, horário de alimentação, origem dos juvenis) é o que se chama de <strong>controle local</strong>. Cada uma dessas fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a qual o efeito do tratamento é julgado.</p>
 <p>O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.</p>
-<p>Parte dessa decisão é definir contra o que o tratamento será comparado. Um <strong>grupo controle</strong> representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional; para um contaminante, concentração zero; para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos outros grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.</p>
-<p>Controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede o efeito naquela origem com precisão, mas pode representar mal outras populações. O objetivo não é eliminar toda variação biológica; é controlar fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.</p>
+<p>Parte dessa decisão é definir contra o que o tratamento será comparado. Um <strong>grupo controle</strong> representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional, para um contaminante, a concentração zero, e para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos outros grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.</p>
+<p>Controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede o efeito naquela origem com precisão, mas pode representar mal outras populações. O objetivo não é eliminar toda variação biológica, e sim controlar fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.</p>
 <p>Uma última providência diz respeito a quem mede. Quando possível, quem registra a resposta não deve saber qual tratamento cada unidade recebeu. Esse <strong>mascaramento</strong> não altera a biologia, mas reduz a chance de expectativas influenciarem a medição, a exclusão de observações ou o registro de resultados ambíguos.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Três decisões, três funções">
 <div class="callout-header d-flex align-content-center">
@@ -674,9 +673,9 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </section>
 <section id="nem-tudo-pode-ser-sorteado" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Nem tudo pode ser sorteado</h1>
-<p>Uma ressalva acompanha boa parte das Ciências do Mar.&nbsp;Em muitos estudos o “tratamento” é uma condição observada, não atribuída: costões expostos e abrigados, meses de coleta, estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.</p>
-<p>Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido: sem aleatorização, a conclusão é sobre associação, não sobre causa.</p>
-<p>Mesmo em experimento aleatorizado, a interpretação causal exige cuidados: tratamentos precisam ser aplicados conforme planejado, uma unidade não deve alterar o tratamento efetivo de outra, perdas não podem depender seletivamente do resultado e a medição deve ser comparável. O sorteio é o núcleo do argumento causal, não uma licença para ignorar o restante do protocolo.</p>
+<p>Uma ressalva acompanha boa parte das Ciências do Mar.&nbsp;Em muitos estudos o “tratamento” é uma condição observada, não atribuída, como costões expostos e abrigados, meses de coleta ou estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.</p>
+<p>Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido. Sem aleatorização, a conclusão é sobre associação, não sobre causa.</p>
+<p>Mesmo em experimento aleatorizado, a interpretação causal exige cuidados. Tratamentos precisam ser aplicados conforme planejado, uma unidade não deve alterar o tratamento efetivo de outra, perdas não podem depender seletivamente do resultado e a medição deve ser comparável. O sorteio é o núcleo do argumento causal, não uma licença para ignorar o restante do protocolo.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Protocolo mínimo antes da coleta">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -687,14 +686,23 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Defina população e unidade experimental; liste tratamentos e controle; escolha replicação e subamostragem; identifique fontes para bloqueio; gere e registre a sequência aleatória; padronize manejo e medição; planeje mascaramento, perdas e exclusões; e declare previamente respostas e comparações principais.</p>
+<p>Defina a população e a unidade experimental. Liste tratamentos e controle. Escolha replicação e subamostragem. Identifique fontes para bloqueio. Gere e registre a sequência aleatória. Padronize manejo e medição. Planeje mascaramento, perdas e exclusões. Declare previamente respostas e comparações principais.</p>
 </div>
 </div>
 <p>Os 120 peixes do início continuam sendo 120. O que as três decisões determinam é quanta informação sobre a dieta esses mesmos peixes serão capazes de fornecer, e nenhuma delas pode ser revista depois que o experimento começa. É por isso que o delineamento, e não a análise, é a etapa em que um estudo ganha ou perde a capacidade de responder à pergunta que o originou.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
-<p>O MEAD não trata de delineamento experimental, mas dois livros da bibliografia da unidade curricular desenvolvem o tema com profundidade: Ruxton e Colegrave <span class="citation" data-cites="ruxton2011">(<a href="#ref-ruxton2011" role="doc-biblioref">Ruxton e Colegrave 2011</a>)</span>, voltado especificamente ao planejamento em ciências da vida, e Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span>, que conecta delineamento e análise.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O MEAD não trata de delineamento experimental, mas dois livros da bibliografia da unidade curricular desenvolvem o tema com profundidade. Ruxton e Colegrave <span class="citation" data-cites="ruxton2011">(<a href="#ref-ruxton2011" role="doc-biblioref">Ruxton e Colegrave 2011</a>)</span> é voltado especificamente ao planejamento em ciências da vida, e Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span> conecta delineamento e análise.</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -712,14 +720,14 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </div>
 </div>
 </section>
-<section id="referências" class="level1" data-number="7">
+<section id="referências" class="level1" data-number="6">
 
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-quinn2002" class="csl-entry" role="listitem">
 Quinn, Gerry P., e Michael J. Keough. 2002. <em>Experimental Design and Data Analysis for Biologists</em>. Cambridge University Press.
 </div>

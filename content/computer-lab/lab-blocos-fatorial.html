@@ -349,7 +349,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#um-segundo-fator-no-mesmo-costão" id="toc-um-segundo-fator-no-mesmo-costão" class="nav-link" data-scroll-target="#um-segundo-fator-no-mesmo-costão"><span class="header-section-number">5.2</span> Um segundo fator, no mesmo costão</a></li>
   </ul></li>
   <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -378,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -392,8 +391,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="objetivo-desta-prática" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
-<p>A <a href="../../content/pre-reading/pread-blocos-interacao.html">leitura desta semana</a> fecha com uma frase que vale guardar: acrescentar um termo ao modelo <strong>retira do resíduo uma variação que tem nome</strong>, e o que muda entre bloco e interação não é a conta, é o estatuto científico do termo.</p>
-<p>Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do gradiente, o tamanho do efeito e o ruído — e vai descobrir, tentando, que a intuição mais comum sobre “como tornar um efeito detectável” falha neste delineamento.</p>
+<p>A <a href="../../content/pre-reading/pread-blocos-interacao.html">leitura desta semana</a> fecha com uma frase que vale guardar, de que acrescentar um termo ao modelo <strong>retira do resíduo uma variação que tem nome</strong>, e o que muda entre bloco e interação não é a conta, é o estatuto científico do termo.</p>
+<p>Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do gradiente, o tamanho do efeito e o ruído, e vai descobrir, tentando, que a intuição mais comum sobre “como tornar um efeito detectável” falha neste delineamento.</p>
 <p>O objetivo em R é comparar modelos que diferem por um único termo e ler o que acontece com o resíduo.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
 <div class="callout-header d-flex align-content-center">
@@ -447,28 +446,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 18 × 4
    bloco placa media_esperada recrutas
    &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
- 1     1 A               24       24.2
- 2     1 B               26.5     27.4
- 3     1 C               29       28.0
- 4     2 A               28       29.1
- 5     2 B               30.5     30.7
- 6     2 C               33       33.2
- 7     3 A               32       31.2
- 8     3 B               34.5     34.7
- 9     3 C               37       38.0
-10     4 A               36       37.2
-11     4 B               38.5     38.4
-12     4 C               41       41.4
+ 1     1 A               24       25.1
+ 2     1 B               26.5     26.3
+ 3     1 C               29       28.7
+ 4     2 A               28       28.4
+ 5     2 B               30.5     29.7
+ 6     2 C               33       31.9
+ 7     3 A               32       30.6
+ 8     3 B               34.5     33.3
+ 9     3 C               37       38.1
+10     4 A               36       34.5
+11     4 B               38.5     37.3
+12     4 C               41       41.9
 13     5 A               40       40.4
-14     5 B               42.5     42.7
-15     5 C               45       46.6
-16     6 A               44       43.8
-17     6 B               46.5     48.5
-18     6 C               49       48.8</code></pre>
+14     5 B               42.5     41.3
+15     5 C               45       44.3
+16     6 A               44       43.6
+17     6 B               46.5     46.4
+18     6 C               49       49.4</code></pre>
 </div>
 </div>
-<p>Leia a linha da <code>media_esperada</code>: cada faixa acrescenta <code>gradiente</code> recrutas, a placa B rende <code>efeito_B</code> a mais que a A, a C rende <code>efeito_C</code>, e o <code>rnorm()</code> acrescenta o que sobra.</p>
-<p>Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer.</p>
+<p>Leia a linha da <code>media_esperada</code>, em que cada faixa acrescenta <code>gradiente</code> recrutas, a placa B rende <code>efeito_B</code> a mais que a A, a C rende <code>efeito_C</code>, e o <code>rnorm()</code> acrescenta o que sobra.</p>
+<p>Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer na <a href="#fig-blocos-gradiente" class="quarto-xref">Figura&nbsp;1</a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(experimento, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(bloco), <span class="at">y =</span> recrutas, <span class="at">colour =</span> placa)) <span class="sc">+</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
@@ -508,11 +507,11 @@ Figura&nbsp;1: Recrutamento nas seis faixas de altura. Dentro de cada faixa est�
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_bloco)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-placa        2   76.1   38.07   0.638  0.542
-Residuals   15  895.4   59.69               </code></pre>
+placa        2   85.7   42.83   0.768  0.481
+Residuals   15  836.5   55.77               </code></pre>
 </div>
 </div>
-<p>O valor de p não indica efeito nenhum — e o efeito existe, porque nós o colocamos ali.</p>
+<p>O valor de p não indica efeito nenhum, e o efeito existe, porque nós o colocamos ali.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -549,14 +548,14 @@ Residuals   15  895.4   59.69               </code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_bloco)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-placa          2   76.1   38.07   41.45 1.45e-05 ***
-factor(bloco)  5  886.2  177.24  193.00 1.31e-09 ***
-Residuals     10    9.2    0.92                     
+placa          2   85.7   42.83   47.02 8.20e-06 ***
+factor(bloco)  5  827.4  165.48  181.66 1.77e-09 ***
+Residuals     10    9.1    0.91                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado: a variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.</p>
+<p>Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado, porque a variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="O bloco não é um resultado">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -575,7 +574,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h1 data-number="5"><span class="header-section-number">5</span> Sua vez</h1>
 <section id="o-desafio-faça-o-modelo-errado-funcionar" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="o-desafio-faça-o-modelo-errado-funcionar"><span class="header-section-number">5.1</span> O desafio: faça o modelo errado funcionar</h2>
-<p>O modelo <code>sem_bloco</code> não detectou o efeito da placa. Ele pode passar a detectar — sem que o bloco entre na fórmula — se o experimento for outro.</p>
+<p>O modelo <code>sem_bloco</code> não detectou o efeito da placa. Ele pode passar a detectar, sem que o bloco entre na fórmula, se o experimento for outro.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="A regra do desafio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -605,14 +604,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="callout-body-container callout-body">
 <p>Antes de mexer em qualquer coisa, escreva no script qual parâmetro você aposta que resolve, e por quê.</p>
-<p>Vale a pena pensar na régua: no modelo <code>sem_bloco</code>, o que exatamente está dentro do <code>Mean Sq</code> residual? Reduzir o <code>ruido</code> diminui esse resíduo o suficiente?</p>
+<p>Vale a pena pensar na régua. No modelo <code>sem_bloco</code>, o que exatamente está dentro do <code>Mean Sq</code> residual? Reduzir o <code>ruido</code> diminui esse resíduo o suficiente?</p>
 </div>
 </div>
 </section>
 <section id="um-segundo-fator-no-mesmo-costão" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="um-segundo-fator-no-mesmo-costão"><span class="header-section-number">5.2</span> Um segundo fator, no mesmo costão</h2>
-<p>Agora um experimento diferente no mesmo local: sem gradiente de altura, mas com as placas instaladas em duas <strong>orientações</strong>, norte e sul, com quatro réplicas por combinação.</p>
-<p>Aqui a segunda variável não é um incômodo: é uma pergunta científica. E ela permite algo que o bloco não permitia — perguntar se o efeito da placa <strong>depende</strong> da orientação.</p>
+<p>Agora um experimento diferente no mesmo local, sem gradiente de altura, mas com as placas instaladas em duas <strong>orientações</strong>, norte e sul, com quatro réplicas por combinação.</p>
+<p>Aqui a segunda variável não é um incômodo, e sim uma pergunta científica. E ela permite algo que o bloco não permitia, que é perguntar se o efeito da placa <strong>depende</strong> da orientação.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>efeito_interacao <span class="ot">&lt;-</span> ____   <span class="co"># escolha e registre: quanto a placa C rende a mais, no sul</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>costao_fatorial <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
@@ -689,13 +688,22 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html" target="_blank">Associação entre variáveis quantitativas e qualitativas</a> (MEAD) — para rever, pelo ângulo descritivo, a comparação de uma resposta contínua entre grupos.</li>
 <li><a href="https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html" target="_blank">Regressão linear múltipla</a> (MEAD) — procure a seção sobre termos de interação, que reaparecem na Prática 10 com um preditor contínuo.</li>
 </ul>
+</div>
+</div>
 
 
 <!-- -->
@@ -1188,231 +1196,195 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
 <span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-blocos-interacao.qmd)</span> fecha com uma frase que vale</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>guardar: acrescentar um termo ao modelo **retira do resíduo uma variação que tem nome**, e o que muda</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>entre bloco e interação não é a conta, é o estatuto científico do termo.</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-blocos-interacao.qmd)</span> fecha com uma frase que vale guardar, de que acrescentar um termo ao modelo **retira do resíduo uma variação que tem nome**, e o que muda entre bloco e interação não é a conta, é o estatuto científico do termo.</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do gradiente, o tamanho do efeito e o ruído, e vai descobrir, tentando, que a intuição mais comum sobre "como tornar um efeito detectável" falha neste delineamento.</span>
 <span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>Hoje você vai testar essa frase por dentro. Construindo o experimento, você controla a força do</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>gradiente, o tamanho do efeito e o ruído — e vai descobrir, tentando, que a intuição mais comum sobre</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>"como tornar um efeito detectável" falha neste delineamento.</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>O objetivo em R é comparar modelos que diferem por um único termo e ler o que acontece com o resíduo.</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>O objetivo em R é comparar modelos que diferem por um único termo e ler o que acontece com o resíduo.</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-blocos-fatorial.R`</span> com o cabeçalho de identificação e comece por:</span>
 <span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-blocos-fatorial.R`</span> com o cabeçalho de identificação e comece por:</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um costão com gradiente</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>Você quer comparar três tipos de placa de assentamento, mas o costão tem um gradiente forte de altura que afeta muito o recrutamento. Seis faixas de altura, três placas em cada faixa, e todos os parâmetros explícitos:</span>
 <span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="fu"># Um costão com gradiente</span></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>Você quer comparar três tipos de placa de assentamento, mas o costão tem um gradiente forte de altura</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>que afeta muito o recrutamento. Seis faixas de altura, três placas em cada faixa, e todos os</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>parâmetros explícitos:</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>gradiente <span class="ot">&lt;-</span> <span class="dv">4</span>      <span class="co"># recrutas a mais por faixa de altura</span></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>efeito_B <span class="ot">&lt;-</span> <span class="fl">2.5</span>     <span class="co"># quanto a placa B rende a mais que a A</span></span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>efeito_C <span class="ot">&lt;-</span> <span class="dv">5</span>       <span class="co"># quanto a placa C rende a mais que a A</span></span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>ruido <span class="ot">&lt;-</span> <span class="fl">1.2</span>        <span class="co"># variação que sobra, dentro de uma faixa</span></span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>n_blocos <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">bloco =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>n_blocos, <span class="at">each =</span> <span class="dv">3</span>),</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">placa =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">times =</span> n_blocos)</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_esperada =</span> <span class="dv">20</span> <span class="sc">+</span> gradiente <span class="sc">*</span> bloco <span class="sc">+</span></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"B"</span>, efeito_B, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"C"</span>, efeito_C, <span class="dv">0</span>),</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">recrutas =</span> media_esperada <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> ruido)</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>experimento</span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>Leia a linha da <span class="in">`media_esperada`</span>: cada faixa acrescenta <span class="in">`gradiente`</span> recrutas, a placa B rende</span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="in">`efeito_B`</span> a mais que a A, a C rende <span class="in">`efeito_C`</span>, e o <span class="in">`rnorm()`</span> acrescenta o que sobra.</span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o</span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer.</span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-blocos-gradiente</span></span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Recrutamento nas seis faixas de altura. Dentro de cada faixa estão as três placas."</span></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(experimento, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(bloco), <span class="at">y =</span> recrutas, <span class="at">colour =</span> placa)) <span class="sc">+</span></span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Faixa de altura (bloco)"</span>, <span class="at">y =</span> <span class="st">"Recrutas por placa"</span>, <span class="at">colour =</span> <span class="st">"Placa"</span>)</span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>O gradiente domina o gráfico. Dentro de cada faixa, porém, a ordem A → B → C se repete com</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>regularidade. É esse padrão local que a análise precisa enxergar.</span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="fu"># Duas análises do mesmo experimento</span></span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>sem_bloco <span class="ot">&lt;-</span> <span class="fu">aov</span>(recrutas <span class="sc">~</span> placa, <span class="at">data =</span> experimento)</span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_bloco)</span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>O valor de p não indica efeito nenhum — e o efeito existe, porque nós o colocamos ali.</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>gradiente <span class="ot">&lt;-</span> <span class="dv">4</span>      <span class="co"># recrutas a mais por faixa de altura</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>efeito_B <span class="ot">&lt;-</span> <span class="fl">2.5</span>     <span class="co"># quanto a placa B rende a mais que a A</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>efeito_C <span class="ot">&lt;-</span> <span class="dv">5</span>       <span class="co"># quanto a placa C rende a mais que a A</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>ruido <span class="ot">&lt;-</span> <span class="fl">1.2</span>        <span class="co"># variação que sobra, dentro de uma faixa</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>n_blocos <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">bloco =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>n_blocos, <span class="at">each =</span> <span class="dv">3</span>),</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">placa =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">times =</span> n_blocos)</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_esperada =</span> <span class="dv">20</span> <span class="sc">+</span> gradiente <span class="sc">*</span> bloco <span class="sc">+</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"B"</span>, efeito_B, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"C"</span>, efeito_C, <span class="dv">0</span>),</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">recrutas =</span> media_esperada <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> ruido)</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>experimento</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>Leia a linha da <span class="in">`media_esperada`</span>, em que cada faixa acrescenta <span class="in">`gradiente`</span> recrutas, a placa B rende <span class="in">`efeito_B`</span> a mais que a A, a C rende <span class="in">`efeito_C`</span>, e o <span class="in">`rnorm()`</span> acrescenta o que sobra.</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>Repare na escala. O gradiente vai de 4 a 24 recrutas entre a primeira e a última faixa, enquanto o efeito da placa não passa de 5. É por isso que ele corre o risco de desaparecer na @fig-blocos-gradiente.</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-blocos-gradiente</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Recrutamento nas seis faixas de altura. Dentro de cada faixa estão as três placas."</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(experimento, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(bloco), <span class="at">y =</span> recrutas, <span class="at">colour =</span> placa)) <span class="sc">+</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Faixa de altura (bloco)"</span>, <span class="at">y =</span> <span class="st">"Recrutas por placa"</span>, <span class="at">colour =</span> <span class="st">"Placa"</span>)</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>O gradiente domina o gráfico. Dentro de cada faixa, porém, a ordem A → B → C se repete com regularidade. É esse padrão local que a análise precisa enxergar.</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="fu"># Duas análises do mesmo experimento</span></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>sem_bloco <span class="ot">&lt;-</span> <span class="fu">aov</span>(recrutas <span class="sc">~</span> placa, <span class="at">data =</span> experimento)</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_bloco)</span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>O valor de p não indica efeito nenhum, e o efeito existe, porque nós o colocamos ali.</span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja"}</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>Vamos acrescentar o bloco ao modelo. Antes de executar, escreva no script duas previsões separadas:</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a <span class="in">`Sum Sq`</span> da linha <span class="in">`placa`</span> vai **mudar** em relação ao modelo anterior?</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>e a <span class="in">`Sum Sq`</span> dos **resíduos**?</span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>Não são a mesma resposta.</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja"}</span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>Vamos acrescentar o bloco ao modelo. Antes de executar, escreva no script duas previsões separadas:</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>Falta, dentro de <span class="in">`factor()`</span>, a coluna que identifica a faixa de altura. <span class="in">`factor()`</span> avisa ao R que os números de 1 a 6 são rótulos, não uma quantidade.</span>
 <span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a <span class="in">`Sum Sq`</span> da linha <span class="in">`placa`</span> vai **mudar** em relação ao modelo anterior?</span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>e a <span class="in">`Sum Sq`</span> dos **resíduos**?</span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>Não são a mesma resposta.</span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>Falta, dentro de <span class="in">`factor()`</span>, a coluna que identifica a faixa de altura. <span class="in">`factor()`</span> avisa ao R que os</span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>números de 1 a 6 são rótulos, não uma quantidade.</span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>com_bloco <span class="ot">&lt;-</span> <span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">+</span> <span class="fu">factor</span>(____), <span class="at">data =</span> experimento)</span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>com_bloco <span class="ot">&lt;-</span> <span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">+</span> <span class="fu">factor</span>(bloco), <span class="at">data =</span> experimento)</span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_bloco)</span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>com_bloco <span class="ot">&lt;-</span> <span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">+</span> <span class="fu">factor</span>(____), <span class="at">data =</span> experimento)</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>com_bloco <span class="ot">&lt;-</span> <span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">+</span> <span class="fu">factor</span>(bloco), <span class="at">data =</span> experimento)</span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_bloco)</span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado, porque a variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="O bloco não é um resultado"}</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difere da faixa 1" seria descrever o costão, não o experimento. O bloco entra no modelo para retirar variação conhecida do resíduo, não para ser interpretado.</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## O desafio: faça o modelo errado funcionar</span></span>
 <span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>Coloque as duas saídas lado a lado e confira as suas previsões. Nenhum dado novo foi coletado: a</span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>variação do gradiente apenas deixou o resíduo e passou a ser atribuída ao bloco.</span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="O bloco não é um resultado"}</span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a>Ninguém sorteia qual faixa do costão será a mais alta. Dizer "a faixa 6 difere da faixa 1" seria</span>
-<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>descrever o costão, não o experimento. O bloco entra no modelo para retirar variação conhecida do</span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>resíduo, não para ser interpretado.</span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>O modelo <span class="in">`sem_bloco`</span> não detectou o efeito da placa. Ele pode passar a detectar, sem que o bloco entre na fórmula, se o experimento for outro.</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="A regra do desafio"}</span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>Mude **um único** dos cinco parâmetros do início (`gradiente`, `efeito_B`, `efeito_C`, `ruido`, `n_blocos`), gere o experimento de novo e ajuste `sem_bloco`. O objetivo é obter um valor de p abaixo de 0,05 **no modelo que ignora o bloco**.</span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>Duas exigências:</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>registre no script **uma tentativa que falhou** e a que funcionou, com o valor antigo e o novo;</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>rode cada tentativa **duas ou três vezes** antes de decidir, porque uma execução isolada pode enganar.</span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a><span class="fu">## O desafio: faça o modelo errado funcionar</span></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>O modelo <span class="in">`sem_bloco`</span> não detectou o efeito da placa. Ele pode passar a detectar — sem que o bloco</span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>entre na fórmula — se o experimento for outro.</span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="A regra do desafio"}</span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>Mude **um único** dos cinco parâmetros do início (<span class="in">`gradiente`</span>, <span class="in">`efeito_B`</span>, <span class="in">`efeito_C`</span>, <span class="in">`ruido`</span>,</span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a><span class="in">`n_blocos`</span>), gere o experimento de novo e ajuste <span class="in">`sem_bloco`</span>. O objetivo é obter um valor de p abaixo</span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>de 0,05 **no modelo que ignora o bloco**.</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de tentar"}</span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>Antes de mexer em qualquer coisa, escreva no script qual parâmetro você aposta que resolve, e por quê.</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>Vale a pena pensar na régua. No modelo <span class="in">`sem_bloco`</span>, o que exatamente está dentro do <span class="in">`Mean Sq`</span> residual? Reduzir o <span class="in">`ruido`</span> diminui esse resíduo o suficiente?</span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## Um segundo fator, no mesmo costão</span></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>Agora um experimento diferente no mesmo local, sem gradiente de altura, mas com as placas instaladas em duas **orientações**, norte e sul, com quatro réplicas por combinação.</span>
 <span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>Duas exigências:</span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>Aqui a segunda variável não é um incômodo, e sim uma pergunta científica. E ela permite algo que o bloco não permitia, que é perguntar se o efeito da placa **depende** da orientação.</span>
 <span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>registre no script **uma tentativa que falhou** e a que funcionou, com o valor antigo e o novo;</span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>rode cada tentativa **duas ou três vezes** antes de decidir, porque uma execução isolada pode</span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>  enganar.</span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de tentar"}</span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>Antes de mexer em qualquer coisa, escreva no script qual parâmetro você aposta que resolve, e por quê.</span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>Vale a pena pensar na régua: no modelo <span class="in">`sem_bloco`</span>, o que exatamente está dentro do <span class="in">`Mean Sq`</span></span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>residual? Reduzir o <span class="in">`ruido`</span> diminui esse resíduo o suficiente?</span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Um segundo fator, no mesmo costão</span></span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>Agora um experimento diferente no mesmo local: sem gradiente de altura, mas com as placas instaladas</span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>em duas **orientações**, norte e sul, com quatro réplicas por combinação.</span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>Aqui a segunda variável não é um incômodo: é uma pergunta científica. E ela permite algo que o bloco</span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>não permitia — perguntar se o efeito da placa **depende** da orientação.</span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>efeito_interacao <span class="ot">&lt;-</span> ____   <span class="co"># escolha e registre: quanto a placa C rende a mais, no sul</span></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>costao_fatorial <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">placa =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)),</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">orientacao =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"norte"</span>, <span class="st">"sul"</span>)),</span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">replica =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">recrutas =</span> <span class="dv">20</span> <span class="sc">+</span></span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"B"</span>, efeito_B, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"C"</span>, efeito_C, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(orientacao <span class="sc">==</span> <span class="st">"sul"</span>, <span class="dv">3</span>, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"C"</span> <span class="sc">&amp;</span> orientacao <span class="sc">==</span> <span class="st">"sul"</span>, efeito_interacao, <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> ruido)</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>Na fórmula, <span class="in">`+`</span> combina os fatores sem interação e <span class="in">`*`</span> acrescenta o termo de interação. É a única diferença entre os dois modelos:</span>
 <span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>efeito_interacao <span class="ot">&lt;-</span> ____   <span class="co"># escolha e registre: quanto a placa C rende a mais, no sul</span></span>
-<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>costao_fatorial <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>  <span class="at">placa =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)),</span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>  <span class="at">orientacao =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"norte"</span>, <span class="st">"sul"</span>)),</span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>  <span class="at">replica =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>    <span class="at">recrutas =</span> <span class="dv">20</span> <span class="sc">+</span></span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"B"</span>, efeito_B, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"C"</span>, efeito_C, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(orientacao <span class="sc">==</span> <span class="st">"sul"</span>, <span class="dv">3</span>, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(placa <span class="sc">==</span> <span class="st">"C"</span> <span class="sc">&amp;</span> orientacao <span class="sc">==</span> <span class="st">"sul"</span>, efeito_interacao, <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> ruido)</span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>Na fórmula, <span class="in">`+`</span> combina os fatores sem interação e <span class="in">`*`</span> acrescenta o termo de interação. É a única</span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>diferença entre os dois modelos:</span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">+</span> orientacao, <span class="at">data =</span> costao_fatorial))</span>
-<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">*</span> orientacao, <span class="at">data =</span> costao_fatorial))</span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>Escolha um valor para <span class="in">`efeito_interacao`</span> e registre-o. Antes de rodar os dois modelos, escreva o que</span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>espera que aconteça com o <span class="in">`Mean Sq`</span> **residual** ao trocar <span class="in">`+`</span> por <span class="in">`*`</span>.</span>
-<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>Depois, se sobrar tempo, repita com um <span class="in">`efeito_interacao`</span> igual a zero e veja se a sua leitura se</span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>mantém.</span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-blocos-fatorial.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
-<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio</span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>script, como comentários iniciados por <span class="in">`#`</span>.</span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: o experimento gerado, o gráfico por faixa e os dois modelos, com as suas duas</span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>   previsões sobre a <span class="in">`Sum Sq`</span> registradas em comentário **antes** das saídas;</span>
-<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o desafio**: a previsão inicial, a tentativa que falhou e a que funcionou, cada uma com o</span>
-<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>   parâmetro alterado, o valor antigo, o valor novo e a tabela de <span class="in">`summary()`</span>;</span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>em comentários, 2 a 3 frases explicando **por que a tentativa que falhou não bastou** — diga o que</span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>   estava dentro do <span class="in">`Mean Sq`</span> residual do modelo sem bloco;</span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**o experimento fatorial** com o <span class="in">`efeito_interacao`</span> que você escolheu, os modelos <span class="in">`+`</span> e <span class="in">`*`</span> e a sua</span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a>   previsão sobre o resíduo registrada antes;</span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, escreva **duas frases prontas para um relatório**, usando os números que você</span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a>   obteve: uma que relate a interação do seu experimento fatorial como **resultado** (dizendo para</span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>   qual combinação de placa e orientação o efeito foi maior), e outra que mencione o bloco do</span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a>   experimento do gradiente apenas como **parte do delineamento**. Em seguida, uma frase explicando</span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>   por que a primeira pode ser publicada como achado e a segunda não.</span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as previsões aparecem **antes** das saídas correspondentes;</span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> no desafio, cada tentativa mudou **um só** parâmetro, e a tentativa que falhou está registrada;</span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a explicação do item 3 menciona o que compõe o resíduo do modelo sem bloco;</span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o valor de <span class="in">`efeito_interacao`</span> está registrado e os dois modelos aparecem;</span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a resposta do item 5 distingue o papel científico dos dois termos, não a conta.</span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Associação entre variáveis quantitativas e qualitativas</span><span class="co">](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html)</span>{target="_blank"}</span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>  (MEAD) — para rever, pelo ângulo descritivo, a comparação de uma resposta contínua entre grupos.</span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regressão linear múltipla</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html)</span>{target="_blank"}</span>
-<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre termos de interação, que reaparecem na Prática 10 com um preditor</span>
-<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>  contínuo.</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">+</span> orientacao, <span class="at">data =</span> costao_fatorial))</span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(recrutas <span class="sc">~</span> placa <span class="sc">*</span> orientacao, <span class="at">data =</span> costao_fatorial))</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e preveja"}</span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>Escolha um valor para <span class="in">`efeito_interacao`</span> e registre-o. Antes de rodar os dois modelos, escreva o que espera que aconteça com o <span class="in">`Mean Sq`</span> **residual** ao trocar <span class="in">`+`</span> por <span class="in">`*`</span>.</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>Depois, se sobrar tempo, repita com um <span class="in">`efeito_interacao`</span> igual a zero e veja se a sua leitura se mantém.</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-blocos-fatorial.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: o experimento gerado, o gráfico por faixa e os dois modelos, com as suas duas previsões sobre a <span class="in">`Sum Sq`</span> registradas em comentário **antes** das saídas;</span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**o desafio**: a previsão inicial, a tentativa que falhou e a que funcionou, cada uma com o parâmetro alterado, o valor antigo, o valor novo e a tabela de <span class="in">`summary()`</span>;</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>em comentários, 2 a 3 frases explicando **por que a tentativa que falhou não bastou** — diga o que estava dentro do <span class="in">`Mean Sq`</span> residual do modelo sem bloco;</span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**o experimento fatorial** com o <span class="in">`efeito_interacao`</span> que você escolheu, os modelos <span class="in">`+`</span> e <span class="in">`*`</span> e a sua previsão sobre o resíduo registrada antes;</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, escreva **duas frases prontas para um relatório**, usando os números que você obteve: uma que relate a interação do seu experimento fatorial como **resultado** (dizendo para qual combinação de placa e orientação o efeito foi maior), e outra que mencione o bloco do experimento do gradiente apenas como **parte do delineamento**. Em seguida, uma frase explicando por que a primeira pode ser publicada como achado e a segunda não.</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as previsões aparecem **antes** das saídas correspondentes;</span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> no desafio, cada tentativa mudou **um só** parâmetro, e a tentativa que falhou está registrada;</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a explicação do item 3 menciona o que compõe o resíduo do modelo sem bloco;</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o valor de <span class="in">`efeito_interacao`</span> está registrado e os dois modelos aparecem;</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a resposta do item 5 distingue o papel científico dos dois termos, não a conta.</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Associação entre variáveis quantitativas e qualitativas</span><span class="co">](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html)</span>{target="_blank"} (MEAD) — para rever, pelo ângulo descritivo, a comparação de uma resposta contínua entre grupos.</span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regressão linear múltipla</span><span class="co">](https://fcopf.github.io/mead/content/regressao-linear/regressao-linear-multipla.html)</span>{target="_blank"} (MEAD) — procure a seção sobre termos de interação, que reaparecem na Prática 10 com um preditor contínuo.</span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -381,7 +381,6 @@ window.Quarto = {
   <li><a href="#esperança-descreve-o-centro-não-o-resultado" id="toc-esperança-descreve-o-centro-não-o-resultado" class="nav-link" data-scroll-target="#esperança-descreve-o-centro-não-o-resultado"><span class="header-section-number">5.1</span> Esperança descreve o centro, não o resultado</a></li>
   </ul></li>
   <li><a href="#a-forma-da-população-e-a-velocidade-do-tcl" id="toc-a-forma-da-população-e-a-velocidade-do-tcl" class="nav-link" data-scroll-target="#a-forma-da-população-e-a-velocidade-do-tcl"><span class="header-section-number">6</span> A forma da população e a velocidade do TCL</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -410,7 +409,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -424,18 +423,18 @@ window.Quarto = {
 
 <section id="duas-equipes-duas-respostas" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Duas equipes, duas respostas</h1>
-<p>Duas equipes recebem a mesma tarefa: estimar o comprimento médio dos mexilhões de um costão. Cada equipe coleta 20 mexilhões, mede um por um e calcula a média.</p>
+<p>Duas equipes recebem a tarefa de estimar o comprimento médio dos mexilhões de um costão. Cada equipe coleta 20 mexilhões, mede um por um e calcula a média.</p>
 <p>A equipe A encontra <strong>4,9 cm</strong>. A equipe B encontra <strong>5,3 cm</strong>.</p>
 <p>Ninguém errou. Ninguém foi descuidado. Elas simplesmente pegaram mexilhões diferentes.</p>
-<p>A pergunta desta leitura é o que fazer com esse fato: se a resposta muda a cada amostra, <strong>como usar uma única amostra para dizer alguma coisa sobre o costão inteiro?</strong></p>
+<p>A pergunta é o que fazer com esse fato. Se a resposta muda a cada amostra, <strong>como usar uma única amostra para tirar alguma conclusão sobre o costão inteiro?</strong></p>
 </section>
 <section id="repetir-o-estudo-ao-menos-no-computador" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Repetir o estudo, ao menos no computador</h1>
-<p>Na prática você coleta uma amostra só. Mas nada impede que <em>imaginemos</em> o que aconteceria se o trabalho fosse repetido, e o computador consegue fazer exatamente isso.</p>
-<p>Cada coleta é um <strong>experimento aleatório</strong>: conhecemos os resultados possíveis, mas não qual deles será observado. Um modelo probabilístico associa probabilidades a esses resultados. Quando o mesmo procedimento é repetido muitas vezes, as frequências observadas tendem às probabilidades do modelo. Essa regularidade é a Lei dos Grandes Números e é o que autoriza estudar um procedimento por simulação, em vez de repetir mil vezes o trabalho de campo.</p>
+<p>Na prática, você coleta uma amostra só. Mas nada impede que você <em>imagine</em> o que aconteceria se o trabalho fosse repetido, e o computador consegue fazer exatamente isso.</p>
+<p>Cada coleta é um <strong>experimento aleatório</strong>. Neste experimento, conhecemos os resultados possíveis, mas não qual deles será observado. Um modelo probabilístico associa probabilidades a esses resultados. Quando o mesmo procedimento é repetido muitas vezes, as frequências observadas tendem às probabilidades do modelo. Essa regularidade vem da Lei dos Grandes Números e é o que autoriza estudar um procedimento por simulação, em vez de repetir mil vezes o trabalho de campo.</p>
 <section id="espaço-amostral-eventos-e-variáveis-aleatórias" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="espaço-amostral-eventos-e-variáveis-aleatórias"><span class="header-section-number">2.1</span> Espaço amostral, eventos e variáveis aleatórias</h2>
-<p>Antes de simular, convém nomear os objetos envolvidos. O <strong>espaço amostral</strong> <span class="math inline">\(\Omega\)</span> reúne todos os resultados possíveis do experimento. Em uma coleta de um mexilhão, cada indivíduo elegível é um resultado; o evento <span class="math inline">\(A=\{X&gt;6\}\)</span> reúne aqueles cujo comprimento excede 6 cm. Uma <strong>variável aleatória</strong> <span class="math inline">\(X\)</span> associa um número a cada resultado. Ela é discreta quando assume valores contáveis, como número de espécies, e contínua quando pode ocupar um intervalo, como comprimento.</p>
+<p>Antes de simular, convém nomear os objetos envolvidos. O <strong>espaço amostral</strong> <span class="math inline">\(\Omega\)</span> reúne todos os resultados possíveis do experimento. Em uma coleta de um mexilhão, cada indivíduo elegível é um resultado. O evento <span class="math inline">\(A=\{X&gt;6\}\)</span> reúne aqueles cujo comprimento excede 6 cm. Uma <strong>variável aleatória</strong> <span class="math inline">\(X\)</span> associa um número a cada resultado. Ela é <strong>discreta</strong> quando assume valores contáveis, como número de espécies, e <strong>contínua</strong> quando pode ocupar um intervalo, como comprimento da concha.</p>
 <p>Se repetimos o sorteio e definimos <span class="math inline">\(I_i=1\)</span> quando o evento <span class="math inline">\(A\)</span> ocorre e <span class="math inline">\(I_i=0\)</span> caso contrário, a proporção observada após <span class="math inline">\(m\)</span> repetições é</p>
 <p><span class="math display">\[
 \hat p_m=\frac{1}{m}\sum_{i=1}^{m}I_i.
@@ -455,11 +454,11 @@ Figura&nbsp;1: Frequência acumulada do evento comprimento maior que 6 cm. A lin
 </div>
 </div>
 </div>
-<p>Nos primeiros sorteios a frequência oscila bastante e depois se aproxima da linha de referência. É essa estabilização que torna a simulação uma ferramenta de estudo, e não um jogo de adivinhação.</p>
+<p>Na <a href="#fig-lei-grandes-numeros" class="quarto-xref">Figura&nbsp;1</a>, a frequência oscila bastante nos primeiros sorteios e depois se aproxima da linha de referência. É essa estabilização que permite que a simulação seja utilizada como uma ferramenta de estudo.</p>
 </section>
 <section id="duas-mil-coletas-de-mexilhões" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="duas-mil-coletas-de-mexilhões"><span class="header-section-number">2.2</span> Duas mil coletas de mexilhões</h2>
-<p>Podemos então aplicar a mesma ideia à pergunta que interessa. Suponha um costão onde os mexilhões têm comprimento médio de 5 cm e variam com desvio-padrão de 1 cm. Vamos sortear 20 mexilhões, anotar a média, e repetir isso duas mil vezes. Três funções bastam para escrever o procedimento inteiro, e vale acompanhar o que cada uma representa.</p>
+<p>Podemos então aplicar a mesma ideia à pergunta que interessa. Suponha um costão onde os mexilhões têm comprimento médio de 5 cm e variam com desvio-padrão de 1 cm. Vamos sortear 20 mexilhões, anotar a média e repetir isso duas mil vezes. Três funções bastam para escrever o procedimento inteiro, e vale acompanhar o que cada uma representa.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver o núcleo da simulação em R</summary>
@@ -476,13 +475,26 @@ Figura&nbsp;1: Frequência acumulada do evento comprimento maior que 6 cm. A lin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><code>rnorm()</code> representa o modelo da população, <code>replicate()</code> representa estudos independentes e <code>mean()</code> transforma cada amostra em uma estatística. O conjunto dos dois mil resultados é uma aproximação da <strong>distribuição amostral da média</strong>: nesta execução, as médias simuladas ficaram centradas em 5,00 cm, com desvio-padrão de 0,22 cm entre estudos. Comparar 4,9 com 5,3 cm, como fizeram as duas equipes, deixa de ser um problema quando se conhece essa dispersão.</p>
+<p><code>rnorm()</code> representa o modelo da população, <code>replicate()</code> representa estudos independentes e <code>mean()</code> transforma cada amostra em uma estatística. O conjunto dos dois mil resultados é uma aproximação da <strong>distribuição amostral da média</strong>. Nesta execução, as médias simuladas ficaram centradas em 5,00 cm, com desvio-padrão de 0,22 cm entre estudos. Comparar 4,9 com 5,3 cm, como fizeram as duas equipes, deixa de ser um problema quando se conhece essa dispersão.</p>
 </section>
 </section>
 <section id="duas-distribuições-que-não-devem-ser-confundidas" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Duas distribuições que não devem ser confundidas</h1>
-<p>A simulação permite colocar lado a lado dois conjuntos de números que costumam ser tomados um pelo outro: os comprimentos dos mexilhões e as médias das amostras.</p>
+<p>A simulação permite colocar lado a lado os comprimentos dos mexilhões e as médias das amostras, dois conjuntos de números que costumam ser confundidos entre si.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Ver o código em R</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>individuos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">valor =</span> <span class="fu">rnorm</span>(<span class="dv">2000</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">tipo =</span> <span class="st">"Mexilhões individuais"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">valor =</span> <span class="fu">replicate</span>(<span class="dv">2000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>))),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tipo =</span> <span class="st">"Médias de 20 mexilhões"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(individuos, medias) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tipo =</span> <span class="fu">fct_relevel</span>(tipo, <span class="st">"Mexilhões individuais"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> valor)) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> tipo) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento (cm)"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-duas-distribuicoes" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois histogramas lado a lado na mesma escala. O da esquerda, de mexilhões individuais, é largo. O da direita, de médias amostrais, é muito mais estreito e concentrado em torno do centro.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -496,7 +508,7 @@ Figura&nbsp;2: À esquerda, os comprimentos de 2000 mexilhões individuais. À d
 </div>
 </div>
 </div>
-<p>O gráfico da esquerda mostra o que você veria se medisse mexilhões um a um: nesta simulação, os comprimentos foram de 1,5 a 8,6 cm. O da direita mostra as <strong>médias</strong> de amostras de 20, que ficaram entre 4,2 e 5,7 cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.</p>
+<p>O painel esquerdo da <a href="#fig-duas-distribuicoes" class="quarto-xref">Figura&nbsp;2</a> mostra o que você veria se medisse 2000 mexilhões um a um. Nesta simulação, os comprimentos foram de 1,9 a 8,6 cm. O painel direito mostra as <strong>médias</strong> de amostras de n = 20, que ficaram entre 4,3 e 5,8 cm. São dois gráficos que respondem a perguntas diferentes, e confundi-los é um dos erros mais comuns em análise de dados.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Duas distribuições diferentes">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -509,19 +521,19 @@ Figura&nbsp;2: À esquerda, os comprimentos de 2000 mexilhões individuais. À d
 <div class="callout-body-container callout-body">
 <p>A distribuição da <strong>esquerda</strong> descreve como variam os <em>indivíduos</em> da população.</p>
 <p>A distribuição da <strong>direita</strong> descreve como varia a <em>média de uma amostra</em> quando o estudo é repetido. Ela recebe o nome de <strong>distribuição amostral da média</strong>.</p>
-<p>A segunda é sempre mais estreita que a primeira, porque médias de vários indivíduos suavizam os extremos: para uma amostra dar média 7 cm, seria preciso que quase todos os 20 mexilhões fossem enormes ao mesmo tempo.</p>
+<p>A segunda é sempre mais estreita que a primeira, porque médias de vários indivíduos suavizam os extremos. Para uma amostra dar média 7 cm, seria preciso que quase todos os 20 mexilhões fossem enormes ao mesmo tempo.</p>
 </div>
 </div>
 </section>
 <section id="e-se-a-amostra-for-maior" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> E se a amostra for maior?</h1>
-<p>A largura da distribuição da direita depende de duas coisas: quanto os indivíduos variam e quantos indivíduos entram em cada amostra. A primeira é uma propriedade do costão, sobre a qual não temos controle. A segunda é uma decisão de quem planeja a coleta, e por isso merece ser examinada.</p>
+<p>A largura da distribuição da direita depende de duas coisas, de quanto os indivíduos variam entre si e de quantos indivíduos entram em cada amostra. A primeira é uma propriedade do costão, sobre a qual não temos controle. A segunda é uma decisão de quem planeja a coleta, e por isso merece ser examinada.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-tamanho-amostra" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga; com n igual a 20 a faixa encolhe; com n igual a 100 as médias ficam concentradas em torno do centro.">
+<div id="fig-tamanho-amostra" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga. Com n igual a 20 a faixa encolhe. Com n igual a 100 as médias ficam concentradas em torno do centro.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tamanho-amostra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-variabilidade-amostral_files/figure-html/fig-tamanho-amostra-1.png" class="img-fluid figure-img" alt="Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga; com n igual a 20 a faixa encolhe; com n igual a 100 as médias ficam concentradas em torno do centro." width="672">
+<img src="pread-variabilidade-amostral_files/figure-html/fig-tamanho-amostra-1.png" class="img-fluid figure-img" alt="Três histogramas empilhados. Com n igual a 5 as médias se espalham por uma faixa larga. Com n igual a 20 a faixa encolhe. Com n igual a 100 as médias ficam concentradas em torno do centro." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tamanho-amostra-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figura&nbsp;3: Distribuição das médias amostrais para três tamanhos de amostra, na mesma população de mexilhões.
@@ -530,29 +542,43 @@ Figura&nbsp;3: Distribuição das médias amostrais para três tamanhos de amost
 </div>
 </div>
 </div>
-<p>Com 5 mexilhões por amostra, as médias desta simulação foram de 3,4 a 6,7 cm: duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre 4,7 e 5,4 cm.</p>
-<p>Ou seja: <strong>amostras maiores não mudam a população, mudam a nossa incerteza sobre ela.</strong></p>
+<p>Na <a href="#fig-tamanho-amostra" class="quarto-xref">Figura&nbsp;3</a>, com 5 mexilhões por amostra, as médias desta simulação foram de 3,0 a 6,6 cm. Com amostras desse tamanho, duas equipes poderiam chegar a conclusões bem diferentes. Com 100, todas as 2000 amostras ficaram entre 4,7 e 5,4 cm. A conclusão que podemos tirar é que <strong>amostras maiores não mudam a população, mas mudam a nossa incerteza sobre ela.</strong></p>
 </section>
 <section id="um-resultado-que-não-depende-dos-mexilhões" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Um resultado que não depende dos mexilhões</h1>
-<p>Tudo o que a simulação mostrou até aqui poderia ser um acidente do exemplo escolhido. Não é. Se observações independentes vêm de uma população com média <span class="math inline">\(\mu\)</span> e variância finita <span class="math inline">\(\sigma^2\)</span>, então a média amostral satisfaz</p>
+<p>Tudo o que a simulação mostrou até aqui pode ser generalizado para observações independentes que vêm de uma população com média <span class="math inline">\(\mu\)</span> e variância finita <span class="math inline">\(\sigma^2\)</span>. Nestas situações, a média amostral satisfaz:</p>
 <p><span class="math display">\[
 E(\bar{X})=\mu
 \qquad\text{e}\qquad
 \operatorname{Var}(\bar{X})=\frac{\sigma^2}{n}.
 \]</span></p>
-<p>A primeira igualdade diz que a média amostral é um estimador não enviesado de <span class="math inline">\(\mu\)</span>: é a tradução formal do fato de os histogramas simulados ficarem centrados no valor correto. A segunda diz que a variância das médias é a variância dos indivíduos dividida por <span class="math inline">\(n\)</span>, e é a tradução formal do estreitamento observado quando <span class="math inline">\(n\)</span> aumentou de 5 para 100. Portanto, o desvio-padrão da distribuição amostral, chamado <strong>erro padrão</strong>, é</p>
+<p>A primeira igualdade diz que a média amostral é um estimador não enviesado de <span class="math inline">\(\mu\)</span>, é a tradução formal do fato de os histogramas simulados ficarem centrados no valor correto. A segunda diz que a variância das médias é a variância dos indivíduos dividida por <span class="math inline">\(n\)</span>, e é a tradução formal do estreitamento observado quando <span class="math inline">\(n\)</span> aumentou de 5 para 100. Portanto, o desvio-padrão da distribuição amostral, chamado <strong>erro padrão</strong>, é</p>
 <p><span class="math display">\[
-EP(\bar{X})=\frac{\sigma}{\sqrt{n}}.
+\sigma_{\bar{x}}=\frac{\sigma}{\sqrt{n}}.
 \]</span></p>
-<p>É a raiz quadrada que explica por que dobrar <span class="math inline">\(n\)</span> não reduz a incerteza pela metade. Para obter metade do erro padrão, é necessário multiplicar <span class="math inline">\(n\)</span> por quatro.</p>
-<p>O <strong>Teorema Central do Limite</strong> acrescenta uma informação sobre a forma, e não apenas sobre centro e dispersão: sob independência e variância finita,</p>
+<p>O subscrito indica de qual quantidade estamos medindo o espalhamento. Enquanto <span class="math inline">\(\sigma\)</span> descreve a variação entre mexilhões individuais, <span class="math inline">\(\sigma_{\bar{x}}\)</span> descreve a variação da média amostral entre estudos repetidos.</p>
+<p>É a raiz quadrada no denominador que explica por que dobrar <span class="math inline">\(n\)</span> não reduz a incerteza pela metade. Para obter metade do erro padrão, é necessário multiplicar <span class="math inline">\(n\)</span> por quatro. Essa mesma raiz quadrada explica por que a redução da incerteza é mais rápida quando a amostra ainda é pequena e por que, em amostras já grandes, aumentar ainda mais o tamanho amostral traz ganhos cada vez menores de precisão. A <a href="#fig-erro-padrao-n" class="quarto-xref">Figura&nbsp;4</a> mostra esse comportamento.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-erro-padrao-n" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curva decrescente do erro padrão em função do tamanho amostral. A queda é acentuada para amostras pequenas e a curva se achata progressivamente conforme n aumenta, ilustrando retornos decrescentes.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-erro-padrao-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-variabilidade-amostral_files/figure-html/fig-erro-padrao-n-1.png" class="img-fluid figure-img" alt="Curva decrescente do erro padrão em função do tamanho amostral. A queda é acentuada para amostras pequenas e a curva se achata progressivamente conforme n aumenta, ilustrando retornos decrescentes." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-erro-padrao-n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Erro padrão da média em função do tamanho amostral, para uma população com desvio-padrão de 1 cm. Os pontos em n = 25 e n = 100 mostram que quadruplicar a amostra reduz o erro padrão pela metade.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>O <strong>Teorema Central do Limite</strong> acrescenta uma informação sobre a forma da distribuição. Sob independência e variância finita, a expressão</p>
 <p><span class="math display">\[
 \frac{\bar{X}-\mu}{\sigma/\sqrt{n}}
 \]</span></p>
-<p>se aproxima de uma distribuição normal padrão quando <span class="math inline">\(n\)</span> cresce. A distribuição normal é simétrica, tem forma de sino e é determinada por média e desvio-padrão. Aqui ela descreve a distribuição da estatística, e não exige que cada mexilhão individual tenha distribuição normal.</p>
-<p>Duas ressalvas acompanham o resultado. A aproximação não tem um tamanho amostral universal: populações aproximadamente simétricas exigem menos observações, enquanto distribuições muito assimétricas, com caudas longas ou valores extremos, exigem mais. E a dependência entre unidades invalida a conta usual, porque várias observações parecidas não carregam a mesma informação que observações independentes.</p>
-<p>Há ainda um ajuste quando a coleta é sem reposição em uma população finita e <span class="math inline">\(n\)</span> representa parcela relevante de <span class="math inline">\(N\)</span>. Nesse caso o erro padrão pode incluir a correção</p>
+<p>se aproxima de uma distribuição normal padrão quando <span class="math inline">\(n\)</span> cresce. A distribuição normal é simétrica, tem forma de sino e é determinada pela média e desvio-padrão. Aqui ela descreve a distribuição da estatística, e não exige que cada mexilhão individual tenha distribuição normal.</p>
+<p>Duas ressalvas acompanham o resultado. A aproximação não tem um tamanho amostral universal. Populações aproximadamente simétricas exigem menos observações, enquanto distribuições muito assimétricas, com caudas longas ou valores extremos, exigem mais observações para que a distribuição das médias se aproxime de uma normal.</p>
+<p>Há ainda um ajuste quando a coleta é sem reposição em uma população finita e <span class="math inline">\(n\)</span> representa parcela relevante de <span class="math inline">\(N\)</span>. Nesse caso, o erro padrão pode incluir a correção:</p>
 <p><span class="math display">\[
 \frac{\sigma}{\sqrt{n}}\sqrt{\frac{N-n}{N-1}}.
 \]</span></p>
@@ -568,48 +594,59 @@ P(a\le \bar X\le b)
 -
 \Phi\!\left(\frac{a-\mu}{\sigma/\sqrt n}\right),
 \]</span></p>
-<p>em que <span class="math inline">\(\Phi\)</span> é a função de distribuição acumulada normal padrão. A leitura verbal é direta: padronizamos os dois limites em unidades de erro padrão e subtraímos as áreas acumuladas. Essa mesma estrutura quantitativa sustentará intervalos de confiança e testes de hipóteses.</p>
+<p>em que <span class="math inline">\(\Phi\)</span> é a função de distribuição acumulada normal padrão. As expressões acima são entendidas como a padronização dos dois limites em unidades de erro padrão e a subtração das áreas acumuladas. Essa mesma estrutura quantitativa sustentará intervalos de confiança e testes de hipóteses.</p>
 </section>
 </section>
 <section id="a-forma-da-população-e-a-velocidade-do-tcl" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> A forma da população e a velocidade do TCL</h1>
-<p>A afirmação de que a normalidade “melhora com <span class="math inline">\(n\)</span>” fica mais concreta quando partimos de uma população claramente não normal. Quando a população já é normal, a média amostral é exatamente normal para qualquer <span class="math inline">\(n\)</span>. Quando a população é assimétrica, a normalidade é uma aproximação. O gráfico seguinte parte de uma população exponencial, limitada por zero e com cauda longa à direita.</p>
+<p>A afirmação de que a normalidade “melhora com <span class="math inline">\(n\)</span>” fica mais concreta quando partimos de uma população claramente não normal. Quando a população já é normal, a média amostral é exatamente normal para qualquer <span class="math inline">\(n\)</span>. Quando a população é assimétrica, a normalidade é uma aproximação. A <a href="#fig-tcl-assimetria" class="quarto-xref">Figura&nbsp;5</a> parte de uma população exponencial, limitada por zero e com cauda longa à direita.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-tcl-assimetria" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro histogramas. A população e as médias de duas observações têm cauda longa à direita; com dez observações a forma é mais simétrica; com cinquenta se aproxima de um sino estreito.">
+<div id="fig-tcl-assimetria" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro histogramas. A população e as médias de duas observações têm cauda longa à direita. Com dez observações a forma é mais simétrica. Com cinquenta se aproxima de um sino estreito.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-tcl-assimetria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-variabilidade-amostral_files/figure-html/fig-tcl-assimetria-1.png" class="img-fluid figure-img" alt="Quatro histogramas. A população e as médias de duas observações têm cauda longa à direita; com dez observações a forma é mais simétrica; com cinquenta se aproxima de um sino estreito." width="672">
+<img src="pread-variabilidade-amostral_files/figure-html/fig-tcl-assimetria-1.png" class="img-fluid figure-img" alt="Quatro histogramas. A população e as médias de duas observações têm cauda longa à direita. Com dez observações a forma é mais simétrica. Com cinquenta se aproxima de um sino estreito." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tcl-assimetria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;4: População exponencial e distribuições de médias para n igual a 2, 10 e 50. A assimetria diminui, e a dispersão das médias encolhe.
+Figura&nbsp;5: População exponencial e distribuições de médias para n igual a 2, 10 e 50. A assimetria diminui, e a dispersão das médias encolhe.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>A cauda longa persiste nas médias de duas observações, atenua-se com dez e praticamente desaparece com cinquenta. Duas condições sustentam esse comportamento e podem falhar: o TCL exige média e variância finitas, de modo que caudas extremamente pesadas tornam a convergência lenta ou invalidam a variância; e a dependência importa, pois se as unidades vêm do mesmo tanque ou do mesmo ponto, o tamanho nominal <span class="math inline">\(n\)</span> exagera a quantidade de informação independente disponível.</p>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O TCL não corrige um plano ruim">
+<p>A cauda longa persiste nas médias de duas observações, atenua-se com dez e praticamente desaparece com cinquenta. Esse comportamento depende de duas condições, que a média e a variância sejam finitas e que as observações sejam independentes. Assim, caudas extremamente longas tornam a convergência para a distribuição normal lenta ou invalidam a variância. Quanto à independência, se as unidades vêm do mesmo tanque ou do mesmo ponto, o tamanho nominal <span class="math inline">\(n\)</span> exagera a quantidade de informação independente disponível.</p>
+<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O TCL não corrige um desenho ruim">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>O TCL não corrige um plano ruim
+<span class="screen-reader-only">Aviso</span>O TCL não corrige um desenho ruim
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uma distribuição amostral estreita pode estar centrada no valor errado quando há viés de seleção. O TCL descreve a forma da variação aleatória sob o mecanismo assumido; não recupera unidades excluídas, não cria independência e não remove erro sistemático.</p>
+<p>Uma distribuição amostral estreita pode estar centrada no valor errado quando há viés de seleção. O TCL descreve a forma da variação aleatória sob o mecanismo amostral assumido e não é capaz de recuperar unidades excluídas, tornar as observações independentes ou remover erros sistemáticos.</p>
 </div>
 </div>
-<p>As duas equipes do início continuam com médias diferentes, e nada nesta leitura mudou esse fato. O que mudou foi o estatuto da diferença: ela deixou de ser um sinal de descuido e passou a ser um resultado previsível de um procedimento cujo comportamento pode ser descrito, centrado em <span class="math inline">\(\mu\)</span> e com dispersão <span class="math inline">\(\sigma/\sqrt{n}\)</span>. É por isso que a distribuição amostral da média é o alicerce de quase tudo o que vem depois. Ela transforma “a resposta muda a cada amostra” em uma quantidade que se pode medir e informar junto com o resultado.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<p>As duas equipes do início continuam com médias diferentes, e nada nesta leitura mudou esse fato. No entanto, entendemos agora que essa diferença é um resultado previsível de um procedimento cujo comportamento pode ser descrito como centrado em <span class="math inline">\(\mu\)</span> e com dispersão <span class="math inline">\(\sigma_{\bar{x}}=\sigma/\sqrt{n}\)</span>.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li><a href="https://fcopf.github.io/mead/content/distribuicao-normal/distr-norm.html" target="_blank">A distribuição normal como modelo</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/fundamentos-probabilidade/combina-probabilidades.html" target="_blank">Combinando probabilidades</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/topics/distribuicao-normal.html" target="_blank">A distribuição normal</a></li>
+<li><a href="https://fcopf.github.io/mead/content/fundamentos-probabilidade/espaco-amostral.html" target="_blank">Espaço de possibilidades de um experimento</a></li>
+<li><a href="https://fcopf.github.io/mead/content/fundamentos-probabilidade/combina-probabilidades.html" target="_blank">Combinando probabilidades</a></li>
+<li><a href="https://fcopf.github.io/mead/content/inferencia-estatistica/teorema-central-limite.html" target="_blank">Distribuição das médias amostrais</a></li>
 </ul>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

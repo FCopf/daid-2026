@@ -350,7 +350,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-comparação-justa" id="toc-a-comparação-justa" class="nav-link" data-scroll-target="#a-comparação-justa"><span class="header-section-number">6.2</span> A comparação justa</a></li>
   </ul></li>
   <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">7</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -379,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -393,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="objetivo-desta-prática" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
-<p>A <a href="../../content/pre-reading/pread-populacao-amostra.html">leitura desta semana</a> comparou duas estratégias de amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear estações soltas. Você viu o resultado; hoje você vai <strong>medir</strong> essa instabilidade com as suas mãos, em dados reais, e descobrir uma coisa que a leitura não informa: <strong>quanto</strong> ela custa e o que muda quando você escolhe o número de praias.</p>
+<p>A <a href="../../content/pre-reading/pread-populacao-amostra.html">leitura desta semana</a> comparou duas estratégias de amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear estações soltas. Você viu o resultado, e hoje vai <strong>medir</strong> essa instabilidade com as suas mãos, em dados reais, e descobrir uma coisa que a leitura não informa, que é <strong>quanto</strong> ela custa e o que muda quando você escolhe o número de praias.</p>
 <p>O objetivo em R é importar dados de uma fonte externa, descrever o conjunto e sortear amostras dele.</p>
 <p>Ao final, você entrega um script com quatro medidas de instabilidade calculadas por você e uma recomendação de delineamento justificada com esses números.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
@@ -499,7 +498,7 @@ $ Beach    &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 
 1    45  5.69   5.00      0     22</code></pre>
 </div>
 </div>
-<p>Guarde a média das 45 estações: é contra ela que todas as suas estimativas serão comparadas.</p>
+<p>Guarde a média das 45 estações, porque é contra ela que todas as suas estimativas serão comparadas.</p>
 </section>
 <section id="as-praias-são-todas-parecidas" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> As praias são todas parecidas?</h1>
@@ -513,8 +512,8 @@ $ Beach    &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Antes de executar o bloco abaixo, escreva no seu script, como comentário: você espera que as nove praias tenham médias parecidas entre si?</p>
-<p>A resposta muda tudo o que vem depois nesta prática. Registre-a antes de olhar.</p>
+<p>Antes de executar o bloco abaixo, escreva no seu script, como comentário, se você espera que as nove praias tenham médias parecidas entre si.</p>
+<p>A resposta muda tudo o que vem depois nesta prática. Registre-a antes de olhar a <a href="#fig-amostragem-praias" class="quarto-xref">Figura&nbsp;1</a>.</p>
 </div>
 </div>
 <div class="cell">
@@ -547,7 +546,7 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 <pre><code># A tibble: 1 × 1
   media
   &lt;dbl&gt;
-1   4.7</code></pre>
+1   5.3</code></pre>
 </div>
 </div>
 <p>Execute essa linha duas ou três vezes. Cada execução sorteia dez estações diferentes e devolve uma estimativa diferente para a mesma região.</p>
@@ -556,7 +555,7 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>praias_sorteadas <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>praias_sorteadas</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3 7 6</code></pre>
+<pre><code>[1] 6 4 2</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Beach <span class="sc">%in%</span> praias_sorteadas) <span class="sc">|&gt;</span></span>
@@ -565,14 +564,14 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 <pre><code># A tibble: 1 × 2
       n media
   &lt;int&gt; &lt;dbl&gt;
-1    15   3.2</code></pre>
+1    15   6.2</code></pre>
 </div>
 </div>
 <p>São 15 estações, mais do que as 10 do sorteio anterior, mas vindas de apenas três praias.</p>
 </section>
 <section id="sua-vez" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Sua vez</h1>
-<p>Rodar uma linha algumas vezes dá uma impressão. Para ter uma <strong>medida</strong>, é preciso guardar as estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas: <code>c()</code> monta um vetor e <code>sd()</code> mede o espalhamento.</p>
+<p>Rodar uma linha algumas vezes dá uma impressão. Para ter uma <strong>medida</strong>, é preciso guardar as estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas, porque <code>c()</code> monta um vetor e <code>sd()</code> mede o espalhamento.</p>
 <section id="quanto-o-tamanho-da-amostra-estabiliza-a-estimativa" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="quanto-o-tamanho-da-amostra-estabiliza-a-estimativa"><span class="header-section-number">6.1</span> Quanto o tamanho da amostra estabiliza a estimativa</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rode a linha abaixo CINCO vezes, anotando cada resultado</span></span>
@@ -585,7 +584,7 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 </section>
 <section id="a-comparação-justa" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="a-comparação-justa"><span class="header-section-number">6.2</span> A comparação justa</h2>
-<p>Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso custa em precisão — e a comparação só é honesta se as duas estratégias medirem <strong>o mesmo número de estações</strong>.</p>
+<p>Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso custa em precisão, e a comparação só é honesta se as duas estratégias medirem <strong>o mesmo número de estações</strong>.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Escolha e justifique">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -596,8 +595,8 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Escolha quantas praias inteiras sortear: <strong>2, 3 ou 4</strong>. Registre a escolha no script.</p>
-<p>Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número: ele é o <code>n</code> que você vai usar na comparação com estações soltas.</p>
+<p>Escolha quantas praias inteiras sortear, entre <strong>2, 3 ou 4</strong>. Registre a escolha no script.</p>
+<p>Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número, porque ele é o <code>n</code> que você vai usar na comparação com estações soltas.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja antes de rodar">
@@ -610,7 +609,7 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Antes de executar, escreva no script: quantas vezes maior você espera que seja o espalhamento das estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações? Duas vezes? Cinco? Quase igual?</p>
+<p>Antes de executar, escreva no script quantas vezes maior você espera que seja o espalhamento das estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações. Duas vezes? Cinco? Quase igual?</p>
 </div>
 </div>
 <p>Rode cinco vezes cada estratégia, guarde as médias em dois vetores e calcule os dois <code>sd()</code>:</p>
@@ -623,7 +622,7 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 </section>
 <section id="entrega" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Entrega</h1>
-<p>Salve o script <code>pr-amostragem.R</code> com o cabeçalho preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>.</p>
+<p>Salve o script <code>pr-amostragem.R</code> com o cabeçalho preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez. Se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>.</p>
 <div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -663,13 +662,22 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 </ul>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html" target="_blank">Importando e exportando dados</a> (MEAD) — procure as funções da família <code>read_*()</code> se precisar abrir um arquivo com outro separador.</li>
 <li><a href="https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html" target="_blank">Amostrando uma população estatística</a> (MEAD) — procure a seção sobre amostragem por conglomerados, que é o nome formal do sorteio de praias inteiras.</li>
 </ul>
+</div>
+</div>
 
 
 <!-- -->
@@ -1162,216 +1170,186 @@ Figura&nbsp;1: Riqueza de espécies por praia. Cada ponto é uma estação.
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-populacao-amostra.qmd)</span> comparou duas estratégias de</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>estações soltas. Você viu o resultado; hoje você vai **medir** essa instabilidade com as suas mãos,</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>em dados reais, e descobrir uma coisa que a leitura não informa: **quanto** ela custa e o que muda</span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>quando você escolhe o número de praias.</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-populacao-amostra.qmd)</span> comparou duas estratégias de amostragem e mostrou que sortear praias inteiras produz estimativas mais instáveis do que sortear estações soltas. Você viu o resultado, e hoje vai **medir** essa instabilidade com as suas mãos, em dados reais, e descobrir uma coisa que a leitura não informa, que é **quanto** ela custa e o que muda quando você escolhe o número de praias.</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>O objetivo em R é importar dados de uma fonte externa, descrever o conjunto e sortear amostras dele.</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>Ao final, você entrega um script com quatro medidas de instabilidade calculadas por você e uma recomendação de delineamento justificada com esses números.</span>
 <span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>O objetivo em R é importar dados de uma fonte externa, descrever o conjunto e sortear amostras dele.</span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>Ao final, você entrega um script com quatro medidas de instabilidade calculadas por você e uma</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>recomendação de delineamento justificada com esses números.</span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-amostragem.R`</span> com o mesmo cabeçalho de identificação da Prática 01 e comece por:</span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abrir os dados</span></span>
-<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de</span>
-<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As estações</span>
-<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>se distribuem por nove praias.</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-amostragem.R`</span> com o mesmo cabeçalho de identificação da Prática 01 e comece por:</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Abrir os dados</span></span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>Um levantamento no litoral holandês registrou, em cada estação de amostragem, quantas espécies de invertebrados foram encontradas e a altura da estação em relação ao nível médio da maré. As estações se distribuem por nove praias.</span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos o endereço em um objeto e o passamos para <span class="in">`read_tsv()`</span>:</span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"</span></span>
 <span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>Os dados estão em um arquivo de texto separado por tabulações, disponível na internet. Guardamos o</span>
-<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>endereço em um objeto e o passamos para <span class="in">`read_tsv()`</span>:</span>
-<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/RIKZ.txt"</span></span>
-<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>rikz <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(rikz)</span>
-<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>rikz <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(rikz)</span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>São 45 linhas e 5 colunas:</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Sample`</span>: identificador da estação;</span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Richness`</span>: número de espécies encontradas;</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Exposure`</span>: índice de exposição da praia às ondas;</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`NAP`</span>: altura da estação em relação à maré, em metros;</span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Beach`</span>: identificador da praia.</span>
 <span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>São 45 linhas e 5 colunas:</span>
-<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Sample`</span>: identificador da estação;</span>
-<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Richness`</span>: número de espécies encontradas;</span>
-<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Exposure`</span>: índice de exposição da praia às ondas;</span>
-<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`NAP`</span>: altura da estação em relação à maré, em metros;</span>
-<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Beach`</span>: identificador da praia.</span>
-<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e as nove</span>
-<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>praias aparecem repetidas várias vezes cada uma.</span>
-<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>Antes de calcular qualquer média, confira se o esforço de coleta foi o mesmo em toda parte:</span>
-<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">count</span>(Beach)</span>
-<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a>Cinco estações por praia, nas nove praias. Um levantamento equilibrado, o que nem sempre acontece.</span>
-<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>Agora o resumo do conjunto inteiro, que servirá de referência o resto da aula:</span>
-<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
-<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(Richness),</span>
-<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(Richness),</span>
-<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(Richness),</span>
-<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(Richness)</span>
-<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a>Guarde a média das 45 estações: é contra ela que todas as suas estimativas serão comparadas.</span>
-<span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a><span class="fu"># As praias são todas parecidas?</span></span>
-<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja"}</span>
-<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a>Antes de executar o bloco abaixo, escreva no seu script, como comentário: você espera que as nove</span>
-<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a>praias tenham médias parecidas entre si?</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>Cada linha é uma **estação**, não uma praia. As 45 linhas descrevem 45 pedaços de costa, e as nove praias aparecem repetidas várias vezes cada uma.</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>Antes de calcular qualquer média, confira se o esforço de coleta foi o mesmo em toda parte:</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">count</span>(Beach)</span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>Cinco estações por praia, nas nove praias. Um levantamento equilibrado, o que nem sempre acontece.</span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>Agora o resumo do conjunto inteiro, que servirá de referência o resto da aula:</span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
+<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(Richness),</span>
+<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(Richness),</span>
+<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimo =</span> <span class="fu">min</span>(Richness),</span>
+<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">maximo =</span> <span class="fu">max</span>(Richness)</span>
+<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a>Guarde a média das 45 estações, porque é contra ela que todas as suas estimativas serão comparadas.</span>
+<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a><span class="fu"># As praias são todas parecidas?</span></span>
+<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja"}</span>
+<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>Antes de executar o bloco abaixo, escreva no seu script, como comentário, se você espera que as nove praias tenham médias parecidas entre si.</span>
+<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a>A resposta muda tudo o que vem depois nesta prática. Registre-a antes de olhar a @fig-amostragem-praias.</span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-amostragem-praias</span></span>
+<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Riqueza de espécies por praia. Cada ponto é uma estação."</span></span>
+<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
 <span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a>A resposta muda tudo o que vem depois nesta prática. Registre-a antes de olhar.</span>
-<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-amostragem-praias</span></span>
-<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Riqueza de espécies por praia. Cada ponto é uma estação."</span></span>
-<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rikz, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(Beach), <span class="at">y =</span> Richness)) <span class="sc">+</span></span>
+<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
+<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Praia"</span>, <span class="at">y =</span> <span class="st">"Número de espécies"</span>)</span>
+<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sortear uma amostra</span></span>
+<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a>A função <span class="in">`slice_sample()`</span> sorteia linhas de uma tabela. Aqui pegamos 10 das 45 estações, como se o orçamento só permitisse isso:</span>
 <span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rikz, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(Beach), <span class="at">y =</span> Richness)) <span class="sc">+</span></span>
-<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Praia"</span>, <span class="at">y =</span> <span class="st">"Número de espécies"</span>)</span>
-<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sortear uma amostra</span></span>
+<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
+<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
+<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>A função <span class="in">`slice_sample()`</span> sorteia linhas de uma tabela. Aqui pegamos 10 das 45 estações, como se o</span>
-<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a>orçamento só permitisse isso:</span>
-<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
-<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a>Execute essa linha duas ou três vezes. Cada execução sorteia dez estações diferentes e devolve uma</span>
-<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a>estimativa diferente para a mesma região.</span>
-<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a>Também é possível sortear **praias inteiras** e usar todas as suas estações. O <span class="in">`sample()`</span> sorteia os</span>
-<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a>identificadores e o <span class="in">`%in%`</span> mantém as linhas cujas praias foram sorteadas:</span>
+<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>Execute essa linha duas ou três vezes. Cada execução sorteia dez estações diferentes e devolve uma estimativa diferente para a mesma região.</span>
+<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a>Também é possível sortear **praias inteiras** e usar todas as suas estações. O <span class="in">`sample()`</span> sorteia os identificadores e o <span class="in">`%in%`</span> mantém as linhas cujas praias foram sorteadas:</span>
+<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>praias_sorteadas <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>praias_sorteadas</span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Beach <span class="sc">%in%</span> praias_sorteadas) <span class="sc">|&gt;</span></span>
+<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
+<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a>São 15 estações, mais do que as 10 do sorteio anterior, mas vindas de apenas três praias.</span>
 <span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a>praias_sorteadas <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">size =</span> <span class="dv">3</span>)</span>
-<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a>praias_sorteadas</span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>Rodar uma linha algumas vezes dá uma impressão. Para ter uma **medida**, é preciso guardar as estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas, porque <span class="in">`c()`</span> monta um vetor e <span class="in">`sd()`</span> mede o espalhamento.</span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quanto o tamanho da amostra estabiliza a estimativa</span></span>
 <span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span></span>
-<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Beach <span class="sc">%in%</span> praias_sorteadas) <span class="sc">|&gt;</span></span>
-<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a>São 15 estações, mais do que as 10 do sorteio anterior, mas vindas de apenas três praias.</span>
-<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
+<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="co"># rode a linha abaixo CINCO vezes, anotando cada resultado</span></span>
+<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a><span class="co"># escreva as cinco médias que você obteve</span></span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a>medias_10 <span class="ot">&lt;-</span> <span class="fu">c</span>(____, ____, ____, ____, ____)</span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias_10)</span>
+<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>Rodar uma linha algumas vezes dá uma impressão. Para ter uma **medida**, é preciso guardar as</span>
-<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a>estimativas e resumir o quanto elas se espalham. Você já sabe fazer as duas coisas: <span class="in">`c()`</span> monta um</span>
-<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a>vetor e <span class="in">`sd()`</span> mede o espalhamento.</span>
+<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>Repita todo o procedimento com <span class="in">`n = 30`</span>, guardando em <span class="in">`medias_30`</span>, e calcule o <span class="in">`sd()`</span> das cinco.</span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## A comparação justa</span></span>
 <span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quanto o tamanho da amostra estabiliza a estimativa</span></span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a>Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso custa em precisão, e a comparação só é honesta se as duas estratégias medirem **o mesmo número de estações**.</span>
 <span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a><span class="co"># rode a linha abaixo CINCO vezes, anotando cada resultado</span></span>
-<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="co"># escreva as cinco médias que você obteve</span></span>
-<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a>medias_10 <span class="ot">&lt;-</span> <span class="fu">c</span>(____, ____, ____, ____, ____)</span>
-<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias_10)</span>
-<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a>Repita todo o procedimento com <span class="in">`n = 30`</span>, guardando em <span class="in">`medias_30`</span>, e calcule o <span class="in">`sd()`</span> das cinco.</span>
-<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a><span class="fu">## A comparação justa</span></span>
-<span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a>Sortear praias inteiras usa menos deslocamento e menos dias de viagem. A pergunta é quanto isso</span>
-<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a>custa em precisão — e a comparação só é honesta se as duas estratégias medirem **o mesmo número de</span>
-<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a>estações**.</span>
-<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e justifique"}</span>
-<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a>Escolha quantas praias inteiras sortear: **2, 3 ou 4**. Registre a escolha no script.</span>
+<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha e justifique"}</span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a>Escolha quantas praias inteiras sortear, entre **2, 3 ou 4**. Registre a escolha no script.</span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a>Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número, porque ele é o <span class="in">`n`</span> que você vai usar na comparação com estações soltas.</span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}</span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a>Antes de executar, escreva no script quantas vezes maior você espera que seja o espalhamento das estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações. Duas vezes? Cinco? Quase igual?</span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a>Rode cinco vezes cada estratégia, guarde as médias em dois vetores e calcule os dois <span class="in">`sd()`</span>:</span>
+<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a><span class="co"># cinco sorteios de praias inteiras (troque o size pelo número que você escolheu)</span></span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">filter</span>(Beach <span class="sc">%in%</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">size =</span> ____)) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a><span class="co"># cinco sorteios de estações soltas, com o MESMO número de estações</span></span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> ____) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a>Como cada praia tem 5 estações, a sua escolha define o número de estações medidas. Anote esse número:</span>
-<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>ele é o <span class="in">`n`</span> que você vai usar na comparação com estações soltas.</span>
-<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-amostragem.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. Se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
 <span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}</span>
-<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a>Antes de executar, escreva no script: quantas vezes maior você espera que seja o espalhamento das</span>
-<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a>estimativas por praias inteiras, em relação ao de estações soltas com o mesmo número de estações?</span>
-<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a>Duas vezes? Cinco? Quase igual?</span>
-<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>Rode cinco vezes cada estratégia, guarde as médias em dois vetores e calcule os dois <span class="in">`sd()`</span>:</span>
-<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a><span class="co"># cinco sorteios de praias inteiras (troque o size pelo número que você escolheu)</span></span>
-<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">filter</span>(Beach <span class="sc">%in%</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">size =</span> ____)) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a><span class="co"># cinco sorteios de estações soltas, com o MESMO número de estações</span></span>
-<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>rikz <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> ____) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(Richness))</span>
-<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-amostragem.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R</span>
-<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a>(*Session → Restart R*) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As</span>
-<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a>respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
-<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: a importação dos dados, o resumo das 45 estações e o gráfico por praia, com a sua</span>
-<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a>   previsão sobre as praias registrada em comentário **antes** dele;</span>
-<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>os vetores <span class="in">`medias_10`</span> e <span class="in">`medias_30`</span>, com os dois <span class="in">`sd()`</span> correspondentes;</span>
-<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a comparação justa: o número de praias que você escolheu, o número de estações que isso produz, os</span>
-<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a>   dois vetores de cinco médias e os dois <span class="in">`sd()`</span>, precedidos da sua previsão sobre a razão entre eles;</span>
-<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 3 a 4 frases respondendo, **com os seus quatro desvios**: um colega tem orçamento</span>
-<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a>   para medir exatamente o mesmo número de estações que você usou na comparação. Que estratégia você</span>
-<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a>   recomenda a ele, e o que ele perde ao escolher a outra? Diga também quantas praias inteiras você</span>
-<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a>   acha que ele precisaria sortear para que essa estratégia se tornasse competitiva.</span>
-<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** dos resultados correspondentes;</span>
-<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> os quatro desvios-padrão foram calculados a partir de cinco execuções cada;</span>
-<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a comparação usa o **mesmo número de estações** nas duas estratégias;</span>
-<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do número de praias está registrada e justificada;</span>
-<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade;</span>
-<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a recomendação final cita os seus próprios desvios, e não uma frase genérica.</span>
-<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb17-238"><a href="#cb17-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb17-240"><a href="#cb17-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-241"><a href="#cb17-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Importando e exportando dados</span><span class="co">](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html)</span>{target="_blank"}</span>
-<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure as funções da família <span class="in">`read_*()`</span> se precisar abrir um arquivo com outro separador.</span>
-<span id="cb17-243"><a href="#cb17-243" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Amostrando uma população estatística</span><span class="co">](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html)</span>{target="_blank"}</span>
-<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre amostragem por conglomerados, que é o nome formal do sorteio de</span>
-<span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a>  praias inteiras.</span>
+<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: a importação dos dados, o resumo das 45 estações e o gráfico por praia, com a sua previsão sobre as praias registrada em comentário **antes** dele;</span>
+<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>os vetores <span class="in">`medias_10`</span> e <span class="in">`medias_30`</span>, com os dois <span class="in">`sd()`</span> correspondentes;</span>
+<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>a comparação justa: o número de praias que você escolheu, o número de estações que isso produz, os dois vetores de cinco médias e os dois <span class="in">`sd()`</span>, precedidos da sua previsão sobre a razão entre eles;</span>
+<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 3 a 4 frases respondendo, **com os seus quatro desvios**: um colega tem orçamento para medir exatamente o mesmo número de estações que você usou na comparação. Que estratégia você recomenda a ele, e o que ele perde ao escolher a outra? Diga também quantas praias inteiras você acha que ele precisaria sortear para que essa estratégia se tornasse competitiva.</span>
+<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** dos resultados correspondentes;</span>
+<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> os quatro desvios-padrão foram calculados a partir de cinco execuções cada;</span>
+<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a comparação usa o **mesmo número de estações** nas duas estratégias;</span>
+<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do número de praias está registrada e justificada;</span>
+<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade;</span>
+<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a recomendação final cita os seus próprios desvios, e não uma frase genérica.</span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
+<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Importando e exportando dados</span><span class="co">](https://fcopf.github.io/mead/content/manipulacao-dados-R/import-export.html)</span>{target="_blank"} (MEAD) — procure as funções da família `read_*()` se precisar abrir um arquivo com outro separador.</span>
+<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Amostrando uma população estatística</span><span class="co">](https://fcopf.github.io/mead/content/amostragem/tipos-amostragem.html)</span>{target="_blank"} (MEAD) — procure a seção sobre amostragem por conglomerados, que é o nome formal do sorteio de praias inteiras.</span>
+<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

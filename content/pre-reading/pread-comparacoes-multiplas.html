@@ -400,8 +400,7 @@ window.Quarto = {
   <li><a href="#comparações-planejadas-e-comparações-descobertas-depois" id="toc-comparações-planejadas-e-comparações-descobertas-depois" class="nav-link" data-scroll-target="#comparações-planejadas-e-comparações-descobertas-depois"><span class="header-section-number">5.1</span> Comparações planejadas e comparações descobertas depois</a></li>
   <li><a href="#bonferroni-tukey-e-holm" id="toc-bonferroni-tukey-e-holm" class="nav-link" data-scroll-target="#bonferroni-tukey-e-holm"><span class="header-section-number">5.2</span> Bonferroni, Tukey e Holm</a></li>
   </ul></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">6</span> Para saber mais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -430,7 +429,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -444,14 +443,14 @@ window.Quarto = {
 
 <section id="quando-aparece-um-terceiro-grupo" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Quando aparece um terceiro grupo</h1>
-<p>Comparar dois grupos é uma operação bem definida: existe uma diferença, existe uma régua para julgá-la, existe um resultado.</p>
+<p>Comparar dois grupos é uma operação bem definida, porque existe uma diferença, existe uma régua para julgá-la e existe um resultado.</p>
 <p>Agora suponha que o experimento tenha <strong>três</strong>. Um estudo em mesocosmos mede a concentração de três nutrientes na água, e a pergunta é se eles diferem entre si.</p>
-<p>A saída óbvia é fazer o que já se sabe fazer, três vezes: comparar o primeiro com o segundo, o primeiro com o terceiro, o segundo com o terceiro. Três testes, três valores de p, e pronto.</p>
+<p>A saída óbvia é fazer o que já se sabe fazer, três vezes, comparando o primeiro com o segundo, o primeiro com o terceiro e o segundo com o terceiro. Três testes, três valores de p, e pronto.</p>
 <p>Essa saída tem um problema, e ele não é pequeno.</p>
 </section>
 <section id="cada-teste-traz-o-seu-próprio-alarme-falso" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Cada teste traz o seu próprio alarme falso</h1>
-<p>Um teste a 5% é um procedimento que, quando não há efeito nenhum, ainda assim acusa diferença em cerca de 5% das vezes. Esses 5% não são um defeito: são o preço combinado de antemão para poder decidir a partir de dados que variam.</p>
+<p>Um teste a 5% é um procedimento que, quando não há efeito nenhum, ainda assim acusa diferença em cerca de 5% das vezes. Esses 5% não são um defeito, e sim o preço combinado de antemão para poder decidir a partir de dados que variam.</p>
 <p>O problema é que esse preço é cobrado <strong>por teste</strong>. Fazendo três testes em grupos idênticos, há três oportunidades de o acaso produzir um resultado chamativo, e basta que uma delas aconteça para alguém anunciar uma descoberta. Como os pares compartilham grupos, essas oportunidades são relacionadas, mas o risco do conjunto ainda cresce.</p>
 <p>E o número de testes cresce depressa. Com <span class="math inline">\(k\)</span> grupos, o número de pares é</p>
 <p><span class="math display">\[\frac{k(k-1)}{2}\]</span></p>
@@ -500,7 +499,7 @@ Figura&nbsp;1: Proporção de experimentos em que pelo menos um teste entre pare
 </div>
 </div>
 </div>
-<p>Com três grupos idênticos, cerca de 12% dos experimentos desta simulação produziram ao menos um par “diferente”. Com seis grupos, 35%.</p>
+<p>Na <a href="#fig-inflacao" class="quarto-xref">Figura&nbsp;1</a>, com três grupos idênticos, cerca de 12% dos experimentos desta simulação produziram ao menos um par “diferente”. Com seis grupos, 31%.</p>
 <p>Nenhum grupo difere de nenhum outro em nenhuma dessas simulações. A diferença anunciada seria inteiramente fabricada pelo procedimento de análise.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Duas taxas de erro com o mesmo nome">
 <div class="callout-header d-flex align-content-center">
@@ -520,11 +519,11 @@ Figura&nbsp;1: Proporção de experimentos em que pelo menos um teste entre pare
 </section>
 <section id="a-conta-por-trás-da-inflação" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="a-conta-por-trás-da-inflação"><span class="header-section-number">2.2</span> A conta por trás da inflação</h2>
-<p>A curva simulada pode ser antecipada por um cálculo simples, ao menos em um caso idealizado. Se <span class="math inline">\(m\)</span> testes fossem independentes e cada um tivesse risco <span class="math inline">\(\alpha\)</span> de alarme falso, a chance de nenhum alarme seria <span class="math inline">\((1-\alpha)^m\)</span>. Logo, a probabilidade de pelo menos um seria</p>
+<p>A curva da <a href="#fig-inflacao" class="quarto-xref">Figura&nbsp;1</a> pode ser antecipada por um cálculo simples, ao menos em um caso idealizado. Se <span class="math inline">\(m\)</span> testes fossem independentes e cada um tivesse risco <span class="math inline">\(\alpha\)</span> de alarme falso, a chance de nenhum alarme seria <span class="math inline">\((1-\alpha)^m\)</span>. Logo, a probabilidade de pelo menos um seria</p>
 <p><span class="math display">\[
 \operatorname{FWER}=1-(1-\alpha)^m.
 \]</span></p>
-<p>A sigla vem de <em>familywise error rate</em>, a taxa de erro da família de testes. Com três testes a 5%, essa conta resulta em <span class="math inline">\(1-0,95^3\approx0,143\)</span>, cerca de 14,3%, valor próximo ao que a simulação produziu. A aproximação não é exata porque comparações entre as mesmas médias não são independentes: cada grupo participa de vários pares. A simulação preserva essa dependência e por isso estima diretamente a taxa correta.</p>
+<p>A sigla vem de <em>familywise error rate</em>, a taxa de erro da família de testes. Com três testes a 5%, essa conta resulta em <span class="math inline">\(1-0,95^3\approx0,143\)</span>, cerca de 14,3%, valor próximo ao que a simulação produziu. A aproximação não é exata porque comparações entre as mesmas médias não são independentes, já que cada grupo participa de vários pares. A simulação preserva essa dependência e por isso estima diretamente a taxa correta.</p>
 <p>Vale ver de onde vem a fórmula, porque ela é um caso da probabilidade de uma união. Se <span class="math inline">\(A_i\)</span> é o evento “o teste <span class="math inline">\(i\)</span> produz alarme falso”, queremos <span class="math inline">\(P(A_1\cup\cdots\cup A_m)\)</span>. Para dois eventos,</p>
 <p><span class="math display">\[
 P(A\cup B)=P(A)+P(B)-P(A\cap B).
@@ -539,7 +538,7 @@ P\left(\bigcup_{i=1}^{m}A_i\right)\le\sum_{i=1}^{m}P(A_i).
 <section id="escolher-o-menor-valor-de-p-é-escolher-o-extremo" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Escolher o menor valor de p é escolher o extremo</h1>
 <p>Antes das correções, vale entender o mecanismo que produz a inflação, porque ele reaparece em muitas situações além desta.</p>
-<p>Quando três testes são feitos e o resultado relatado é o mais chamativo dos três, o número informado não é o valor de p de um teste: é o <strong>mínimo</strong> de três valores de p.&nbsp;E mínimos de vários sorteios se concentram perto de zero mesmo quando cada sorteio isolado é bem comportado.</p>
+<p>Quando três testes são feitos e o resultado relatado é o mais chamativo dos três, o número informado não é o valor de p de um teste, e sim o <strong>mínimo</strong> de três valores de p.&nbsp;E mínimos de vários sorteios se concentram perto de zero mesmo quando cada sorteio isolado é bem comportado.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-minimo-p" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Três histogramas. Com um teste os valores são uniformes; com cinco e vinte testes o menor valor se concentra progressivamente perto de zero.">
@@ -554,7 +553,7 @@ Figura&nbsp;2: Distribuição do menor valor de p em famílias de 1, 5 e 20 test
 </div>
 </div>
 </div>
-<p>No painel superior, com um único teste sob hipótese nula, os valores de p se distribuem uniformemente entre 0 e 1, e apenas 5% caem abaixo da linha. Nos painéis seguintes, o menor valor de p da família se acumula progressivamente à esquerda: com vinte testes, quase toda a distribuição está abaixo de 0,05. O mesmo raciocínio vale para quem testa vários nutrientes, várias espécies ou várias praias e relata só o que se destacou. Quanto mais coisas se olha, mais fácil encontrar alguma.</p>
+<p>No painel superior da <a href="#fig-minimo-p" class="quarto-xref">Figura&nbsp;2</a>, com um único teste sob hipótese nula, os valores de p se distribuem uniformemente entre 0 e 1, e apenas 5% caem abaixo da linha. Nos painéis seguintes, o menor valor de p da família se acumula progressivamente à esquerda, e com vinte testes quase toda a distribuição está abaixo de 0,05. O mesmo raciocínio vale para quem testa vários nutrientes, várias espécies ou várias praias e relata só o que se destacou. Quanto mais coisas se olha, mais fácil encontrar alguma.</p>
 </section>
 <section id="a-saída-é-mudar-a-pergunta" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> A saída é mudar a pergunta</h1>
@@ -563,7 +562,7 @@ Figura&nbsp;2: Distribuição do menor valor de p em famílias de 1, 5 e 20 test
 <p><strong>Existe alguma diferença entre os grupos?</strong></p>
 </blockquote>
 <p>Uma pergunta só, um teste só, um risco de alarme falso só. Se a resposta for que os grupos não se distinguem do que o acaso produz, a investigação para aí. Se for que se distinguem, aí sim vale descobrir quais deles.</p>
-<p>A ordem importa: primeiro a pergunta global, depois as comparações específicas. E é justamente para essa segunda etapa que existem procedimentos capazes de considerar quantas comparações estão sendo feitas.</p>
+<p>A ordem importa, vindo primeiro a pergunta global e depois as comparações específicas. E é justamente para essa segunda etapa que existem procedimentos capazes de considerar quantas comparações estão sendo feitas.</p>
 </section>
 <section id="depois-da-pergunta-global-quais-grupos-diferem" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Depois da pergunta global, quais grupos diferem?</h1>
@@ -575,20 +574,20 @@ Figura&nbsp;2: Distribuição do menor valor de p em famílias de 1, 5 e 20 test
 C=\sum_{i=1}^{k}c_i\bar{y}_i,
 \qquad \sum_{i=1}^{k}c_i=0.
 \]</span></p>
-<p>A restrição sobre os coeficientes garante que o contraste meça uma diferença, e não um nível geral: se todas as médias fossem iguais, <span class="math inline">\(C\)</span> valeria zero qualquer que fosse a escala das medidas.</p>
+<p>A restrição sobre os coeficientes garante que o contraste meça uma diferença, e não um nível geral. Se todas as médias fossem iguais, <span class="math inline">\(C\)</span> valeria zero qualquer que fosse a escala das medidas.</p>
 <p>Um exemplo torna a ideia concreta. Para quatro médias <span class="math inline">\(\bar y_C,\bar y_1,\bar y_2,\bar y_3\)</span>, comparar o controle com a média dos tratamentos usa coeficientes <span class="math inline">\((-1,1/3,1/3,1/3)\)</span>, ou seja,</p>
 <p><span class="math display">\[
 C=-\bar y_C+\frac{\bar y_1+\bar y_2+\bar y_3}{3}.
 \]</span></p>
 <p>Em desenho balanceado com <span class="math inline">\(n_g\)</span> unidades por grupo e quadrado médio residual <span class="math inline">\(QM_e\)</span>, seu erro padrão é</p>
 <p><span class="math display">\[
-EP(C)=\sqrt{QM_e\sum_{i=1}^{k}\frac{c_i^2}{n_g}}.
+s_C=\sqrt{QM_e\sum_{i=1}^{k}\frac{c_i^2}{n_g}}.
 \]</span></p>
 <p>Os coeficientes expressam a pergunta antes de qualquer cálculo, e multiplicá-los todos pela mesma constante muda a escala do contraste, mas não sua estatística padronizada. Perguntas planejadas limitam o número de testes e costumam ter mais poder. Comparações escolhidas depois de olhar médias, gráficos ou valores de p pertencem a uma família exploratória maior e precisam de controle simultâneo. Chamar uma comparação de planejada depois de observar o resultado não desfaz a seleção.</p>
 </section>
 <section id="bonferroni-tukey-e-holm" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="bonferroni-tukey-e-holm"><span class="header-section-number">5.2</span> Bonferroni, Tukey e Holm</h2>
-<p>Quando a família é exploratória, alguma correção é necessária. A correção de <strong>Bonferroni</strong> é a aplicação direta da desigualdade vista antes: ela controla a taxa familiar para qualquer conjunto de <span class="math inline">\(m\)</span> testes, comparando cada valor de p com <span class="math inline">\(\alpha/m\)</span> ou, de modo equivalente, ajustando <span class="math inline">\(p_{ajustado}=\min(mp,1)\)</span>. É simples e válida mesmo com dependência, ao custo de ser conservadora quando há muitas comparações.</p>
+<p>Quando a família é exploratória, alguma correção é necessária. A correção de <strong>Bonferroni</strong> é a aplicação direta da desigualdade vista antes, e controla a taxa familiar para qualquer conjunto de <span class="math inline">\(m\)</span> testes, comparando cada valor de p com <span class="math inline">\(\alpha/m\)</span> ou, de modo equivalente, ajustando <span class="math inline">\(p_{ajustado}=\min(mp,1)\)</span>. É simples e válida mesmo com dependência, ao custo de ser conservadora quando há muitas comparações.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver o ajuste de Bonferroni em R</summary>
@@ -609,7 +608,7 @@ EP(C)=\sqrt{QM_e\sum_{i=1}^{k}\frac{c_i^2}{n_g}}.
 3 B - C           0.18         0.54 </code></pre>
 </div>
 </div>
-<p>Os três valores originais foram multiplicados por 3, o número de comparações. O primeiro par continua abaixo de 0,05 depois do ajuste; o segundo, que parecia significativo, deixa de ser.</p>
+<p>Os três valores originais foram multiplicados por 3, o número de comparações. O primeiro par continua abaixo de 0,05 depois do ajuste, enquanto o segundo, que parecia significativo, deixa de ser.</p>
 <p>O procedimento de <strong>Tukey</strong> foi construído especificamente para todas as comparações entre pares de médias depois de uma ANOVA. Ele usa a amplitude studentizada <span class="math inline">\(q\)</span>, que considera simultaneamente a maior separação entre médias. Em um desenho balanceado, a diferença mínima de Tukey é</p>
 <p><span class="math display">\[
 HSD=q_{1-\alpha;k,gl_e}\sqrt{\frac{QM_e}{n_g}},
@@ -629,15 +628,23 @@ Figura&nbsp;3: Intervalos simultâneos de Tukey para todas as diferenças entre 
 </div>
 </div>
 </div>
-<p>Cada linha da figura corresponde a um par de tratamentos, com a diferença estimada e seu intervalo simultâneo. Os pares cujo intervalo cruza a linha do zero não são distinguidos ao nível familiar de 5%. Apresentar o resultado assim, e não como uma lista de letras ou de decisões, preserva direção, magnitude e incerteza de cada comparação.</p>
-<p>Um terceiro procedimento, o de <strong>Holm</strong>, também controla a taxa familiar e costuma ser menos conservador que Bonferroni em famílias gerais: ele ordena os valores de p e aplica limites progressivamente menos rígidos. A escolha entre os três segue a família de perguntas, e não o método que devolve mais resultados abaixo de 0,05. Bonferroni e Holm servem para famílias quaisquer definidas pelo pesquisador; Tukey é mais eficiente quando a família é exatamente o conjunto de todos os pares. Nenhum deles corrige a prática de testar muitas respostas e relatar apenas a família mais favorável.</p>
+<p>Cada linha da <a href="#fig-tukey" class="quarto-xref">Figura&nbsp;3</a> corresponde a um par de tratamentos, com a diferença estimada e seu intervalo simultâneo. Os pares cujo intervalo cruza a linha do zero não são distinguidos ao nível familiar de 5%. Apresentar o resultado assim, e não como uma lista de letras ou de decisões, preserva direção, magnitude e incerteza de cada comparação.</p>
+<p>Um terceiro procedimento, o de <strong>Holm</strong>, também controla a taxa familiar e costuma ser menos conservador que Bonferroni em famílias gerais, porque ordena os valores de p e aplica limites progressivamente menos rígidos. A escolha entre os três segue a família de perguntas, e não o método que devolve mais resultados abaixo de 0,05. Bonferroni e Holm servem para famílias quaisquer definidas pelo pesquisador, ao passo que Tukey é mais eficiente quando a família é exatamente o conjunto de todos os pares. Nenhum deles corrige a prática de testar muitas respostas e relatar apenas a família mais favorável.</p>
 <p>Convém acrescentar que o teste global e os testes entre pares não são logicamente idênticos. Em situações limítrofes, uma ANOVA pode não rejeitar a hipótese global enquanto um contraste planejado bem direcionado é preciso o bastante para detectar o efeito, ou o inverso. A sequência global seguida de Tukey é uma estratégia coerente para explorar todos os pares, mas perguntas planejadas devem ser declaradas e analisadas como tais.</p>
-<p>O terceiro grupo do início, portanto, não acrescenta apenas mais uma comparação: ele muda a natureza da pergunta. Enquanto havia dois grupos, a diferença entre eles era a pergunta inteira. Com três ou mais, a pergunta passa a ser sobre o conjunto, e o risco de erro precisa ser controlado no nível do conjunto. Decidir isso antes de olhar os dados é o que separa uma análise de uma busca por resultados.</p>
-</section>
-</section>
-<section id="para-saber-mais" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Para saber mais</h1>
+<p>O terceiro grupo do início, portanto, não acrescenta apenas mais uma comparação. Ele muda a natureza da pergunta. Enquanto havia dois grupos, a diferença entre eles era a pergunta inteira. Com três ou mais, a pergunta passa a ser sobre o conjunto, e o risco de erro precisa ser controlado no nível do conjunto. Decidir isso antes de olhar os dados é o que separa uma análise de uma busca por resultados.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span> dedicam um capítulo às comparações múltiplas, com a comparação detalhada entre os procedimentos citados aqui e outros métodos disponíveis.</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -655,14 +662,15 @@ Figura&nbsp;3: Intervalos simultâneos de Tukey para todas as diferenças entre 
 </div>
 </div>
 </section>
-<section id="referências" class="level1" data-number="7">
+</section>
+<section id="referências" class="level1" data-number="6">
 
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">6 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-quinn2002" class="csl-entry" role="listitem">
 Quinn, Gerry P., e Michael J. Keough. 2002. <em>Experimental Design and Data Analysis for Biologists</em>. Cambridge University Press.
 </div>

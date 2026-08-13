@@ -350,7 +350,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#três-cenários-de-simulação" id="toc-três-cenários-de-simulação" class="nav-link" data-scroll-target="#três-cenários-de-simulação"><span class="header-section-number">6.2</span> Três cenários de simulação</a></li>
   </ul></li>
   <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">7</span> Entrega</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -379,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -394,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="objetivo-desta-prática" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
 <p>A <a href="../../content/pre-reading/pread-dados-unidades-variacao.html">leitura desta semana</a> apresentou uma tabela de poças de maré, a média, o desvio-padrão e o histograma das medidas. Você viu esses objetos <strong>prontos</strong>.</p>
-<p>Hoje você vai construí-los. O objetivo é operar o R: guardar valores em objetos, montar uma tabela, resumi-la por grupo, desenhar um gráfico e pedir ao computador que gere novas medidas.</p>
+<p>Hoje você vai construí-los. O objetivo é operar o R, guardando valores em objetos, montando uma tabela, resumindo-a por grupo, desenhando um gráfico e pedindo ao computador que gere novas medidas.</p>
 <p>Ao final, você entrega um script com <strong>a sua própria tabela de poças</strong> e <strong>três simulações comparadas</strong>, acompanhadas de duas previsões que você registra antes de ver os resultados.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
 <div class="callout-header d-flex align-content-center">
@@ -435,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Se aparecer <code>there is no package called 'tidyverse'</code>, instale-o uma única vez com <code>install.packages("tidyverse")</code> e execute o <code>library()</code> novamente.</p>
-<p>Leia sempre a mensagem inteira antes de pedir ajuda: quase todo erro em R nomeia o objeto ou a função que causou o problema.</p>
+<p>Leia sempre a mensagem inteira antes de pedir ajuda, porque quase todo erro em R nomeia o objeto ou a função que causou o problema.</p>
 </div>
 </div>
 </div>
@@ -447,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="guardar-medidas-em-um-objeto" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Guardar medidas em um objeto</h1>
-<p>Você mediu a temperatura da água em cinco poças de um costão e anotou: 25,4; 25,9; 24,8; 26,3; 25,1 °C.</p>
+<p>Você mediu a temperatura da água em cinco poças de um costão e anotou os valores 25,4, 25,9, 24,8, 26,3 e 25,1 °C.</p>
 <p>No R, guardamos valores dentro de <strong>objetos</strong>. A seta <code>&lt;-</code> faz essa atribuição e <code>c()</code> junta vários números em um <strong>vetor</strong>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temperatura <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">25.4</span>, <span class="fl">25.9</span>, <span class="fl">24.8</span>, <span class="fl">26.3</span>, <span class="fl">25.1</span>)</span>
@@ -510,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5     5        25.1           15 médio       </code></pre>
 </div>
 </div>
-<p>A saída mostra o tipo de cada coluna: <code>&lt;dbl&gt;</code> para números com casas decimais, <code>&lt;int&gt;</code> para inteiros, <code>&lt;chr&gt;</code> para texto. <code>glimpse()</code> dá a mesma informação de forma compacta:</p>
+<p>A saída mostra o tipo de cada coluna, com <code>&lt;dbl&gt;</code> para números com casas decimais, <code>&lt;int&gt;</code> para inteiros e <code>&lt;chr&gt;</code> para texto. <code>glimpse()</code> dá a mesma informação de forma compacta:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pocas)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -548,7 +547,7 @@ $ sombreamento &lt;chr&gt; "baixo", "baixo", "alto", "baixo", "médio"</code></p
 5     5        25.1           15 médio           -0.400</code></pre>
 </div>
 </div>
-<p>A coluna nova mostra quanto cada poça se afasta da média: valores negativos são poças mais frias que a média, positivos são mais quentes.</p>
+<p>A coluna nova mostra quanto cada poça se afasta da média, com valores negativos para poças mais frias que a média e positivos para as mais quentes.</p>
 <p>Para resumir por grupo, combine <code>group_by()</code> com <code>summarise()</code>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span></span>
@@ -567,8 +566,8 @@ $ sombreamento &lt;chr&gt; "baixo", "baixo", "alto", "baixo", "médio"</code></p
 3 médio            1  25.1 NA    </code></pre>
 </div>
 </div>
-<p>O <code>desvio</code> aparece como <code>NA</code> onde há uma única poça: não é possível medir espalhamento com um único valor. Guarde isso, porque você vai precisar decidir quantas poças colocar em cada grupo daqui a pouco.</p>
-<p>Números resumem; gráficos revelam. Todo gráfico do <code>ggplot2</code> tem três partes: os dados, o mapeamento entre variáveis e eixos (<code>aes</code>) e a forma de desenhar (<code>geom_</code>):</p>
+<p>O <code>desvio</code> aparece como <code>NA</code> onde há uma única poça, porque não é possível medir espalhamento com um único valor. Guarde isso, porque você vai precisar decidir quantas poças colocar em cada grupo daqui a pouco.</p>
+<p>Números resumem e gráficos revelam. Todo gráfico do <code>ggplot2</code> tem três partes, que são os dados, o mapeamento entre variáveis e eixos (<code>aes</code>) e a forma de desenhar (<code>geom_</code>), como na <a href="#fig-medicoes-dispersao" class="quarto-xref">Figura&nbsp;1</a>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pocas, <span class="fu">aes</span>(<span class="at">x =</span> profundidade, <span class="at">y =</span> temperatura, <span class="at">colour =</span> sombreamento)) <span class="sc">+</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
@@ -594,10 +593,10 @@ Figura&nbsp;1: Temperatura em função da profundidade nas cinco poças, com o s
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="fl">25.5</span>, <span class="at">sd =</span> <span class="fl">0.6</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 25.44282 25.95393 26.05775 25.28516 25.00746</code></pre>
+<pre><code>[1] 26.10577 26.26681 25.18213 25.16975 25.86789</code></pre>
 </div>
 </div>
-<p>Os três argumentos são explícitos: <strong>quantos</strong> valores gerar, qual a <strong>média</strong> e qual o <strong>desvio-padrão</strong>. Execute essa linha algumas vezes seguidas: cada execução produz cinco números diferentes, e é essa a ideia de “voltar ao costão e medir outras cinco poças”.</p>
+<p>Os três argumentos são explícitos, indicando <strong>quantos</strong> valores gerar, qual a <strong>média</strong> e qual o <strong>desvio-padrão</strong>. Execute essa linha algumas vezes seguidas e note que cada execução produz cinco números diferentes, e é essa a ideia de “voltar ao costão e medir outras cinco poças”.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Dica: por que o meu resultado é diferente do meu colega?">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -615,7 +614,7 @@ Figura&nbsp;1: Temperatura em função da profundidade nas cinco poças, com o s
 </div>
 </div>
 </div>
-<p>Agora vamos gerar trinta poças e olhar como elas se distribuem:</p>
+<p>Agora vamos gerar trinta poças e olhar como elas se distribuem na <a href="#fig-medicoes-histograma" class="quarto-xref">Figura&nbsp;2</a>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>simuladas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
@@ -649,7 +648,7 @@ Figura&nbsp;2: Distribuição da temperatura em trinta poças simuladas com méd
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A função <code>abs()</code> devolve o valor absoluto, isto é, descarta o sinal: <code>abs(-0.3)</code> vale <code>0.3</code>.</p>
+<p>A função <code>abs()</code> devolve o valor absoluto, isto é, descarta o sinal, de modo que <code>abs(-0.3)</code> vale <code>0.3</code>.</p>
 <p>Escreva no seu script a linha que calcula a distância entre a média das poças simuladas e 25,5:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="fu">mean</span>(____<span class="sc">$</span>temperatura) <span class="sc">-</span> <span class="fl">25.5</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Guarde esse resultado. Ele é a medida que você vai usar para comparar cenários no bloco seguinte.</p>
@@ -682,7 +681,7 @@ Figura&nbsp;2: Distribuição da temperatura em trinta poças simuladas com méd
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Olhe os números que <strong>você</strong> escolheu e escreva no script, como comentário: qual dos dois grupos de sombreamento terá a maior temperatura média, e por quanto, aproximadamente?</p>
+<p>Olhe os números que <strong>você</strong> escolheu e escreva no script, como comentário, qual dos dois grupos de sombreamento terá a maior temperatura média, e por quanto, aproximadamente.</p>
 <p>Só depois calcule o resumo por grupo, com <code>group_by()</code> e <code>summarise()</code>, como na seção anterior. Acertou?</p>
 </div>
 </div>
@@ -707,14 +706,14 @@ Figura&nbsp;2: Distribuição da temperatura em trinta poças simuladas com méd
 </div>
 <div class="callout-body-container callout-body">
 <p>Antes de executar os três cenários, escreva no script qual deles você espera que produza a <strong>menor</strong> distância até 25,5, e por quê.</p>
-<p>Depois rode os três. Se a sua previsão não se confirmar, não apague nada: rode os três cenários mais uma vez e observe se a ordem entre eles se mantém. Explicar por que ela mudou vale tanto quanto ter acertado.</p>
+<p>Depois rode os três. Se a sua previsão não se confirmar, não apague nada. Rode os três cenários mais uma vez e observe se a ordem entre eles se mantém. Explicar por que ela mudou vale tanto quanto ter acertado.</p>
 </div>
 </div>
 </section>
 </section>
 <section id="entrega" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Entrega</h1>
-<p>Salve o script <code>pr-medicoes.R</code> com o cabeçalho de identificação preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>, logo abaixo da conta a que se referem.</p>
+<p>Salve o script <code>pr-medicoes.R</code> com o cabeçalho de identificação preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez. Se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>, logo abaixo da conta a que se referem.</p>
 <div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -729,7 +728,7 @@ Figura&nbsp;2: Distribuição da temperatura em trinta poças simuladas com méd
 <li>a base da aula: o vetor <code>temperatura</code>, a tabela <code>pocas</code> e o gráfico de dispersão;</li>
 <li><strong>a sua tabela de seis poças</strong>, com a previsão sobre os dois grupos de sombreamento registrada em comentário <strong>antes</strong> do resumo, e o resumo por <code>sombreamento</code> que a confirma ou desmente;</li>
 <li><strong>os três cenários de simulação</strong>, cada um com o seu histograma e a sua distância até 25,5, precedidos da previsão sobre qual ficaria mais perto;</li>
-<li>em comentários, 2 a 3 frases respondendo, <strong>com os seus três números</strong>: o que aproximou mais a média de 25,5 — aumentar o número de poças ou usar um desvio-padrão menor? Diga também o que aconteceu com a <strong>largura</strong> dos histogramas.</li>
+<li>em comentários, 2 a 3 frases respondendo, <strong>com os seus três números</strong>, o que aproximou mais a média de 25,5, se aumentar o número de poças ou usar um desvio-padrão menor. Diga também o que aconteceu com a <strong>largura</strong> dos histogramas.</li>
 </ol>
 </div>
 </div>
@@ -754,13 +753,22 @@ Figura&nbsp;2: Distribuição da temperatura em trinta poças simuladas com méd
 </ul>
 </div>
 </div>
-</section>
-<section id="para-saber-mais" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/introducao-r/estrutura-linguagem.html" target="_blank">Estrutura da linguagem R</a> (MEAD) — procure a seção sobre atribuição de objetos e vetores, se quiser rever <code>&lt;-</code> e <code>c()</code>.</li>
 <li><a href="https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html" target="_blank">Gráficos em camadas com ggplot2</a> (MEAD) — procure <code>geom_histogram()</code> para ajustar o número de barras do seu histograma.</li>
 </ul>
+</div>
+</div>
 
 
 <!-- -->
@@ -1253,291 +1261,247 @@ Figura&nbsp;2: Distribuição da temperatura em trinta poças simuladas com méd
 <span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
 <span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-dados-unidades-variacao.qmd)</span> apresentou uma tabela de</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>poças de maré, a média, o desvio-padrão e o histograma das medidas. Você viu esses objetos **prontos**.</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>Hoje você vai construí-los. O objetivo é operar o R: guardar valores em objetos, montar uma tabela,</span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>resumi-la por grupo, desenhar um gráfico e pedir ao computador que gere novas medidas.</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-dados-unidades-variacao.qmd)</span> apresentou uma tabela de poças de maré, a média, o desvio-padrão e o histograma das medidas. Você viu esses objetos **prontos**.</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>Hoje você vai construí-los. O objetivo é operar o R, guardando valores em objetos, montando uma tabela, resumindo-a por grupo, desenhando um gráfico e pedindo ao computador que gere novas medidas.</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>Ao final, você entrega um script com **a sua própria tabela de poças** e **três simulações comparadas**, acompanhadas de duas previsões que você registra antes de ver os resultados.</span>
 <span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>Ao final, você entrega um script com **a sua própria tabela de poças** e **três simulações</span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>comparadas**, acompanhadas de duas previsões que você registra antes de ver os resultados.</span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>Abra o RStudio, crie um script novo (*File → New File → R Script*), salve-o como <span class="in">`pr-medicoes.R`</span> e</span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>comece por estas duas linhas:</span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>A primeira carrega o conjunto de pacotes que usaremos o semestre inteiro. A segunda define a</span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>aparência dos gráficos, para não repetirmos isso depois.</span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" collapse="true" title="Dica: e se der erro?"}</span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>Se aparecer <span class="in">`there is no package called 'tidyverse'`</span>, instale-o uma única vez com</span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a><span class="in">`install.packages("tidyverse")`</span> e execute o <span class="in">`library()`</span> novamente.</span>
-<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>Leia sempre a mensagem inteira antes de pedir ajuda: quase todo erro em R nomeia o objeto ou a</span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>função que causou o problema.</span>
-<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>Comece o script com um cabeçalho de identificação. Ele será exigido em todas as práticas do semestre:</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>Abra o RStudio, crie um script novo (*File → New File → R Script*), salve-o como <span class="in">`pr-medicoes.R`</span> e comece por estas duas linhas:</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>A primeira carrega o conjunto de pacotes que usaremos o semestre inteiro. A segunda define a aparência dos gráficos, para não repetirmos isso depois.</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" collapse="true" title="Dica: e se der erro?"}</span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>Se aparecer <span class="in">`there is no package called 'tidyverse'`</span>, instale-o uma única vez com <span class="in">`install.packages("tidyverse")`</span> e execute o <span class="in">`library()`</span> novamente.</span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>Leia sempre a mensagem inteira antes de pedir ajuda, porque quase todo erro em R nomeia o objeto ou a função que causou o problema.</span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>Comece o script com um cabeçalho de identificação. Ele será exigido em todas as práticas do semestre:</span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Prática em R 01 - Primeiras medições em R</span></span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Nome:</span></span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a><span class="co"># RA:</span></span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Data:</span></span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Prática em R 01 - Primeiras medições em R</span></span>
-<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Nome:</span></span>
-<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a><span class="co"># RA:</span></span>
-<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Data:</span></span>
-<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a><span class="fu"># Guardar medidas em um objeto</span></span>
-<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a>Você mediu a temperatura da água em cinco poças de um costão e anotou: 25,4; 25,9; 24,8; 26,3;</span>
-<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a>25,1 °C.</span>
-<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a>No R, guardamos valores dentro de **objetos**. A seta <span class="in">`&lt;-`</span> faz essa atribuição e <span class="in">`c()`</span> junta vários</span>
-<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>números em um **vetor**:</span>
+<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a><span class="fu"># Guardar medidas em um objeto</span></span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>Você mediu a temperatura da água em cinco poças de um costão e anotou os valores 25,4, 25,9, 24,8, 26,3 e 25,1 °C.</span>
+<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>No R, guardamos valores dentro de **objetos**. A seta `&lt;-` faz essa atribuição e `c()` junta vários números em um **vetor**:</span>
+<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a>temperatura <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">25.4</span>, <span class="fl">25.9</span>, <span class="fl">24.8</span>, <span class="fl">26.3</span>, <span class="fl">25.1</span>)</span>
+<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a>temperatura</span>
+<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>Note que no R o separador decimal é o ponto, não a vírgula.</span>
 <span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-79"><a href="#cb27-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a>temperatura <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">25.4</span>, <span class="fl">25.9</span>, <span class="fl">24.8</span>, <span class="fl">26.3</span>, <span class="fl">25.1</span>)</span>
-<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a>temperatura</span>
-<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a>Note que no R o separador decimal é o ponto, não a vírgula.</span>
-<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a>Com o vetor criado, podemos perguntar coisas a ele:</span>
-<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(temperatura)</span>
-<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(temperatura)</span>
-<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(temperatura)</span>
-<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a><span class="in">`length()`</span> conta quantos valores existem, <span class="in">`mean()`</span> calcula a média e <span class="in">`sd()`</span> mede o quanto os valores</span>
-<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a>se espalham em torno dela.</span>
-<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
-<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>A média fica perto de 25,5 °C, mas nenhuma poça mediu exatamente isso. A média é um resumo do</span>
-<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>conjunto, não uma das medidas.</span>
-<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma tabela: cada linha é uma poça</span></span>
-<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a>Na prática você não anota só a temperatura. Anota também a profundidade, o sombreamento, o</span>
-<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a>identificador da poça. Para isso precisamos de uma **tabela**, em que cada linha é uma poça e cada</span>
-<span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a>coluna é uma característica medida nela.</span>
+<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a>Com o vetor criado, podemos perguntar coisas a ele:</span>
+<span id="cb27-78"><a href="#cb27-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(temperatura)</span>
+<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(temperatura)</span>
+<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(temperatura)</span>
+<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a><span class="in">`length()`</span> conta quantos valores existem, <span class="in">`mean()`</span> calcula a média e <span class="in">`sd()`</span> mede o quanto os valores se espalham em torno dela.</span>
+<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-89"><a href="#cb27-89" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe"}</span>
+<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a>A média fica perto de 25,5 °C, mas nenhuma poça mediu exatamente isso. A média é um resumo do conjunto, não uma das medidas.</span>
+<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma tabela: cada linha é uma poça</span></span>
+<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a>Na prática você não anota só a temperatura. Anota também a profundidade, o sombreamento, o identificador da poça. Para isso precisamos de uma **tabela**, em que cada linha é uma poça e cada coluna é uma característica medida nela.</span>
+<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>pocas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="fu">c</span>(<span class="fl">25.4</span>, <span class="fl">25.9</span>, <span class="fl">24.8</span>, <span class="fl">26.3</span>, <span class="fl">25.1</span>),</span>
+<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a>  <span class="at">profundidade =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">20</span>, <span class="dv">6</span>, <span class="dv">15</span>),</span>
+<span id="cb27-104"><a href="#cb27-104" aria-hidden="true" tabindex="-1"></a>  <span class="at">sombreamento =</span> <span class="fu">c</span>(<span class="st">"baixo"</span>, <span class="st">"baixo"</span>, <span class="st">"alto"</span>, <span class="st">"baixo"</span>, <span class="st">"médio"</span>)</span>
+<span id="cb27-105"><a href="#cb27-105" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-106"><a href="#cb27-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-107"><a href="#cb27-107" aria-hidden="true" tabindex="-1"></a>pocas</span>
+<span id="cb27-108"><a href="#cb27-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-109"><a href="#cb27-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-112"><a href="#cb27-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-113"><a href="#cb27-113" aria-hidden="true" tabindex="-1"></a>pocas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="fu">c</span>(<span class="fl">25.4</span>, <span class="fl">25.9</span>, <span class="fl">24.8</span>, <span class="fl">26.3</span>, <span class="fl">25.1</span>),</span>
-<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a>  <span class="at">profundidade =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">20</span>, <span class="dv">6</span>, <span class="dv">15</span>),</span>
-<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a>  <span class="at">sombreamento =</span> <span class="fu">c</span>(<span class="st">"baixo"</span>, <span class="st">"baixo"</span>, <span class="st">"alto"</span>, <span class="st">"baixo"</span>, <span class="st">"médio"</span>)</span>
-<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-110"><a href="#cb27-110" aria-hidden="true" tabindex="-1"></a>A saída mostra o tipo de cada coluna, com <span class="in">`&lt;dbl&gt;`</span> para números com casas decimais, <span class="in">`&lt;int&gt;`</span> para inteiros e <span class="in">`&lt;chr&gt;`</span> para texto. <span class="in">`glimpse()`</span> dá a mesma informação de forma compacta:</span>
+<span id="cb27-111"><a href="#cb27-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-114"><a href="#cb27-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-115"><a href="#cb27-115" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pocas)</span>
+<span id="cb27-116"><a href="#cb27-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-117"><a href="#cb27-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-118"><a href="#cb27-118" aria-hidden="true" tabindex="-1"></a>Três operações resolvem quase tudo no começo. <span class="in">`filter()`</span> escolhe **linhas**, `select()` escolhe **colunas** e <span class="in">`mutate()`</span> cria colunas novas:</span>
 <span id="cb27-119"><a href="#cb27-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-120"><a href="#cb27-120" aria-hidden="true" tabindex="-1"></a>pocas</span>
-<span id="cb27-121"><a href="#cb27-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a>A saída mostra o tipo de cada coluna: <span class="in">`&lt;dbl&gt;`</span> para números com casas decimais, <span class="in">`&lt;int&gt;`</span> para inteiros,</span>
-<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a><span class="in">`&lt;chr&gt;`</span> para texto. <span class="in">`glimpse()`</span> dá a mesma informação de forma compacta:</span>
+<span id="cb27-122"><a href="#cb27-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-123"><a href="#cb27-123" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span> <span class="fu">filter</span>(profundidade <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb27-124"><a href="#cb27-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-125"><a href="#cb27-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-128"><a href="#cb27-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-129"><a href="#cb27-129" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(pocas)</span>
-<span id="cb27-130"><a href="#cb27-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-131"><a href="#cb27-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-132"><a href="#cb27-132" aria-hidden="true" tabindex="-1"></a>Três operações resolvem quase tudo no começo. <span class="in">`filter()`</span> escolhe **linhas**, <span class="in">`select()`</span> escolhe</span>
-<span id="cb27-133"><a href="#cb27-133" aria-hidden="true" tabindex="-1"></a>**colunas** e <span class="in">`mutate()`</span> cria colunas novas:</span>
-<span id="cb27-134"><a href="#cb27-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-137"><a href="#cb27-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-138"><a href="#cb27-138" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span> <span class="fu">filter</span>(profundidade <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
-<span id="cb27-139"><a href="#cb27-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-140"><a href="#cb27-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-141"><a href="#cb27-141" aria-hidden="true" tabindex="-1"></a>O símbolo <span class="in">`|&gt;`</span> é o **pipe**: ele leva o valor da esquerda para o primeiro argumento da função à</span>
-<span id="cb27-142"><a href="#cb27-142" aria-hidden="true" tabindex="-1"></a>direita. Leia como "tome <span class="in">`pocas`</span>, **e então** filtre".</span>
-<span id="cb27-143"><a href="#cb27-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-146"><a href="#cb27-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-147"><a href="#cb27-147" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">diferenca =</span> temperatura <span class="sc">-</span> <span class="fu">mean</span>(temperatura))</span>
+<span id="cb27-126"><a href="#cb27-126" aria-hidden="true" tabindex="-1"></a>O símbolo <span class="in">`|&gt;`</span> é o **pipe**: ele leva o valor da esquerda para o primeiro argumento da função à direita. Leia como "tome `pocas`, **e então** filtre".</span>
+<span id="cb27-127"><a href="#cb27-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-130"><a href="#cb27-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-131"><a href="#cb27-131" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">diferenca =</span> temperatura <span class="sc">-</span> <span class="fu">mean</span>(temperatura))</span>
+<span id="cb27-132"><a href="#cb27-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-133"><a href="#cb27-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-134"><a href="#cb27-134" aria-hidden="true" tabindex="-1"></a>A coluna nova mostra quanto cada poça se afasta da média, com valores negativos para poças mais frias que a média e positivos para as mais quentes.</span>
+<span id="cb27-135"><a href="#cb27-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-136"><a href="#cb27-136" aria-hidden="true" tabindex="-1"></a>Para resumir por grupo, combine <span class="in">`group_by()`</span> com <span class="in">`summarise()`</span>:</span>
+<span id="cb27-137"><a href="#cb27-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-140"><a href="#cb27-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-141"><a href="#cb27-141" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span></span>
+<span id="cb27-142"><a href="#cb27-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sombreamento) <span class="sc">|&gt;</span></span>
+<span id="cb27-143"><a href="#cb27-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb27-144"><a href="#cb27-144" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb27-145"><a href="#cb27-145" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(temperatura),</span>
+<span id="cb27-146"><a href="#cb27-146" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(temperatura)</span>
+<span id="cb27-147"><a href="#cb27-147" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb27-148"><a href="#cb27-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-149"><a href="#cb27-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-150"><a href="#cb27-150" aria-hidden="true" tabindex="-1"></a>A coluna nova mostra quanto cada poça se afasta da média: valores negativos são poças mais frias que</span>
-<span id="cb27-151"><a href="#cb27-151" aria-hidden="true" tabindex="-1"></a>a média, positivos são mais quentes.</span>
-<span id="cb27-152"><a href="#cb27-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-153"><a href="#cb27-153" aria-hidden="true" tabindex="-1"></a>Para resumir por grupo, combine <span class="in">`group_by()`</span> com <span class="in">`summarise()`</span>:</span>
-<span id="cb27-154"><a href="#cb27-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-157"><a href="#cb27-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-158"><a href="#cb27-158" aria-hidden="true" tabindex="-1"></a>pocas <span class="sc">|&gt;</span></span>
-<span id="cb27-159"><a href="#cb27-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sombreamento) <span class="sc">|&gt;</span></span>
-<span id="cb27-160"><a href="#cb27-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb27-161"><a href="#cb27-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb27-162"><a href="#cb27-162" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(temperatura),</span>
-<span id="cb27-163"><a href="#cb27-163" aria-hidden="true" tabindex="-1"></a>    <span class="at">desvio =</span> <span class="fu">sd</span>(temperatura)</span>
-<span id="cb27-164"><a href="#cb27-164" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb27-165"><a href="#cb27-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-166"><a href="#cb27-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-167"><a href="#cb27-167" aria-hidden="true" tabindex="-1"></a>O <span class="in">`desvio`</span> aparece como <span class="in">`NA`</span> onde há uma única poça: não é possível medir espalhamento com um único</span>
-<span id="cb27-168"><a href="#cb27-168" aria-hidden="true" tabindex="-1"></a>valor. Guarde isso, porque você vai precisar decidir quantas poças colocar em cada grupo daqui a</span>
-<span id="cb27-169"><a href="#cb27-169" aria-hidden="true" tabindex="-1"></a>pouco.</span>
-<span id="cb27-170"><a href="#cb27-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-171"><a href="#cb27-171" aria-hidden="true" tabindex="-1"></a>Números resumem; gráficos revelam. Todo gráfico do <span class="in">`ggplot2`</span> tem três partes: os dados, o mapeamento</span>
-<span id="cb27-172"><a href="#cb27-172" aria-hidden="true" tabindex="-1"></a>entre variáveis e eixos (<span class="in">`aes`</span>) e a forma de desenhar (<span class="in">`geom_`</span>):</span>
-<span id="cb27-173"><a href="#cb27-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-176"><a href="#cb27-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-177"><a href="#cb27-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medicoes-dispersao</span></span>
-<span id="cb27-178"><a href="#cb27-178" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Temperatura em função da profundidade nas cinco poças, com o sombreamento indicado pela cor."</span></span>
-<span id="cb27-179"><a href="#cb27-179" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb27-180"><a href="#cb27-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-181"><a href="#cb27-181" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pocas, <span class="fu">aes</span>(<span class="at">x =</span> profundidade, <span class="at">y =</span> temperatura, <span class="at">colour =</span> sombreamento)) <span class="sc">+</span></span>
-<span id="cb27-182"><a href="#cb27-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb27-183"><a href="#cb27-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Profundidade (cm)"</span>, <span class="at">y =</span> <span class="st">"Temperatura (°C)"</span>, <span class="at">colour =</span> <span class="st">"Sombreamento"</span>)</span>
-<span id="cb27-184"><a href="#cb27-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-150"><a href="#cb27-150" aria-hidden="true" tabindex="-1"></a>O <span class="in">`desvio`</span> aparece como <span class="in">`NA`</span> onde há uma única poça, porque não é possível medir espalhamento com um único valor. Guarde isso, porque você vai precisar decidir quantas poças colocar em cada grupo daqui a pouco.</span>
+<span id="cb27-151"><a href="#cb27-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-152"><a href="#cb27-152" aria-hidden="true" tabindex="-1"></a>Números resumem e gráficos revelam. Todo gráfico do <span class="in">`ggplot2`</span> tem três partes, que são os dados, o mapeamento entre variáveis e eixos (<span class="in">`aes`</span>) e a forma de desenhar (<span class="in">`geom_`</span>), como na @fig-medicoes-dispersao:</span>
+<span id="cb27-153"><a href="#cb27-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-156"><a href="#cb27-156" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-157"><a href="#cb27-157" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medicoes-dispersao</span></span>
+<span id="cb27-158"><a href="#cb27-158" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Temperatura em função da profundidade nas cinco poças, com o sombreamento indicado pela cor."</span></span>
+<span id="cb27-159"><a href="#cb27-159" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
+<span id="cb27-160"><a href="#cb27-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-161"><a href="#cb27-161" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pocas, <span class="fu">aes</span>(<span class="at">x =</span> profundidade, <span class="at">y =</span> temperatura, <span class="at">colour =</span> sombreamento)) <span class="sc">+</span></span>
+<span id="cb27-162"><a href="#cb27-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb27-163"><a href="#cb27-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Profundidade (cm)"</span>, <span class="at">y =</span> <span class="st">"Temperatura (°C)"</span>, <span class="at">colour =</span> <span class="st">"Sombreamento"</span>)</span>
+<span id="cb27-164"><a href="#cb27-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-165"><a href="#cb27-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-166"><a href="#cb27-166" aria-hidden="true" tabindex="-1"></a>Repare que as camadas do <span class="in">`ggplot2`</span> são somadas com <span class="in">`+`</span>, e não com o pipe.</span>
+<span id="cb27-167"><a href="#cb27-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-168"><a href="#cb27-168" aria-hidden="true" tabindex="-1"></a><span class="fu"># Quando o computador gera as medidas</span></span>
+<span id="cb27-169"><a href="#cb27-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-170"><a href="#cb27-170" aria-hidden="true" tabindex="-1"></a>Aqui entra a ferramenta que usaremos o semestre inteiro. A função <span class="in">`rnorm()`</span> sorteia valores em torno de um centro, com um espalhamento que você define:</span>
+<span id="cb27-171"><a href="#cb27-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-174"><a href="#cb27-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-175"><a href="#cb27-175" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="fl">25.5</span>, <span class="at">sd =</span> <span class="fl">0.6</span>)</span>
+<span id="cb27-176"><a href="#cb27-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-177"><a href="#cb27-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-178"><a href="#cb27-178" aria-hidden="true" tabindex="-1"></a>Os três argumentos são explícitos, indicando **quantos** valores gerar, qual a **média** e qual o **desvio-padrão**. Execute essa linha algumas vezes seguidas e note que cada execução produz cinco números diferentes, e é essa a ideia de "voltar ao costão e medir outras cinco poças".</span>
+<span id="cb27-179"><a href="#cb27-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-180"><a href="#cb27-180" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" collapse="true" title="Dica: por que o meu resultado é diferente do meu colega?"}</span>
+<span id="cb27-181"><a href="#cb27-181" aria-hidden="true" tabindex="-1"></a>Quando é preciso que um sorteio se repita exatamente igual, o R oferece a função <span class="in">`set.seed()`</span>, que fixa o ponto de partida do sorteio.</span>
+<span id="cb27-182"><a href="#cb27-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-183"><a href="#cb27-183" aria-hidden="true" tabindex="-1"></a>**Não vamos usá-la nesta unidade curricular.** A variação entre execuções é justamente o que queremos observar. Se o seu número for diferente do número do colega ao lado, isso é o resultado esperado, não um erro. O que precisa coincidir entre vocês é a interpretação, não o valor sorteado.</span>
+<span id="cb27-184"><a href="#cb27-184" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb27-185"><a href="#cb27-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-186"><a href="#cb27-186" aria-hidden="true" tabindex="-1"></a>Repare que as camadas do <span class="in">`ggplot2`</span> são somadas com <span class="in">`+`</span>, e não com o pipe.</span>
+<span id="cb27-186"><a href="#cb27-186" aria-hidden="true" tabindex="-1"></a>Agora vamos gerar trinta poças e olhar como elas se distribuem na @fig-medicoes-histograma:</span>
 <span id="cb27-187"><a href="#cb27-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-188"><a href="#cb27-188" aria-hidden="true" tabindex="-1"></a><span class="fu"># Quando o computador gera as medidas</span></span>
-<span id="cb27-189"><a href="#cb27-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-190"><a href="#cb27-190" aria-hidden="true" tabindex="-1"></a>Aqui entra a ferramenta que usaremos o semestre inteiro. A função <span class="in">`rnorm()`</span> sorteia valores em torno</span>
-<span id="cb27-191"><a href="#cb27-191" aria-hidden="true" tabindex="-1"></a>de um centro, com um espalhamento que você define:</span>
-<span id="cb27-192"><a href="#cb27-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-195"><a href="#cb27-195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-196"><a href="#cb27-196" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="fl">25.5</span>, <span class="at">sd =</span> <span class="fl">0.6</span>)</span>
-<span id="cb27-197"><a href="#cb27-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-198"><a href="#cb27-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-199"><a href="#cb27-199" aria-hidden="true" tabindex="-1"></a>Os três argumentos são explícitos: **quantos** valores gerar, qual a **média** e qual o</span>
-<span id="cb27-200"><a href="#cb27-200" aria-hidden="true" tabindex="-1"></a>**desvio-padrão**. Execute essa linha algumas vezes seguidas: cada execução produz cinco números</span>
-<span id="cb27-201"><a href="#cb27-201" aria-hidden="true" tabindex="-1"></a>diferentes, e é essa a ideia de "voltar ao costão e medir outras cinco poças".</span>
-<span id="cb27-202"><a href="#cb27-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-203"><a href="#cb27-203" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" collapse="true" title="Dica: por que o meu resultado é diferente do meu colega?"}</span>
-<span id="cb27-204"><a href="#cb27-204" aria-hidden="true" tabindex="-1"></a>Quando é preciso que um sorteio se repita exatamente igual, o R oferece a função <span class="in">`set.seed()`</span>, que</span>
-<span id="cb27-205"><a href="#cb27-205" aria-hidden="true" tabindex="-1"></a>fixa o ponto de partida do sorteio.</span>
+<span id="cb27-190"><a href="#cb27-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-191"><a href="#cb27-191" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medicoes-histograma</span></span>
+<span id="cb27-192"><a href="#cb27-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribuição da temperatura em trinta poças simuladas com média 25,5 °C e desvio-padrão 0,6 °C."</span></span>
+<span id="cb27-193"><a href="#cb27-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.2</span></span>
+<span id="cb27-194"><a href="#cb27-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-195"><a href="#cb27-195" aria-hidden="true" tabindex="-1"></a>simuladas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb27-196"><a href="#cb27-196" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
+<span id="cb27-197"><a href="#cb27-197" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="fl">25.5</span>, <span class="at">sd =</span> <span class="fl">0.6</span>)</span>
+<span id="cb27-198"><a href="#cb27-198" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-199"><a href="#cb27-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-200"><a href="#cb27-200" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simuladas, <span class="fu">aes</span>(<span class="at">x =</span> temperatura)) <span class="sc">+</span></span>
+<span id="cb27-201"><a href="#cb27-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb27-202"><a href="#cb27-202" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperatura (°C)"</span>, <span class="at">y =</span> <span class="st">"Número de poças"</span>)</span>
+<span id="cb27-203"><a href="#cb27-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-204"><a href="#cb27-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-205"><a href="#cb27-205" aria-hidden="true" tabindex="-1"></a>Pedimos média 25,5 °C, mas a média das trinta poças sorteadas não sai exatamente 25,5. Para medir esse desencontro precisamos da **distância** entre o valor pedido e o valor obtido, sem que o sinal atrapalhe.</span>
 <span id="cb27-206"><a href="#cb27-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-207"><a href="#cb27-207" aria-hidden="true" tabindex="-1"></a>**Não vamos usá-la nesta unidade curricular.** A variação entre execuções é justamente o que</span>
-<span id="cb27-208"><a href="#cb27-208" aria-hidden="true" tabindex="-1"></a>queremos observar. Se o seu número for diferente do número do colega ao lado, isso é o resultado</span>
-<span id="cb27-209"><a href="#cb27-209" aria-hidden="true" tabindex="-1"></a>esperado, não um erro. O que precisa coincidir entre vocês é a interpretação, não o valor sorteado.</span>
-<span id="cb27-210"><a href="#cb27-210" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-207"><a href="#cb27-207" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
+<span id="cb27-208"><a href="#cb27-208" aria-hidden="true" tabindex="-1"></a>A função <span class="in">`abs()`</span> devolve o valor absoluto, isto é, descarta o sinal, de modo que <span class="in">`abs(-0.3)`</span> vale <span class="in">`0.3`</span>.</span>
+<span id="cb27-209"><a href="#cb27-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-210"><a href="#cb27-210" aria-hidden="true" tabindex="-1"></a>Escreva no seu script a linha que calcula a distância entre a média das poças simuladas e 25,5:</span>
 <span id="cb27-211"><a href="#cb27-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-212"><a href="#cb27-212" aria-hidden="true" tabindex="-1"></a>Agora vamos gerar trinta poças e olhar como elas se distribuem:</span>
-<span id="cb27-213"><a href="#cb27-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-216"><a href="#cb27-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb27-217"><a href="#cb27-217" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-medicoes-histograma</span></span>
-<span id="cb27-218"><a href="#cb27-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribuição da temperatura em trinta poças simuladas com média 25,5 °C e desvio-padrão 0,6 °C."</span></span>
-<span id="cb27-219"><a href="#cb27-219" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.2</span></span>
+<span id="cb27-212"><a href="#cb27-212" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb27-213"><a href="#cb27-213" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="fu">mean</span>(____<span class="sc">$</span>temperatura) <span class="sc">-</span> <span class="fl">25.5</span>)</span>
+<span id="cb27-214"><a href="#cb27-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-215"><a href="#cb27-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-216"><a href="#cb27-216" aria-hidden="true" tabindex="-1"></a>Guarde esse resultado. Ele é a medida que você vai usar para comparar cenários no bloco seguinte.</span>
+<span id="cb27-217"><a href="#cb27-217" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-218"><a href="#cb27-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-219"><a href="#cb27-219" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
 <span id="cb27-220"><a href="#cb27-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-221"><a href="#cb27-221" aria-hidden="true" tabindex="-1"></a>simuladas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb27-222"><a href="#cb27-222" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
-<span id="cb27-223"><a href="#cb27-223" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="fl">25.5</span>, <span class="at">sd =</span> <span class="fl">0.6</span>)</span>
-<span id="cb27-224"><a href="#cb27-224" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-225"><a href="#cb27-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-226"><a href="#cb27-226" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simuladas, <span class="fu">aes</span>(<span class="at">x =</span> temperatura)) <span class="sc">+</span></span>
-<span id="cb27-227"><a href="#cb27-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">12</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb27-228"><a href="#cb27-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperatura (°C)"</span>, <span class="at">y =</span> <span class="st">"Número de poças"</span>)</span>
-<span id="cb27-229"><a href="#cb27-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-230"><a href="#cb27-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-231"><a href="#cb27-231" aria-hidden="true" tabindex="-1"></a>Pedimos média 25,5 °C, mas a média das trinta poças sorteadas não sai exatamente 25,5. Para medir</span>
-<span id="cb27-232"><a href="#cb27-232" aria-hidden="true" tabindex="-1"></a>esse desencontro precisamos da **distância** entre o valor pedido e o valor obtido, sem que o sinal</span>
-<span id="cb27-233"><a href="#cb27-233" aria-hidden="true" tabindex="-1"></a>atrapalhe.</span>
-<span id="cb27-234"><a href="#cb27-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-235"><a href="#cb27-235" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
-<span id="cb27-236"><a href="#cb27-236" aria-hidden="true" tabindex="-1"></a>A função <span class="in">`abs()`</span> devolve o valor absoluto, isto é, descarta o sinal: <span class="in">`abs(-0.3)`</span> vale <span class="in">`0.3`</span>.</span>
+<span id="cb27-221"><a href="#cb27-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## A sua tabela de poças</span></span>
+<span id="cb27-222"><a href="#cb27-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-223"><a href="#cb27-223" aria-hidden="true" tabindex="-1"></a>Monte a **sua** tabela, com seis poças inventadas por você, seguindo três regras:</span>
+<span id="cb27-224"><a href="#cb27-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-225"><a href="#cb27-225" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>as temperaturas ficam entre 24 e 27 °C;</span>
+<span id="cb27-226"><a href="#cb27-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a coluna <span class="in">`sombreamento`</span> usa apenas <span class="in">`"baixo"`</span> e <span class="in">`"alto"`</span>, com pelo menos duas poças de cada;</span>
+<span id="cb27-227"><a href="#cb27-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>as profundidades ficam entre 5 e 25 cm.</span>
+<span id="cb27-228"><a href="#cb27-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-229"><a href="#cb27-229" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb27-230"><a href="#cb27-230" aria-hidden="true" tabindex="-1"></a>minhas_pocas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb27-231"><a href="#cb27-231" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb27-232"><a href="#cb27-232" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="fu">c</span>(____),</span>
+<span id="cb27-233"><a href="#cb27-233" aria-hidden="true" tabindex="-1"></a>  <span class="at">profundidade =</span> <span class="fu">c</span>(____),</span>
+<span id="cb27-234"><a href="#cb27-234" aria-hidden="true" tabindex="-1"></a>  <span class="at">sombreamento =</span> <span class="fu">c</span>(____)</span>
+<span id="cb27-235"><a href="#cb27-235" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-236"><a href="#cb27-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb27-237"><a href="#cb27-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-238"><a href="#cb27-238" aria-hidden="true" tabindex="-1"></a>Escreva no seu script a linha que calcula a distância entre a média das poças simuladas e 25,5:</span>
-<span id="cb27-239"><a href="#cb27-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-240"><a href="#cb27-240" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb27-241"><a href="#cb27-241" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="fu">mean</span>(____<span class="sc">$</span>temperatura) <span class="sc">-</span> <span class="fl">25.5</span>)</span>
-<span id="cb27-242"><a href="#cb27-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-238"><a href="#cb27-238" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de calcular"}</span>
+<span id="cb27-239"><a href="#cb27-239" aria-hidden="true" tabindex="-1"></a>Olhe os números que **você** escolheu e escreva no script, como comentário, qual dos dois grupos de sombreamento terá a maior temperatura média, e por quanto, aproximadamente.</span>
+<span id="cb27-240"><a href="#cb27-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-241"><a href="#cb27-241" aria-hidden="true" tabindex="-1"></a>Só depois calcule o resumo por grupo, com <span class="in">`group_by()`</span> e <span class="in">`summarise()`</span>, como na seção anterior. Acertou?</span>
+<span id="cb27-242"><a href="#cb27-242" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb27-243"><a href="#cb27-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-244"><a href="#cb27-244" aria-hidden="true" tabindex="-1"></a>Guarde esse resultado. Ele é a medida que você vai usar para comparar cenários no bloco seguinte.</span>
-<span id="cb27-245"><a href="#cb27-245" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-246"><a href="#cb27-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-247"><a href="#cb27-247" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
-<span id="cb27-248"><a href="#cb27-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-249"><a href="#cb27-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## A sua tabela de poças</span></span>
-<span id="cb27-250"><a href="#cb27-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-251"><a href="#cb27-251" aria-hidden="true" tabindex="-1"></a>Monte a **sua** tabela, com seis poças inventadas por você, seguindo três regras:</span>
-<span id="cb27-252"><a href="#cb27-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-253"><a href="#cb27-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>as temperaturas ficam entre 24 e 27 °C;</span>
-<span id="cb27-254"><a href="#cb27-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a coluna <span class="in">`sombreamento`</span> usa apenas <span class="in">`"baixo"`</span> e <span class="in">`"alto"`</span>, com pelo menos duas poças de cada;</span>
-<span id="cb27-255"><a href="#cb27-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>as profundidades ficam entre 5 e 25 cm.</span>
+<span id="cb27-244"><a href="#cb27-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Três cenários de simulação</span></span>
+<span id="cb27-245"><a href="#cb27-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-246"><a href="#cb27-246" aria-hidden="true" tabindex="-1"></a>Volte à simulação e monte **três** cenários diferentes entre si, combinando o número de poças e o desvio-padrão:</span>
+<span id="cb27-247"><a href="#cb27-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-248"><a href="#cb27-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o número de poças deve ser **30** ou **300**;</span>
+<span id="cb27-249"><a href="#cb27-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o desvio-padrão deve ser **0,6** ou um valor **maior que 1** escolhido por você;</span>
+<span id="cb27-250"><a href="#cb27-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>pelo menos um cenário usa 300 poças e pelo menos um usa o seu desvio-padrão.</span>
+<span id="cb27-251"><a href="#cb27-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-252"><a href="#cb27-252" aria-hidden="true" tabindex="-1"></a>Para cada cenário, produza o histograma e calcule a distância até 25,5 com a linha do <span class="in">`abs()`</span>.</span>
+<span id="cb27-253"><a href="#cb27-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-254"><a href="#cb27-254" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}</span>
+<span id="cb27-255"><a href="#cb27-255" aria-hidden="true" tabindex="-1"></a>Antes de executar os três cenários, escreva no script qual deles você espera que produza a **menor** distância até 25,5, e por quê.</span>
 <span id="cb27-256"><a href="#cb27-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-257"><a href="#cb27-257" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb27-258"><a href="#cb27-258" aria-hidden="true" tabindex="-1"></a>minhas_pocas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb27-259"><a href="#cb27-259" aria-hidden="true" tabindex="-1"></a>  <span class="at">poca =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
-<span id="cb27-260"><a href="#cb27-260" aria-hidden="true" tabindex="-1"></a>  <span class="at">temperatura =</span> <span class="fu">c</span>(____),</span>
-<span id="cb27-261"><a href="#cb27-261" aria-hidden="true" tabindex="-1"></a>  <span class="at">profundidade =</span> <span class="fu">c</span>(____),</span>
-<span id="cb27-262"><a href="#cb27-262" aria-hidden="true" tabindex="-1"></a>  <span class="at">sombreamento =</span> <span class="fu">c</span>(____)</span>
-<span id="cb27-263"><a href="#cb27-263" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-264"><a href="#cb27-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-265"><a href="#cb27-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-266"><a href="#cb27-266" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de calcular"}</span>
-<span id="cb27-267"><a href="#cb27-267" aria-hidden="true" tabindex="-1"></a>Olhe os números que **você** escolheu e escreva no script, como comentário: qual dos dois grupos de</span>
-<span id="cb27-268"><a href="#cb27-268" aria-hidden="true" tabindex="-1"></a>sombreamento terá a maior temperatura média, e por quanto, aproximadamente?</span>
-<span id="cb27-269"><a href="#cb27-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-270"><a href="#cb27-270" aria-hidden="true" tabindex="-1"></a>Só depois calcule o resumo por grupo, com <span class="in">`group_by()`</span> e <span class="in">`summarise()`</span>, como na seção anterior.</span>
-<span id="cb27-271"><a href="#cb27-271" aria-hidden="true" tabindex="-1"></a>Acertou?</span>
-<span id="cb27-272"><a href="#cb27-272" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-273"><a href="#cb27-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-274"><a href="#cb27-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## Três cenários de simulação</span></span>
-<span id="cb27-275"><a href="#cb27-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-276"><a href="#cb27-276" aria-hidden="true" tabindex="-1"></a>Volte à simulação e monte **três** cenários diferentes entre si, combinando o número de poças e o</span>
-<span id="cb27-277"><a href="#cb27-277" aria-hidden="true" tabindex="-1"></a>desvio-padrão:</span>
-<span id="cb27-278"><a href="#cb27-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-279"><a href="#cb27-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o número de poças deve ser **30** ou **300**;</span>
-<span id="cb27-280"><a href="#cb27-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>o desvio-padrão deve ser **0,6** ou um valor **maior que 1** escolhido por você;</span>
-<span id="cb27-281"><a href="#cb27-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>pelo menos um cenário usa 300 poças e pelo menos um usa o seu desvio-padrão.</span>
-<span id="cb27-282"><a href="#cb27-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-283"><a href="#cb27-283" aria-hidden="true" tabindex="-1"></a>Para cada cenário, produza o histograma e calcule a distância até 25,5 com a linha do <span class="in">`abs()`</span>.</span>
-<span id="cb27-284"><a href="#cb27-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-285"><a href="#cb27-285" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja antes de rodar"}</span>
-<span id="cb27-286"><a href="#cb27-286" aria-hidden="true" tabindex="-1"></a>Antes de executar os três cenários, escreva no script qual deles você espera que produza a **menor**</span>
-<span id="cb27-287"><a href="#cb27-287" aria-hidden="true" tabindex="-1"></a>distância até 25,5, e por quê.</span>
-<span id="cb27-288"><a href="#cb27-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-289"><a href="#cb27-289" aria-hidden="true" tabindex="-1"></a>Depois rode os três. Se a sua previsão não se confirmar, não apague nada: rode os três cenários mais</span>
-<span id="cb27-290"><a href="#cb27-290" aria-hidden="true" tabindex="-1"></a>uma vez e observe se a ordem entre eles se mantém. Explicar por que ela mudou vale tanto quanto ter</span>
-<span id="cb27-291"><a href="#cb27-291" aria-hidden="true" tabindex="-1"></a>acertado.</span>
-<span id="cb27-292"><a href="#cb27-292" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-293"><a href="#cb27-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-294"><a href="#cb27-294" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb27-295"><a href="#cb27-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-296"><a href="#cb27-296" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-medicoes.R`</span> com o cabeçalho de identificação preenchido. Antes de enviar, reinicie</span>
-<span id="cb27-297"><a href="#cb27-297" aria-hidden="true" tabindex="-1"></a>o R (*Session → Restart R*) e execute o script inteiro uma vez: se ele parar em alguma linha, corrija.</span>
-<span id="cb27-298"><a href="#cb27-298" aria-hidden="true" tabindex="-1"></a>As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>, logo abaixo da conta</span>
-<span id="cb27-299"><a href="#cb27-299" aria-hidden="true" tabindex="-1"></a>a que se referem.</span>
-<span id="cb27-300"><a href="#cb27-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-301"><a href="#cb27-301" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb27-302"><a href="#cb27-302" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: o vetor <span class="in">`temperatura`</span>, a tabela <span class="in">`pocas`</span> e o gráfico de dispersão;</span>
-<span id="cb27-303"><a href="#cb27-303" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a sua tabela de seis poças**, com a previsão sobre os dois grupos de sombreamento registrada em</span>
-<span id="cb27-304"><a href="#cb27-304" aria-hidden="true" tabindex="-1"></a>   comentário **antes** do resumo, e o resumo por <span class="in">`sombreamento`</span> que a confirma ou desmente;</span>
-<span id="cb27-305"><a href="#cb27-305" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**os três cenários de simulação**, cada um com o seu histograma e a sua distância até 25,5,</span>
-<span id="cb27-306"><a href="#cb27-306" aria-hidden="true" tabindex="-1"></a>   precedidos da previsão sobre qual ficaria mais perto;</span>
-<span id="cb27-307"><a href="#cb27-307" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 2 a 3 frases respondendo, **com os seus três números**: o que aproximou mais a</span>
-<span id="cb27-308"><a href="#cb27-308" aria-hidden="true" tabindex="-1"></a>   média de 25,5 — aumentar o número de poças ou usar um desvio-padrão menor? Diga também o que</span>
-<span id="cb27-309"><a href="#cb27-309" aria-hidden="true" tabindex="-1"></a>   aconteceu com a **largura** dos histogramas.</span>
-<span id="cb27-310"><a href="#cb27-310" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-311"><a href="#cb27-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-312"><a href="#cb27-312" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb27-313"><a href="#cb27-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb27-314"><a href="#cb27-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o cabeçalho de identificação está preenchido;</span>
-<span id="cb27-315"><a href="#cb27-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** dos resultados correspondentes;</span>
-<span id="cb27-316"><a href="#cb27-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a sua tabela cumpre as três regras (faixa de temperatura, dois níveis de sombreamento com pelo</span>
-<span id="cb27-317"><a href="#cb27-317" aria-hidden="true" tabindex="-1"></a>      menos duas poças cada, faixa de profundidade);</span>
-<span id="cb27-318"><a href="#cb27-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> os três cenários são diferentes entre si e cada um tem histograma e distância calculada;</span>
-<span id="cb27-319"><a href="#cb27-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade;</span>
-<span id="cb27-320"><a href="#cb27-320" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão final cita os seus próprios valores, e não uma frase genérica.</span>
-<span id="cb27-321"><a href="#cb27-321" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb27-322"><a href="#cb27-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-323"><a href="#cb27-323" aria-hidden="true" tabindex="-1"></a><span class="fu"># Para saber mais</span></span>
-<span id="cb27-324"><a href="#cb27-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-325"><a href="#cb27-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Estrutura da linguagem R</span><span class="co">](https://fcopf.github.io/mead/content/introducao-r/estrutura-linguagem.html)</span>{target="_blank"}</span>
-<span id="cb27-326"><a href="#cb27-326" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure a seção sobre atribuição de objetos e vetores, se quiser rever <span class="in">`&lt;-`</span> e <span class="in">`c()`</span>.</span>
-<span id="cb27-327"><a href="#cb27-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Gráficos em camadas com ggplot2</span><span class="co">](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html)</span>{target="_blank"}</span>
-<span id="cb27-328"><a href="#cb27-328" aria-hidden="true" tabindex="-1"></a>  (MEAD) — procure <span class="in">`geom_histogram()`</span> para ajustar o número de barras do seu histograma.</span>
+<span id="cb27-257"><a href="#cb27-257" aria-hidden="true" tabindex="-1"></a>Depois rode os três. Se a sua previsão não se confirmar, não apague nada. Rode os três cenários mais uma vez e observe se a ordem entre eles se mantém. Explicar por que ela mudou vale tanto quanto ter acertado.</span>
+<span id="cb27-258"><a href="#cb27-258" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-259"><a href="#cb27-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-260"><a href="#cb27-260" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
+<span id="cb27-261"><a href="#cb27-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-262"><a href="#cb27-262" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-medicoes.R`</span> com o cabeçalho de identificação preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. Se ele parar em alguma linha, corrija. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>, logo abaixo da conta a que se referem.</span>
+<span id="cb27-263"><a href="#cb27-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-264"><a href="#cb27-264" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
+<span id="cb27-265"><a href="#cb27-265" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: o vetor <span class="in">`temperatura`</span>, a tabela <span class="in">`pocas`</span> e o gráfico de dispersão;</span>
+<span id="cb27-266"><a href="#cb27-266" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a sua tabela de seis poças**, com a previsão sobre os dois grupos de sombreamento registrada em comentário **antes** do resumo, e o resumo por <span class="in">`sombreamento`</span> que a confirma ou desmente;</span>
+<span id="cb27-267"><a href="#cb27-267" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**os três cenários de simulação**, cada um com o seu histograma e a sua distância até 25,5, precedidos da previsão sobre qual ficaria mais perto;</span>
+<span id="cb27-268"><a href="#cb27-268" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 2 a 3 frases respondendo, **com os seus três números**, o que aproximou mais a média de 25,5, se aumentar o número de poças ou usar um desvio-padrão menor. Diga também o que aconteceu com a **largura** dos histogramas.</span>
+<span id="cb27-269"><a href="#cb27-269" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-270"><a href="#cb27-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-271"><a href="#cb27-271" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
+<span id="cb27-272"><a href="#cb27-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
+<span id="cb27-273"><a href="#cb27-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o cabeçalho de identificação está preenchido;</span>
+<span id="cb27-274"><a href="#cb27-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> as duas previsões aparecem **antes** dos resultados correspondentes;</span>
+<span id="cb27-275"><a href="#cb27-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a sua tabela cumpre as três regras (faixa de temperatura, dois níveis de sombreamento com pelo menos duas poças cada, faixa de profundidade);</span>
+<span id="cb27-276"><a href="#cb27-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> os três cenários são diferentes entre si e cada um tem histograma e distância calculada;</span>
+<span id="cb27-277"><a href="#cb27-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade;</span>
+<span id="cb27-278"><a href="#cb27-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão final cita os seus próprios valores, e não uma frase genérica.</span>
+<span id="cb27-279"><a href="#cb27-279" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb27-280"><a href="#cb27-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-281"><a href="#cb27-281" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
+<span id="cb27-282"><a href="#cb27-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Estrutura da linguagem R</span><span class="co">](https://fcopf.github.io/mead/content/introducao-r/estrutura-linguagem.html)</span>{target="_blank"} (MEAD) — procure a seção sobre atribuição de objetos e vetores, se quiser rever <span class="in">`&lt;-`</span> e <span class="in">`c()`</span>.</span>
+<span id="cb27-283"><a href="#cb27-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Gráficos em camadas com ggplot2</span><span class="co">](https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html)</span>{target="_blank"} (MEAD) — procure <span class="in">`geom_histogram()`</span> para ajustar o número de barras do seu histograma.</span>
+<span id="cb27-284"><a href="#cb27-284" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

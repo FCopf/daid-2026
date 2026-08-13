@@ -114,6 +114,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Procurar"
   }
 }</script>
+<script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -388,7 +390,6 @@ window.Quarto = {
   <li><a href="#classes-histogramas-e-boxplot" id="toc-classes-histogramas-e-boxplot" class="nav-link" data-scroll-target="#classes-histogramas-e-boxplot"><span class="header-section-number">5.2</span> Classes, histogramas e boxplot</a></li>
   </ul></li>
   <li><a href="#forma-posição-relativa-e-escolha-do-resumo" id="toc-forma-posição-relativa-e-escolha-do-resumo" class="nav-link" data-scroll-target="#forma-posição-relativa-e-escolha-do-resumo"><span class="header-section-number">6</span> Forma, posição relativa e escolha do resumo</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -417,7 +418,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -431,17 +432,16 @@ window.Quarto = {
 
 <section id="duas-medidas-dois-números" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Duas medidas, dois números</h1>
-<p>Você desce até um costão rochoso com um termômetro e mede a temperatura da água em uma poça de maré: <strong>25,4 °C</strong>. Um colega mede a poça ao lado: <strong>25,9 °C</strong>. Em uma terceira poça, medimos <strong>24,8 °C</strong>.</p>
-<p>Três medidas, três números. Nenhum errado.</p>
-<p>Essa é a situação mais comum em qualquer ciência que trabalha com o ambiente. Quando repetimos uma medida, quase nunca obtemos o mesmo valor. E a primeira decisão de quem analisa dados é justamente esta: <strong>o que fazer com essa diferença?</strong></p>
-<p>Há duas saídas ruins. A primeira é tratar a variação como defeito: “meu método está impreciso”. A segunda é ignorá-la e ficar só com a média: “a temperatura é 25,4 °C”. Nesta unidade curricular seguimos por outro caminho: a variação é informação, e boa parte do trabalho consiste em descobrir <strong>de onde ela vem</strong>.</p>
+<p>Você desce até um costão rochoso com um termômetro, mede a temperatura da água em uma poça de maré e registra <strong>25,4 °C</strong>. Um colega mede a poça ao lado e registra <strong>25,9 °C</strong>. Em uma terceira poça, medimos <strong>24,8 °C</strong>.</p>
+<p>Essa é a situação mais comum em qualquer ciência que trabalha com o ambiente. Quando repetimos uma medida, quase nunca obtemos o mesmo valor e a primeira decisão de quem analisa dados é justamente <strong>como lidar com essa diferença?</strong></p>
+<p>Uma possibilidade seria tratar a variação como defeito, assumindo que “o método está impreciso”. Outra possibilidade é ignorá-la e usar apenas a média, neste caso, assumir a temperatura “correta” como <strong>25,37 °C</strong>. Nesta unidade curricular seguiremos por outro caminho. Nossos objetivos serão compreender <strong>de onde vem a variabilidade observada</strong> e <strong>o que essa variabilidade nos informa</strong>.</p>
 <section id="de-onde-vem-a-diferença-entre-duas-medidas" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="de-onde-vem-a-diferença-entre-duas-medidas"><span class="header-section-number">1.1</span> De onde vem a diferença entre duas medidas?</h2>
 <p>Quando dois números diferem, pelo menos três coisas podem estar acontecendo ao mesmo tempo.</p>
-<p><strong>As poças são realmente diferentes.</strong> Uma recebe mais sol, outra é mais funda, outra tem mais sombra de alga. Essa é uma diferença que existe no mundo, independentemente de você medi-la.</p>
-<p><strong>O instrumento não é perfeito.</strong> O mesmo termômetro, na mesma poça, no mesmo instante, pode registrar 25,4 ou 25,5 °C. Essa diferença não está na poça: está na medição.</p>
-<p><strong>Você escolheu essas poças e não outras.</strong> Havia dezenas de poças no costão e você mediu três. Outro grupo mediria outras três e chegaria a outros números.</p>
-<p>As três fontes se somam no valor que você anota na planilha. Separá-las não é um detalhe técnico: é o que permite dizer se um resultado significa alguma coisa.</p>
+<p><strong>As poças são realmente diferentes.</strong> Uma recebe mais sol, outra é mais funda, outra é mais sombreada por algas. Essa é uma diferença que existe no mundo e tem uma causa específica, independentemente de você medi-la.</p>
+<p><strong>O instrumento não é perfeito.</strong> O mesmo termômetro, na mesma poça, no mesmo instante, pode registrar 25,4 ou 25,5 °C. Essa diferença não está na poça, está na medição.</p>
+<p><strong>Você escolheu essas poças e não outras.</strong> Havia dezenas de poças no costão e você mediu três. Outro grupo de pesquisadores medindo outras poças registraria outros números, sem uma causa conhecida.</p>
+<p>As três fontes se somam no valor que você anota na planilha e separá-las é o objetivo do delineamento experimental.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -452,24 +452,24 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Repare que a terceira fonte não tem nada a ver com o cuidado da medição. Mesmo com um instrumento perfeito e poças medidas sem nenhum erro, mediríamos três números diferentes em três poças diferentes.</p>
+<p>Repare que a terceira fonte não tem nada a ver com o cuidado da medição. Mesmo com um instrumento perfeito e com as poças medidas sem nenhum erro, registraríamos três números diferentes em três poças diferentes.</p>
 </div>
 </div>
 </section>
 </section>
 <section id="a-unidade-amostral-e-a-tabela-de-dados" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> A unidade amostral e a tabela de dados</h1>
-<p>Reconhecer que os valores variam ainda não diz o que cada valor representa. Antes de anotar qualquer número, é preciso responder: <strong>o número descreve o quê?</strong></p>
-<p>No exemplo, cada número descreve <strong>uma poça de maré</strong>. A poça é a <em>unidade amostral</em>: a coisa sobre a qual a medida é feita. Se estivéssemos pesando peixes, a unidade seria cada peixe. Se contássemos espécies em quadrados de 1 m² na praia, a unidade seria cada quadrado.</p>
-<p>Essa escolha parece óbvia, mas é o ponto onde mais se erra. Se você mede a temperatura da mesma poça cinco vezes, você tem cinco medidas, mas continua tendo <strong>uma</strong> poça. Cinco medidas de uma poça não são a mesma coisa que uma medida de cinco poças, ainda que a planilha fique com cinco linhas nos dois casos.</p>
+<p>Reconhecer que os valores variam ainda não diz o que cada valor representa. Antes de anotar qualquer número, é preciso responder a uma pergunta, <strong>o que o número descreve?</strong></p>
+<p>No exemplo, cada número descreve <strong>uma poça de maré</strong>. A poça é a <em>unidade amostral</em>, a unidade sobre a qual a medida é feita. Se estivéssemos pesando peixes, a unidade seria cada peixe. Se contássemos espécies em quadrados de 1 m² na praia, a unidade seria cada quadrado.</p>
+<p>Essa escolha parece óbvia, mas há um ponto que deve ser ressaltado. Se você mede a temperatura da mesma poça cinco vezes, você tem cinco medidas, mas continua tendo <strong>uma única</strong> unidade amostral, a poça. Cinco medidas de uma mesma poça, portanto, não são o mesmo que uma medida de cinco poças diferentes, ainda que a planilha fique com cinco linhas nos dois casos.</p>
 <section id="cada-linha-é-uma-unidade-cada-coluna-é-uma-característica" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="cada-linha-é-uma-unidade-cada-coluna-é-uma-característica"><span class="header-section-number">2.1</span> Cada linha é uma unidade, cada coluna é uma característica</h2>
-<p>Definida a unidade amostral, a tabela de dados praticamente se escreve sozinha. Ela segue duas regras:</p>
+<p>Para registrar um conjunto de dados seguiremos sempre a mesma regra:</p>
 <ul>
 <li><strong>cada linha é uma unidade amostral</strong>;</li>
 <li><strong>cada coluna é uma característica medida nessa unidade</strong>.</li>
 </ul>
-<p>Para as poças de maré, ficaria assim:</p>
+<p>Para as poças de maré, teríamos:</p>
 <div class="cell">
 <div id="tbl-pocas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -478,45 +478,45 @@ Tabela&nbsp;1: Cinco poças de maré: cada linha é uma poça, cada coluna é um
 </figcaption>
 <div aria-describedby="tbl-pocas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell caption-top table table-sm table-striped small">
+<table class="table table-striped table-hover cell caption-top table-sm small">
 <thead>
 <tr class="header">
-<th style="text-align: right;">Poça</th>
-<th style="text-align: right;">Temperatura (°C)</th>
-<th style="text-align: right;">Profundidade (cm)</th>
-<th style="text-align: left;">Sombreamento</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Poça</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Temperatura (°C)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Profundidade (cm)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Sombreamento</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">25.4</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">baixo</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">25.4</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">baixo</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">25.9</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">baixo</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">25.9</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">baixo</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">24.8</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: left;">alto</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">24.8</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">alto</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">26.3</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">baixo</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">26.3</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">baixo</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">25.1</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: left;">médio</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">25.1</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">médio</td>
 </tr>
 </tbody>
 </table>
@@ -525,20 +525,20 @@ Tabela&nbsp;1: Cinco poças de maré: cada linha é uma poça, cada coluna é um
 </figure>
 </div>
 </div>
-<p>Cinco linhas, cinco poças. A coluna <code>poca</code> não é uma medida: é o identificador da unidade. As outras três colunas são características dessa unidade: duas numéricas e uma categórica.</p>
-<p>Guardar os dados nesse formato não é preciosismo de organização. É ele que permite responder perguntas como “as poças mais fundas são mais frias?” sem reescrever nada.</p>
+<p>A coluna <code>poca</code> não é uma medida, é o identificador da unidade. As outras três colunas são características dessa unidade, duas numéricas e uma categórica.</p>
+<p>Guardar os dados nesse formato nos permite responder perguntas como “as poças mais fundas são mais frias?”.</p>
 </section>
 <section id="ausência-de-informação-não-é-um-valor-zero" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="ausência-de-informação-não-é-um-valor-zero"><span class="header-section-number">2.2</span> Ausência de informação não é um valor zero</h2>
-<p>Nem toda célula da tabela é preenchida. Uma célula vazia pode significar que a profundidade não foi medida, que o instrumento falhou ou que a anotação se perdeu. Em R, essa ausência é representada por <code>NA</code>. Ela não deve ser substituída por zero: profundidade igual a zero é uma medida possível e tem significado científico; profundidade desconhecida é falta de informação.</p>
-<p>Antes de resumir uma coluna, convém contar quantos valores estão ausentes e perguntar por quê. Se a ausência ocorrer sobretudo nas poças mais profundas ou nos dias de mar agitado, remover essas linhas pode alterar a distribuição observada. Assim, até um procedimento aparentemente simples, como calcular uma média com <code>na.rm = TRUE</code>, precisa de justificativa.</p>
+<p>Nem sempre toda célula da tabela está preenchida. Uma célula vazia pode significar que a profundidade não foi medida, que o instrumento falhou ou que a anotação se perdeu. Em R, essa ausência é representada por <code>NA</code>. Ela <strong>não deve ser substituída por zero</strong>. Profundidade igual a zero é uma medida possível e tem significado científico, enquanto a profundidade desconhecida é falta de informação.</p>
+<p>Antes de resumir uma coluna, convém contar quantos valores estão ausentes e perguntar por quê. Se a ausência ocorrer sobretudo nas poças mais profundas ou nos dias de mar agitado, remover essas linhas pode alterar a distribuição observada. Nestes casos, até um procedimento aparentemente simples como calcular uma média precisa de justificativa.</p>
 </section>
 </section>
 <section id="que-tipo-de-característica-foi-registrada" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Que tipo de característica foi registrada?</h1>
-<p>As colunas da tabela não admitem todas o mesmo tratamento. Uma coluna pode guardar números sem representar uma quantidade: o código da poça poderia ser 1, 2 ou 3, mas calcular sua média não teria sentido. Antes de escolher um resumo ou um gráfico, precisamos identificar o tipo da variável.</p>
-<p>Variáveis <strong>qualitativas</strong> registram categorias. Elas podem ser <strong>nominais</strong>, quando não existe uma ordem natural, como o tipo de substrato, ou <strong>ordinais</strong>, quando os níveis têm ordem, como sombreamento baixo, médio e alto. Variáveis <strong>quantitativas</strong> registram quantidades. Uma contagem de espécies é discreta, pois assume valores inteiros; temperatura e profundidade são contínuas, pois podem assumir qualquer valor dentro da precisão do instrumento.</p>
-<p>A escala também limita as operações válidas. Em uma escala de razão, como comprimento em centímetros, o zero representa ausência da quantidade e faz sentido dizer que 20 cm é o dobro de 10 cm. Em temperatura Celsius, o zero é convencional: 20 °C não é duas vezes mais quente que 10 °C. A média continua válida, mas a razão entre os valores não tem essa interpretação.</p>
+<p>As colunas da tabela não admitem todas o mesmo tratamento. O código da poça poderia ser 1, 2 ou 3. Assim, uma coluna pode guardar números que não representam uma quantidade e calcular a média dessa coluna não teria sentido. Antes de escolher um resumo ou um gráfico, precisamos portanto identificar o tipo da variável.</p>
+<p>Variáveis <strong>qualitativas</strong> registram categorias. Elas podem ser <strong>nominais</strong>, quando não existe uma ordem natural, como o tipo de substrato, ou <strong>ordinais</strong>, quando os níveis têm ordem, como sombreamento baixo, médio e alto. Variáveis <strong>quantitativas</strong> registram quantidades. Uma contagem de espécies é discreta, pois assume valores inteiros, enquanto temperatura e profundidade são contínuas, pois podem assumir qualquer valor dentro da precisão do instrumento.</p>
+<p>A escala também limita as operações válidas. Em uma escala de razão, como comprimento em centímetros, o zero representa ausência da quantidade e faz sentido dizer que 20 cm é o dobro de 10 cm. Em temperatura Celsius, o zero é convencional e 20 °C não é duas vezes mais quente que 10 °C. A média continua válida, mas a razão entre os valores não tem essa interpretação física.</p>
 <p>As quatro escalas usuais organizam as operações que fazem sentido:</p>
 <table class="caption-top table">
 <colgroup>
@@ -582,7 +582,7 @@ Tabela&nbsp;1: Cinco poças de maré: cada linha é uma poça, cada coluna é um
 </tr>
 </tbody>
 </table>
-<p>A classificação não depende de como a coluna foi armazenada. Uma categoria ordinal salva como <code>1</code>, <code>2</code> e <code>3</code> continua sendo categórica; um comprimento digitado com vírgula e importado como texto continua sendo uma quantidade que precisa ser corrigida antes da análise.</p>
+<p>A classificação não depende de como a coluna foi armazenada. Uma categoria ordinal salva como <code>1</code>, <code>2</code> e <code>3</code> continua sendo categórica. Um comprimento digitado com vírgula e importado como texto continua sendo uma quantidade que precisa ser corrigida antes da análise.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O tipo da variável vem antes do comando">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -599,7 +599,7 @@ Tabela&nbsp;1: Cinco poças de maré: cada linha é uma poça, cada coluna é um
 </section>
 <section id="centro-posição-e-espalhamento" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Centro, posição e espalhamento</h1>
-<p>Sabendo que a temperatura é uma variável quantitativa contínua, podemos resumi-la. Resumi-la em quê, porém? Cinco números são poucos para enxergar um padrão. Com trinta poças, a figura abaixo mostra o que costuma acontecer: os valores se espalham em torno de um centro, a maioria perto dele e poucos bem longe.</p>
+<p>Sabendo que a temperatura é uma variável quantitativa contínua, podemos resumi-la. Cinco números são poucos para enxergar um padrão. Com trinta poças, a <a href="#fig-variacao-espalhamento" class="quarto-xref">Figura&nbsp;1</a> mostra o que costuma acontecer. Os valores se espalham em torno de um centro, a maioria perto dele e poucos bem longe.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-variacao-espalhamento" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de pontos mostrando trinta valores de temperatura espalhados ao longo do eixo, com uma linha vertical marcando a média das trinta medidas. A maioria dos pontos fica próxima da linha e poucos ficam nas extremidades.">
@@ -614,19 +614,19 @@ Figura&nbsp;1: Temperatura medida em trinta poças de maré. A linha marca a mé
 </div>
 </div>
 </div>
-<p>Duas coisas descrevem essa figura, e vamos usá-las o semestre inteiro:</p>
+<p>Duas propriedades descrevem essa figura, e vamos usá-las o semestre inteiro:</p>
 <ul>
 <li><strong>onde está o centro</strong>: a média das trinta medidas;</li>
 <li><strong>quão espalhados estão os valores</strong> em torno desse centro.</li>
 </ul>
-<p>Um resumo que informa só o centro esconde metade do que aconteceu. Dizer “a temperatura média é 25,5 °C” é verdadeiro tanto para poças que variam de 25,4 a 25,6 quanto para poças que variam de 21 a 30. São situações completamente diferentes. Vale, portanto, definir com precisão cada uma dessas duas quantidades.</p>
+<p>Um resumo que informa só o centro esconde a estrutura da variação. Dizer “a temperatura média é 25,5 °C” é verdadeiro tanto para poças que variam de 25,4 a 25,6 quanto para poças que variam de 21 a 30, ainda que estas sejam situações completamente diferentes. Vale, portanto, definir com precisão cada uma dessas duas quantidades.</p>
 <p>Considere valores <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>. A <strong>média amostral</strong> é</p>
 <p><span class="math display">\[
 \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
 \]</span></p>
 <p>Ela funciona como o ponto de equilíbrio dos valores e usa todas as observações. Por isso também é sensível a valores extremos. A <strong>mediana</strong> é o valor central depois de ordenar os dados e costuma representar melhor o centro de distribuições muito assimétricas. A <strong>moda</strong> é o valor ou categoria mais frequente e pode ser usada tanto com variáveis quantitativas quanto qualitativas.</p>
-<p>Além do centro, interessa localizar uma observação dentro do conjunto ordenado. Os <strong>quartis</strong> dividem os valores ordenados em quatro partes. O primeiro quartil, <span class="math inline">\(Q_1\)</span>, deixa cerca de 25% das observações abaixo dele; a mediana, <span class="math inline">\(Q_2\)</span>, deixa 50%; e <span class="math inline">\(Q_3\)</span>, 75%. A distância <span class="math inline">\(AIQ=Q_3-Q_1\)</span> é a amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor a extremos que a amplitude total, calculada por máximo menos mínimo.</p>
-<p>Falta a segunda quantidade anunciada pela figura: o espalhamento. A variância amostral mede a média dos desvios quadráticos em relação a <span class="math inline">\(\bar{x}\)</span>:</p>
+<p>Além do centro, interessa localizar uma observação dentro do conjunto ordenado. Os <strong>quartis</strong> dividem os valores ordenados em quatro partes. O primeiro quartil, <span class="math inline">\(Q_1\)</span>, deixa cerca de 25% das observações abaixo dele, a mediana, <span class="math inline">\(Q_2\)</span>, deixa 50%, e <span class="math inline">\(Q_3\)</span> deixa 75%. A distância <span class="math inline">\(AIQ=Q_3-Q_1\)</span> é a amplitude interquartil. Ela descreve a metade central dos dados e resiste melhor a extremos que a amplitude total, calculada por máximo menos mínimo.</p>
+<p>O espalhamento pode ser medido pela <strong>variância</strong>. A variância amostral mede a média dos desvios quadráticos em relação a <span class="math inline">\(\bar{x}\)</span>:</p>
 <p><span class="math display">\[
 s^2=\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}.
 \]</span></p>
@@ -668,7 +668,7 @@ s^2=\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}.
 <section id="uma-conta-completa-de-variância" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="uma-conta-completa-de-variância"><span class="header-section-number">4.1</span> Uma conta completa de variância</h2>
 <p>Acompanhar a variância uma vez, valor por valor, deixa claro o que a fórmula faz. Para <span class="math inline">\(25{,}4\)</span>, <span class="math inline">\(25{,}9\)</span>, <span class="math inline">\(24{,}8\)</span>, <span class="math inline">\(26{,}3\)</span> e <span class="math inline">\(25{,}1\)</span> °C, a média é 25,5 °C. Os desvios em relação à média são <span class="math inline">\(-0{,}1\)</span>, <span class="math inline">\(0{,}4\)</span>, <span class="math inline">\(-0{,}7\)</span>, <span class="math inline">\(0{,}8\)</span> e <span class="math inline">\(-0{,}4\)</span> °C. A soma dos desvios é zero, por isso não podemos usá-la como medida de variação. Elevando-os ao quadrado, obtemos soma igual a 1,46 °C². Ao dividir por <span class="math inline">\(n-1=4\)</span>, a variância é 0,365 °C² e o desvio-padrão é aproximadamente 0,604 °C.</p>
-<p>O cálculo separa três ideias: um centro estimado, os afastamentos de cada unidade e um resumo desses afastamentos. Ele também deixa explícitas as unidades. A variância está em °C²; o desvio-padrão volta a °C e pode ser comparado diretamente aos valores medidos.</p>
+<p>O cálculo separa três ideias, um centro estimado, os afastamentos de cada unidade e um resumo desses afastamentos. Ele também deixa explícitas as unidades. A variância está em °C², enquanto o desvio-padrão volta a °C e pode ser comparado diretamente aos valores medidos.</p>
 </section>
 </section>
 <section id="da-lista-de-valores-à-distribuição" class="level1" data-number="5">
@@ -676,11 +676,11 @@ s^2=\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}.
 <p>Média e desvio-padrão comprimem trinta números em dois, e nessa compressão muita informação se perde. Para recuperar parte dela, contamos quantas unidades ocorrem em cada valor ou em cada faixa de valores. É isso que transforma uma lista de medidas em uma <strong>distribuição</strong>.</p>
 <section id="frequências-de-uma-variável-qualitativa" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="frequências-de-uma-variável-qualitativa"><span class="header-section-number">5.1</span> Frequências de uma variável qualitativa</h2>
-<p>Para uma variável qualitativa, a distribuição é descrita contando os níveis. A frequência absoluta <span class="math inline">\(f_j\)</span> é o número de unidades na categoria <span class="math inline">\(j\)</span>; a frequência relativa é</p>
+<p>Para uma variável qualitativa, a distribuição é descrita contando os níveis. A frequência absoluta <span class="math inline">\(f_j\)</span> é o número de unidades na categoria <span class="math inline">\(j\)</span>, e a frequência relativa é</p>
 <p><span class="math display">\[
 p_j=\frac{f_j}{n},
 \]</span></p>
-<p>em que <span class="math inline">\(n\)</span> é o total de unidades. A soma de todos os <span class="math inline">\(f_j\)</span> é <span class="math inline">\(n\)</span>, e a soma dos <span class="math inline">\(p_j\)</span> é 1, ou 100%. Em variáveis ordinais também podemos acumular as frequências seguindo a ordem dos níveis. Em uma variável nominal, acumular categorias não tem interpretação porque não existe uma ordem científica.</p>
+<p>em que <span class="math inline">\(n\)</span> é o total de unidades. A soma de todos os <span class="math inline">\(f_j\)</span> é <span class="math inline">\(n\)</span>, e a soma dos <span class="math inline">\(p_j\)</span> é 1, ou 100%. Em variáveis ordinais também podemos acumular as frequências seguindo a ordem dos níveis. Em uma variável nominal, acumular categorias não tem interpretação porque não existe uma ordem intrínseca.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-frequencias-sombra" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Gráfico de barras com as categorias baixo, médio e alto no eixo horizontal e a frequência de poças no vertical.">
@@ -695,11 +695,11 @@ Figura&nbsp;2: Frequências do sombreamento em trinta poças. Barras representam
 </div>
 </div>
 </div>
-<p>As barras não se encostam porque baixo, médio e alto são categorias. A ordem é informativa, mas a distância visual entre baixo e médio não representa uma diferença numérica conhecida.</p>
+<p>As barras da <a href="#fig-frequencias-sombra" class="quarto-xref">Figura&nbsp;2</a> não se encostam porque baixo, médio e alto são categorias. A ordem é informativa, mas a distância visual entre baixo e médio não representa uma diferença numérica conhecida.</p>
 </section>
 <section id="classes-histogramas-e-boxplot" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="classes-histogramas-e-boxplot"><span class="header-section-number">5.2</span> Classes, histogramas e boxplot</h2>
-<p>Uma variável quantitativa contínua raramente repete valores, de modo que contar ocorrências uma a uma não produz um resumo útil. Agrupamos então os valores em classes. Se a classe <span class="math inline">\(j\)</span> tem limites <span class="math inline">\(a_j\)</span> e <span class="math inline">\(a_{j+1}\)</span>, contamos as observações com <span class="math inline">\(a_j\le x&lt;a_{j+1}\)</span>. A escolha da largura modifica a aparência: classes largas escondem detalhes; classes estreitas deixam o ruído amostral dominar. A figura abaixo representa os mesmos comprimentos de quatro maneiras.</p>
+<p>Uma variável quantitativa contínua raramente repete valores, de modo que contar ocorrências uma a uma não produz um resumo útil. Agrupamos então os valores em classes. Se a classe <span class="math inline">\(j\)</span> tem limites <span class="math inline">\(a_j\)</span> e <span class="math inline">\(a_{j+1}\)</span>, contamos as observações com <span class="math inline">\(a_j\le x&lt;a_{j+1}\)</span>. A escolha da largura modifica a aparência. Classes largas escondem detalhes e classes estreitas deixam o ruído amostral dominar. A <a href="#fig-formas-distribuicao" class="quarto-xref">Figura&nbsp;3</a> representa os mesmos comprimentos de quatro maneiras.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-formas-distribuicao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Painéis mostram dois histogramas com resoluções diferentes, uma curva crescente de frequência acumulada e um boxplot horizontal dos mesmos valores.">
@@ -714,8 +714,8 @@ Figura&nbsp;3: Quatro representações dos mesmos comprimentos: histogramas com 
 </div>
 </div>
 </div>
-<p>Os dois histogramas descrevem exatamente os mesmos dados e sugerem formas um pouco diferentes, o que já é um aviso contra ler detalhes finos de um histograma isolado. No gráfico acumulado, a altura em 5 cm informa a proporção de unidades com comprimento menor ou igual a 5 cm. No boxplot, a caixa vai de <span class="math inline">\(Q_1\)</span> a <span class="math inline">\(Q_3\)</span>, a linha interna é a mediana e os bigodes avançam até os valores observados dentro das cercas <span class="math inline">\(Q_1-1{,}5\,AIQ\)</span> e <span class="math inline">\(Q_3+1{,}5\,AIQ\)</span>.</p>
-<p>Pontos além das cercas são sinalizados como candidatos a valores atípicos. Eles não são erros por definição. Podem representar falha de digitação, uma unidade biologicamente incomum ou a cauda legítima da distribuição, e por isso devem ser investigados, não apagados automaticamente.</p>
+<p>Os dois histogramas descrevem exatamente os mesmos dados e sugerem formas um pouco diferentes, o que já é um aviso contra ler detalhes finos de um histograma isolado. No gráfico acumulado, a altura em 5 cm informa a proporção de unidades com comprimento menor ou igual a 5 cm. No boxplot, a caixa vai de <span class="math inline">\(Q_1\)</span> a <span class="math inline">\(Q_3\)</span>, a linha interna é a mediana e as linhas avançam até os valores observados dentro dos quartis <span class="math inline">\(Q_1-1{,}5\,AIQ\)</span> e <span class="math inline">\(Q_3+1{,}5\,AIQ\)</span>.</p>
+<p>Pontos além desses limites são sinalizados como candidatos a valores atípicos. Eles não são erros por definição. Podem representar falha de digitação, uma unidade biologicamente incomum ou a cauda legítima da distribuição, e por isso devem ser investigados, não apagados automaticamente.</p>
 </section>
 </section>
 <section id="forma-posição-relativa-e-escolha-do-resumo" class="level1" data-number="6">
@@ -728,27 +728,38 @@ z_i=\frac{x_i-\bar{x}}{s}.
 \]</span></p>
 <p>Um escore <span class="math inline">\(z=1,5\)</span> informa que a observação está 1,5 desvio-padrão acima da média. O escore não indica que o valor é raro por si só. Essa conclusão também depende da forma da distribuição e do número de observações.</p>
 <p>Como a transformação apenas muda origem e unidade, o conjunto dos escores tem média zero e desvio-padrão um. Ela permite comparar posições relativas em escalas diferentes. Um organismo com <span class="math inline">\(z=1{,}2\)</span> para massa e <span class="math inline">\(z=-0{,}4\)</span> para comprimento está relativamente mais pesado que comprido em relação aos respectivos grupos, sem que massa e comprimento tenham sido convertidos para a mesma unidade física.</p>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Resumos não escolhem a pergunta">
+<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Resumos são complementares">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Resumos não escolhem a pergunta
+<span class="screen-reader-only">Aviso</span>Resumos são complementares
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Média, mediana, desvio-padrão, AIQ e escore z descrevem aspectos diferentes. Nenhum deles é automaticamente o “melhor”. A variável, a forma da distribuição, a presença de limites e o objetivo científico determinam qual combinação de tabela, figura e medida é informativa.</p>
+<p>Média, mediana, desvio-padrão, AIQ e escore z descrevem aspectos diferentes. A variável, a forma da distribuição, a presença de limites e o objetivo científico determinam qual combinação de tabela, figura e medida é informativa.</p>
 </div>
 </div>
-<p>No início desta leitura, três temperaturas diferentes pareciam apenas ruído de medição. Percorrido o caminho, elas se tornaram um conjunto com unidade amostral definida, tipo de variável identificado, centro estimado, espalhamento quantificado e forma descrita. Saber dizer onde está o centro das medidas e o quanto elas se afastam dele é a primeira tarefa de quem analisa dados, e é por ela que a unidade curricular começa. Tudo o que vem depois, comparar grupos, testar hipóteses ou ajustar modelos, continuará sendo uma maneira de perguntar de onde vem a variação observada.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<p>No início desta leitura, três temperaturas diferentes pareciam apenas ruído de medição. Vistas em um conjunto maior, elas compõem o padrão de distribuição da variável com centro estimado, espalhamento quantificado e forma descrita. Saber dizer onde está o centro das medidas e o quanto elas se afastam dele é a primeira tarefa de quem analisa dados. Como sequência, podemos comparar grupos, testar hipóteses ou ajustar modelos, o que nos ajudará a entender de onde vem a variação observada.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li><a href="https://fcopf.github.io/mead/content/manipulacao-dados-R/transform.html" target="_blank">Transformação de dados com dplyr</a> (MEAD)</li>
-<li><a href="https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html" target="_blank">Gráficos em camadas com ggplot2</a> (MEAD)</li>
+<li><a href="https://fcopf.github.io/mead/content/manipulacao-dados-R/transform.html" target="_blank">Transformação de dados com dplyr</a></li>
+<li><a href="https://fcopf.github.io/mead/content/visualizacao-dados/grafico-ggplot2.html" target="_blank">Gráficos em camadas com ggplot2</a></li>
+<li><a href="https://fcopf.github.io/mead/content/estrutura-dados/estrutura-tipo.html" target="_blank">Estrutura e tipos de dados</a></li>
+<li><a href="https://fcopf.github.io/mead/topics/estatistica-descritiva.html" target="_blank">Estatística Descritiva</a></li>
 </ul>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -760,7 +771,7 @@ z_i=\frac{x_i-\bar{x}}{s}.
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Se você medisse a temperatura de outras trinta poças no mesmo costão, esperaria obter exatamente a mesma média? E um valor muito diferente?</li>
+<li>Se você medisse a temperatura de outras trinta poças no mesmo costão, esperaria obter exatamente a mesma média? Se espera médias diferentes, o quão diferentes elas devem ser?</li>
 <li>Um pesquisador mede vinte vezes a mesma poça e conclui que “a variação entre poças é muito pequena”. Onde está o problema?</li>
 </ul>
 </div>

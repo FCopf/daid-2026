@@ -385,7 +385,6 @@ window.Quarto = {
   <li><a href="#o-que-a-razão-f-responde-e-o-que-não-responde" id="toc-o-que-a-razão-f-responde-e-o-que-não-responde" class="nav-link" data-scroll-target="#o-que-a-razão-f-responde-e-o-que-não-responde"><span class="header-section-number">6.2</span> O que a razão F responde, e o que não responde</a></li>
   </ul></li>
   <li><a href="#o-que-precisa-ser-verificado" id="toc-o-que-precisa-ser-verificado" class="nav-link" data-scroll-target="#o-que-precisa-ser-verificado"><span class="header-section-number">7</span> O que precisa ser verificado</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">8</span> Para saber mais</a></li>
   </ul>
 </nav>
     </div>
@@ -414,7 +413,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -437,7 +436,7 @@ window.Quarto = {
 </section>
 <section id="duas-situações-com-a-mesma-diferença-de-médias" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Duas situações com a mesma diferença de médias</h1>
-<p>Antes da conta, vale ver por que a pergunta precisa mencionar as duas variações, e não apenas a separação entre as médias. Compare os dois cenários abaixo: em ambos, as médias dos quatro grupos são exatamente as mesmas.</p>
+<p>Antes da conta, vale ver por que a pergunta precisa mencionar as duas variações, e não apenas a separação entre as médias. Compare os dois cenários da <a href="#fig-dois-cenarios" class="quarto-xref">Figura&nbsp;1</a>, em que as médias dos quatro grupos são exatamente as mesmas.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dois-cenarios" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis lado a lado. No painel da esquerda, os pontos de cada grupo estão bem agrupados e os quatro níveis aparecem separados. No painel da direita, os pontos se espalham muito e as nuvens dos quatro grupos se sobrepõem quase inteiramente.">
@@ -452,7 +451,7 @@ Figura&nbsp;1: Dois experimentos com as mesmas quatro médias de grupo (linhas h
 </div>
 </div>
 </div>
-<p>À esquerda, a queda da diversidade ao longo das quatro concentrações salta aos olhos: cada grupo ocupa uma faixa estreita e a ordem entre eles é imediata. À direita, com as <strong>mesmas médias</strong>, as nuvens se sobrepõem amplamente: olhando um canal isolado, seria difícil dizer de qual tratamento ele veio.</p>
+<p>À esquerda, a queda da diversidade ao longo das quatro concentrações salta aos olhos, porque cada grupo ocupa uma faixa estreita e a ordem entre eles é imediata. À direita, com as <strong>mesmas médias</strong>, as nuvens se sobrepõem amplamente, e olhando um canal isolado seria difícil dizer de qual tratamento ele veio.</p>
 <p>A conclusão é que a diferença entre médias, sozinha, não diz nada. Ela só ganha sentido quando comparada à variação de fundo.</p>
 </section>
 <section id="um-modelo-para-cada-observação" class="level1" data-number="3">
@@ -462,7 +461,7 @@ Figura&nbsp;1: Dois experimentos com as mesmas quatro médias de grupo (linhas h
 Y_{ij}=\mu+\alpha_i+\varepsilon_{ij}.
 \]</span></p>
 <p><span class="math inline">\(Y_{ij}\)</span> é a diversidade observada, <span class="math inline">\(\mu\)</span> é a média geral, <span class="math inline">\(\alpha_i\)</span> é o desvio associado ao tratamento <span class="math inline">\(i\)</span> e <span class="math inline">\(\varepsilon_{ij}\)</span> é a variação individual não explicada pelo tratamento. Uma forma equivalente usa diretamente a média de cada grupo, <span class="math inline">\(Y_{ij}=\mu_i+\varepsilon_{ij}\)</span>.</p>
-<p>A equação já contém a estrutura da pergunta: <span class="math inline">\(\alpha_i\)</span> é a parte que o tratamento explica e <span class="math inline">\(\varepsilon_{ij}\)</span> é a parte que ele não explica. As hipóteses globais dizem respeito aos <span class="math inline">\(\alpha_i\)</span>, ou de modo equivalente às médias:</p>
+<p>A equação já contém a estrutura da pergunta, porque <span class="math inline">\(\alpha_i\)</span> é a parte que o tratamento explica e <span class="math inline">\(\varepsilon_{ij}\)</span> é a parte que ele não explica. As hipóteses globais dizem respeito aos <span class="math inline">\(\alpha_i\)</span>, ou de modo equivalente às médias:</p>
 <p><span class="math display">\[
 H_0:\mu_1=\mu_2=\cdots=\mu_k
 \]</span></p>
@@ -476,7 +475,7 @@ H_A:\text{pelo menos uma média difere}.
 <h1 data-number="4"><span class="header-section-number">4</span> Duas fontes de variação</h1>
 <p>Toda observação carrega duas contribuições, e a análise consiste em separá-las.</p>
 <p><strong>Variação entre grupos.</strong> O quanto as médias dos tratamentos se afastam da média geral. É a parte que o tratamento explica.</p>
-<p><strong>Variação dentro dos grupos.</strong> O quanto os canais de um <em>mesmo</em> tratamento diferem entre si. Como receberam a mesma condição, essa variação vem de tudo o que não é o tratamento: diferenças entre canais, erro de medição, acaso. É a variação <strong>residual</strong>.</p>
+<p><strong>Variação dentro dos grupos.</strong> O quanto os canais de um <em>mesmo</em> tratamento diferem entre si. Como receberam a mesma condição, essa variação vem de tudo o que não é o tratamento, como diferenças entre canais, erro de medição e acaso. É a variação <strong>residual</strong>.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Somas de quadrados">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -492,7 +491,7 @@ H_A:\text{pelo menos uma média difere}.
 <li><span class="math inline">\(SQ_{\text{entre}}\)</span> soma, para cada grupo, o quadrado da distância entre a média do grupo e a média geral;</li>
 <li><span class="math inline">\(SQ_{\text{dentro}}\)</span> soma, para cada observação, o quadrado da distância até a média do seu próprio grupo.</li>
 </ul>
-<p>As duas se somam exatamente na variação total: <span class="math inline">\(SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}\)</span>.</p>
+<p>As duas se somam exatamente na variação total, de modo que <span class="math inline">\(SQ_{\text{total}} = SQ_{\text{entre}} + SQ_{\text{dentro}}\)</span>.</p>
 </div>
 </div>
 <p>Em símbolos, com <span class="math inline">\(n_i\)</span> observações no grupo <span class="math inline">\(i\)</span> e <span class="math inline">\(N=\sum_i n_i\)</span>,</p>
@@ -505,7 +504,7 @@ SQ_{\text{entre}}=\sum_{i=1}^{k}n_i(\bar{Y}_{i.}-\bar{Y}_{..})^2,
 <p><span class="math display">\[
 SQ_{\text{dentro}}=\sum_{i=1}^{k}\sum_{j=1}^{n_i}(Y_{ij}-\bar{Y}_{i.})^2.
 \]</span></p>
-<p><span class="math inline">\(\bar{Y}_{i.}\)</span> é a média do grupo <span class="math inline">\(i\)</span> e <span class="math inline">\(\bar{Y}_{..}\)</span> é a média geral ponderada pelos tamanhos dos grupos. A identidade entre as três somas mostra que o modelo não cria nem perde variação: ele apenas atribui partes da variação total ao fator e ao resíduo.</p>
+<p><span class="math inline">\(\bar{Y}_{i.}\)</span> é a média do grupo <span class="math inline">\(i\)</span> e <span class="math inline">\(\bar{Y}_{..}\)</span> é a média geral ponderada pelos tamanhos dos grupos. A identidade entre as três somas mostra que o modelo não cria nem perde variação, e sim atribui partes da variação total ao fator e ao resíduo.</p>
 <section id="a-partição-observação-por-observação" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="a-partição-observação-por-observação"><span class="header-section-number">4.1</span> A partição observação por observação</h2>
 <p>Essa identidade entre somas não é uma coincidência algébrica. Ela decorre de uma decomposição válida para cada canal individualmente:</p>
@@ -516,12 +515,12 @@ Y_{ij}-\bar Y_{..}
 +
 (Y_{ij}-\bar Y_{i.}).
 \]</span></p>
-<p>O desvio total de uma observação em relação à média geral é a soma do desvio explicado pelo grupo e do resíduo. Quando somamos os quadrados de todas as observações, o termo cruzado desaparece e obtemos a partição das somas de quadrados. Esse é o mesmo princípio usado na regressão: comparar um modelo que prevê apenas a média geral com outro que permite previsões diferentes para os grupos.</p>
+<p>O desvio total de uma observação em relação à média geral é a soma do desvio explicado pelo grupo e do resíduo. Quando somamos os quadrados de todas as observações, o termo cruzado desaparece e obtemos a partição das somas de quadrados. Esse é o mesmo princípio usado na regressão, que compara um modelo com previsão única, a média geral, contra outro que permite previsões diferentes para os grupos.</p>
 </section>
 </section>
 <section id="da-soma-de-quadrados-ao-quadrado-médio" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Da soma de quadrados ao quadrado médio</h1>
-<p>As somas de quadrados ainda não podem ser comparadas entre si, e a razão é aritmética: somas dependem de quantas parcelas foram somadas. <span class="math inline">\(SQ_{\text{dentro}}\)</span> acumula uma parcela por canal; <span class="math inline">\(SQ_{\text{entre}}\)</span>, uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.</p>
+<p>As somas de quadrados ainda não podem ser comparadas entre si, e a razão é aritmética, porque somas dependem de quantas parcelas foram somadas. <span class="math inline">\(SQ_{\text{dentro}}\)</span> acumula uma parcela por canal, enquanto <span class="math inline">\(SQ_{\text{entre}}\)</span> acumula uma por grupo. Comparar as duas seria comparar 32 parcelas com 4.</p>
 <p>A correção é dividir cada soma pelo seu número de <strong>graus de liberdade</strong>, ou seja, quantos valores podiam variar livremente. Com <span class="math inline">\(k\)</span> grupos e <span class="math inline">\(N\)</span> observações no total:</p>
 <p><span class="math display">\[QM_{\text{entre}} = \frac{SQ_{\text{entre}}}{k - 1}
 \qquad
@@ -568,7 +567,7 @@ QM_{\text{dentro}} = \frac{SQ_{\text{dentro}}}{N - k}\]</span></p>
 </tr>
 </tbody>
 </table>
-<p>Os graus de liberdade também se particionam: <span class="math inline">\((N-1)=(k-1)+(N-k)\)</span>.</p>
+<p>Os graus de liberdade também se particionam, de modo que <span class="math inline">\((N-1)=(k-1)+(N-k)\)</span>.</p>
 <section id="a-tabela-calculada-passo-a-passo" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="a-tabela-calculada-passo-a-passo"><span class="header-section-number">5.1</span> A tabela calculada passo a passo</h2>
 <p>Todas as quantidades da tabela vêm das definições apresentadas acima, e vale construí-las uma vez a partir de um conjunto pequeno, com três grupos de quatro canais, para verificar que as identidades se cumprem.</p>
@@ -650,7 +649,7 @@ Tabela&nbsp;1: Tabela ANOVA calculada a partir das definições das somas de qua
 </figure>
 </div>
 </div>
-<p>Neste exemplo, as médias dos três grupos são 8, 7 e 4, e a média geral é <span class="math inline">\(19/3\approx6{,}33\)</span>. A tabela permite verificar as duas identidades: a soma de quadrados dos tratamentos mais a do resíduo reproduz o total, e os graus de liberdade se somam do mesmo modo. Se alguma delas falhar, há erro na definição dos grupos, nos pesos ou nas contas.</p>
+<p>Neste exemplo, as médias dos três grupos são 8, 7 e 4, e a média geral é <span class="math inline">\(19/3\approx6{,}33\)</span>. A tabela permite verificar as duas identidades, porque a soma de quadrados dos tratamentos mais a do resíduo reproduz o total, e os graus de liberdade se somam do mesmo modo. Se alguma delas falhar, há erro na definição dos grupos, nos pesos ou nas contas.</p>
 </section>
 </section>
 <section id="a-razão-f" class="level1" data-number="6">
@@ -658,7 +657,7 @@ Tabela&nbsp;1: Tabela ANOVA calculada a partir das definições das somas de qua
 <p>Comparáveis, os dois quadrados médios podem ser postos em uma razão:</p>
 <p><span class="math display">\[F = \frac{QM_{\text{entre}}}{QM_{\text{dentro}}}\]</span></p>
 <p>A leitura é direta. Se o tratamento não faz nada, as duas fontes medem a mesma coisa (variação residual) e <span class="math inline">\(F\)</span> fica em torno de 1. Se o tratamento separa os grupos além do ruído, o numerador cresce e <span class="math inline">\(F\)</span> fica maior que 1.</p>
-<p>Resta saber quanto maior que 1 é grande o bastante, e a resposta vem da mesma estratégia usada para qualquer distribuição nula: gerar muitos experimentos em que o tratamento não faz nada e observar quais valores de <span class="math inline">\(F\)</span> o acaso produz.</p>
+<p>Resta saber quanto maior que 1 é grande o bastante, e a resposta vem da mesma estratégia usada para qualquer distribuição nula, que é gerar muitos experimentos em que o tratamento não faz nada e observar quais valores de <span class="math inline">\(F\)</span> o acaso produz.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-distribuicao-f" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histograma assimétrico à direita, concentrado perto de zero, com uma cauda que se estende até valores maiores. Uma linha vertical marca o limiar acima do qual ficam os 5% maiores valores de F.">
@@ -673,8 +672,8 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 </div>
 </div>
 </div>
-<p>A linha marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 4,9% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
-<p>A distribuição F depende de dois graus de liberdade: <span class="math inline">\(k-1\)</span> no numerador e <span class="math inline">\(N-k\)</span> no denominador. Ela assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição a partir do F observado. Sob <span class="math inline">\(H_0\)</span>, numerador e denominador estimam a mesma variância residual; quando as médias diferem, o numerador incorpora também a separação entre grupos.</p>
+<p>A linha da <a href="#fig-distribuicao-f" class="quarto-xref">Figura&nbsp;2</a> marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 5,3% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
+<p>A distribuição F depende de dois graus de liberdade, sendo <span class="math inline">\(k-1\)</span> no numerador e <span class="math inline">\(N-k\)</span> no denominador. Ela assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição a partir do F observado. Sob <span class="math inline">\(H_0\)</span>, numerador e denominador estimam a mesma variância residual, e quando as médias diferem, o numerador incorpora também a separação entre grupos.</p>
 <p>Na prática, uma única função reúne toda a tabela:</p>
 <div class="cell">
 <details class="code-fold">
@@ -689,13 +688,13 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-grupo        3  4.165   1.388   44.75 8.25e-11 ***
-Residuals   28  0.869   0.031                     
+grupo        3  3.657  1.2189   37.26 6.55e-10 ***
+Residuals   28  0.916  0.0327                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>A saída reproduz as colunas construídas manualmente: graus de liberdade, somas de quadrados, quadrados médios, a razão F e o valor de p associado. Vale notar que <code>aov()</code> e <code>lm()</code> ajustam o mesmo modelo linear; a diferença está na forma de apresentar os coeficientes e a partição de variação, não em uma família estatística separada.</p>
+<p>A saída reproduz as colunas construídas manualmente, com graus de liberdade, somas de quadrados, quadrados médios, a razão F e o valor de p associado. Vale notar que <code>aov()</code> e <code>lm()</code> ajustam o mesmo modelo linear, e a diferença está na forma de apresentar os coeficientes e a partição de variação, não em uma família estatística separada.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Um F grande não conserta o delineamento">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -720,9 +719,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="o-que-a-razão-f-responde-e-o-que-não-responde" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="o-que-a-razão-f-responde-e-o-que-não-responde"><span class="header-section-number">6.2</span> O que a razão F responde, e o que não responde</h2>
-<p>A hipótese testada é sobre o conjunto: <strong>todas as médias de tratamento são iguais</strong>. Um valor de p pequeno indica que essa descrição não se sustenta, mas não diz <em>quais</em> tratamentos diferem.</p>
-<p>Descobrir isso é o passo seguinte, feito com comparações <strong>a posteriori</strong>, como o teste de Tukey, que compara todos os pares controlando a taxa global de alarmes falsos. A ordem importa: primeiro a pergunta global, depois as comparações específicas.</p>
-<p>Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente à mesma conclusão: são duas formas de escrever a mesma comparação, e de fato <span class="math inline">\(F=t^2\)</span> nesse caso. A análise de variância apenas generaliza a ideia para qualquer número de grupos.</p>
+<p>A hipótese testada é sobre o conjunto, ou seja, <strong>todas as médias de tratamento são iguais</strong>. Um valor de p pequeno indica que essa descrição não se sustenta, mas não diz <em>quais</em> tratamentos diferem.</p>
+<p>Descobrir isso é o passo seguinte, feito com comparações <strong>a posteriori</strong>, como o teste de Tukey, que compara todos os pares controlando a taxa global de alarmes falsos. A ordem importa, vindo primeiro a pergunta global e depois as comparações específicas.</p>
+<p>Vale registrar que essa lógica não é nova. Com dois grupos, a razão F e o teste t levam exatamente à mesma conclusão, porque são duas formas de escrever a mesma comparação, e de fato <span class="math inline">\(F=t^2\)</span> nesse caso. A análise de variância apenas generaliza a ideia para qualquer número de grupos.</p>
 </section>
 </section>
 <section id="o-que-precisa-ser-verificado" class="level1" data-number="7">
@@ -742,15 +741,24 @@ Figura&nbsp;3: Diagnósticos do modelo de um fator: resíduos contra valores aju
 </div>
 </div>
 </div>
-<p>O gráfico de resíduos contra valores ajustados revela aumento de dispersão, curvaturas ou grupos com comportamento distinto: aqui as quatro colunas de pontos têm amplitude semelhante, o que é compatível com variância constante. O gráfico quantil-quantil ajuda a reconhecer caudas e valores extremos, e neste caso os pontos acompanham razoavelmente a linha de referência.</p>
-<p>Com grupos balanceados e amostras moderadas, a razão F é robusta a desvios leves de normalidade, mas variâncias muito diferentes, grupos muito desbalanceados ou observações influentes exigem cautela. O teste de razão de variâncias é sensível à normalidade e não substitui esses gráficos; quando grupos pequenos possuem maior dispersão, a distorção pode ser relevante. Transformações podem estabilizar a variância quando têm interpretação científica, mas não devem ser escolhidas apenas para obter significância e não corrigem pseudorreplicação ou confundimento.</p>
-<p>Os dois cenários do início desta leitura tinham exatamente as mesmas médias e conclusões opostas. A razão F é o instrumento que torna essa distinção explícita: ela não pergunta se os grupos diferem, mas se diferem mais do que canais tratados de forma idêntica já diferem entre si. Toda a construção, das somas de quadrados aos graus de liberdade, existe para tornar essas duas variações comparáveis na mesma escala.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Para saber mais</h1>
+<p>O gráfico de resíduos contra valores ajustados revela aumento de dispersão, curvaturas ou grupos com comportamento distinto. Na <a href="#fig-diagnosticos" class="quarto-xref">Figura&nbsp;3</a>, as quatro colunas de pontos têm amplitude semelhante, o que é compatível com variância constante. O gráfico quantil-quantil ajuda a reconhecer caudas e valores extremos, e neste caso os pontos acompanham razoavelmente a linha de referência.</p>
+<p>Com grupos balanceados e amostras moderadas, a razão F é robusta a desvios leves de normalidade, mas variâncias muito diferentes, grupos muito desbalanceados ou observações influentes exigem cautela. O teste de razão de variâncias é sensível à normalidade e não substitui esses gráficos, e quando grupos pequenos possuem maior dispersão, a distorção pode ser relevante. Transformações podem estabilizar a variância quando têm interpretação científica, mas não devem ser escolhidas apenas para obter significância e não corrigem pseudorreplicação ou confundimento.</p>
+<p>Os dois cenários da <a href="#fig-dois-cenarios" class="quarto-xref">Figura&nbsp;1</a> tinham exatamente as mesmas médias e conclusões opostas. A razão F é o instrumento que torna essa distinção explícita, porque ela não pergunta se os grupos diferem, mas se diferem mais do que canais tratados de forma idêntica já diferem entre si. Toda a construção, das somas de quadrados aos graus de liberdade, existe para tornar essas duas variações comparáveis na mesma escala.</p>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li><a href="https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html" target="_blank">Associação entre variáveis quantitativas e qualitativas</a> (MEAD), que aborda a mesma comparação entre grupos pelo ângulo descritivo das medidas de associação.</li>
 </ul>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

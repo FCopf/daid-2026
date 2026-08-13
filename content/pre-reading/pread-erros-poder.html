@@ -401,8 +401,7 @@ window.Quarto = {
   <li><a href="#pressupostos-e-o-que-eles-não-cobrem" id="toc-pressupostos-e-o-que-eles-não-cobrem" class="nav-link" data-scroll-target="#pressupostos-e-o-que-eles-não-cobrem"><span class="header-section-number">5.3</span> Pressupostos e o que eles não cobrem</a></li>
   </ul></li>
   <li><a href="#planejar-antes-relatar-depois" id="toc-planejar-antes-relatar-depois" class="nav-link" data-scroll-target="#planejar-antes-relatar-depois"><span class="header-section-number">6</span> Planejar antes, relatar depois</a></li>
-  <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">7</span> Para saber mais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">8</span> Referências</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7</span> Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -431,7 +430,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">13 de agosto de 2026</p>
     </div>
   </div>
   
@@ -446,12 +445,12 @@ window.Quarto = {
 <section id="uma-decisão-tomada-com-dados-que-variam" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Uma decisão tomada com dados que variam</h1>
 <p>Um experimento compara dois substratos para o assentamento de larvas de mexilhão. Doze placas recebem cada substrato, sorteadas, e ao fim mede-se o comprimento médio dos indivíduos em cada placa. A diferença observada entre as médias é de 1,4 cm.</p>
-<p>A partir daí toma-se uma decisão: anunciar um efeito, ou não anunciar. E como a decisão se apoia em dados que variam, ela pode estar errada de duas maneiras diferentes.</p>
-<p>Esta leitura trata dessas duas maneiras, e de uma pergunta que costuma ser esquecida na hora de planejar um estudo: <strong>este experimento seria capaz de detectar o efeito que eu procuro?</strong></p>
+<p>A partir daí toma-se uma decisão, anunciar um efeito ou não anunciar. E como a decisão se apoia em dados que variam, ela pode estar errada de duas maneiras diferentes.</p>
+<p>Esta leitura trata dessas duas maneiras, e de uma pergunta que costuma ser esquecida na hora de planejar um estudo. <strong>Este experimento seria capaz de detectar o efeito que eu procuro?</strong></p>
 </section>
 <section id="duas-maneiras-de-errar" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Duas maneiras de errar</h1>
-<p><strong>Alarme falso.</strong> Não há efeito, mas a amostra sorteada produziu uma diferença grande e concluímos que há. É o <strong>erro tipo I</strong>. Sua frequência é controlada pelo limiar escolhido: usar 5% significa aceitar cerca de 5% de alarmes falsos quando o efeito não existe.</p>
+<p><strong>Alarme falso.</strong> Não há efeito, mas a amostra sorteada produziu uma diferença grande e concluímos que há. É o <strong>erro tipo I</strong>. Sua frequência é controlada pelo limiar escolhido, de modo que usar 5% significa aceitar cerca de 5% de alarmes falsos quando o efeito não existe.</p>
 <p><strong>Efeito perdido.</strong> Há efeito, mas a diferença observada não se destacou o suficiente do ruído e não rejeitamos a hipótese nula. É o <strong>erro tipo II</strong>.</p>
 <p>A capacidade de detectar um efeito que realmente existe é o <strong>poder</strong> do estudo.</p>
 <p>As quatro combinações possíveis organizam o problema:</p>
@@ -492,7 +491,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O erro tipo I você escolhe: ele é o limiar, e vale 5% porque alguém decidiu usar 5%.</p>
+<p>O erro tipo I você escolhe, porque ele é o limiar, e vale 5% porque alguém decidiu usar 5%.</p>
 <p>O erro tipo II você <strong>herda</strong> do delineamento. Ele depende do tamanho do efeito, da variação entre unidades e de quantas unidades foram montadas, e ninguém o informa junto com o resultado.</p>
 <p>Por isso o alarme falso é discutido o tempo todo e o efeito perdido quase nunca é.</p>
 </div>
@@ -507,7 +506,7 @@ window.Quarto = {
 <li><strong>a variação residual</strong>: quanto mais as placas diferem por razões que não são o tratamento, mais difícil enxergar o tratamento;</li>
 <li><strong>o número de réplicas</strong>: mais unidades experimentais tornam a estimativa mais estável.</li>
 </ul>
-<p>Nenhuma dessas três quantidades aparece nos dados depois da coleta: todas precisam ser estipuladas antes. É por isso que o poder se estima por simulação, gerando dados sob um efeito conhecido e verificando com que frequência o teste o detecta.</p>
+<p>Nenhuma dessas três quantidades aparece nos dados depois da coleta, pois todas precisam ser estipuladas antes. É por isso que o poder se estima por simulação, gerando dados sob um efeito conhecido e verificando com que frequência o teste o detecta.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver a lógica da simulação de poder</summary>
@@ -525,8 +524,8 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>poder_estimado <span class="ot">&lt;-</span> <span class="fu">mean</span>(detectar)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>A estrutura é a mesma da distribuição nula, com uma diferença essencial: aqui os dois grupos são gerados com médias <strong>diferentes</strong>, porque queremos saber o que acontece quando o efeito existe. Cada repetição pergunta se o procedimento rejeitou <span class="math inline">\(H_0\)</span>, e a média dos valores lógicos estima <span class="math inline">\(P(\text{rejeitar }H_0\mid H_A)\)</span>. Com 15 placas por grupo, esta execução detectou o efeito em 45% das vezes.</p>
-<p>Repetindo o mesmo cálculo para vários tamanhos de amostra, obtemos a curva de poder.</p>
+<p>A estrutura é a mesma da distribuição nula, com uma diferença essencial. Aqui os dois grupos são gerados com médias <strong>diferentes</strong>, porque queremos saber o que acontece quando o efeito existe. Cada repetição pergunta se o procedimento rejeitou <span class="math inline">\(H_0\)</span>, e a média dos valores lógicos estima <span class="math inline">\(P(\text{rejeitar }H_0\mid H_A)\)</span>. Com 15 placas por grupo, esta execução detectou o efeito em 47% das vezes.</p>
+<p>Repetindo o mesmo cálculo para vários tamanhos de amostra, obtemos a curva de poder da <a href="#fig-poder-n" class="quarto-xref">Figura&nbsp;1</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-poder-n" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Curva crescente que começa perto de 20% com 5 placas por grupo, cruza a linha tracejada de 80% em torno de 35 placas por grupo e se aproxima de 100% com 80 placas.">
@@ -541,7 +540,7 @@ Figura&nbsp;1: Proporção de experimentos que detectam um efeito real de 1,4 cm
 </div>
 </div>
 </div>
-<p>Repare no canto esquerdo da curva. Com 15 placas por grupo, o efeito de 1,4 cm foi detectado em cerca de 48% dos experimentos, embora ele exista em todos eles. Um estudo desse tamanho falha na maioria das vezes, e quando falha não produz nenhum aviso de que falhou.</p>
+<p>Repare no canto esquerdo da <a href="#fig-poder-n" class="quarto-xref">Figura&nbsp;1</a>. Com 15 placas por grupo, o efeito de 1,4 cm foi detectado em cerca de 44% dos experimentos, embora ele exista em todos eles. Um estudo desse tamanho falha na maioria das vezes, e quando falha não produz nenhum aviso de que falhou.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="O poder se decide antes, não depois">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -553,19 +552,19 @@ Figura&nbsp;1: Proporção de experimentos que detectam um efeito real de 1,4 cm
 </div>
 <div class="callout-body-container callout-body">
 <p>Calcular o poder faz sentido no planejamento, para escolher quantas unidades montar.</p>
-<p>Calculá-lo depois, usando o efeito que foi observado, não acrescenta informação: apenas reescreve o valor de p obtido em outra escala.</p>
+<p>Calculá-lo depois, usando o efeito que foi observado, não acrescenta informação, pois apenas reescreve o valor de p obtido em outra escala.</p>
 </div>
 </div>
 <section id="o-poder-é-uma-superfície-não-uma-única-curva" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="o-poder-é-uma-superfície-não-uma-única-curva"><span class="header-section-number">3.1</span> O poder é uma superfície, não uma única curva</h2>
-<p>A curva anterior manteve fixos o efeito e a variabilidade. Como as três quantidades atuam juntas, convém expressá-las de uma só vez. O tamanho padronizado <span class="math inline">\(d=\Delta/\sigma\)</span> expressa a diferença relevante <span class="math inline">\(\Delta\)</span> em unidades do desvio-padrão, e é ele, não a diferença bruta, que determina a dificuldade da detecção: um efeito de 1 cm é fácil de detectar quando <span class="math inline">\(\sigma=0{,}5\)</span> cm e difícil quando <span class="math inline">\(\sigma=3\)</span> cm.</p>
+<p>A <a href="#fig-poder-n" class="quarto-xref">Figura&nbsp;1</a> manteve fixos o efeito e a variabilidade. Como as três quantidades atuam juntas, convém expressá-las de uma só vez. O tamanho padronizado <span class="math inline">\(d=\Delta/\sigma\)</span> expressa a diferença relevante <span class="math inline">\(\Delta\)</span> em unidades do desvio-padrão, e é ele, não a diferença bruta, que determina a dificuldade da detecção. Um efeito de 1 cm é fácil de detectar quando <span class="math inline">\(\sigma=0{,}5\)</span> cm e difícil quando <span class="math inline">\(\sigma=3\)</span> cm.</p>
 <p>Para uma aproximação normal de dois grupos balanceados, o poder pode ser escrito como</p>
 <p><span class="math display">\[
 \text{poder}\approx
 P\!\left(|Z|&gt;z_{1-\alpha/2}\mid
 Z\sim N\!\left(\frac{\Delta}{\sigma\sqrt{2/n}},1\right)\right).
 \]</span></p>
-<p>A expressão diz que a estatística <span class="math inline">\(Z\)</span> continua tendo dispersão 1, mas passa a ser centrada em <span class="math inline">\(\Delta/(\sigma\sqrt{2/n})\)</span> em vez de zero. Esse deslocamento é a relação sinal-ruído da comparação: aumenta com o efeito e com <span class="math inline">\(\sqrt n\)</span>, e diminui com a variabilidade. Quanto mais deslocada a distribuição, maior a parte dela que ultrapassa o valor crítico, e é essa parte que corresponde ao poder.</p>
+<p>A expressão diz que a estatística <span class="math inline">\(Z\)</span> continua tendo dispersão 1, mas passa a ser centrada em <span class="math inline">\(\Delta/(\sigma\sqrt{2/n})\)</span> em vez de zero. Esse deslocamento é a relação sinal-ruído da comparação, que aumenta com o efeito e com <span class="math inline">\(\sqrt n\)</span>, e diminui com a variabilidade. Quanto mais deslocada a distribuição, maior a parte dela que ultrapassa o valor crítico, e é essa parte que corresponde ao poder.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-superficie-poder" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Painéis de curvas crescentes. O poder aumenta com o efeito e o tamanho amostral, e é menor no painel com maior desvio-padrão.">
@@ -580,12 +579,12 @@ Figura&nbsp;2: Poder aproximado de um teste bilateral para diferentes efeitos e 
 </div>
 </div>
 </div>
-<p>Os dois painéis mostram o mesmo conjunto de tamanhos amostrais sob variabilidades diferentes. Com <span class="math inline">\(\sigma=2\)</span> cm, a curva de <span class="math inline">\(n=8\)</span> mal alcança 40% de poder para uma diferença de 1,5 cm, enquanto com <span class="math inline">\(\sigma=1\)</span> cm o mesmo <span class="math inline">\(n\)</span> já ultrapassa a marca de 80%. Reduzir a variação residual, por controle local ou por melhor medição, é portanto uma alternativa real a aumentar o número de unidades. A curva deve ser lida a partir da menor diferença cientificamente relevante, e não do efeito que seria conveniente detectar.</p>
+<p>Os dois painéis da <a href="#fig-superficie-poder" class="quarto-xref">Figura&nbsp;2</a> mostram o mesmo conjunto de tamanhos amostrais sob variabilidades diferentes. Com <span class="math inline">\(\sigma=2\)</span> cm, a curva de <span class="math inline">\(n=8\)</span> mal alcança 40% de poder para uma diferença de 1,5 cm, enquanto com <span class="math inline">\(\sigma=1\)</span> cm o mesmo <span class="math inline">\(n\)</span> já ultrapassa a marca de 80%. Reduzir a variação residual, por controle local ou por melhor medição, é portanto uma alternativa real a aumentar o número de unidades. A curva deve ser lida a partir da menor diferença cientificamente relevante, e não do efeito que seria conveniente detectar.</p>
 </section>
 </section>
 <section id="não-encontrar-não-é-o-mesmo-que-não-existir" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Não encontrar não é o mesmo que não existir</h1>
-<p>Daí a frase que vale guardar: <strong>ausência de evidência não é evidência de ausência</strong>.</p>
+<p>Daí a frase que vale guardar, <strong>ausência de evidência não é evidência de ausência</strong>.</p>
 <p>Um estudo pequeno, com muita variação residual, quase sempre falha em detectar efeitos moderados. Concluir “o substrato não faz diferença” a partir dele é ir além do que os dados permitem. O que se pode dizer é que o estudo não teve sensibilidade suficiente para distinguir esse efeito do ruído.</p>
 <p>É por isso que informar o <strong>intervalo de confiança</strong> da diferença é mais útil que informar apenas o valor de p.&nbsp;Um intervalo de <span class="math inline">\(-0{,}2\)</span> a <span class="math inline">\(0{,}3\)</span> cm diz que efeitos grandes foram descartados. Um intervalo de <span class="math inline">\(-3\)</span> a <span class="math inline">\(4\)</span> cm diz que o estudo não conseguiu descartar quase nada, ainda que os dois tenham produzido o mesmo “não significativo”.</p>
 </section>
@@ -596,25 +595,29 @@ Figura&nbsp;2: Poder aproximado de um teste bilateral para diferentes efeitos e 
 <p>O que ele <strong>não</strong> faz é verificar se as unidades sobre as quais você o aplicou são de fato as unidades experimentais, nem se a variação usada como régua é a variação certa. Essa parte continua sendo sua.</p>
 <section id="como-o-teste-t-constrói-a-régua" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="como-o-teste-t-constrói-a-régua"><span class="header-section-number">5.1</span> Como o teste t constrói a régua</h2>
-<p>O teste t assume formas diferentes conforme o delineamento, mas todas seguem a mesma estrutura: uma diferença estimada no numerador, dividida pelo erro padrão dessa diferença no denominador. Vale percorrer os três casos que aparecem com mais frequência.</p>
+<p>O teste t assume formas diferentes conforme o delineamento, mas todas seguem a mesma estrutura, com uma diferença estimada no numerador dividida pelo erro padrão dessa diferença no denominador. Vale percorrer os três casos que aparecem com mais frequência.</p>
 <p>O caso mais simples compara uma amostra a um valor de referência <span class="math inline">\(\mu_0\)</span>, como uma concentração tolerada por norma ambiental. A estatística é</p>
 <p><span class="math display">\[
-t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}},
+t=\frac{\bar{x}-\mu_0}{s_{\bar{x}}},
+\qquad
+s_{\bar{x}}=\frac{s}{\sqrt{n}},
 \]</span></p>
 <p>com <span class="math inline">\(n-1\)</span> graus de liberdade. O numerador é a diferença estimada e o denominador é o erro padrão da média, que já conhecemos.</p>
-<p>No caso <strong>pareado</strong>, as duas medições pertencem à mesma unidade, como comprimento antes e depois do tratamento. O truque é reduzir o problema ao caso anterior: definimos a diferença dentro de cada unidade, <span class="math inline">\(D_i=Y_{depois,i}-Y_{antes,i}\)</span>, e fazemos um teste de uma amostra sobre essas diferenças,</p>
+<p>No caso <strong>pareado</strong>, as duas medições pertencem à mesma unidade, como comprimento antes e depois do tratamento. O truque é reduzir o problema ao caso anterior. Definimos a diferença dentro de cada unidade, <span class="math inline">\(D_i=Y_{depois,i}-Y_{antes,i}\)</span>, e fazemos um teste de uma amostra sobre essas diferenças,</p>
 <p><span class="math display">\[
-t=\frac{\bar D-\mu_{D,0}}{s_D/\sqrt n}.
+t=\frac{\bar D-\mu_{D,0}}{s_{\bar{D}}},
+\qquad
+s_{\bar{D}}=\frac{s_D}{\sqrt n}.
 \]</span></p>
-<p>O pareamento remove diferenças estáveis entre indivíduos quando a ligação é real, e é por isso que costuma ter mais poder. Tratar medidas pareadas como independentes desperdiça essa informação; parear observações de indivíduos distintos, ao contrário, cria dependência artificial.</p>
+<p>O pareamento remove diferenças estáveis entre indivíduos quando a ligação é real, e é por isso que costuma ter mais poder. Tratar medidas pareadas como independentes desperdiça essa informação, ao passo que parear observações de indivíduos distintos cria dependência artificial.</p>
 <p>Para dois grupos independentes, como as placas dos dois substratos, o numerador é a diferença entre as médias e o denominador precisa combinar a incerteza das duas. A versão de Welch usa</p>
 <p><span class="math display">\[
-EP(\bar{x}_1-\bar{x}_2)=
+s_{\bar{x}_1-\bar{x}_2}=
 \sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}
 \]</span></p>
 <p>e, portanto,</p>
 <p><span class="math display">\[
-t=\frac{(\bar{x}_1-\bar{x}_2)-0}{EP(\bar{x}_1-\bar{x}_2)}.
+t=\frac{(\bar{x}_1-\bar{x}_2)-0}{s_{\bar{x}_1-\bar{x}_2}}.
 \]</span></p>
 <p>Como os dois grupos podem ter variâncias diferentes, os graus de liberdade deixam de ser um número inteiro simples e passam a ser aproximados pela equação de Welch-Satterthwaite:</p>
 <p><span class="math display">\[
@@ -645,7 +648,7 @@ mean of x mean of y
    11.350    10.175 </code></pre>
 </div>
 </div>
-<p>A saída reúne, em um único bloco, a estatística, os graus de liberdade aproximados, o valor de p e o intervalo de confiança da diferença. Vale notar que o intervalo usa a mesma estimativa e o mesmo erro padrão do teste. Em um teste bilateral a 5%, rejeitar diferença zero equivale a obter um intervalo de 95% que não contém zero: as duas leituras são a mesma conta apresentada de dois modos. O intervalo acrescenta o que o valor de p não informa, que é a faixa de magnitudes compatíveis com os dados.</p>
+<p>A saída reúne, em um único bloco, a estatística, os graus de liberdade aproximados, o valor de p e o intervalo de confiança da diferença. Vale notar que o intervalo usa a mesma estimativa e o mesmo erro padrão do teste. Em um teste bilateral a 5%, rejeitar diferença zero equivale a obter um intervalo de 95% que não contém zero, porque as duas leituras são a mesma conta apresentada de dois modos. O intervalo acrescenta o que o valor de p não informa, que é a faixa de magnitudes compatíveis com os dados.</p>
 </section>
 <section id="variâncias-iguais-ou-diferentes" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="variâncias-iguais-ou-diferentes"><span class="header-section-number">5.2</span> Variâncias iguais ou diferentes</h2>
@@ -653,12 +656,12 @@ mean of x mean of y
 <p><span class="math display">\[
 s_p^2=\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2},
 \]</span></p>
-<p>e o erro padrão passa a ser <span class="math inline">\(s_p\sqrt{1/n_1+1/n_2}\)</span>, com <span class="math inline">\(n_1+n_2-2\)</span> graus de liberdade. Essa versão agrupada é um pouco mais precisa, mas a precisão extra depende de a restrição de variâncias iguais ser plausível. Welch é uma escolha segura quando os tamanhos ou as dispersões diferem.</p>
+<p>e o erro padrão passa a ser <span class="math inline">\(s_{\bar{x}_1-\bar{x}_2}=s_p\sqrt{1/n_1+1/n_2}\)</span>, com <span class="math inline">\(n_1+n_2-2\)</span> graus de liberdade. Essa versão agrupada é um pouco mais precisa, mas a precisão extra depende de a restrição de variâncias iguais ser plausível. Welch é uma escolha segura quando os tamanhos ou as dispersões diferem.</p>
 <p>Surge então a tentação de decidir entre as duas versões com um terceiro teste. O teste F clássico para <span class="math inline">\(H_0:\sigma_1^2=\sigma_2^2\)</span> usa</p>
 <p><span class="math display">\[
 F=\frac{s_1^2}{s_2^2},
 \]</span></p>
-<p>com <span class="math inline">\(n_1-1\)</span> e <span class="math inline">\(n_2-1\)</span> graus de liberdade. Ele é muito sensível à não normalidade, e testes baseados em desvios absolutos, como o de Levene, são mais robustos. Nenhum deles, porém, deveria decidir mecanicamente entre Welch e a versão agrupada: encadear testes faz o segundo herdar a incerteza do primeiro, e a decisão passa a depender de um valor de p obtido com pouca informação. Gráficos, conhecimento do processo e tamanhos de grupo informam melhor essa escolha.</p>
+<p>com <span class="math inline">\(n_1-1\)</span> e <span class="math inline">\(n_2-1\)</span> graus de liberdade. Ele é muito sensível à não normalidade, e testes baseados em desvios absolutos, como o de Levene, são mais robustos. Nenhum deles, porém, deveria decidir mecanicamente entre Welch e a versão agrupada. Encadear testes faz o segundo herdar a incerteza do primeiro, e a decisão passa a depender de um valor de p obtido com pouca informação. Gráficos, conhecimento do processo e tamanhos de grupo informam melhor essa escolha.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-diagnosticos-t" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Um painel mostra pontos e boxplots dos dois substratos; outro compara quantis dos resíduos com uma linha normal de referência.">
@@ -673,21 +676,30 @@ Figura&nbsp;3: Distribuições dos dois substratos e gráfico quantil-quantil do
 </div>
 </div>
 </div>
-<p>Nesses dados, a razão entre as variâncias amostrais é 0,81 e o teste F devolve valor de p igual a 0,79. Os boxplots mostram dispersões semelhantes e o gráfico quantil-quantil não revela afastamento importante da normalidade. Com oito unidades por grupo, contudo, essa inspeção detecta apenas problemas grosseiros, o que reforça a recomendação de usar Welch por padrão.</p>
+<p>Nesses dados, a razão entre as variâncias amostrais é 0,81 e o teste F devolve valor de p igual a 0,79. Na <a href="#fig-diagnosticos-t" class="quarto-xref">Figura&nbsp;3</a>, os boxplots mostram dispersões semelhantes e o gráfico quantil-quantil não revela afastamento importante da normalidade. Com oito unidades por grupo, contudo, essa inspeção detecta apenas problemas grosseiros, o que reforça a recomendação de usar Welch por padrão.</p>
 </section>
 <section id="pressupostos-e-o-que-eles-não-cobrem" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="pressupostos-e-o-que-eles-não-cobrem"><span class="header-section-number">5.3</span> Pressupostos e o que eles não cobrem</h2>
-<p>O teste t requer unidades independentes e respostas quantitativas. A suposição de normalidade se refere aos erros dentro de cada população, não aos dados brutos reunidos: com amostras moderadas, a média é robusta a desvios leves, mas assimetria extrema e valores influentes precisam ser investigados. Welch acomoda variâncias diferentes, mas não corrige dependência, viés de seleção nem pseudorreplicação. Um teste aplicado a subamostras continua devolvendo um valor de p pequeno, calculado sobre a régua errada.</p>
+<p>O teste t requer unidades independentes e respostas quantitativas. A suposição de normalidade se refere aos erros dentro de cada população, não aos dados brutos reunidos. Com amostras moderadas, a média é robusta a desvios leves, mas assimetria extrema e valores influentes precisam ser investigados. Welch acomoda variâncias diferentes, mas não corrige dependência, viés de seleção nem pseudorreplicação. Um teste aplicado a subamostras continua devolvendo um valor de p pequeno, calculado sobre a régua errada.</p>
 </section>
 </section>
 <section id="planejar-antes-relatar-depois" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Planejar antes, relatar depois</h1>
 <p>Reunindo as duas metades da leitura, o planejamento de um estudo exige definir antes da coleta uma diferença mínima cientificamente importante, uma estimativa realista da variação, o nível <span class="math inline">\(\alpha\)</span>, a lateralidade do teste e o número de unidades independentes. Aumentar <span class="math inline">\(\alpha\)</span> eleva o poder à custa de mais alarmes falsos. Reduzir variação por controle local ou melhorar a medição pode ser tão útil quanto aumentar <span class="math inline">\(n\)</span>. O planejamento deve ainda considerar perdas de unidades e nunca usar o efeito observado no próprio estudo como substituto da diferença relevante.</p>
 <p>A decisão que abriu esta leitura, anunciar ou não um efeito de 1,4 cm, continua sendo uma decisão sujeita a erro. O que mudou é que agora os dois erros têm nome, e apenas um deles é escolhido por quem analisa. O outro foi decidido quando alguém escolheu quantas placas montar, e permanece invisível no resultado a menos que seja calculado de propósito.</p>
-</section>
-<section id="para-saber-mais" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Para saber mais</h1>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Leitura adicional
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Gotelli e Ellison <span class="citation" data-cites="gotelli2015">(<a href="#ref-gotelli2015" role="doc-biblioref">Gotelli e Ellison 2015</a>)</span> discutem poder, tamanho de efeito e planejamento no contexto de estudos ecológicos, com exemplos de campo próximos aos desta unidade curricular.</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -708,14 +720,14 @@ Figura&nbsp;3: Distribuições dos dois substratos e gráfico quantil-quantil do
 </div>
 </div>
 </section>
-<section id="referências" class="level1" data-number="8">
+<section id="referências" class="level1" data-number="7">
 
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">8 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 Referências</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-gotelli2015" class="csl-entry" role="listitem">
 Gotelli, Nicholas J., e Aaron M. Ellison. 2015. <em>Princípios de Estatística em Ecologia</em>. Artmed.
 </div>
