@@ -24,96 +24,263 @@ theme_set(theme_bw(base_size = 12))
 
 # Cento e vinte peixes para distribuir
 
-Uma pesquisadora vai comparar duas dietas para juvenis de robalo. O orçamento dá para 120 peixes e para o espaço, a mão de obra e a ração que eles exigem. Esse número está fechado.
+Uma pesquisadora vai comparar duas dietas para juvenis de robalo. Dependendo do orçamento disponível, do tempo estimado de processamento e do espaço físico, ela pode escolher entre algumas opções:
 
-O que ainda não está fechado é como distribuí-los. Dois tanques de 60 peixes? Quatro de 30? Vinte de 6? Todas as opções gastam o mesmo, ocupam a mesma sala e produzem 120 medidas de comprimento.
+- Dois tanques de 60 peixes;
+- Quatro tanques de 30 peixes;
+- Oito tanques de 15 peixes;
+- Vinte tanques de 6 peixes.
 
-Elas não produzem, porém, a mesma capacidade de responder à pergunta. Esta leitura trata das três decisões que definem isso, todas tomadas **antes** de o primeiro peixe entrar na água.
+Cada uma dessas opções tem uma capacidade diferente de responder à pergunta. Vamos explorar as consequências de cada escolha, exercício que sempre deve ser feito antes do início do experimento.
 
 # Primeira decisão: quantas unidades experimentais?
 
-Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é atribuída ao tanque, não ao peixe. Quem se replica, portanto, é o tanque.
+Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é atribuída ao tanque, não ao peixe. A unidade experimental, e portanto a réplica, é o tanque.
 
-Vale ver o que isso significa em números. A @fig-alocacao repete duas mil vezes um experimento em que **as duas dietas são idênticas**, variando apenas a distribuição dos 120 peixes, e guarda a diferença estimada entre as dietas em cada repetição.
+Vale simular os quatro experimentos para compreender o que cada um permite aprender sobre as fontes de variação nele envolvidas. Como nenhum planejamento acontece sem uma expectativa a respeito dessas fontes, vamos fixar três magnitudes:
+
+- Variação entre peixes: peixes de um mesmo tanque diferem entre si com desvio-padrão $\sigma_P = 0{,}8$ cm;
+- Variação entre tanques: tanques tratados da mesma forma diferem entre si com desvio-padrão $\sigma_T = 0{,}5$ cm;
+- Variação entre dietas: a dieta enriquecida acrescenta $\Delta = 1{,}0$ cm ao comprimento médio, sobre uma média de 10 cm na dieta comum (o que o experimento deseja estimar).
+
+A @fig-quatro-desenhos simula um experimento para cada uma das quatro opções. A simulação tem dois passos, que correspondem aos dois níveis do experimento. Primeiro sorteamos a média de cada tanque e depois sorteamos os peixes dentro dele.
 
 ```{r}
-#| echo: false
-#| label: fig-alocacao
-#| fig-cap: "Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero."
-#| fig-alt: "Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero."
-#| fig-height: 4.6
-variacao_entre_tanques <- 0.8
-variacao_entre_peixes <- 0.5
-orcamento <- 120
+#| code-fold: true
+#| code-summary: "Ver a simulação dos quatro desenhos"
+#| label: fig-quatro-desenhos
+#| fig-cap: "Um experimento simulado para cada maneira de distribuir os mesmos 120 peixes. Cada ponto é um peixe, cada traço curto é a média de um tanque e as linhas tracejadas são as médias das duas dietas. A dieta enriquecida realmente acrescenta 1,0 cm em todos os painéis."
+#| fig-alt: "Quatro gráficos de pontos em painel 2x2, um por desenho. Em 2 tanques de 60 peixes há duas nuvens densas, cada uma com uma única média de tanque. Conforme o número de tanques aumenta, as nuvens ficam menores e mais numerosas, e as médias de tanque se espalham em torno das linhas tracejadas de cada dieta."
+#| fig-height: 6.2
+set.seed(174)
 
-diferenca_estimada <- function(n_tanques) {
+orcamento <- 120
+comprimento_base <- 10
+efeito_dieta <- 1.0
+sigma_tanque <- 0.5
+sigma_peixe <- 0.8
+
+simular_desenho <- function(n_tanques) {
   peixes_por_tanque <- orcamento / n_tanques
   dieta <- rep(c("comum", "enriquecida"), each = n_tanques / 2)
 
-  media_tanque <- rnorm(n_tanques, mean = 10, sd = variacao_entre_tanques)
-  media_medida <- media_tanque +
-    rnorm(n_tanques, mean = 0, sd = variacao_entre_peixes / sqrt(peixes_por_tanque))
+  media_tanque <- rnorm(
+    n_tanques,
+    mean = comprimento_base + efeito_dieta * (dieta == "enriquecida"),
+    sd = sigma_tanque
+  )
 
-  mean(media_medida[dieta == "enriquecida"]) - mean(media_medida[dieta == "comum"])
+  tibble(
+    desenho = paste0(n_tanques, " tanques de ", peixes_por_tanque, " peixes"),
+    tanque = factor(rep(seq_len(n_tanques), each = peixes_por_tanque)),
+    dieta = rep(dieta, each = peixes_por_tanque),
+    comprimento = rnorm(orcamento,
+                        mean = rep(media_tanque, each = peixes_por_tanque),
+                        sd = sigma_peixe)
+  )
 }
 
-alocacoes <- c(2, 4, 8, 20)
-rotulos <- paste0(alocacoes, " tanques de ", orcamento / alocacoes, " peixes")
+desenhos <- c(2, 4, 8, 20)
+experimentos <- lapply(desenhos, simular_desenho)
+limites_y <- range(bind_rows(experimentos)$comprimento)
 
-diferencas <- bind_rows(lapply(seq_along(alocacoes), function(i) {
-  tibble(
-    alocacao = rotulos[i],
-    diferenca = replicate(2000, diferenca_estimada(alocacoes[i]))
-  )
-})) |>
-  mutate(alocacao = fct_relevel(alocacao, rotulos))
+painel_desenho <- function(dados) {
+  media_tanque <- dados |>
+    group_by(tanque, dieta) |>
+    summarise(media = mean(comprimento), .groups = "drop")
 
-ggplot(diferencas, aes(x = diferenca)) +
-  geom_histogram(bins = 50, fill = "#0072B2", colour = "white") +
-  geom_vline(xintercept = 0, colour = "#D55E00", linewidth = 1) +
-  facet_wrap(~ alocacao, ncol = 1, scales = "free_y") +
-  labs(x = "Diferença estimada entre as dietas (cm)", y = "Frequência")
+  media_dieta <- dados |>
+    group_by(dieta) |>
+    summarise(media = mean(comprimento), .groups = "drop")
+
+  ggplot(dados, aes(x = tanque, y = comprimento, colour = dieta)) +
+    geom_hline(data = media_dieta, aes(yintercept = media, colour = dieta),
+               linetype = "dashed", linewidth = 0.4) +
+    geom_jitter(width = 0.15, alpha = 0.35, size = 1) +
+    geom_point(data = media_tanque, aes(y = media), shape = 95, size = 7) +
+    coord_cartesian(ylim = limites_y) +
+    scale_x_discrete(guide = guide_axis(check.overlap = TRUE)) +
+    scale_colour_manual(values = c(comum = "#0072B2", enriquecida = "#D55E00")) +
+    labs(title = unique(dados$desenho), x = "Tanque", y = "Comprimento (cm)",
+         colour = "Dieta") +
+    theme_bw(base_size = 11) +
+    theme(axis.text.x = element_text(size = 7))
+}
+
+patchwork::wrap_plots(lapply(experimentos, painel_desenho),
+                      ncol = 2, guides = "collect")
 ```
 
 ```{r}
 #| echo: false
-espalhamento <- diferencas |>
-  group_by(alocacao) |>
-  summarise(desvio = sd(diferenca))
+observado <- sapply(experimentos, function(dados) {
+  medias <- tapply(dados$comprimento, dados$dieta, mean)
+  unname(medias["enriquecida"] - medias["comum"])
+})
 
-sd_2  <- formatC(espalhamento$desvio[1], format = "f", digits = 2, decimal.mark = ",")
-sd_20 <- formatC(espalhamento$desvio[4], format = "f", digits = 2, decimal.mark = ",")
+formatar <- function(x) formatC(x, format = "f", digits = 2, decimal.mark = ",")
+dif_2 <- formatar(observado[1])
+dif_4 <- formatar(observado[2])
+dif_8 <- formatar(observado[3])
+dif_20 <- formatar(observado[4])
 ```
 
-Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de `r sd_2` cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de `r sd_20` cm.
+Os quatro painéis nasceram do mesmo processo, com o mesmo efeito real de 1,0 cm, e é com esse valor que cada estimativa deve ser comparada. No desenho de 2 tanques, a diferença entre as linhas tracejadas foi de `r dif_2` cm, e ela carrega tudo o que separa aqueles dois tanques, porque comparar as duas dietas é literalmente comparar dois tanques. No desenho de 4 tanques, cada dieta já é a média de dois tanques, e a estimativa foi de `r dif_4` cm. Nos desenhos de 8 e de 20 tanques, em que cada média de dieta se apoia em quatro e em dez sorteios independentes, as estimativas foram de `r dif_8` cm e `r dif_20` cm.
 
 ::: {.callout-tip appearance="minimal" title="Observe"}
-Nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a dieta foi sorteada de forma independente.
+Note que nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a dieta foi sorteada de forma independente.
 
-Repare também que os quatro histogramas estão centrados em zero. Distribuir mal os peixes não faz o experimento errar para um lado. Faz cada resultado ser muito mais instável, e portanto muito mais fácil de confundir com um efeito real.
+Repare também que nenhum desenho está errado por construção. Distribuir mal os peixes não faz o experimento errar sempre para o mesmo lado, mas torna cada resultado muito mais instável e, por isso, muito mais fácil de confundir com um efeito real.
 :::
 
-Isso não significa que subamostras sejam inúteis. Medir vários peixes por tanque produz uma média confiável **daquele** tanque, e isso melhora a estimativa. Só que o ganho satura rápido, enquanto cada tanque novo acrescenta uma repetição independente do tratamento.
+## Três comparações, três precisões
+
+A @fig-quatro-desenhos ilustra uma única simulação deste experimento, portanto os valores acima valem apenas para esse sorteio. Você pode, e deve, repetir o código removendo a chamada a `set.seed()` para ver a variedade de padrões que cada um desses experimentos é capaz de gerar.
+
+Para comparar os desenhos sem depender de um sorteio particular, a incerteza de cada comparação pode ser calculada diretamente das três magnitudes já fixadas.
+
+Com $k$ tanques e $m$ peixes em cada um, a média de um tanque carrega as duas fontes de variação, do tanque ($\sigma_T$) e dos peixes ($\sigma_P$), e tem variância
+
+$$
+\sigma^2_{\bar y_{tanque}}=\sigma_T^2+\frac{\sigma_P^2}{m}.
+$$
+
+Falta uma regra, que usaremos três vezes. Quando duas quantidades são independentes, a variância da diferença entre elas é a soma das duas variâncias, isto é, $\sigma^2_{a-b}=\sigma^2_a+\sigma^2_b$. Se as duas tiverem a mesma variância, o erro padrão da diferença é o erro padrão de uma delas multiplicado por $\sqrt{2}$.
+
+Com essa regra, podemos escrever o erro padrão das três comparações que o experimento permite, do nível mais baixo para o mais alto.
+
+**Dois peixes do mesmo tanque.** Os dois compartilham a média daquele tanque, e o que os separa é apenas a variação individual, portanto
+
+$$
+\sigma_{y_1-y_2}=\sqrt{2}\,\sigma_P.
+$$
+
+Nem $k$ nem $m$ aparecem aqui, e é por isso que essa comparação tem o mesmo valor nos quatro desenhos.
+
+**Dois tanques da mesma dieta.** Cada tanque entra pela sua média, cuja variância é a da primeira fórmula desta seção, de modo que
+
+$$
+\sigma_{\bar y_{t_1}-\bar y_{t_2}}=\sqrt{2\left(\sigma_T^2+\frac{\sigma_P^2}{m}\right)}.
+$$
+
+Agora $m$ aparece, mas dentro da parcela menor, e por isso essa comparação piora só um pouco quando os tanques ficam menores.
+
+**As duas dietas.** Cada dieta é a média de $k/2$ tanques, e a variância dessa média é a variância de uma média de tanque dividida por $k/2$. Aplicando a regra da diferença e substituindo $m=120/k$, chegamos a
+
+$$
+\sigma_{\bar y_1-\bar y_2}=2\sqrt{\frac{\sigma_T^2}{k}+\frac{\sigma_P^2}{120}}.
+$$
+
+O 120 que sobrou no denominador é o total de peixes. Como $k\times m=120$, o número de peixes por tanque desapareceu dessa parcela, que é a mesma nos quatro desenhos. Só a parcela dos tanques ($\sigma_T^2/k$) responde ao número de tanques.
+
+Repare ainda que, com $k=2$, esta última expressão e a anterior dão o mesmo valor, porque, com apenas dois tanques, comparar as duas dietas é o mesmo que comparar dois tanques. A @fig-erros-padrao reúne as três comparações para os quatro delineamentos.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Ver o cálculo dos três erros padrão"
+#| label: fig-erros-padrao
+#| fig-cap: "Precisão dos quatro desenhos, calculada a partir das magnitudes fixadas. Em A, o erro padrão de três comparações possíveis, com a linha tracejada no efeito de 1,0 cm que se quer detectar. Em B, a variância da diferença entre dietas separada na parcela que vem dos tanques e na parcela que vem dos peixes."
+#| fig-alt: "Dois painéis. No painel A, a curva entre dois peixes é horizontal e a mais alta, a curva entre dois tanques sobe levemente e a curva entre as duas dietas parte do mesmo ponto da curva entre tanques e cai até menos de um terço da linha do efeito. No painel B, barras empilhadas encolhem da esquerda para a direita, com uma fatia inferior de mesma altura em todas."
+#| fig-height: 4.4
+erros <- tibble(n_tanques = desenhos) |>
+  mutate(
+    peixes_por_tanque = orcamento / n_tanques,
+    desenho = fct_inorder(paste0(n_tanques, " tanques\n", peixes_por_tanque, " peixes")),
+    entre_dietas = 2 * sqrt(sigma_tanque^2 / n_tanques + sigma_peixe^2 / orcamento),
+    entre_tanques = sqrt(2 * (sigma_tanque^2 + sigma_peixe^2 / peixes_por_tanque)),
+    entre_peixes = sqrt(2) * sigma_peixe
+  )
+
+comparacoes <- c(
+  entre_dietas = "Entre as duas dietas",
+  entre_tanques = "Entre dois tanques da mesma dieta",
+  entre_peixes = "Entre dois peixes do mesmo tanque"
+)
+
+p_erros <- erros |>
+  pivot_longer(all_of(names(comparacoes)),
+               names_to = "comparacao", values_to = "erro_padrao") |>
+  mutate(comparacao = factor(comparacao, levels = names(comparacoes),
+                             labels = comparacoes)) |>
+  ggplot(aes(x = desenho, y = erro_padrao, colour = comparacao, group = comparacao)) +
+  geom_hline(yintercept = efeito_dieta, linetype = "dashed", colour = "grey40") +
+  geom_line(linewidth = 0.8) +
+  geom_point(size = 2.4) +
+  annotate("text", x = 1, y = efeito_dieta, label = "efeito da dieta",
+           hjust = 0, vjust = -0.6, size = 3, colour = "grey40") +
+  scale_colour_manual(values = c("Entre as duas dietas" = "#009E73",
+                                 "Entre dois tanques da mesma dieta" = "#CC79A7",
+                                 "Entre dois peixes do mesmo tanque" = "#999999")) +
+  expand_limits(y = 0) +
+  labs(x = NULL, y = "Erro padrão da diferença (cm)", colour = NULL) +
+  theme_bw(base_size = 11) +
+  theme(legend.position = "bottom", legend.direction = "vertical")
+
+p_parcelas <- erros |>
+  transmute(
+    desenho,
+    `Parcela dos tanques` = 4 * sigma_tanque^2 / n_tanques,
+    `Parcela dos peixes` = 4 * sigma_peixe^2 / orcamento
+  ) |>
+  pivot_longer(-desenho, names_to = "parcela", values_to = "variancia") |>
+  mutate(parcela = fct_inorder(parcela)) |>
+  ggplot(aes(x = desenho, y = variancia, fill = parcela)) +
+  geom_col(width = 0.6) +
+  geom_hline(yintercept = 4 * sigma_peixe^2 / orcamento,
+             linetype = "dashed", colour = "grey40") +
+  scale_fill_manual(values = c(`Parcela dos tanques` = "#CC79A7",
+                               `Parcela dos peixes` = "#999999")) +
+  labs(x = NULL, y = "Variância da diferença entre dietas (cm²)", fill = NULL) +
+  theme_bw(base_size = 11) +
+  theme(legend.position = "bottom", legend.direction = "vertical")
+
+patchwork::wrap_plots(p_erros, p_parcelas, ncol = 2) +
+  patchwork::plot_annotation(tag_levels = "A")
+```
+
+```{r}
+#| echo: false
+ep_2 <- formatar(erros$entre_dietas[1])
+ep_20 <- formatar(erros$entre_dietas[4])
+ep_peixes <- formatar(erros$entre_peixes[1])
+ept_2 <- formatar(erros$entre_tanques[1])
+ept_20 <- formatar(erros$entre_tanques[4])
+
+formatar3 <- function(x) formatC(x, format = "f", digits = 3, decimal.mark = ",")
+parcela_peixes <- formatar3(4 * sigma_peixe^2 / orcamento)
+sub_6 <- formatar3(sigma_peixe^2 / 6)
+sub_60 <- formatar3(sigma_peixe^2 / 60)
+var_tanque <- formatar(sigma_tanque^2)
+```
+
+O painel A da @fig-erros-padrao apresenta o erro padrão da diferença entre dois peixes, entre dois tanques e entre as duas dietas. O erro padrão da diferença entre dois peixes do mesmo tanque depende apenas de $\sigma_P$ e por isso vale `r ep_peixes` cm nos quatro desenhos. A comparação entre dois tanques da mesma dieta sobe de `r ept_2` para `r ept_20` cm, porque tanques com menos peixes têm suas médias estimadas com menor precisão. Isso não é um problema aqui, já que o objetivo do experimento é estimar a diferença entre as dietas. É justamente esse último erro padrão que cai à medida que usamos mais tanques, de `r ep_2` cm com 2 tanques para `r ep_20` cm com 20 tanques. Lembre-se de que um experimento é tanto mais preciso quanto menor for o erro padrão da comparação que interessa, de modo que aumentar o número de tanques aumenta a capacidade de detectar o efeito de 1,0 cm no comprimento médio.
+
+Vale notar onde as curvas se encontram. Com 2 tanques, a diferença entre dietas tem exatamente o mesmo erro padrão que a diferença entre dois tanques quaisquer, porque as duas comparações são a mesma coisa. Nessa situação, os efeitos do tanque e da dieta estão **confundidos**, o experimento não tem como separá-los e a pergunta inicial não pode ser respondida.
+
+O painel B da @fig-erros-padrao decompõe a variância da diferença entre dietas na contribuição dos peixes e na contribuição dos tanques. A parcela que vem dos peixes vale `r parcela_peixes` cm² nos quatro desenhos, porque todos usam os mesmos 120 peixes. A parcela que vem dos tanques, por outro lado, cai pela metade cada vez que o número de tanques dobra. Com poucos tanques, portanto, o experimento é tanto mais prejudicado quanto mais heterogêneos eles forem, ao passo que essa heterogeneidade, mesmo existindo, pesa cada vez menos quando há muitos tanques (réplicas) por dieta.
+
+A contribuição das subamostras, isto é, de medir mais de um peixe por tanque, é pequena, mas subamostrar não é um problema em si. Medir vários peixes produz uma média mais confiável **daquele** tanque, e isso melhora a estimativa. O ganho, porém, satura rápido. A parcela $\sigma_P^2/m$ vale `r sub_6` cm² com 6 peixes por tanque e `r sub_60` cm² com 60, sempre pequena diante dos `r var_tanque` cm² que a variação entre tanques acrescenta. Nenhum peixe a mais reduz a variação entre tanques, enquanto cada tanque novo acrescenta uma repetição independente do tratamento e torna o experimento mais capaz de detectar diferenças entre as dietas.
+
+Em resumo, a replicação tem duas funções. Primeiro, permite estimar a variação entre unidades tratadas da mesma forma. Segundo, faz com que uma ocorrência inesperada, como a falha de uma bomba, não determine sozinha o efeito estimado. Para isso, no entanto, as réplicas precisam ser genuinamente independentes e cobrir a variabilidade sobre a qual se pretende concluir.
 
 ::: {.callout-warning appearance="minimal" title="Um extremo também não serve"}
-Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas, como densidade irrealista, mais trabalho de manutenção e mais chance de perder unidades inteiras durante o experimento.
+Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas, como densidades irrealistas, mais trabalho de manutenção e mais chance de perder unidades inteiras durante o experimento.
 
-A decisão é um equilíbrio, mas ele começa contando unidades experimentais, não observações.
+A decisão, portanto, está em encontrar o ponto de equilíbrio, e ela depende prioritariamente do número de unidades experimentais (tanques), não do número de observações (peixes).
 :::
 
-Replicação tem duas funções. Primeiro, permite estimar a variação entre unidades tratadas da mesma forma. Segundo, faz com que uma ocorrência particular, como a falha de uma bomba, não determine inteiramente o efeito estimado. Réplicas precisam ser genuinamente independentes e cobrir a variabilidade sobre a qual se pretende concluir.
 
-## Quantas unidades em cada tratamento
+## Quantas unidades em cada tratamento?
 
-Definido o número total de unidades, resta distribuí-las entre os tratamentos. Um desenho **balanceado** atribui o mesmo número de unidades a cada um. O balanceamento não é obrigatório para todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças de variância. Também evita que a perda de poucas unidades deixe um tratamento quase sem replicação, situação em que o experimento inteiro passa a depender de duas ou três observações.
+Definido o número total de unidades, resta distribuí-las entre os tratamentos. Um desenho **balanceado** atribui o mesmo número de unidades a cada tratamento. O balanceamento não é exigido por todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças de variância. Também evita que a perda de poucas unidades deixe um dos tratamentos quase sem replicação, situação em que o experimento inteiro passa a depender de um punhado de réplicas.
 
 # Segunda decisão: quem recebe qual tratamento?
 
-Definidos os tanques, resta atribuir as dietas. E essa atribuição precisa ser **sorteada**.
+Definidos os tanques, resta atribuir as dietas, e essa atribuição precisa ser **sorteada**.
 
-Sortear não é uma formalidade burocrática. É o que impede que diferenças pré-existentes se alinhem com o tratamento. Se a pesquisadora escolher "os tanques mais claros para a dieta nova", luz e dieta ficam confundidas para sempre, e nenhuma análise posterior separa as duas.
+Sortear impede que diferenças pré-existentes se alinhem com o tratamento. Se a pesquisadora escolher "os tanques mais claros para a dieta nova", luz e dieta ficam confundidas para sempre, e nenhuma análise posterior será capaz de separar as duas.
 
-O sorteio também cobre o que ninguém pensou em medir, como a posição na sala, a idade da bomba de aeração e a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado.
+O sorteio também cobre o que ninguém pensou em medir, como a posição na sala, a idade da bomba de aeração e a ordem em que os peixes foram capturados. Ele não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado só.
 
 Vale escrever isso com um pouco mais de precisão. Se $Y_i(0)$ representa o resultado que o tanque $i$ teria sob a dieta comum e $Y_i(1)$ o resultado sob a dieta enriquecida, o efeito individual seria $Y_i(1)-Y_i(0)$. Nunca observamos os dois resultados no mesmo tanque, porque cada tanque recebe uma única dieta. A alocação aleatória contorna esse impasse ao criar grupos comparáveis, de modo que o efeito médio pode ser estimado por
 
@@ -121,9 +288,9 @@ $$
 \widehat\Delta=\bar Y_{enriquecida}-\bar Y_{comum}.
 $$
 
-O símbolo $\widehat\Delta$ é a diferença observada entre médias. Sob sorteio correto e ausência de interferência entre unidades, ela é centrada no efeito médio. A aleatorização não garante que toda característica fique exatamente balanceada em uma realização, mas garante que desequilíbrios não sejam sistematicamente produzidos pelo pesquisador e fornece base probabilística para a comparação.
+O símbolo $\widehat\Delta$ representa a diferença observada entre as médias dos dois grupos. Sob sorteio correto e na ausência de interferência entre as unidades, essa diferença estima sem viés o efeito médio do tratamento. A aleatorização não garante que toda característica fique exatamente balanceada em um sorteio particular, mas garante que os desequilíbrios não sejam produzidos sistematicamente pelo pesquisador, e fornece a base probabilística da comparação.
 
-Na prática, o sorteio balanceado é uma linha de código, e convém que seja registrada:
+Na prática, o sorteio balanceado é uma linha de código, e convém que ela seja registrada:
 
 ```{r}
 #| code-fold: true
@@ -136,7 +303,7 @@ alocacao <- tanques |>
 alocacao
 ```
 
-O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima, e a função `sample()` apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.
+O vetor já contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima, e a função `sample()` apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.
 
 ::: {.callout-warning appearance="minimal" title="Aleatorizar não é escolher sem critério"}
 "Distribuir de qualquer jeito" e "sortear" não são a mesma coisa. Uma escolha informal tende a seguir padrões que quem escolhe nem percebe.
@@ -153,7 +320,7 @@ O que exatamente se perde quando o sorteio não acontece? A resposta fica clara 
 | Superior | 10 | 0 |
 | Inferior | 0 | 10 |
 
-Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral, pois vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.
+Nenhuma comparação nesse desenho separa dieta de posição. Qualquer diferença observada pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não se trata de um problema de tamanho amostral, pois vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.
 
 ```{r}
 #| echo: false
@@ -168,6 +335,7 @@ confundido <- grade_tanques |>
   mutate(dieta = if_else(prateleira == "superior", "comum", "enriquecida"),
          desenho = "Confundido")
 
+set.seed(45)
 balanceado <- grade_tanques |>
   group_by(prateleira) |>
   mutate(dieta = sample(rep(c("comum", "enriquecida"), each = 5))) |>
@@ -188,7 +356,7 @@ No painel de baixo da @fig-confundimento, cada prateleira contém as duas dietas
 
 ## Quando o sorteio precisa respeitar a estrutura
 
-O painel inferior da @fig-confundimento sugere um refinamento do sorteio. Aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear **dentro** deles. Por exemplo, em cada prateleira da sala metade dos tanques recebe cada dieta. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.
+O painel inferior da @fig-confundimento sugere um refinamento do sorteio. A aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear **dentro** deles. Por exemplo, em cada prateleira da sala, metade dos tanques recebe uma dieta e metade recebe a outra. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.
 
 Uma implementação completa cria os grupos primeiro e sorteia os rótulos separadamente em cada um:
 
@@ -210,25 +378,25 @@ count(plano, prateleira, tratamento)
 
 A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar `each = 3` altera a replicação por tratamento dentro de cada grupo. Se o número de unidades for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.
 
-Esses grupos são blocos. O bloqueamento não transforma posição em tratamento de interesse, apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta e cada bloco deve permitir comparação entre os tratamentos.
+Esses grupos são chamados de **blocos**. O bloqueamento não transforma a posição em um tratamento de interesse, apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta, e cada bloco deve permitir a comparação entre todos os tratamentos.
 
 ## Sortear unidades e sortear tratamentos
 
 Duas operações levam o nome de sorteio e respondem a perguntas diferentes. A **amostragem aleatória** seleciona unidades de uma população e sustenta a generalização para essa população. A **alocação aleatória** distribui tratamentos entre unidades já selecionadas e sustenta a comparação causal entre tratamentos. Um estudo pode ter uma sem a outra.
 
-Peixes comprados de um único viveiro podem receber dietas por sorteio. A comparação causal dentro desse conjunto é forte, mas generalizar para todas as populações de robalo exige cautela. Em sentido oposto, uma amostra aleatória de estuários descreve bem a região, mas comparar estuários poluídos e não poluídos continua sendo observacional se a poluição não foi atribuída.
+Peixes comprados de um único viveiro podem receber as dietas por sorteio. A comparação causal dentro desse conjunto é forte, mas generalizar o resultado para todas as populações de robalo exige cautela. No sentido oposto, uma amostra aleatória de estuários descreve bem a região, e ainda assim comparar estuários poluídos e não poluídos continua sendo um estudo observacional, porque a poluição não foi atribuída pelo pesquisador.
 
 # Terceira decisão: o que manter constante?
 
 A última decisão é sobre tudo aquilo que **não** é o tratamento.
 
-Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial, horário de alimentação, origem dos juvenis) é o que se chama de **controle local**. Cada uma dessas fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a qual o efeito do tratamento é julgado.
+Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial, horário de alimentação, origem dos juvenis) é o que se chama de **controle local**. Cada fonte de variação eliminada dessa forma deixa de compor a variação residual, e a variação residual é a régua com a qual o efeito do tratamento é julgado.
 
 O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.
 
-Parte dessa decisão é definir contra o que o tratamento será comparado. Um **grupo controle** representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional, para um contaminante, a concentração zero, e para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos outros grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.
+Parte dessa decisão é definir contra o que o tratamento será comparado. Um **grupo controle** representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional, para um contaminante, a concentração zero, e para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos demais grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.
 
-Controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede o efeito naquela origem com precisão, mas pode representar mal outras populações. O objetivo não é eliminar toda variação biológica, e sim controlar fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.
+O controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede com precisão o efeito naquela origem, mas pode representar mal outras populações. O objetivo não é eliminar toda a variação biológica, e sim controlar as fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.
 
 Uma última providência diz respeito a quem mede. Quando possível, quem registra a resposta não deve saber qual tratamento cada unidade recebeu. Esse **mascaramento** não altera a biologia, mas reduz a chance de expectativas influenciarem a medição, a exclusão de observações ou o registro de resultados ambíguos.
 
@@ -244,11 +412,9 @@ As três são decisões de delineamento. Nenhuma delas pode ser tomada depois, n
 
 # Nem tudo pode ser sorteado
 
-Uma ressalva acompanha boa parte das Ciências do Mar. Em muitos estudos o "tratamento" é uma condição observada, não atribuída, como costões expostos e abrigados, meses de coleta ou estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.
+Compreender os elementos discutidos acima é fundamental para conduzir um bom delineamento, mas aplicá-los nem sempre é simples. Em muitos estudos, o "tratamento" é uma condição observada, e não atribuída. Quando o estudo compara costões expostos e abrigados, meses de coleta ou estuários poluídos e limpos, essas condições não são alocadas por escolha do pesquisador.
 
-Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido. Sem aleatorização, a conclusão é sobre associação, não sobre causa.
-
-Mesmo em experimento aleatorizado, a interpretação causal exige cuidados. Tratamentos precisam ser aplicados conforme planejado, uma unidade não deve alterar o tratamento efetivo de outra, perdas não podem depender seletivamente do resultado e a medição deve ser comparável. O sorteio é o núcleo do argumento causal, não uma licença para ignorar o restante do protocolo.
+Nesses casos, ainda vale escolher bem as unidades, replicá-las e controlar o que for possível, para evitar que o confundimento com variáveis que não interessam ao estudo invalide a comparação central.
 
 ::: {.callout-note appearance="minimal" title="Protocolo mínimo antes da coleta"}
 Defina a população e a unidade experimental. Liste tratamentos e controle. Escolha replicação e subamostragem. Identifique fontes para bloqueio. Gere e registre a sequência aleatória. Padronize manejo e medição. Planeje mascaramento, perdas e exclusões. Declare previamente respostas e comparações principais.
@@ -257,12 +423,13 @@ Defina a população e a unidade experimental. Liste tratamentos e controle. Esc
 Os 120 peixes do início continuam sendo 120. O que as três decisões determinam é quanta informação sobre a dieta esses mesmos peixes serão capazes de fornecer, e nenhuma delas pode ser revista depois que o experimento começa. É por isso que o delineamento, e não a análise, é a etapa em que um estudo ganha ou perde a capacidade de responder à pergunta que o originou.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
-O MEAD não trata de delineamento experimental, mas dois livros da bibliografia da unidade curricular desenvolvem o tema com profundidade. Ruxton e Colegrave [@ruxton2011] é voltado especificamente ao planejamento em ciências da vida, e Quinn e Keough [@quinn2002] conecta delineamento e análise.
+- Ruxton e Colegrave [@ruxton2011]
+- Quinn e Keough [@quinn2002]
 :::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Se a pesquisadora só puder montar 6 tanques, é melhor colocar 30 peixes em cada um, ou 10 peixes em cada um e usar o restante do orçamento em mais tanques?
-- Um colega sugere manter os tanques da dieta nova em uma sala mais quente, "para os peixes crescerem melhor". Que problema isso cria para a comparação?
+- Se a pesquisadora só puder montar 6 tanques, os mesmos 120 peixes rendem 20 por tanque. Use a fórmula do erro padrão da diferença entre dietas para dizer quanto esse desenho ganha em relação a 4 tanques de 30 peixes e quanto perde em relação a 8 tanques de 15.
+- Um colega sugere manter somente os tanques da dieta enriquecida em uma sala mais quente, "para os peixes crescerem melhor". Que problema isso cria para a comparação?
 :::
 
 # Referências
