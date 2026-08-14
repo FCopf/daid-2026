@@ -390,7 +390,8 @@ window.Quarto = {
   <li><a href="#cento-e-vinte-peixes-para-distribuir" id="toc-cento-e-vinte-peixes-para-distribuir" class="nav-link active" data-scroll-target="#cento-e-vinte-peixes-para-distribuir"><span class="header-section-number">1</span> Cento e vinte peixes para distribuir</a></li>
   <li><a href="#primeira-decisão-quantas-unidades-experimentais" id="toc-primeira-decisão-quantas-unidades-experimentais" class="nav-link" data-scroll-target="#primeira-decisão-quantas-unidades-experimentais"><span class="header-section-number">2</span> Primeira decisão: quantas unidades experimentais?</a>
   <ul class="collapse">
-  <li><a href="#quantas-unidades-em-cada-tratamento" id="toc-quantas-unidades-em-cada-tratamento" class="nav-link" data-scroll-target="#quantas-unidades-em-cada-tratamento"><span class="header-section-number">2.1</span> Quantas unidades em cada tratamento</a></li>
+  <li><a href="#três-comparações-três-precisões" id="toc-três-comparações-três-precisões" class="nav-link" data-scroll-target="#três-comparações-três-precisões"><span class="header-section-number">2.1</span> Três comparações, três precisões</a></li>
+  <li><a href="#quantas-unidades-em-cada-tratamento" id="toc-quantas-unidades-em-cada-tratamento" class="nav-link" data-scroll-target="#quantas-unidades-em-cada-tratamento"><span class="header-section-number">2.2</span> Quantas unidades em cada tratamento?</a></li>
   </ul></li>
   <li><a href="#segunda-decisão-quem-recebe-qual-tratamento" id="toc-segunda-decisão-quem-recebe-qual-tratamento" class="nav-link" data-scroll-target="#segunda-decisão-quem-recebe-qual-tratamento"><span class="header-section-number">3</span> Segunda decisão: quem recebe qual tratamento?</a>
   <ul class="collapse">
@@ -443,29 +444,100 @@ window.Quarto = {
 
 <section id="cento-e-vinte-peixes-para-distribuir" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Cento e vinte peixes para distribuir</h1>
-<p>Uma pesquisadora vai comparar duas dietas para juvenis de robalo. O orçamento dá para 120 peixes e para o espaço, a mão de obra e a ração que eles exigem. Esse número está fechado.</p>
-<p>O que ainda não está fechado é como distribuí-los. Dois tanques de 60 peixes? Quatro de 30? Vinte de 6? Todas as opções gastam o mesmo, ocupam a mesma sala e produzem 120 medidas de comprimento.</p>
-<p>Elas não produzem, porém, a mesma capacidade de responder à pergunta. Esta leitura trata das três decisões que definem isso, todas tomadas <strong>antes</strong> de o primeiro peixe entrar na água.</p>
+<p>Uma pesquisadora vai comparar duas dietas para juvenis de robalo. Dependendo do orçamento disponível, do tempo estimado de processamento e do espaço físico, ela pode escolher entre algumas opções:</p>
+<ul>
+<li>Dois tanques de 60 peixes;</li>
+<li>Quatro tanques de 30 peixes;</li>
+<li>Oito tanques de 15 peixes;</li>
+<li>Vinte tanques de 6 peixes.</li>
+</ul>
+<p>Cada uma dessas opções tem uma capacidade diferente de responder à pergunta. Vamos explorar as consequências de cada escolha, exercício que sempre deve ser feito antes do início do experimento.</p>
 </section>
 <section id="primeira-decisão-quantas-unidades-experimentais" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Primeira decisão: quantas unidades experimentais?</h1>
-<p>Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é atribuída ao tanque, não ao peixe. Quem se replica, portanto, é o tanque.</p>
-<p>Vale ver o que isso significa em números. A <a href="#fig-alocacao" class="quarto-xref">Figura&nbsp;1</a> repete duas mil vezes um experimento em que <strong>as duas dietas são idênticas</strong>, variando apenas a distribuição dos 120 peixes, e guarda a diferença estimada entre as dietas em cada repetição.</p>
+<p>Peixes do mesmo tanque compartilham as condições daquele tanque, e a dieta é atribuída ao tanque, não ao peixe. A unidade experimental, e portanto a réplica, é o tanque.</p>
+<p>Vale simular os quatro experimentos para compreender o que cada um permite aprender sobre as fontes de variação nele envolvidas. Como nenhum planejamento acontece sem uma expectativa a respeito dessas fontes, vamos fixar três magnitudes:</p>
+<ul>
+<li>Variação entre peixes: peixes de um mesmo tanque diferem entre si com desvio-padrão <span class="math inline">\(\sigma_P = 0{,}8\)</span> cm;</li>
+<li>Variação entre tanques: tanques tratados da mesma forma diferem entre si com desvio-padrão <span class="math inline">\(\sigma_T = 0{,}5\)</span> cm;</li>
+<li>Variação entre dietas: a dieta enriquecida acrescenta <span class="math inline">\(\Delta = 1{,}0\)</span> cm ao comprimento médio, sobre uma média de 10 cm na dieta comum (o que o experimento deseja estimar).</li>
+</ul>
+<p>A <a href="#fig-quatro-desenhos" class="quarto-xref">Figura&nbsp;1</a> simula um experimento para cada uma das quatro opções. A simulação tem dois passos, que correspondem aos dois níveis do experimento. Primeiro sorteamos a média de cada tanque e depois sorteamos os peixes dentro dele.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Ver a simulação dos quatro desenhos</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">174</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>orcamento <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>comprimento_base <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>efeito_dieta <span class="ot">&lt;-</span> <span class="fl">1.0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sigma_tanque <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sigma_peixe <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>simular_desenho <span class="ot">&lt;-</span> <span class="cf">function</span>(n_tanques) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  peixes_por_tanque <span class="ot">&lt;-</span> orcamento <span class="sc">/</span> n_tanques</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  dieta <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> n_tanques <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  media_tanque <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    n_tanques,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> comprimento_base <span class="sc">+</span> efeito_dieta <span class="sc">*</span> (dieta <span class="sc">==</span> <span class="st">"enriquecida"</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> sigma_tanque</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">desenho =</span> <span class="fu">paste0</span>(n_tanques, <span class="st">" tanques de "</span>, peixes_por_tanque, <span class="st">" peixes"</span>),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">tanque =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">seq_len</span>(n_tanques), <span class="at">each =</span> peixes_por_tanque)),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">dieta =</span> <span class="fu">rep</span>(dieta, <span class="at">each =</span> peixes_por_tanque),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">comprimento =</span> <span class="fu">rnorm</span>(orcamento,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                        <span class="at">mean =</span> <span class="fu">rep</span>(media_tanque, <span class="at">each =</span> peixes_por_tanque),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sd =</span> sigma_peixe)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>desenhos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">20</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>experimentos <span class="ot">&lt;-</span> <span class="fu">lapply</span>(desenhos, simular_desenho)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>limites_y <span class="ot">&lt;-</span> <span class="fu">range</span>(<span class="fu">bind_rows</span>(experimentos)<span class="sc">$</span>comprimento)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>painel_desenho <span class="ot">&lt;-</span> <span class="cf">function</span>(dados) {</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  media_tanque <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tanque, dieta) <span class="sc">|&gt;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  media_dieta <span class="ot">&lt;-</span> dados <span class="sc">|&gt;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(dieta) <span class="sc">|&gt;</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(comprimento), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(dados, <span class="fu">aes</span>(<span class="at">x =</span> tanque, <span class="at">y =</span> comprimento, <span class="at">colour =</span> dieta)) <span class="sc">+</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">data =</span> media_dieta, <span class="fu">aes</span>(<span class="at">yintercept =</span> media, <span class="at">colour =</span> dieta),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>               <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> media_tanque, <span class="fu">aes</span>(<span class="at">y =</span> media), <span class="at">shape =</span> <span class="dv">95</span>, <span class="at">size =</span> <span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> limites_y) <span class="sc">+</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">guide =</span> <span class="fu">guide_axis</span>(<span class="at">check.overlap =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">comum =</span> <span class="st">"#0072B2"</span>, <span class="at">enriquecida =</span> <span class="st">"#D55E00"</span>)) <span class="sc">+</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">unique</span>(dados<span class="sc">$</span>desenho), <span class="at">x =</span> <span class="st">"Tanque"</span>, <span class="at">y =</span> <span class="st">"Comprimento (cm)"</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">"Dieta"</span>) <span class="sc">+</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(<span class="fu">lapply</span>(experimentos, painel_desenho),</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">guides =</span> <span class="st">"collect"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
-<div id="fig-alocacao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero.">
+<div id="fig-quatro-desenhos" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Quatro gráficos de pontos em painel 2x2, um por desenho. Em 2 tanques de 60 peixes há duas nuvens densas, cada uma com uma única média de tanque. Conforme o número de tanques aumenta, as nuvens ficam menores e mais numerosas, e as médias de tanque se espalham em torno das linhas tracejadas de cada dieta.">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-alocacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="pread-aleatorizacao-controle_files/figure-html/fig-alocacao-1.png" class="img-fluid figure-img" alt="Quatro histogramas empilhados, todos centrados em zero. Com 2 tanques de 60 peixes a distribuição é muito larga; ela vai se estreitando conforme o número de tanques aumenta, e com 20 tanques de 6 peixes fica bem concentrada em torno de zero." width="672">
+<div aria-describedby="fig-quatro-desenhos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-aleatorizacao-controle_files/figure-html/fig-quatro-desenhos-1.png" class="img-fluid figure-img" alt="Quatro gráficos de pontos em painel 2x2, um por desenho. Em 2 tanques de 60 peixes há duas nuvens densas, cada uma com uma única média de tanque. Conforme o número de tanques aumenta, as nuvens ficam menores e mais numerosas, e as médias de tanque se espalham em torno das linhas tracejadas de cada dieta." width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-alocacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil experimentos, para quatro maneiras de distribuir os mesmos 120 peixes. Como não há efeito, o valor correto é sempre zero.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quatro-desenhos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Um experimento simulado para cada maneira de distribuir os mesmos 120 peixes. Cada ponto é um peixe, cada traço curto é a média de um tanque e as linhas tracejadas são as médias das duas dietas. A dieta enriquecida realmente acrescenta 1,0 cm em todos os painéis.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Com 2 tanques de 60 peixes, as diferenças estimadas nesta simulação se espalharam com desvio-padrão de 1,12 cm, apesar de a dieta não fazer nada. Com 20 tanques de 6 peixes, o mesmo orçamento produziu estimativas com desvio-padrão de 0,37 cm.</p>
+<p>Os quatro painéis nasceram do mesmo processo, com o mesmo efeito real de 1,0 cm, e é com esse valor que cada estimativa deve ser comparada. No desenho de 2 tanques, a diferença entre as linhas tracejadas foi de 0,22 cm, e ela carrega tudo o que separa aqueles dois tanques, porque comparar as duas dietas é literalmente comparar dois tanques. No desenho de 4 tanques, cada dieta já é a média de dois tanques, e a estimativa foi de 0,93 cm. Nos desenhos de 8 e de 20 tanques, em que cada média de dieta se apoia em quatro e em dez sorteios independentes, as estimativas foram de 0,93 cm e 1,30 cm.</p>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -476,11 +548,112 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a dieta foi sorteada de forma independente.</p>
-<p>Repare também que os quatro histogramas estão centrados em zero. Distribuir mal os peixes não faz o experimento errar para um lado. Faz cada resultado ser muito mais instável, e portanto muito mais fácil de confundir com um efeito real.</p>
+<p>Note que nenhum peixe foi acrescentado entre o primeiro painel e o último. O que mudou foi quantas vezes a dieta foi sorteada de forma independente.</p>
+<p>Repare também que nenhum desenho está errado por construção. Distribuir mal os peixes não faz o experimento errar sempre para o mesmo lado, mas torna cada resultado muito mais instável e, por isso, muito mais fácil de confundir com um efeito real.</p>
 </div>
 </div>
-<p>Isso não significa que subamostras sejam inúteis. Medir vários peixes por tanque produz uma média confiável <strong>daquele</strong> tanque, e isso melhora a estimativa. Só que o ganho satura rápido, enquanto cada tanque novo acrescenta uma repetição independente do tratamento.</p>
+<section id="três-comparações-três-precisões" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="três-comparações-três-precisões"><span class="header-section-number">2.1</span> Três comparações, três precisões</h2>
+<p>A <a href="#fig-quatro-desenhos" class="quarto-xref">Figura&nbsp;1</a> ilustra uma única simulação deste experimento, portanto os valores acima valem apenas para esse sorteio. Você pode, e deve, repetir o código removendo a chamada a <code>set.seed()</code> para ver a variedade de padrões que cada um desses experimentos é capaz de gerar.</p>
+<p>Para comparar os desenhos sem depender de um sorteio particular, a incerteza de cada comparação pode ser calculada diretamente das três magnitudes já fixadas.</p>
+<p>Com <span class="math inline">\(k\)</span> tanques e <span class="math inline">\(m\)</span> peixes em cada um, a média de um tanque carrega as duas fontes de variação, do tanque (<span class="math inline">\(\sigma_T\)</span>) e dos peixes (<span class="math inline">\(\sigma_P\)</span>), e tem variância</p>
+<p><span class="math display">\[
+\sigma^2_{\bar y_{tanque}}=\sigma_T^2+\frac{\sigma_P^2}{m}.
+\]</span></p>
+<p>Falta uma regra, que usaremos três vezes. Quando duas quantidades são independentes, a variância da diferença entre elas é a soma das duas variâncias, isto é, <span class="math inline">\(\sigma^2_{a-b}=\sigma^2_a+\sigma^2_b\)</span>. Se as duas tiverem a mesma variância, o erro padrão da diferença é o erro padrão de uma delas multiplicado por <span class="math inline">\(\sqrt{2}\)</span>.</p>
+<p>Com essa regra, podemos escrever o erro padrão das três comparações que o experimento permite, do nível mais baixo para o mais alto.</p>
+<p><strong>Dois peixes do mesmo tanque.</strong> Os dois compartilham a média daquele tanque, e o que os separa é apenas a variação individual, portanto</p>
+<p><span class="math display">\[
+\sigma_{y_1-y_2}=\sqrt{2}\,\sigma_P.
+\]</span></p>
+<p>Nem <span class="math inline">\(k\)</span> nem <span class="math inline">\(m\)</span> aparecem aqui, e é por isso que essa comparação tem o mesmo valor nos quatro desenhos.</p>
+<p><strong>Dois tanques da mesma dieta.</strong> Cada tanque entra pela sua média, cuja variância é a da primeira fórmula desta seção, de modo que</p>
+<p><span class="math display">\[
+\sigma_{\bar y_{t_1}-\bar y_{t_2}}=\sqrt{2\left(\sigma_T^2+\frac{\sigma_P^2}{m}\right)}.
+\]</span></p>
+<p>Agora <span class="math inline">\(m\)</span> aparece, mas dentro da parcela menor, e por isso essa comparação piora só um pouco quando os tanques ficam menores.</p>
+<p><strong>As duas dietas.</strong> Cada dieta é a média de <span class="math inline">\(k/2\)</span> tanques, e a variância dessa média é a variância de uma média de tanque dividida por <span class="math inline">\(k/2\)</span>. Aplicando a regra da diferença e substituindo <span class="math inline">\(m=120/k\)</span>, chegamos a</p>
+<p><span class="math display">\[
+\sigma_{\bar y_1-\bar y_2}=2\sqrt{\frac{\sigma_T^2}{k}+\frac{\sigma_P^2}{120}}.
+\]</span></p>
+<p>O 120 que sobrou no denominador é o total de peixes. Como <span class="math inline">\(k\times m=120\)</span>, o número de peixes por tanque desapareceu dessa parcela, que é a mesma nos quatro desenhos. Só a parcela dos tanques (<span class="math inline">\(\sigma_T^2/k\)</span>) responde ao número de tanques.</p>
+<p>Repare ainda que, com <span class="math inline">\(k=2\)</span>, esta última expressão e a anterior dão o mesmo valor, porque, com apenas dois tanques, comparar as duas dietas é o mesmo que comparar dois tanques. A <a href="#fig-erros-padrao" class="quarto-xref">Figura&nbsp;2</a> reúne as três comparações para os quatro delineamentos.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Ver o cálculo dos três erros padrão</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>erros <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">n_tanques =</span> desenhos) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">peixes_por_tanque =</span> orcamento <span class="sc">/</span> n_tanques,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">desenho =</span> <span class="fu">fct_inorder</span>(<span class="fu">paste0</span>(n_tanques, <span class="st">" tanques</span><span class="sc">\n</span><span class="st">"</span>, peixes_por_tanque, <span class="st">" peixes"</span>)),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">entre_dietas =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(sigma_tanque<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> n_tanques <span class="sc">+</span> sigma_peixe<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> orcamento),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">entre_tanques =</span> <span class="fu">sqrt</span>(<span class="dv">2</span> <span class="sc">*</span> (sigma_tanque<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> sigma_peixe<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> peixes_por_tanque)),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">entre_peixes =</span> <span class="fu">sqrt</span>(<span class="dv">2</span>) <span class="sc">*</span> sigma_peixe</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>comparacoes <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">entre_dietas =</span> <span class="st">"Entre as duas dietas"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">entre_tanques =</span> <span class="st">"Entre dois tanques da mesma dieta"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">entre_peixes =</span> <span class="st">"Entre dois peixes do mesmo tanque"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>p_erros <span class="ot">&lt;-</span> erros <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">all_of</span>(<span class="fu">names</span>(comparacoes)),</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"comparacao"</span>, <span class="at">values_to =</span> <span class="st">"erro_padrao"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comparacao =</span> <span class="fu">factor</span>(comparacao, <span class="at">levels =</span> <span class="fu">names</span>(comparacoes),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> comparacoes)) <span class="sc">|&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> desenho, <span class="at">y =</span> erro_padrao, <span class="at">colour =</span> comparacao, <span class="at">group =</span> comparacao)) <span class="sc">+</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> efeito_dieta, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> efeito_dieta, <span class="at">label =</span> <span class="st">"efeito da dieta"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.6</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Entre as duas dietas"</span> <span class="ot">=</span> <span class="st">"#009E73"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Entre dois tanques da mesma dieta"</span> <span class="ot">=</span> <span class="st">"#CC79A7"</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"Entre dois peixes do mesmo tanque"</span> <span class="ot">=</span> <span class="st">"#999999"</span>)) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Erro padrão da diferença (cm)"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.direction =</span> <span class="st">"vertical"</span>)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>p_parcelas <span class="ot">&lt;-</span> erros <span class="sc">|&gt;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    desenho,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Parcela dos tanques</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">4</span> <span class="sc">*</span> sigma_tanque<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> n_tanques,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Parcela dos peixes</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">4</span> <span class="sc">*</span> sigma_peixe<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> orcamento</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>desenho, <span class="at">names_to =</span> <span class="st">"parcela"</span>, <span class="at">values_to =</span> <span class="st">"variancia"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parcela =</span> <span class="fu">fct_inorder</span>(parcela)) <span class="sc">|&gt;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> desenho, <span class="at">y =</span> variancia, <span class="at">fill =</span> parcela)) <span class="sc">+</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">4</span> <span class="sc">*</span> sigma_peixe<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> orcamento,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">Parcela dos tanques</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#CC79A7"</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>                               <span class="st">`</span><span class="at">Parcela dos peixes</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"#999999"</span>)) <span class="sc">+</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Variância da diferença entre dietas (cm²)"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, <span class="at">legend.direction =</span> <span class="st">"vertical"</span>)</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p_erros, p_parcelas, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-erros-padrao" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis. No painel A, a curva entre dois peixes é horizontal e a mais alta, a curva entre dois tanques sobe levemente e a curva entre as duas dietas parte do mesmo ponto da curva entre tanques e cai até menos de um terço da linha do efeito. No painel B, barras empilhadas encolhem da esquerda para a direita, com uma fatia inferior de mesma altura em todas.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-erros-padrao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pread-aleatorizacao-controle_files/figure-html/fig-erros-padrao-1.png" class="img-fluid figure-img" alt="Dois painéis. No painel A, a curva entre dois peixes é horizontal e a mais alta, a curva entre dois tanques sobe levemente e a curva entre as duas dietas parte do mesmo ponto da curva entre tanques e cai até menos de um terço da linha do efeito. No painel B, barras empilhadas encolhem da esquerda para a direita, com uma fatia inferior de mesma altura em todas." width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-erros-padrao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Precisão dos quatro desenhos, calculada a partir das magnitudes fixadas. Em A, o erro padrão de três comparações possíveis, com a linha tracejada no efeito de 1,0 cm que se quer detectar. Em B, a variância da diferença entre dietas separada na parcela que vem dos tanques e na parcela que vem dos peixes.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>O painel A da <a href="#fig-erros-padrao" class="quarto-xref">Figura&nbsp;2</a> apresenta o erro padrão da diferença entre dois peixes, entre dois tanques e entre as duas dietas. O erro padrão da diferença entre dois peixes do mesmo tanque depende apenas de <span class="math inline">\(\sigma_P\)</span> e por isso vale 1,13 cm nos quatro desenhos. A comparação entre dois tanques da mesma dieta sobe de 0,72 para 0,84 cm, porque tanques com menos peixes têm suas médias estimadas com menor precisão. Isso não é um problema aqui, já que o objetivo do experimento é estimar a diferença entre as dietas. É justamente esse último erro padrão que cai à medida que usamos mais tanques, de 0,72 cm com 2 tanques para 0,27 cm com 20 tanques. Lembre-se de que um experimento é tanto mais preciso quanto menor for o erro padrão da comparação que interessa, de modo que aumentar o número de tanques aumenta a capacidade de detectar o efeito de 1,0 cm no comprimento médio.</p>
+<p>Vale notar onde as curvas se encontram. Com 2 tanques, a diferença entre dietas tem exatamente o mesmo erro padrão que a diferença entre dois tanques quaisquer, porque as duas comparações são a mesma coisa. Nessa situação, os efeitos do tanque e da dieta estão <strong>confundidos</strong>, o experimento não tem como separá-los e a pergunta inicial não pode ser respondida.</p>
+<p>O painel B da <a href="#fig-erros-padrao" class="quarto-xref">Figura&nbsp;2</a> decompõe a variância da diferença entre dietas na contribuição dos peixes e na contribuição dos tanques. A parcela que vem dos peixes vale 0,021 cm² nos quatro desenhos, porque todos usam os mesmos 120 peixes. A parcela que vem dos tanques, por outro lado, cai pela metade cada vez que o número de tanques dobra. Com poucos tanques, portanto, o experimento é tanto mais prejudicado quanto mais heterogêneos eles forem, ao passo que essa heterogeneidade, mesmo existindo, pesa cada vez menos quando há muitos tanques (réplicas) por dieta.</p>
+<p>A contribuição das subamostras, isto é, de medir mais de um peixe por tanque, é pequena, mas subamostrar não é um problema em si. Medir vários peixes produz uma média mais confiável <strong>daquele</strong> tanque, e isso melhora a estimativa. O ganho, porém, satura rápido. A parcela <span class="math inline">\(\sigma_P^2/m\)</span> vale 0,107 cm² com 6 peixes por tanque e 0,011 cm² com 60, sempre pequena diante dos 0,25 cm² que a variação entre tanques acrescenta. Nenhum peixe a mais reduz a variação entre tanques, enquanto cada tanque novo acrescenta uma repetição independente do tratamento e torna o experimento mais capaz de detectar diferenças entre as dietas.</p>
+<p>Em resumo, a replicação tem duas funções. Primeiro, permite estimar a variação entre unidades tratadas da mesma forma. Segundo, faz com que uma ocorrência inesperada, como a falha de uma bomba, não determine sozinha o efeito estimado. Para isso, no entanto, as réplicas precisam ser genuinamente independentes e cobrir a variabilidade sobre a qual se pretende concluir.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Um extremo também não serve">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -491,64 +664,64 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas, como densidade irrealista, mais trabalho de manutenção e mais chance de perder unidades inteiras durante o experimento.</p>
-<p>A decisão é um equilíbrio, mas ele começa contando unidades experimentais, não observações.</p>
+<p>Levar a lógica ao limite e montar 60 tanques de 2 peixes traz outros problemas, como densidades irrealistas, mais trabalho de manutenção e mais chance de perder unidades inteiras durante o experimento.</p>
+<p>A decisão, portanto, está em encontrar o ponto de equilíbrio, e ela depende prioritariamente do número de unidades experimentais (tanques), não do número de observações (peixes).</p>
 </div>
 </div>
-<p>Replicação tem duas funções. Primeiro, permite estimar a variação entre unidades tratadas da mesma forma. Segundo, faz com que uma ocorrência particular, como a falha de uma bomba, não determine inteiramente o efeito estimado. Réplicas precisam ser genuinamente independentes e cobrir a variabilidade sobre a qual se pretende concluir.</p>
-<section id="quantas-unidades-em-cada-tratamento" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="quantas-unidades-em-cada-tratamento"><span class="header-section-number">2.1</span> Quantas unidades em cada tratamento</h2>
-<p>Definido o número total de unidades, resta distribuí-las entre os tratamentos. Um desenho <strong>balanceado</strong> atribui o mesmo número de unidades a cada um. O balanceamento não é obrigatório para todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças de variância. Também evita que a perda de poucas unidades deixe um tratamento quase sem replicação, situação em que o experimento inteiro passa a depender de duas ou três observações.</p>
+</section>
+<section id="quantas-unidades-em-cada-tratamento" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="quantas-unidades-em-cada-tratamento"><span class="header-section-number">2.2</span> Quantas unidades em cada tratamento?</h2>
+<p>Definido o número total de unidades, resta distribuí-las entre os tratamentos. Um desenho <strong>balanceado</strong> atribui o mesmo número de unidades a cada tratamento. O balanceamento não é exigido por todo modelo, mas torna as comparações mais precisas e menos sensíveis a diferenças de variância. Também evita que a perda de poucas unidades deixe um dos tratamentos quase sem replicação, situação em que o experimento inteiro passa a depender de um punhado de réplicas.</p>
 </section>
 </section>
 <section id="segunda-decisão-quem-recebe-qual-tratamento" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Segunda decisão: quem recebe qual tratamento?</h1>
-<p>Definidos os tanques, resta atribuir as dietas. E essa atribuição precisa ser <strong>sorteada</strong>.</p>
-<p>Sortear não é uma formalidade burocrática. É o que impede que diferenças pré-existentes se alinhem com o tratamento. Se a pesquisadora escolher “os tanques mais claros para a dieta nova”, luz e dieta ficam confundidas para sempre, e nenhuma análise posterior separa as duas.</p>
-<p>O sorteio também cobre o que ninguém pensou em medir, como a posição na sala, a idade da bomba de aeração e a ordem em que os peixes foram capturados. Não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado.</p>
+<p>Definidos os tanques, resta atribuir as dietas, e essa atribuição precisa ser <strong>sorteada</strong>.</p>
+<p>Sortear impede que diferenças pré-existentes se alinhem com o tratamento. Se a pesquisadora escolher “os tanques mais claros para a dieta nova”, luz e dieta ficam confundidas para sempre, e nenhuma análise posterior será capaz de separar as duas.</p>
+<p>O sorteio também cobre o que ninguém pensou em medir, como a posição na sala, a idade da bomba de aeração e a ordem em que os peixes foram capturados. Ele não elimina essas diferenças, mas as espalha entre os tratamentos, em vez de deixá-las acumular de um lado só.</p>
 <p>Vale escrever isso com um pouco mais de precisão. Se <span class="math inline">\(Y_i(0)\)</span> representa o resultado que o tanque <span class="math inline">\(i\)</span> teria sob a dieta comum e <span class="math inline">\(Y_i(1)\)</span> o resultado sob a dieta enriquecida, o efeito individual seria <span class="math inline">\(Y_i(1)-Y_i(0)\)</span>. Nunca observamos os dois resultados no mesmo tanque, porque cada tanque recebe uma única dieta. A alocação aleatória contorna esse impasse ao criar grupos comparáveis, de modo que o efeito médio pode ser estimado por</p>
 <p><span class="math display">\[
 \widehat\Delta=\bar Y_{enriquecida}-\bar Y_{comum}.
 \]</span></p>
-<p>O símbolo <span class="math inline">\(\widehat\Delta\)</span> é a diferença observada entre médias. Sob sorteio correto e ausência de interferência entre unidades, ela é centrada no efeito médio. A aleatorização não garante que toda característica fique exatamente balanceada em uma realização, mas garante que desequilíbrios não sejam sistematicamente produzidos pelo pesquisador e fornece base probabilística para a comparação.</p>
-<p>Na prática, o sorteio balanceado é uma linha de código, e convém que seja registrada:</p>
+<p>O símbolo <span class="math inline">\(\widehat\Delta\)</span> representa a diferença observada entre as médias dos dois grupos. Sob sorteio correto e na ausência de interferência entre as unidades, essa diferença estima sem viés o efeito médio do tratamento. A aleatorização não garante que toda característica fique exatamente balanceada em um sorteio particular, mas garante que os desequilíbrios não sejam produzidos sistematicamente pelo pesquisador, e fornece a base probabilística da comparação.</p>
+<p>Na prática, o sorteio balanceado é uma linha de código, e convém que ela seja registrada:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver uma alocação balanceada em R</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>alocacao <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dieta =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">10</span>)))</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>alocacao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tanques <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">tanque =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>alocacao <span class="ot">&lt;-</span> tanques <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dieta =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"comum"</span>, <span class="st">"enriquecida"</span>), <span class="at">each =</span> <span class="dv">10</span>)))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>alocacao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 2
    tanque dieta      
     &lt;int&gt; &lt;chr&gt;      
  1      1 enriquecida
- 2      2 comum      
+ 2      2 enriquecida
  3      3 comum      
  4      4 comum      
- 5      5 comum      
+ 5      5 enriquecida
  6      6 enriquecida
  7      7 comum      
- 8      8 enriquecida
- 9      9 enriquecida
-10     10 enriquecida
+ 8      8 comum      
+ 9      9 comum      
+10     10 comum      
 11     11 enriquecida
-12     12 enriquecida
-13     13 comum      
-14     14 comum      
+12     12 comum      
+13     13 enriquecida
+14     14 enriquecida
 15     15 enriquecida
-16     16 enriquecida
-17     17 comum      
+16     16 comum      
+17     17 enriquecida
 18     18 comum      
-19     19 enriquecida
-20     20 comum      </code></pre>
+19     19 comum      
+20     20 enriquecida</code></pre>
 </div>
 </div>
-<p>O vetor contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima, e a função <code>sample()</code> apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.</p>
+<p>O vetor já contém dez rótulos de cada dieta antes do sorteio, o que garante o balanceamento discutido acima, e a função <code>sample()</code> apenas embaralha a ordem em que eles são distribuídos pelos tanques. Registrar a sequência produzida torna o processo auditável.</p>
 <div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Aleatorizar não é escolher sem critério">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -587,7 +760,7 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 </tr>
 </tbody>
 </table>
-<p>Não existe nenhuma unidade que separe dieta de posição. Qualquer diferença pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não é um problema de tamanho amostral, pois vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.</p>
+<p>Nenhuma comparação nesse desenho separa dieta de posição. Qualquer diferença observada pode ser atribuída igualmente à dieta, à prateleira ou à combinação das duas. Não se trata de um problema de tamanho amostral, pois vinte, duzentos ou dois mil tanques com esse mesmo padrão continuariam confundidos.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-confundimento" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira.">
@@ -596,32 +769,32 @@ Figura&nbsp;1: Diferença estimada entre duas dietas idênticas, em dois mil exp
 <img src="pread-aleatorizacao-controle_files/figure-html/fig-confundimento-1.png" class="img-fluid figure-img" alt="Dois painéis de tanques organizados em prateleiras. No painel confundido cada prateleira possui uma única cor; no balanceado as duas cores aparecem em cada prateleira." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confundimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira coincidem; no segundo, cada prateleira contém as duas dietas.
+Figura&nbsp;3: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira coincidem; no segundo, cada prateleira contém as duas dietas.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>No painel de baixo da <a href="#fig-confundimento" class="quarto-xref">Figura&nbsp;2</a>, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.</p>
+<p>No painel de baixo da <a href="#fig-confundimento" class="quarto-xref">Figura&nbsp;3</a>, cada prateleira contém as duas dietas, e por isso a comparação entre dietas pode ser feita dentro de cada prateleira. Foi essa possibilidade que o desenho confundido eliminou.</p>
 </section>
 <section id="quando-o-sorteio-precisa-respeitar-a-estrutura" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="quando-o-sorteio-precisa-respeitar-a-estrutura"><span class="header-section-number">3.2</span> Quando o sorteio precisa respeitar a estrutura</h2>
-<p>O painel inferior da <a href="#fig-confundimento" class="quarto-xref">Figura&nbsp;2</a> sugere um refinamento do sorteio. Aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear <strong>dentro</strong> deles. Por exemplo, em cada prateleira da sala metade dos tanques recebe cada dieta. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.</p>
+<p>O painel inferior da <a href="#fig-confundimento" class="quarto-xref">Figura&nbsp;3</a> sugere um refinamento do sorteio. A aleatorização irrestrita pode, por acaso, concentrar um tratamento em uma região da sala ou em um lote de peixes. Se uma fonte importante de variação é conhecida antes do experimento, podemos formar grupos homogêneos e sortear <strong>dentro</strong> deles. Por exemplo, em cada prateleira da sala, metade dos tanques recebe uma dieta e metade recebe a outra. Essa aleatorização restrita preserva o sorteio e impede que a posição se alinhe com o tratamento.</p>
 <p>Uma implementação completa cria os grupos primeiro e sorteia os rótulos separadamente em cada um:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Ver a aleatorização restrita por blocos</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>unidades <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">prateleira =</span> <span class="fu">paste</span>(<span class="st">"prateleira"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">posicao =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plano <span class="ot">&lt;-</span> unidades <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(prateleira) <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tratamento =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"controle"</span>, <span class="st">"dieta nova"</span>), <span class="at">each =</span> <span class="dv">3</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(plano, prateleira, tratamento)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>unidades <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">prateleira =</span> <span class="fu">paste</span>(<span class="st">"prateleira"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">posicao =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plano <span class="ot">&lt;-</span> unidades <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(prateleira) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tratamento =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"controle"</span>, <span class="st">"dieta nova"</span>), <span class="at">each =</span> <span class="dv">3</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(plano, prateleira, tratamento)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 3
@@ -638,21 +811,21 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </div>
 </div>
 <p>A contagem final confirma três unidades de cada tratamento em cada prateleira. Mudar <code>each = 3</code> altera a replicação por tratamento dentro de cada grupo. Se o número de unidades for ímpar, o plano precisa definir previamente como o desequilíbrio será distribuído.</p>
-<p>Esses grupos são blocos. O bloqueamento não transforma posição em tratamento de interesse, apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta e cada bloco deve permitir comparação entre os tratamentos.</p>
+<p>Esses grupos são chamados de <strong>blocos</strong>. O bloqueamento não transforma a posição em um tratamento de interesse, apenas retira uma fonte previsível da variação residual. Os blocos precisam ser definidos antes de observar a resposta, e cada bloco deve permitir a comparação entre todos os tratamentos.</p>
 </section>
 <section id="sortear-unidades-e-sortear-tratamentos" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sortear-unidades-e-sortear-tratamentos"><span class="header-section-number">3.3</span> Sortear unidades e sortear tratamentos</h2>
 <p>Duas operações levam o nome de sorteio e respondem a perguntas diferentes. A <strong>amostragem aleatória</strong> seleciona unidades de uma população e sustenta a generalização para essa população. A <strong>alocação aleatória</strong> distribui tratamentos entre unidades já selecionadas e sustenta a comparação causal entre tratamentos. Um estudo pode ter uma sem a outra.</p>
-<p>Peixes comprados de um único viveiro podem receber dietas por sorteio. A comparação causal dentro desse conjunto é forte, mas generalizar para todas as populações de robalo exige cautela. Em sentido oposto, uma amostra aleatória de estuários descreve bem a região, mas comparar estuários poluídos e não poluídos continua sendo observacional se a poluição não foi atribuída.</p>
+<p>Peixes comprados de um único viveiro podem receber as dietas por sorteio. A comparação causal dentro desse conjunto é forte, mas generalizar o resultado para todas as populações de robalo exige cautela. No sentido oposto, uma amostra aleatória de estuários descreve bem a região, e ainda assim comparar estuários poluídos e não poluídos continua sendo um estudo observacional, porque a poluição não foi atribuída pelo pesquisador.</p>
 </section>
 </section>
 <section id="terceira-decisão-o-que-manter-constante" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Terceira decisão: o que manter constante?</h1>
 <p>A última decisão é sobre tudo aquilo que <strong>não</strong> é o tratamento.</p>
-<p>Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial, horário de alimentação, origem dos juvenis) é o que se chama de <strong>controle local</strong>. Cada uma dessas fontes de variação que você elimina sai da variação residual, e a variação residual é a régua com a qual o efeito do tratamento é julgado.</p>
+<p>Manter constante o que puder ser mantido constante (temperatura, fotoperíodo, densidade inicial, horário de alimentação, origem dos juvenis) é o que se chama de <strong>controle local</strong>. Cada fonte de variação eliminada dessa forma deixa de compor a variação residual, e a variação residual é a régua com a qual o efeito do tratamento é julgado.</p>
 <p>O efeito da dieta não muda com isso. O que muda é a nitidez com que ele aparece.</p>
-<p>Parte dessa decisão é definir contra o que o tratamento será comparado. Um <strong>grupo controle</strong> representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional, para um contaminante, a concentração zero, e para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos outros grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.</p>
-<p>Controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede o efeito naquela origem com precisão, mas pode representar mal outras populações. O objetivo não é eliminar toda variação biológica, e sim controlar fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.</p>
+<p>Parte dessa decisão é definir contra o que o tratamento será comparado. Um <strong>grupo controle</strong> representa o que aconteceria sem a intervenção de interesse. Para uma dieta, pode ser a formulação convencional, para um contaminante, a concentração zero, e para um procedimento, um manejo simulado que reproduza o manuseio sem o componente ativo. O controle precisa passar pelas mesmas etapas dos demais grupos, pois qualquer diferença de manejo passa a competir com a explicação do tratamento.</p>
+<p>O controle local também tem custo quando levado longe demais. Se todos os tanques usam indivíduos de uma única origem, o experimento mede com precisão o efeito naquela origem, mas pode representar mal outras populações. O objetivo não é eliminar toda a variação biológica, e sim controlar as fontes que obscurecem a comparação e replicar sobre as fontes às quais a conclusão pretende se estender.</p>
 <p>Uma última providência diz respeito a quem mede. Quando possível, quem registra a resposta não deve saber qual tratamento cada unidade recebeu. Esse <strong>mascaramento</strong> não altera a biologia, mas reduz a chance de expectativas influenciarem a medição, a exclusão de observações ou o registro de resultados ambíguos.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Três decisões, três funções">
 <div class="callout-header d-flex align-content-center">
@@ -673,9 +846,8 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </section>
 <section id="nem-tudo-pode-ser-sorteado" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Nem tudo pode ser sorteado</h1>
-<p>Uma ressalva acompanha boa parte das Ciências do Mar.&nbsp;Em muitos estudos o “tratamento” é uma condição observada, não atribuída, como costões expostos e abrigados, meses de coleta ou estuários poluídos e limpos. Ninguém sorteia qual costão será exposto.</p>
-<p>Nesses casos ainda vale escolher bem as unidades, replicá-las e controlar o que der para controlar. O que não vale é ler o resultado como se o sorteio tivesse acontecido. Sem aleatorização, a conclusão é sobre associação, não sobre causa.</p>
-<p>Mesmo em experimento aleatorizado, a interpretação causal exige cuidados. Tratamentos precisam ser aplicados conforme planejado, uma unidade não deve alterar o tratamento efetivo de outra, perdas não podem depender seletivamente do resultado e a medição deve ser comparável. O sorteio é o núcleo do argumento causal, não uma licença para ignorar o restante do protocolo.</p>
+<p>Compreender os elementos discutidos acima é fundamental para conduzir um bom delineamento, mas aplicá-los nem sempre é simples. Em muitos estudos, o “tratamento” é uma condição observada, e não atribuída. Quando o estudo compara costões expostos e abrigados, meses de coleta ou estuários poluídos e limpos, essas condições não são alocadas por escolha do pesquisador.</p>
+<p>Nesses casos, ainda vale escolher bem as unidades, replicá-las e controlar o que for possível, para evitar que o confundimento com variáveis que não interessam ao estudo invalide a comparação central.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Protocolo mínimo antes da coleta">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -700,7 +872,10 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O MEAD não trata de delineamento experimental, mas dois livros da bibliografia da unidade curricular desenvolvem o tema com profundidade. Ruxton e Colegrave <span class="citation" data-cites="ruxton2011">(<a href="#ref-ruxton2011" role="doc-biblioref">Ruxton e Colegrave 2011</a>)</span> é voltado especificamente ao planejamento em ciências da vida, e Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span> conecta delineamento e análise.</p>
+<ul>
+<li>Ruxton e Colegrave <span class="citation" data-cites="ruxton2011">(<a href="#ref-ruxton2011" role="doc-biblioref">Ruxton e Colegrave 2011</a>)</span></li>
+<li>Quinn e Keough <span class="citation" data-cites="quinn2002">(<a href="#ref-quinn2002" role="doc-biblioref">Quinn e Keough 2002</a>)</span></li>
+</ul>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
@@ -714,8 +889,8 @@ Figura&nbsp;2: Dois desenhos com vinte tanques. No primeiro, dieta e prateleira 
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Se a pesquisadora só puder montar 6 tanques, é melhor colocar 30 peixes em cada um, ou 10 peixes em cada um e usar o restante do orçamento em mais tanques?</li>
-<li>Um colega sugere manter os tanques da dieta nova em uma sala mais quente, “para os peixes crescerem melhor”. Que problema isso cria para a comparação?</li>
+<li>Se a pesquisadora só puder montar 6 tanques, os mesmos 120 peixes rendem 20 por tanque. Use a fórmula do erro padrão da diferença entre dietas para dizer quanto esse desenho ganha em relação a 4 tanques de 30 peixes e quanto perde em relação a 8 tanques de 15.</li>
+<li>Um colega sugere manter somente os tanques da dieta enriquecida em uma sala mais quente, “para os peixes crescerem melhor”. Que problema isso cria para a comparação?</li>
 </ul>
 </div>
 </div>
