@@ -24,11 +24,11 @@ theme_set(theme_bw(base_size = 12))
 
 # A diferença é de 1,4 cm. E daí?
 
-Um experimento compara dois substratos para o assentamento de larvas de mexilhão. Doze placas recebem o substrato A e doze recebem o substrato B, sorteadas. Ao fim, mede-se o comprimento médio dos indivíduos em cada placa.
+Um experimento compara dois substratos para o assentamento de larvas de mexilhão. Doze placas são sorteadas para receber o substrato A e doze para receber o substrato B. Ao fim, mede-se o comprimento médio dos indivíduos em cada placa.
 
 O substrato A produziu **10,2 cm** e o substrato B produziu **11,6 cm**, uma diferença de **1,4 cm**.
 
-Parece um efeito. Mas antes de anunciá-lo, vale lembrar de onde viemos, porque duas amostras da mesma população já teriam médias diferentes. Então a pergunta correta não é "houve diferença?". Houve, sempre há. A pergunta é:
+Parece um efeito. Antes de anunciá-lo, porém, vale lembrar do que já sabemos sobre variabilidade amostral, pois duas amostras retiradas da mesma população também teriam médias diferentes. A pergunta correta, portanto, não é "houve diferença?", já que sempre haverá alguma. A pergunta é:
 
 > **Uma diferença desse tamanho apareceria com frequência mesmo que os dois substratos fossem idênticos?**
 
@@ -36,11 +36,13 @@ Parece um efeito. Mas antes de anunciá-lo, vale lembrar de onde viemos, porque 
 
 Para responder, precisamos saber como seriam os resultados **se o substrato não fizesse diferença nenhuma**. Esse cenário tem um nome, **hipótese nula**.
 
-A hipótese nula não é uma opinião sobre o mundo. É um **processo gerador de dados**, uma receita que podemos escrever e executar no computador:
+A hipótese nula é um **processo gerador de dados**, uma receita que podemos escrever e executar no computador para descobrir quais resultados um experimento produziria caso não houvesse efeito algum. O processo gerador é:
 
-> sorteie 12 placas com média 10,2 e desvio-padrão 2, sorteie outras 12 com **a mesma** média e **o mesmo** desvio-padrão, e calcule a diferença entre as médias.
+1. sorteie 12 placas de uma população com média 10,2 cm e desvio-padrão 2 cm;
+2. sorteie outras 12 placas com **a mesma** média e **o mesmo** desvio-padrão;
+3. calcule a diferença entre as duas médias.
 
-Rodando essa receita uma vez, obtemos uma diferença. Rodando 5000 vezes, obtemos o conjunto de diferenças que o acaso sozinho é capaz de produzir. É exatamente isso que o código abaixo faz, e vale acompanhá-lo linha a linha, porque ele é a tradução literal da receita.
+Rodando esse processo uma vez, obtemos uma única diferença de médias. Rodando 5000 vezes, obtemos todo o conjunto de diferenças que o acaso é capaz de produzir sob a hipótese nula. É exatamente isso que o código abaixo faz, e vale acompanhá-lo linha a linha, porque ele é a tradução literal da receita.
 
 ```{r}
 #| code-fold: true
@@ -49,6 +51,8 @@ Rodando essa receita uma vez, obtemos uma diferença. Rodando 5000 vezes, obtemo
 #| fig-cap: "Cinco mil diferenças entre médias de dois grupos gerados pelo mesmo processo. A linha marca a diferença de 1,4 cm observada no experimento."
 #| fig-alt: "Histograma simétrico centrado em zero. Uma linha vertical em 1,4 centímetro cai na região onde ainda há barras razoavelmente altas, longe da cauda."
 #| fig-height: 3.4
+set.seed(2026)
+
 diferencas <- replicate(5000, mean(rnorm(12, 10.2, 2)) - mean(rnorm(12, 10.2, 2)))
 
 valor_p <- mean(abs(diferencas) >= 1.4)
@@ -59,41 +63,39 @@ ggplot(tibble(d = diferencas), aes(x = d)) +
   labs(x = "Diferença entre as médias (cm)", y = "Frequência")
 ```
 
-O histograma da @fig-distribuicao-nula está centrado em zero, como esperado, porque dois grupos idênticos não diferem em média. Mas ele é **largo**. Diferenças de 1 cm, de 2 cm e até maiores acontecem com alguma frequência, sem que exista qualquer efeito.
+O histograma da @fig-distribuicao-nula está centrado em zero, como esperado, porque dois grupos gerados pelo mesmo processo não diferem em média. No entanto, o histograma é **largo**, e diferenças de 1 cm, de 2 cm e até maiores, positivas ou negativas, acontecem com alguma frequência sem que exista qualquer efeito.
 
 A diferença observada, 1,4 cm, cai numa região onde o acaso ainda produz resultados com certa regularidade.
 
 ## O processo nulo precisa respeitar o experimento
 
-A receita acima não é a única possível, e escrever a receita errada invalida tudo o que vem depois. No exemplo, cada placa é independente e os dois grupos têm o mesmo desvio-padrão no gerador. Se o tratamento tivesse sido aplicado a tanques com várias placas dentro, simular placas independentes seria um modelo nulo errado. O processo precisa reproduzir número de unidades experimentais, agrupamento, alocação, variabilidade e estatística usada na análise.
+O processo simulado precisa reproduzir as condições do experimento realizado, da forma de alocação dos tratamentos ao tamanho amostral. Só assim ele descreve os resultados que aquele experimento, e não outro qualquer, produziria na ausência de efeito.
 
-Convém notar que nem toda hipótese fixa tudo o que é preciso simular. Há hipóteses **simples**, que determinam completamente um parâmetro, e hipóteses **compostas**, que reúnem vários valores. A hipótese $H_0:\mu_A-\mu_B=0$ fixa a diferença, mas deixa desconhecidas médias e variâncias que precisam ser estimadas. Um teste clássico produz sua distribuição nula levando essa estimação em conta, e uma simulação precisa fazer o mesmo de forma coerente.
+No exemplo, cada placa é independente e os dois grupos têm o mesmo desvio-padrão. Se o tratamento tivesse sido aplicado a tanques com várias placas dentro, simular placas independentes seria um modelo nulo errado. O processo precisa reproduzir o número de unidades experimentais, as subamostras (se existirem), o agrupamento, a alocação, a variabilidade e a estatística usada na análise.
+
+Convém notar que nem toda hipótese fixa tudo o que é preciso simular. Há hipóteses **simples**, que atribuem um único valor ao parâmetro, e hipóteses **compostas**, que abrangem um conjunto de valores. A hipótese $H_0:\mu_A-\mu_B=0$ fixa a diferença, mas deixa desconhecidas as médias e as variâncias, que precisam ser estimadas. Um teste clássico constrói sua distribuição nula levando essa estimação em conta, e uma simulação precisa fazer o mesmo.
 
 # O valor de p
 
-Agora podemos transformar essa leitura visual em um número, **a proporção das diferenças simuladas que é tão extrema quanto a observada**.
+Agora podemos transformar essa leitura visual em um número, **a proporção das diferenças simuladas que é tão ou mais extrema quanto a observada**.
 
-No caso, cerca de **`r round(valor_p * 100)`%** das simulações produziram uma diferença de 1,4 cm ou mais, para mais ou para menos, num mundo sem efeito nenhum. Essa proporção é o **valor de p**.
+No caso, cerca de **`r round(valor_p * 100)`%** das simulações produziram uma diferença de pelo menos 1,4 cm, para mais ou para menos, num mundo sem efeito nenhum. Essa proporção é o **valor de p**.
 
 ::: {.callout-note appearance="minimal" title="O que o valor de p responde"}
-O valor de p é a probabilidade de observar um resultado **tão ou mais extremo** que o obtido, **supondo que a hipótese nula seja verdadeira**.
+O valor de p é a probabilidade de observar um resultado **tão ou mais extremo** quanto o obtido, **supondo que a hipótese nula seja verdadeira**.
 
-Ele parte do modelo sem efeito e olha para os dados.
-:::
-
-::: {.callout-warning appearance="minimal" title="O que o valor de p não responde"}
-Ele **não** é a probabilidade de a hipótese nula ser verdadeira. E **não** é a probabilidade de o resultado ter sido "sorte".
-
-Trocar essas duas leituras é o erro de interpretação mais frequente em toda a estatística aplicada.
+Ele parte do modelo sem efeito e olha para os dados que esse modelo é capaz de gerar. Não é, portanto, a probabilidade de a hipótese nula ser verdadeira, nem a probabilidade de o resultado ter surgido por acaso.
 :::
 
 ## Uma ou duas caudas
 
-A definição fala em resultados "tão ou mais extremos", e essa expressão esconde uma decisão. No teste bilateral, diferenças positivas e negativas contam como extremas, e é por isso que o código usa `abs()`. Um teste unilateral, como $H_A:\mu_B>\mu_A$, conta apenas a cauda previamente especificada. Ele pode ter maior poder na direção escolhida, mas deixa de considerar a direção oposta como evidência contra $H_0$.
+A definição fala em resultados "tão ou mais extremos", e essa expressão esconde uma decisão. No teste bilateral, diferenças positivas e negativas contam como extremas.
 
-A escolha precisa ocorrer antes de olhar os resultados e só é defensável quando a direção oposta não responderia à pergunta científica. Observar o sinal da diferença e então escolher uma cauda reduz artificialmente o valor de p.
+Poderíamos conduzir um teste unilateral, como $H_A:\mu_B>\mu_A$, que consideraria apenas a cauda previamente especificada. Ele pode ter maior poder na direção escolhida, mas deixa de tratar a direção oposta como evidência contra $H_0$.
 
-Em um teste bilateral com nível $\alpha$, a região de rejeição é dividida em $\alpha/2$ em cada cauda. Em um unilateral, toda a área $\alpha$ fica em uma cauda. Essa concentração reduz o valor crítico na direção prevista e aumenta o poder ali, mas torna resultados extremos no sentido oposto incapazes de rejeitar o teste tal como especificado.
+A escolha precisa ser feita antes de olhar os resultados, e só é defensável quando a direção oposta não responderia à pergunta científica.
+
+Em um teste bilateral com nível $\alpha$, a região de rejeição é repartida em $\alpha/2$ em cada cauda. Em um teste unilateral, toda a área $\alpha$ fica concentrada em uma única cauda. Essa concentração aproxima o valor crítico na direção prevista e aumenta o poder ali, mas impede que resultados extremos no sentido oposto rejeitem $H_0$.
 
 # Hipóteses, estatística e distribuição nula
 
@@ -107,7 +109,7 @@ H_0:\mu_A-\mu_B=0
 H_A:\mu_A-\mu_B\ne0.
 $$
 
-$H_0$ fornece um valor de referência, enquanto $H_A$ reúne diferenças em qualquer direção. A diferença entre médias é a **estatística de teste** escolhida para medir a discrepância entre dados e hipótese. Sua distribuição quando $H_0$ é verdadeira é a **distribuição nula**, isto é, precisamente o histograma da @fig-distribuicao-nula.
+$H_0$ fornece um valor de referência, enquanto $H_A$ reúne as diferenças em qualquer direção. A diferença entre médias é a **estatística de teste** escolhida para medir a discrepância entre os dados e a hipótese. Sua distribuição quando $H_0$ é verdadeira é a **distribuição nula**, que é justamente o que o histograma da @fig-distribuicao-nula aproxima com as 5000 repetições.
 
 Uma estatística útil aumenta quando os dados se afastam de $H_0$. Em testes clássicos, costuma ser padronizada pela própria incerteza:
 
@@ -116,7 +118,7 @@ $$
 {\text{erro padrão da estimativa}}.
 $$
 
-Essa forma explica por que a mesma diferença pode ser comum em um estudo pequeno e extrema em um estudo preciso. O numerador mede o efeito observado, enquanto o denominador mede o ruído esperado pelo desenho.
+Essa forma explica por que a mesma diferença pode ser corriqueira em um estudo com poucas unidades e extrema em um estudo com muitas. O numerador mede o efeito observado, enquanto o denominador mede o ruído que o delineamento é capaz de gerar sozinho.
 
 ## O atalho analítico: um teste Z
 
@@ -127,7 +129,7 @@ Z=\frac{\bar X-\mu_0}{\sigma/\sqrt n}
 =\frac{10{,}8-10}{2/\sqrt{25}}=2.
 $$
 
-Aqui $\mu_0$ é o valor previsto por $H_0$ e $\sigma_{\bar{x}}=\sigma/\sqrt n=0{,}4$ cm é o erro padrão da média. A leitura verbal é que a média observada ficou dois erros padrão acima do valor nulo. Em um teste bilateral, o valor de p é $2P(Z\ge2)\approx0{,}0455$, que corresponde à área destacada nas duas caudas da @fig-caudas.
+Aqui $\mu_0$ é o valor previsto por $H_0$ e $\sigma_{\bar{x}}=\sigma/\sqrt n=0{,}4$ cm é o erro padrão da média. Em palavras, a média observada ficou dois erros padrão acima do valor nulo. Em um teste bilateral, o valor de p é $2P(Z\ge2)\approx0{,}0455$, que corresponde à área destacada nas duas caudas da @fig-caudas.
 
 ```{r}
 #| echo: false
@@ -140,59 +142,63 @@ alpha <- 0.05
 critico <- qnorm(1 - alpha / 2)
 
 curva <- tibble(
-  z = seq(-4, 4, length.out = 1000),
+  z = sort(unique(c(seq(-4, 4, length.out = 1000), -z_observado, z_observado))),
   densidade = dnorm(z),
-  extrema = abs(z) >= abs(z_observado)
+  cauda = case_when(z <= -z_observado ~ "inferior",
+                    z >= z_observado ~ "superior",
+                    .default = NA)
 )
 
 ggplot(curva, aes(x = z, y = densidade)) +
-  geom_area(data = filter(curva, extrema), fill = "#D55E00", alpha = 0.7) +
+  geom_area(data = filter(curva, !is.na(cauda)), aes(group = cauda),
+            fill = "#D55E00", alpha = 0.7) +
   geom_line(linewidth = 1) +
   geom_vline(xintercept = c(-critico, critico), linetype = 2,
              colour = "#0072B2") +
   labs(x = "Estatística Z sob H0", y = "Densidade")
 ```
 
-As linhas tracejadas da @fig-caudas, em aproximadamente $\pm1{,}96$, delimitam a região central que concentra 95% da distribuição nula. Como $Z=2$ ficou fora dela, o resultado seria declarado incompatível com $H_0$ ao nível de 5%. No cotidiano, $\sigma$ é quase sempre desconhecido e a distribuição t substitui a normal. O exemplo Z é uma lente para compreender a padronização, não uma recomendação automática de teste.
+As linhas tracejadas da @fig-caudas, em aproximadamente $\pm1{,}96$, delimitam a região central que concentra 95% da distribuição nula. Como $Z=2$ ficou fora dela, o resultado seria declarado incompatível com $H_0$ ao nível de 5%. Na prática, $\sigma$ é quase sempre desconhecido e precisa ser estimado a partir da própria amostra, e a distribuição t de Student passa a substituir a normal.
 
 # Do valor de p à decisão
 
-Calculado o valor de p, muitos contextos exigem uma decisão explícita. O nível de significância $\alpha$ é o risco máximo de erro tipo I aceito antes da análise. Com $\alpha=0,05$, usamos a regra:
+Calculado o valor de p, muitos contextos exigem uma decisão explícita. O nível de significância $\alpha$ é o risco máximo de rejeitar $H_0$ quando ela é verdadeira que aceitamos correr, e precisa ser fixado antes da análise. Com $\alpha=0{,}05$, usamos a regra:
 
 - se $p\le\alpha$, rejeitamos $H_0$;
 - se $p>\alpha$, não rejeitamos $H_0$.
 
-Não rejeitar não significa aceitar ou provar $H_0$. Significa apenas que a estatística observada não foi suficientemente incompatível com o modelo nulo, dada a precisão disponível. O valor de p é uma medida contínua de compatibilidade e não muda de natureza ao cruzar 0,05.
+Não rejeitar não significa aceitar nem provar $H_0$. Significa apenas que a estatística observada não foi suficientemente **incompatível** com o modelo nulo, dada a precisão disponível. O valor de p é uma medida contínua de compatibilidade, e não muda de natureza ao cruzar 0,05.
 
 | Situação calculada | Decisão formal | Formulação adequada |
 |---|---|---|
 | $p\le\alpha$ | rejeitar $H_0$ | dados pouco compatíveis com o modelo nulo |
 | $p>\alpha$ | não rejeitar $H_0$ | evidência insuficiente para rejeitar o modelo nulo |
 
-Evite "aceitar $H_0$", "provar $H_A$" e "não existe diferença". Um teste pode deixar de rejeitar porque o efeito é realmente nulo, porque a amostra é pequena, porque a variabilidade é alta ou porque o modelo e a estatística são pouco sensíveis ao efeito existente.
+Um teste pode deixar de rejeitar $H_0$ porque o efeito é realmente nulo, porque a amostra é pequena, porque a variabilidade é alta ou porque o modelo e a estatística são pouco sensíveis ao efeito existente.
 
-O valor de p também não mede a magnitude ou a relevância do efeito. Uma diferença minúscula pode produzir valor de p pequeno em uma amostra enorme, e uma diferença biologicamente importante pode permanecer incerta em uma amostra pequena. Por isso estimativa, intervalo de confiança, unidade de medida e contexto devem acompanhar a decisão. Um relato informativo reúne diferença estimada, unidade, intervalo de confiança, estatística, graus de liberdade quando houver, valor de p e descrição do delineamento. A decisão binária é apenas uma parte dessa evidência.
+Há ainda um ponto que o valor de p não resolve sozinho. Uma diferença minúscula pode produzir um valor de p pequeno em uma amostra enorme, e uma diferença biologicamente importante pode permanecer incerta em uma amostra pequena. Por isso a estimativa, o intervalo de confiança, a unidade de medida e o contexto devem acompanhar a decisão. Um relato informativo reúne a diferença estimada, a unidade, o intervalo de confiança, a estatística, os graus de liberdade quando houver, o valor de p e a descrição do delineamento. A decisão binária de rejeitar ou não rejeitar $H_0$ é apenas uma parte dessa evidência.
 
 ::: {.callout-warning appearance="minimal" title="A distribuição nula não é fixa"}
-Ela não depende só do que se mede, mas também do experimento que foi montado.
+A distribuição da estatística de teste sob $H_0$ não depende só do que se mede, mas também das características do experimento que foi montado.
 
-Com menos placas por grupo, o acaso produz diferenças maiores com facilidade e a distribuição nula fica mais larga. Com mais placas, ela se estreita. A mesma diferença de 1,4 cm pode ser banal em um experimento e rara em outro.
+Com menos placas por grupo, o acaso produz diferenças maiores com facilidade e a distribuição nula fica mais larga. Com mais placas, ela se estreita. A mesma diferença de 1,4 cm pode ser irrelevante em um experimento e muito informativa em outro.
 :::
 
 # Uma receita que serve para qualquer comparação
 
-Vale reparar no que foi feito aqui, porque o procedimento se repete em praticamente toda a estatística aplicada. Escrevemos o cenário sem efeito como um processo gerador de dados. Executamos esse processo muitas vezes. Olhamos onde o resultado observado cai dentro do que o acaso produz. Contamos.
+O procedimento feito aqui se repete em praticamente toda a estatística aplicada. Escrevemos o cenário sem efeito como um processo gerador de dados, executamos esse processo muitas vezes, olhamos onde o resultado observado cai dentro do que o acaso produz e avaliamos se ele é um resultado usual sob $H_0$.
 
-Nenhuma fórmula apareceu nas três primeiras etapas, e nenhuma foi necessária. As fórmulas dos testes clássicos existem porque, antes dos computadores, simular cinco mil experimentos era impossível. Elas chegam ao mesmo lugar por um atalho matemático, e é por isso que o teste Z da seção anterior e o histograma simulado respondem à mesma pergunta.
+As fórmulas dos testes clássicos são simplesmente as contrapartes analíticas desse mesmo processo, criadas em uma época em que não havia computadores capazes de simular cinco mil experimentos.
 
 Essa é a razão pela qual vale a pena entender o modelo nulo como uma receita, e não como uma tabela de valores críticos. Diante de um delineamento novo, para o qual nenhuma fórmula pronta se aplica, ainda é possível escrever o processo que geraria os dados na ausência de efeito, executá-lo e contar. A diferença de 1,4 cm do início não ganhou nem perdeu importância nesta leitura. Ela apenas passou a ser lida contra o que o acaso, naquele experimento específico, é capaz de produzir sozinho.
 
 ::: {.callout-tip appearance="minimal" title="Leitura adicional"}
-- [Probabilidade condicional](https://fcopf.github.io/mead/content/fundamentos-probabilidade/probabilidade-condicional.html){target="_blank"} (MEAD)
-- [Teorema de Bayes](https://fcopf.github.io/mead/content/fundamentos-probabilidade/teorema-bayes.html){target="_blank"} (MEAD), que formaliza por que $P(\text{dados}\mid H_0)$ e $P(H_0\mid \text{dados})$ são quantidades diferentes.
+- [Introdução ao teste de hipóteses](https://fcopf.github.io/mead/content/teste-hipoteses/intro-testehipot.html){target="_blank"}
+- [Comparando variâncias](https://fcopf.github.io/mead/content/teste-hipoteses/teste-variancia.html){target="_blank"}
+- [Comparando médias: teste t de Student](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html){target="_blank"}
 :::
 
 ::: {.callout-tip appearance="minimal" title="Para pensar"}
-- Uma simulação de 5000 repetições devolve 40 resultados tão extremos quanto o observado. Qual é o valor de p, e como você o descreveria em uma frase para quem não estudou estatística?
+- Uma simulação de 5000 repetições devolve 40 resultados tão ou mais extremos quanto o observado. Qual é o valor de p, e como você o descreveria em uma frase para quem não estudou estatística?
 - Se a hipótese nula é uma receita que escrevemos, o que aconteceria com o valor de p caso escolhêssemos um desvio-padrão maior ao escrevê-la?
 :::
