@@ -541,18 +541,18 @@ lm(formula = riqueza ~ altura, data = dados_precisos)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.5213 -0.6487 -0.0753  0.4811  2.1772 
+-2.5133 -0.6783  0.1116  0.6799  2.9976 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  6.53975    0.11151   58.65   &lt;2e-16 ***
-altura      -2.76341    0.09932  -27.82   &lt;2e-16 ***
+(Intercept)   6.7961     0.1455    46.7   &lt;2e-16 ***
+altura       -2.8373     0.1261   -22.5   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.8359 on 58 degrees of freedom
-Multiple R-squared:  0.9303,    Adjusted R-squared:  0.9291 
-F-statistic: 774.1 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.103 on 58 degrees of freedom
+Multiple R-squared:  0.8972,    Adjusted R-squared:  0.8954 
+F-statistic:   506 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste da reta em R</summary>
@@ -560,8 +560,8 @@ F-statistic: 774.1 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
-(Intercept)  6.316542  6.762966
-altura      -2.962221 -2.564592</code></pre>
+(Intercept)  6.504784  7.087403
+altura      -3.089824 -2.584867</code></pre>
 </div>
 </div>
 <p><code>lm()</code> estima os coeficientes, <code>summary()</code> informa erros padrão, testes e <span class="math inline">\(R^2\)</span>, e <code>confint()</code> fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.</p>

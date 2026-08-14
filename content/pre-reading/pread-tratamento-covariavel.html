@@ -509,8 +509,8 @@ Y=\beta_0+\beta_1X+\beta_2G+\beta_3XG+\varepsilon.
 Model 1: biomassa ~ comprimento_c + mes
 Model 2: biomassa ~ comprimento_c * mes
   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
-1    117 1.4130                           
-2    116 1.4083  1 0.0047361 0.3901 0.5335</code></pre>
+1    117 1.5870                           
+2    116 1.5686  1  0.018334 1.3558 0.2467</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste e as médias ajustadas no R</summary>
@@ -528,11 +528,11 @@ Model 2: biomassa ~ comprimento_c * mes
 <pre><code># A tibble: 2 × 4
   mes         fit   lwr   upr
   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 fevereiro  1.18  1.14  1.22
-2 abril      1.39  1.36  1.42</code></pre>
+1 fevereiro  1.14  1.09  1.18
+2 abril      1.31  1.27  1.35</code></pre>
 </div>
 </div>
-<p>A comparação entre os dois modelos avalia a interação, e os dados desta simulação foram gerados com inclinações iguais, de modo que ela normalmente não se justifica. As previsões no comprimento centralizado zero, isto é, em 21,7 mm, são as <strong>médias ajustadas</strong>. Elas representam médias modeladas em uma condição comum, não médias de uma população artificial em que todos os indivíduos tenham exatamente aquele comprimento. A diferença entre as duas previsões é o contraste ajustado, e aqui vale 0,212 g.</p>
+<p>A comparação entre os dois modelos avalia a interação, e os dados desta simulação foram gerados com inclinações iguais, de modo que ela normalmente não se justifica. As previsões no comprimento centralizado zero, isto é, em 21,1 mm, são as <strong>médias ajustadas</strong>. Elas representam médias modeladas em uma condição comum, não médias de uma população artificial em que todos os indivíduos tenham exatamente aquele comprimento. A diferença entre as duas previsões é o contraste ajustado, e aqui vale 0,173 g.</p>
 <p>Formalmente, no modelo aditivo as médias ajustadas em <span class="math inline">\(x_0\)</span> são</p>
 <p><span class="math display">\[
 \widehat\mu_{fev}(x_0)=\hat\beta_0+\hat\beta_1x_0,
@@ -562,7 +562,7 @@ Figura&nbsp;2: Diferenças bruta e ajustada entre meses. O ajuste compara os gru
 </div>
 </div>
 </div>
-<p>Na <a href="#fig-bruta-ajustada" class="quarto-xref">Figura&nbsp;2</a>, a diferença bruta estimada foi 0,76 g e a ajustada, 0,17 g. A distância entre os dois resultados não é uma correção cosmética, porque a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.</p>
+<p>Na <a href="#fig-bruta-ajustada" class="quarto-xref">Figura&nbsp;2</a>, a diferença bruta estimada foi 0,78 g e a ajustada, 0,27 g. A distância entre os dois resultados não é uma correção cosmética, porque a comparação bruta mistura a composição de tamanhos observada com o mês, enquanto a ajustada condiciona a comparação ao comprimento de 21 mm. Uma mudança grande após o ajuste não significa que uma resposta esteja certa e a outra errada, porque elas respondem a perguntas diferentes. Se a pergunta científica fosse deliberadamente sobre as populações tal como encontradas em cada mês, a diferença bruta continuaria relevante. O relatório deve mostrar a distribuição da covariável, as médias brutas, as retas, o ponto de comparação e o contraste ajustado com intervalo de confiança.</p>
 </section>
 </section>
 <section id="pressupostos-que-sustentam-o-ajuste" class="level1" data-number="3">
