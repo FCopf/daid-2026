@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Fabio Cop (fcferreira@unifesp.br)">
 <meta name="author" content="Instituto do Mar - Unifesp">
 
-<title>Fator, bloco ou covariável? – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
+<title>…. – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -334,17 +334,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Conteúdo</h2>
-   
-  <ul class="collapse">
-  <li><a href="#três-papéis-uma-mesma-fórmula" id="toc-três-papéis-uma-mesma-fórmula" class="nav-link active" data-scroll-target="#três-papéis-uma-mesma-fórmula"><span class="header-section-number">1</span> Três papéis, uma mesma fórmula</a></li>
-  <li><a href="#quatro-situações" id="toc-quatro-situações" class="nav-link" data-scroll-target="#quatro-situações"><span class="header-section-number">2</span> Quatro situações</a></li>
-  <li><a href="#uma-simulação-para-a-situação-1" id="toc-uma-simulação-para-a-situação-1" class="nav-link" data-scroll-target="#uma-simulação-para-a-situação-1"><span class="header-section-number">3</span> Uma simulação para a situação 1</a></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">4</span> Entrega</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -352,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Fator, bloco ou covariável?</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">….</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
 <p class="subtitle lead">Atividade extraclasse 04</p>
 </div>
 
@@ -371,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">13 de agosto de 2026</p>
+      <p class="date">14 de agosto de 2026</p>
     </div>
   </div>
   
@@ -383,111 +374,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="três-papéis-uma-mesma-fórmula" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Três papéis, uma mesma fórmula</h1>
-<p>Fator, bloco e covariável entram todos com <code>+</code> ou <code>*</code> na fórmula do modelo, e o R os ajusta pelo mesmo procedimento. O que os separa não está na fórmula. O fator é o que se quer testar, enquanto bloco e covariável são retirados do resíduo para tornar o teste mais sensível.</p>
-<p>Esta atividade pede que você reconheça esse papel em situações novas, e que mostre no R o que acontece quando ele é ignorado.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="quatro-situações" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Quatro situações</h1>
-<p>Cada situação abaixo descreve um estudo. Para cada uma, decida o papel de cada variável mencionada e justifique.</p>
-<ol type="1">
-<li>Um experimento testa três rações para camarões em 12 tanques, montados em três salas com temperaturas ligeiramente diferentes. <strong>O que é a sala?</strong></li>
-<li>Um estudo compara o crescimento de mudas de mangue em dois substratos. A altura inicial de cada muda foi medida antes do plantio. <strong>O que é a altura inicial?</strong></li>
-<li>Um experimento cruza duas temperaturas e três salinidades para avaliar a sobrevivência de larvas. <strong>O que são temperatura e salinidade?</strong></li>
-<li>Um levantamento compara a riqueza de peixes entre dois estuários. A profundidade de cada ponto de coleta foi registrada. <strong>O que é a profundidade?</strong></li>
-</ol>
-</section>
-<section id="uma-simulação-para-a-situação-1" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Uma simulação para a situação 1</h1>
-<p>A simulação a seguir reproduz a estrutura da situação 1, com três rações testadas em tanques distribuídos por salas com temperaturas diferentes.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sala =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each =</span> <span class="dv">3</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">racao =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">times =</span> <span class="dv">6</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_esperada =</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> sala,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">resposta =</span> media_esperada <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">18</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">1.2</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sem_sala <span class="ot">&lt;-</span> <span class="fu">aov</span>(resposta <span class="sc">~</span> racao, <span class="at">data =</span> experimento)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>com_sala <span class="ot">&lt;-</span> <span class="fu">aov</span>(resposta <span class="sc">~</span> racao <span class="sc">+</span> <span class="fu">factor</span>(sala), <span class="at">data =</span> experimento)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_sala)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
-racao        2    6.6    3.28   0.056  0.946
-Residuals   15  884.4   58.96               </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_sala)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-racao         2    6.6    3.28    1.88    0.203    
-factor(sala)  5  866.9  173.39   99.42 3.41e-08 ***
-Residuals    10   17.4    1.74                     
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Para pensar">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Para pensar
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Nesta simulação <code>racao</code> não tem efeito nenhum (a média não depende de <code>racao</code>). Ainda assim, compare o quadrado médio residual dos dois modelos e verifique se tratar a sala como se ela não existisse muda a régua usada para julgar a ração.</p>
-</div>
-</div>
-</section>
-<section id="entrega" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Entrega</h1>
-<div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Entregue
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Um documento curto ou um script <code>ae-papeis.R</code> com comentários, contendo:</p>
-<ol type="1">
-<li>para cada uma das quatro situações: o papel de cada variável (fator, bloco ou covariável), a justificativa em uma frase, e a fórmula do modelo em R que você usaria;</li>
-<li>uma simulação, adaptada da simulação acima, mostrando o efeito de tratar uma variável de bloco como se ela não existisse (use a situação 1 como base);</li>
-<li>em comentários, duas a três frases respondendo: <strong>o que distingue um bloco de um fator, se os dois aparecem do mesmo jeito na fórmula do modelo?</strong></li>
-</ol>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Leitura adicional
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html" target="_blank">Associação entre variáveis quantitativas e qualitativas</a> (MEAD)</li>
-</ul>
-</div>
-</div>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -954,84 +844,24 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Fator, bloco ou covariável?"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Atividade extraclasse 04"</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Três papéis, uma mesma fórmula</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>Fator, bloco e covariável entram todos com <span class="in">`+`</span> ou <span class="in">`*`</span> na fórmula do modelo, e o R os ajusta pelo mesmo procedimento. O que os separa não está na fórmula. O fator é o que se quer testar, enquanto bloco e covariável são retirados do resíduo para tornar o teste mais sensível.</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>Esta atividade pede que você reconheça esse papel em situações novas, e que mostre no R o que acontece quando ele é ignorado.</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu"># Quatro situações</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>Cada situação abaixo descreve um estudo. Para cada uma, decida o papel de cada variável mencionada e justifique.</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Um experimento testa três rações para camarões em 12 tanques, montados em três salas com temperaturas ligeiramente diferentes. **O que é a sala?**</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Um estudo compara o crescimento de mudas de mangue em dois substratos. A altura inicial de cada muda foi medida antes do plantio. **O que é a altura inicial?**</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Um experimento cruza duas temperaturas e três salinidades para avaliar a sobrevivência de larvas. **O que são temperatura e salinidade?**</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Um levantamento compara a riqueza de peixes entre dois estuários. A profundidade de cada ponto de coleta foi registrada. **O que é a profundidade?**</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="fu"># Uma simulação para a situação 1</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>A simulação a seguir reproduz a estrutura da situação 1, com três rações testadas em tanques distribuídos por salas com temperaturas diferentes.</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">sala =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each =</span> <span class="dv">3</span>),</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">racao =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">times =</span> <span class="dv">6</span>)</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">media_esperada =</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> sala,</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">resposta =</span> media_esperada <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">18</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">1.2</span>)</span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>sem_sala <span class="ot">&lt;-</span> <span class="fu">aov</span>(resposta <span class="sc">~</span> racao, <span class="at">data =</span> experimento)</span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>com_sala <span class="ot">&lt;-</span> <span class="fu">aov</span>(resposta <span class="sc">~</span> racao <span class="sc">+</span> <span class="fu">factor</span>(sala), <span class="at">data =</span> experimento)</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sem_sala)</span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(com_sala)</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Para pensar"}</span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>Nesta simulação <span class="in">`racao`</span> não tem efeito nenhum (a média não depende de <span class="in">`racao`</span>). Ainda assim, compare o quadrado médio residual dos dois modelos e verifique se tratar a sala como se ela não existisse muda a régua usada para julgar a ração.</span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>Um documento curto ou um script <span class="in">`ae-papeis.R`</span> com comentários, contendo:</span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>para cada uma das quatro situações: o papel de cada variável (fator, bloco ou covariável), a justificativa em uma frase, e a fórmula do modelo em R que você usaria;</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>uma simulação, adaptada da simulação acima, mostrando o efeito de tratar uma variável de bloco como se ela não existisse (use a situação 1 como base);</span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>em comentários, duas a três frases respondendo: **o que distingue um bloco de um fator, se os dois aparecem do mesmo jeito na fórmula do modelo?**</span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Associação entre variáveis quantitativas e qualitativas</span><span class="co">](https://fcopf.github.io/mead/content/medidas-associacao/biquantquali.html)</span>{target="_blank"} (MEAD)</span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "...."</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Atividade extraclasse 04"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

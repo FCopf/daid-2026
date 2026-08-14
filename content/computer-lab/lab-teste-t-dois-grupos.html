@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Fabio Cop (fcferreira@unifesp.br)">
 <meta name="author" content="Instituto do Mar - Unifesp">
 
-<title>As algas mudam a concentração de fosfato? – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
+<title>…. – 10888 - DELINEAMENTO, ANÁLISE E INTERPRETAÇÃO DE DADOS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -334,23 +334,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Conteúdo</h2>
-   
-  <ul class="collapse">
-  <li><a href="#objetivo-desta-prática" id="toc-objetivo-desta-prática" class="nav-link active" data-scroll-target="#objetivo-desta-prática"><span class="header-section-number">1</span> Objetivo desta prática</a></li>
-  <li><a href="#preparação" id="toc-preparação" class="nav-link" data-scroll-target="#preparação"><span class="header-section-number">2</span> Preparação</a></li>
-  <li><a href="#quantas-unidades-experimentais-existem" id="toc-quantas-unidades-experimentais-existem" class="nav-link" data-scroll-target="#quantas-unidades-experimentais-existem"><span class="header-section-number">3</span> Quantas unidades experimentais existem?</a></li>
-  <li><a href="#a-comparação-no-nível-certo" id="toc-a-comparação-no-nível-certo" class="nav-link" data-scroll-target="#a-comparação-no-nível-certo"><span class="header-section-number">4</span> A comparação no nível certo</a></li>
-  <li><a href="#sua-vez" id="toc-sua-vez" class="nav-link" data-scroll-target="#sua-vez"><span class="header-section-number">5</span> Sua vez</a>
-  <ul class="collapse">
-  <li><a href="#outro-nutriente-outra-conclusão" id="toc-outro-nutriente-outra-conclusão" class="nav-link" data-scroll-target="#outro-nutriente-outra-conclusão"><span class="header-section-number">5.1</span> Outro nutriente, outra conclusão?</a></li>
-  <li><a href="#o-preço-de-usar-a-régua-errada" id="toc-o-preço-de-usar-a-régua-errada" class="nav-link" data-scroll-target="#o-preço-de-usar-a-régua-errada"><span class="header-section-number">5.2</span> O preço de usar a régua errada</a></li>
-  </ul></li>
-  <li><a href="#entrega" id="toc-entrega" class="nav-link" data-scroll-target="#entrega"><span class="header-section-number">6</span> Entrega</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -358,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">As algas mudam a concentração de fosfato?</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">….</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Código</button></div></div>
 <p class="subtitle lead">Prática em R 06</p>
 </div>
 
@@ -377,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">13 de agosto de 2026</p>
+      <p class="date">14 de agosto de 2026</p>
     </div>
   </div>
   
@@ -389,338 +374,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="objetivo-desta-prática" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Objetivo desta prática</h1>
-<p>A <a href="../../content/pre-reading/pread-erros-poder.html">leitura desta semana</a> apresentou o teste t e lembrou o que ele <strong>não</strong> faz, que é verificar se as unidades sobre as quais você o aplicou são de fato as unidades experimentais. “Essa parte continua sendo sua”, diz a leitura.</p>
-<p>Hoje ela é sua, com dados reais. Você vai decidir qual é a unidade experimental de um experimento em mesocosmos, conduzir a comparação no nível certo e depois fazer deliberadamente a análise errada, para medir o que exatamente ela alega a mais.</p>
-<p>O objetivo em R é reduzir dados ao nível da unidade experimental e ler a saída completa de <code>t.test()</code>, com intervalo de confiança.</p>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Como a hora será usada">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Como a hora será usada
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><strong>5 min</strong> abrir o RStudio, criar o script e ler a proposta;</li>
-<li><strong>40 a 45 min</strong> percorrer as seções guiadas e fazer o bloco <em>Sua vez</em>;</li>
-<li><strong>10 a 15 min</strong> escrever as respostas, rodar o script do início ao fim e enviar.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="preparação" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Preparação</h1>
-<p>Crie um script <code>pr-dois-grupos.R</code> com o cabeçalho de identificação e comece por:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="quantas-unidades-experimentais-existem" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Quantas unidades experimentais existem?</h1>
-<p>Um experimento investigou como a presença de algas afeta a concentração de nutrientes na água. Mesocosmos receberam ou não algas, e a concentração de três nutrientes foi medida em cada um.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Biodiversity.txt"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>biodiv <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(biodiv)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 108
-Columns: 7
-$ MU            &lt;dbl&gt; 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7,…
-$ Mesocosm      &lt;dbl&gt; 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7,…
-$ Abundance     &lt;dbl&gt; 0, 0, 0, 4, 4, 4, 8, 8, 8, 8, 8, 8, 12, 12, 12, 16, 16, …
-$ Biomass       &lt;dbl&gt; 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1…
-$ Treatment     &lt;chr&gt; "NoAlgae", "NoAlgae", "NoAlgae", "NoAlgae", "NoAlgae", "…
-$ Nutrient      &lt;chr&gt; "NO3", "NO3", "NO3", "NO3", "NO3", "NO3", "NO3", "NO3", …
-$ Concentration &lt;dbl&gt; 2.490, 1.185, 3.825, 3.045, 2.190, 3.600, 2.835, 2.475, …</code></pre>
-</div>
-</div>
-<p><code>MU</code> identifica a unidade medida, <code>Treatment</code> indica a presença de algas, <code>Nutrient</code> o nutriente e <code>Concentration</code> a concentração observada.</p>
-<p>Antes de qualquer teste, vem a pergunta obrigatória da Prática 04. Quantas vezes o tratamento foi de fato aplicado?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(biodiv)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 108</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(biodiv<span class="sc">$</span>MU)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 36</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>biodiv <span class="sc">|&gt;</span> <span class="fu">count</span>(MU) <span class="sc">|&gt;</span> <span class="fu">count</span>(n, <span class="at">name =</span> <span class="st">"quantas_unidades"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-      n quantas_unidades
-  &lt;int&gt;            &lt;int&gt;
-1     3               36</code></pre>
-</div>
-</div>
-<p>São 108 linhas para 36 unidades, ou seja, <strong>cada unidade foi medida três vezes</strong>. Essas três medidas descrevem bem aquela unidade, mas não são repetições independentes do tratamento. É a ela que reduzimos os dados antes de analisar:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mesocosmos <span class="ot">&lt;-</span> biodiv <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(MU, Treatment, Nutrient) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">concentracao =</span> <span class="fu">mean</span>(Concentration), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>mesocosmos <span class="sc">|&gt;</span> <span class="fu">count</span>(Treatment, Nutrient)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  Treatment Nutrient     n
-  &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
-1 Algae     NH4          6
-2 Algae     NO3          6
-3 Algae     PO3          6
-4 NoAlgae   NH4          6
-5 NoAlgae   NO3          6
-6 NoAlgae   PO3          6</code></pre>
-</div>
-</div>
-<p>Trinta e seis unidades, seis em cada combinação de tratamento e nutriente.</p>
-</section>
-<section id="a-comparação-no-nível-certo" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> A comparação no nível certo</h1>
-<p>Vamos começar por um nutriente só, o fosfato:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fosfato <span class="ot">&lt;-</span> mesocosmos <span class="sc">|&gt;</span> <span class="fu">filter</span>(Nutrient <span class="sc">==</span> <span class="st">"PO3"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>fosfato <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(concentracao), <span class="at">desvio =</span> <span class="fu">sd</span>(concentracao))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  Treatment     n media desvio
-  &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1 Algae         6 2.42   0.289
-2 NoAlgae       6 0.675  0.282</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fosfato, <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> concentracao)) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.12</span>, <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tratamento"</span>, <span class="at">y =</span> <span class="st">"Concentração de fosfato"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-fosfato-grupos" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-fosfato-grupos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="lab-teste-t-dois-grupos_files/figure-html/fig-fosfato-grupos-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fosfato-grupos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Concentração de fosfato nos mesocosmos com e sem algas. Cada ponto é uma unidade experimental.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Preveja">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Preveja
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Olhe a <a href="#fig-fosfato-grupos" class="quarto-xref">Figura&nbsp;1</a>. As duas nuvens se sobrepõem? A diferença entre elas parece grande em relação ao espalhamento dentro de cada grupo?</p>
-<p>Escreva no script, como comentário, se você espera um valor de p <strong>abaixo ou acima de 0,05</strong>, e faça isso <strong>antes</strong> de rodar o teste.</p>
-</div>
-</div>
-<p>A fórmula <code>concentracao ~ Treatment</code> lê-se “concentração <strong>em função de</strong> tratamento”. É a notação que usaremos em todos os modelos daqui em diante.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Complete">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Complete
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>No bloco abaixo falta a variável que separa os dois grupos.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>teste <span class="ot">&lt;-</span> <span class="fu">t.test</span>(concentracao <span class="sc">~</span> ____, <span class="at">data =</span> fosfato)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>teste</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Welch Two Sample t-test
-
-data:  concentracao by Treatment
-t = 10.593, df = 9.9943, p-value = 9.393e-07
-alternative hypothesis: true difference in means between group Algae and group NoAlgae is not equal to 0
-95 percent confidence interval:
- 1.377705 2.111695
-sample estimates:
-  mean in group Algae mean in group NoAlgae 
-            2.4200222             0.6753222 </code></pre>
-</div>
-</div>
-<p>A saída traz, em ordem, a estatística <code>t</code>, os <strong>graus de liberdade</strong>, o valor de p, o intervalo de confiança de 95% para a diferença entre as médias e as duas médias.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Observe os graus de liberdade">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Observe os graus de liberdade
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Com 6 unidades em cada grupo, os graus de liberdade ficam em torno de 10. Eles não são um detalhe técnico, e sim a contabilidade de <strong>quanta informação independente</strong> o teste acredita ter recebido.</p>
-<p>Guarde esse número. Ele volta no bloco <em>Sua vez</em>.</p>
-</div>
-</div>
-</section>
-<section id="sua-vez" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Sua vez</h1>
-<section id="outro-nutriente-outra-conclusão" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="outro-nutriente-outra-conclusão"><span class="header-section-number">5.1</span> Outro nutriente, outra conclusão?</h2>
-<p>O conjunto tem três nutrientes, que são <code>PO3</code>, <code>NH4</code> e <code>NO3</code>. Você analisou o primeiro.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Escolha">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Escolha
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Escolha <strong>um</strong> dos outros dois e refaça a análise inteira para ele, com o <code>filter()</code>, a tabela de médias, o gráfico e o teste. Registre a escolha no script.</p>
-<p>Não copie a conclusão do fosfato. Olhe o <strong>sinal</strong> do intervalo de confiança do seu nutriente antes de escrever qualquer frase.</p>
-</div>
-</div>
-<p>Escreva a conclusão do seu nutriente em uma frase que use o <strong>intervalo</strong>, não apenas a palavra “significativo”: ele está na unidade da resposta e diz de quanto é a diferença, com que incerteza.</p>
-</section>
-<section id="o-preço-de-usar-a-régua-errada" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="o-preço-de-usar-a-régua-errada"><span class="header-section-number">5.2</span> O preço de usar a régua errada</h2>
-<p>Agora faça de propósito o que a Prática 04 ensinou a evitar e rode o mesmo teste sobre as <strong>108 linhas originais</strong>, sem reduzir aos mesocosmos, para o seu nutriente.</p>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Complete">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Complete
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Atenção a um detalhe. Em <code>biodiv</code> a coluna da resposta chama-se <code>Concentration</code>, e não <code>concentracao</code>, porque este segundo nome só passou a existir depois do <code>summarise()</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>biodiv_nutriente <span class="ot">&lt;-</span> biodiv <span class="sc">|&gt;</span> <span class="fu">filter</span>(Nutrient <span class="sc">==</span> <span class="st">"____"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(____ <span class="sc">~</span> Treatment, <span class="at">data =</span> biodiv_nutriente)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<p>Compare as duas saídas e anote:</p>
-<ul>
-<li>os <strong>graus de liberdade</strong> de cada uma;</li>
-<li>quantas unidades independentes por grupo cada análise está alegando ter;</li>
-<li>a <strong>largura</strong> dos dois intervalos de confiança.</li>
-</ul>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Nem todo sintoma aparece no valor de p">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Nem todo sintoma aparece no valor de p
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Neste conjunto de dados o efeito das algas é grande, e o valor de p continua minúsculo nas duas análises. Isso não absolve a análise errada.</p>
-<p>O sintoma confiável está nos graus de liberdade, porque a análise sobre 108 linhas alega ter três vezes mais unidades independentes do que o experimento produziu. Em um estudo com efeito menor, é exatamente essa alegação a mais que transforma ruído em “descoberta”.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="entrega" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Entrega</h1>
-<p>Salve o script <code>pr-dois-grupos.R</code> com o cabeçalho preenchido. Antes de enviar, reinicie o R (<em>Session → Restart R</em>) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <code>#</code>.</p>
-<div class="callout callout-style-simple callout-important no-icon callout-titled" title="Entregue">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Entregue
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>a base da aula: a contagem que justifica a redução às 36 unidades, o gráfico do fosfato e o teste, com a sua previsão sobre o valor de p registrada em comentário <strong>antes</strong> dele;</li>
-<li><strong>a análise completa do nutriente que você escolheu</strong>: tabela de médias, gráfico e teste, com uma frase de conclusão escrita a partir do <strong>intervalo de confiança</strong>, na unidade da resposta;</li>
-<li><strong>o mesmo teste feito sobre as 108 linhas</strong>, com os graus de liberdade e a largura do intervalo das duas análises anotados lado a lado em comentário;</li>
-<li>em comentários, 3 a 4 frases respondendo, <strong>com os seus números</strong>: o que mudou e o que <strong>não</strong> mudou ao usar a régua errada, no seu nutriente?</li>
-<li>em comentários, mais 2 frases comparando o <strong>seu</strong> nutriente com o fosfato: qual dos dois experimentos estimou o efeito das algas com mais precisão? Responda pela largura dos dois intervalos, lembrando que eles estão em unidades diferentes — diga então por que essa comparação exige cuidado.</li>
-</ol>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="O que será avaliado">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>O que será avaliado
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul class="task-list">
-<li><label><input type="checkbox">o script roda em sessão nova, do início ao fim, sem erro;</label></li>
-<li><label><input type="checkbox">a previsão sobre o valor de p aparece <strong>antes</strong> do teste;</label></li>
-<li><label><input type="checkbox">a escolha do nutriente está registrada e a conclusão corresponde ao <strong>sinal</strong> do intervalo dele;</label></li>
-<li><label><input type="checkbox">a conclusão do item 2 cita os limites do intervalo, e não apenas “significativo”;</label></li>
-<li><label><input type="checkbox">os graus de liberdade das duas análises aparecem comparados explicitamente;</label></li>
-<li><label><input type="checkbox">a comparação do item 5 usa as larguras dos intervalos e reconhece a diferença de unidades;</label></li>
-<li><label><input type="checkbox">cada gráfico tem eixos com nome e unidade.</label></li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Para levar adiante (fora da entrega)">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Para levar adiante (fora da entrega)
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>A leitura desta semana estimou o <strong>poder</strong> de um experimento por simulação. Com os 6 mesocosmos por grupo deste estudo, você pode repetir aquele cálculo trocando o tamanho do efeito:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>efeito <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">t.test</span>(<span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">rnorm</span>(<span class="dv">6</span>, efeito, <span class="dv">1</span>))<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Tente alguns valores de <code>efeito</code> e veja a partir de qual deles este delineamento passaria a detectar o efeito em cerca de 80% das vezes. O resultado costuma surpreender.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Leitura adicional">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Leitura adicional
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><a href="https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html" target="_blank">Comparando médias: teste t de Student</a> (MEAD) — procure a seção sobre o teste para duas amostras independentes e a versão de Welch, que é a que o R usa por padrão.</li>
-</ul>
-</div>
-</div>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1187,215 +844,24 @@ sample estimates:
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Código fonte</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "As algas mudam a concentração de fosfato?"</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 06"</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="fu"># Objetivo desta prática</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>A <span class="co">[</span><span class="ot">leitura desta semana</span><span class="co">](../pre-reading/pread-erros-poder.qmd)</span> apresentou o teste t e lembrou o que ele **não** faz, que é verificar se as unidades sobre as quais você o aplicou são de fato as unidades experimentais. "Essa parte continua sendo sua", diz a leitura.</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>Hoje ela é sua, com dados reais. Você vai decidir qual é a unidade experimental de um experimento em mesocosmos, conduzir a comparação no nível certo e depois fazer deliberadamente a análise errada, para medir o que exatamente ela alega a mais.</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>O objetivo em R é reduzir dados ao nível da unidade experimental e ler a saída completa de <span class="in">`t.test()`</span>, com intervalo de confiança.</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" title="Como a hora será usada"}</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5 min** abrir o RStudio, criar o script e ler a proposta;</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**40 a 45 min** percorrer as seções guiadas e fazer o bloco *Sua vez*;</span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10 a 15 min** escrever as respostas, rodar o script do início ao fim e enviar.</span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preparação</span></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>Crie um script <span class="in">`pr-dois-grupos.R`</span> com o cabeçalho de identificação e comece por:</span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>))</span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Quantas unidades experimentais existem?</span></span>
-<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>Um experimento investigou como a presença de algas afeta a concentração de nutrientes na água. Mesocosmos receberam ou não algas, e a concentração de três nutrientes foi medida em cada um.</span>
-<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/FCopf/datasets/refs/heads/main/zuur-2009-data-sets/Biodiversity.txt"</span></span>
-<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>biodiv <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(biodiv)</span>
-<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a><span class="in">`MU`</span> identifica a unidade medida, <span class="in">`Treatment`</span> indica a presença de algas, <span class="in">`Nutrient`</span> o nutriente e <span class="in">`Concentration`</span> a concentração observada.</span>
-<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>Antes de qualquer teste, vem a pergunta obrigatória da Prática 04. Quantas vezes o tratamento foi de fato aplicado?</span>
-<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(biodiv)</span>
-<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a><span class="fu">n_distinct</span>(biodiv<span class="sc">$</span>MU)</span>
-<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>biodiv <span class="sc">|&gt;</span> <span class="fu">count</span>(MU) <span class="sc">|&gt;</span> <span class="fu">count</span>(n, <span class="at">name =</span> <span class="st">"quantas_unidades"</span>)</span>
-<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>São 108 linhas para 36 unidades, ou seja, **cada unidade foi medida três vezes**. Essas três medidas descrevem bem aquela unidade, mas não são repetições independentes do tratamento. É a ela que reduzimos os dados antes de analisar:</span>
-<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>mesocosmos <span class="ot">&lt;-</span> biodiv <span class="sc">|&gt;</span></span>
-<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(MU, Treatment, Nutrient) <span class="sc">|&gt;</span></span>
-<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">concentracao =</span> <span class="fu">mean</span>(Concentration), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>mesocosmos <span class="sc">|&gt;</span> <span class="fu">count</span>(Treatment, Nutrient)</span>
-<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>Trinta e seis unidades, seis em cada combinação de tratamento e nutriente.</span>
-<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a><span class="fu"># A comparação no nível certo</span></span>
-<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a>Vamos começar por um nutriente só, o fosfato:</span>
-<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>fosfato <span class="ot">&lt;-</span> mesocosmos <span class="sc">|&gt;</span> <span class="fu">filter</span>(Nutrient <span class="sc">==</span> <span class="st">"PO3"</span>)</span>
-<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a>fosfato <span class="sc">|&gt;</span></span>
-<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">|&gt;</span></span>
-<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">mean</span>(concentracao), <span class="at">desvio =</span> <span class="fu">sd</span>(concentracao))</span>
-<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-fosfato-grupos</span></span>
-<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Concentração de fosfato nos mesocosmos com e sem algas. Cada ponto é uma unidade experimental."</span></span>
-<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3.4</span></span>
-<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fosfato, <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> concentracao)) <span class="sc">+</span></span>
-<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.12</span>, <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">colour =</span> <span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
-<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tratamento"</span>, <span class="at">y =</span> <span class="st">"Concentração de fosfato"</span>)</span>
-<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Preveja"}</span>
-<span id="cb20-113"><a href="#cb20-113" aria-hidden="true" tabindex="-1"></a>Olhe a @fig-fosfato-grupos. As duas nuvens se sobrepõem? A diferença entre elas parece grande em relação ao espalhamento dentro de cada grupo?</span>
-<span id="cb20-114"><a href="#cb20-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-115"><a href="#cb20-115" aria-hidden="true" tabindex="-1"></a>Escreva no script, como comentário, se você espera um valor de p **abaixo ou acima de 0,05**, e faça isso **antes** de rodar o teste.</span>
-<span id="cb20-116"><a href="#cb20-116" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-117"><a href="#cb20-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-118"><a href="#cb20-118" aria-hidden="true" tabindex="-1"></a>A fórmula <span class="in">`concentracao ~ Treatment`</span> lê-se "concentração **em função de** tratamento". É a notação que usaremos em todos os modelos daqui em diante.</span>
-<span id="cb20-119"><a href="#cb20-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-120"><a href="#cb20-120" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
-<span id="cb20-121"><a href="#cb20-121" aria-hidden="true" tabindex="-1"></a>No bloco abaixo falta a variável que separa os dois grupos.</span>
-<span id="cb20-122"><a href="#cb20-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-123"><a href="#cb20-123" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb20-124"><a href="#cb20-124" aria-hidden="true" tabindex="-1"></a>teste <span class="ot">&lt;-</span> <span class="fu">t.test</span>(concentracao <span class="sc">~</span> ____, <span class="at">data =</span> fosfato)</span>
-<span id="cb20-125"><a href="#cb20-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-126"><a href="#cb20-126" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-127"><a href="#cb20-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-130"><a href="#cb20-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-131"><a href="#cb20-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a>teste <span class="ot">&lt;-</span> <span class="fu">t.test</span>(concentracao <span class="sc">~</span> Treatment, <span class="at">data =</span> fosfato)</span>
-<span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a>teste</span>
-<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>A saída traz, em ordem, a estatística <span class="in">`t`</span>, os **graus de liberdade**, o valor de p, o intervalo de confiança de 95% para a diferença entre as médias e as duas médias.</span>
-<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Observe os graus de liberdade"}</span>
-<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a>Com 6 unidades em cada grupo, os graus de liberdade ficam em torno de 10. Eles não são um detalhe técnico, e sim a contabilidade de **quanta informação independente** o teste acredita ter recebido.</span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>Guarde esse número. Ele volta no bloco *Sua vez*.</span>
-<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a><span class="fu"># Sua vez</span></span>
-<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Outro nutriente, outra conclusão?</span></span>
-<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a>O conjunto tem três nutrientes, que são <span class="in">`PO3`</span>, <span class="in">`NH4`</span> e <span class="in">`NO3`</span>. Você analisou o primeiro.</span>
-<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Escolha"}</span>
-<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a>Escolha **um** dos outros dois e refaça a análise inteira para ele, com o <span class="in">`filter()`</span>, a tabela de médias, o gráfico e o teste. Registre a escolha no script.</span>
-<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a>Não copie a conclusão do fosfato. Olhe o **sinal** do intervalo de confiança do seu nutriente antes de escrever qualquer frase.</span>
-<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a>Escreva a conclusão do seu nutriente em uma frase que use o **intervalo**, não apenas a palavra "significativo": ele está na unidade da resposta e diz de quanto é a diferença, com que incerteza.</span>
-<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## O preço de usar a régua errada</span></span>
-<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a>Agora faça de propósito o que a Prática 04 ensinou a evitar e rode o mesmo teste sobre as **108 linhas originais**, sem reduzir aos mesocosmos, para o seu nutriente.</span>
-<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Complete"}</span>
-<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>Atenção a um detalhe. Em <span class="in">`biodiv`</span> a coluna da resposta chama-se <span class="in">`Concentration`</span>, e não <span class="in">`concentracao`</span>, porque este segundo nome só passou a existir depois do <span class="in">`summarise()`</span>.</span>
-<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a>biodiv_nutriente <span class="ot">&lt;-</span> biodiv <span class="sc">|&gt;</span> <span class="fu">filter</span>(Nutrient <span class="sc">==</span> <span class="st">"____"</span>)</span>
-<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(____ <span class="sc">~</span> Treatment, <span class="at">data =</span> biodiv_nutriente)</span>
-<span id="cb20-174"><a href="#cb20-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-175"><a href="#cb20-175" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-176"><a href="#cb20-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-177"><a href="#cb20-177" aria-hidden="true" tabindex="-1"></a>Compare as duas saídas e anote:</span>
-<span id="cb20-178"><a href="#cb20-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-179"><a href="#cb20-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>os **graus de liberdade** de cada uma;</span>
-<span id="cb20-180"><a href="#cb20-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>quantas unidades independentes por grupo cada análise está alegando ter;</span>
-<span id="cb20-181"><a href="#cb20-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>a **largura** dos dois intervalos de confiança.</span>
-<span id="cb20-182"><a href="#cb20-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-183"><a href="#cb20-183" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="minimal" title="Nem todo sintoma aparece no valor de p"}</span>
-<span id="cb20-184"><a href="#cb20-184" aria-hidden="true" tabindex="-1"></a>Neste conjunto de dados o efeito das algas é grande, e o valor de p continua minúsculo nas duas análises. Isso não absolve a análise errada.</span>
-<span id="cb20-185"><a href="#cb20-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-186"><a href="#cb20-186" aria-hidden="true" tabindex="-1"></a>O sintoma confiável está nos graus de liberdade, porque a análise sobre 108 linhas alega ter três vezes mais unidades independentes do que o experimento produziu. Em um estudo com efeito menor, é exatamente essa alegação a mais que transforma ruído em "descoberta".</span>
-<span id="cb20-187"><a href="#cb20-187" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-188"><a href="#cb20-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-189"><a href="#cb20-189" aria-hidden="true" tabindex="-1"></a><span class="fu"># Entrega</span></span>
-<span id="cb20-190"><a href="#cb20-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-191"><a href="#cb20-191" aria-hidden="true" tabindex="-1"></a>Salve o script <span class="in">`pr-dois-grupos.R`</span> com o cabeçalho preenchido. Antes de enviar, reinicie o R (*Session → Restart R*) e execute o script inteiro uma vez. As respostas escritas vão no próprio script, como comentários iniciados por <span class="in">`#`</span>.</span>
-<span id="cb20-192"><a href="#cb20-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-193"><a href="#cb20-193" aria-hidden="true" tabindex="-1"></a>::: {.callout-important appearance="minimal" title="Entregue"}</span>
-<span id="cb20-194"><a href="#cb20-194" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>a base da aula: a contagem que justifica a redução às 36 unidades, o gráfico do fosfato e o teste, com a sua previsão sobre o valor de p registrada em comentário **antes** dele;</span>
-<span id="cb20-195"><a href="#cb20-195" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**a análise completa do nutriente que você escolheu**: tabela de médias, gráfico e teste, com uma frase de conclusão escrita a partir do **intervalo de confiança**, na unidade da resposta;</span>
-<span id="cb20-196"><a href="#cb20-196" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**o mesmo teste feito sobre as 108 linhas**, com os graus de liberdade e a largura do intervalo das duas análises anotados lado a lado em comentário;</span>
-<span id="cb20-197"><a href="#cb20-197" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>em comentários, 3 a 4 frases respondendo, **com os seus números**: o que mudou e o que **não** mudou ao usar a régua errada, no seu nutriente?</span>
-<span id="cb20-198"><a href="#cb20-198" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>em comentários, mais 2 frases comparando o **seu** nutriente com o fosfato: qual dos dois experimentos estimou o efeito das algas com mais precisão? Responda pela largura dos dois intervalos, lembrando que eles estão em unidades diferentes — diga então por que essa comparação exige cuidado.</span>
-<span id="cb20-199"><a href="#cb20-199" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-200"><a href="#cb20-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-201"><a href="#cb20-201" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="O que será avaliado"}</span>
-<span id="cb20-202"><a href="#cb20-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> o script roda em sessão nova, do início ao fim, sem erro;</span>
-<span id="cb20-203"><a href="#cb20-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a previsão sobre o valor de p aparece **antes** do teste;</span>
-<span id="cb20-204"><a href="#cb20-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a escolha do nutriente está registrada e a conclusão corresponde ao **sinal** do intervalo dele;</span>
-<span id="cb20-205"><a href="#cb20-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a conclusão do item 2 cita os limites do intervalo, e não apenas "significativo";</span>
-<span id="cb20-206"><a href="#cb20-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> os graus de liberdade das duas análises aparecem comparados explicitamente;</span>
-<span id="cb20-207"><a href="#cb20-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> a comparação do item 5 usa as larguras dos intervalos e reconhece a diferença de unidades;</span>
-<span id="cb20-208"><a href="#cb20-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> cada gráfico tem eixos com nome e unidade.</span>
-<span id="cb20-209"><a href="#cb20-209" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-210"><a href="#cb20-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-211"><a href="#cb20-211" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal" collapse="true" title="Para levar adiante (fora da entrega)"}</span>
-<span id="cb20-212"><a href="#cb20-212" aria-hidden="true" tabindex="-1"></a>A leitura desta semana estimou o **poder** de um experimento por simulação. Com os 6 mesocosmos por grupo deste estudo, você pode repetir aquele cálculo trocando o tamanho do efeito:</span>
-<span id="cb20-213"><a href="#cb20-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-214"><a href="#cb20-214" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb20-215"><a href="#cb20-215" aria-hidden="true" tabindex="-1"></a>efeito <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb20-216"><a href="#cb20-216" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">t.test</span>(<span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">rnorm</span>(<span class="dv">6</span>, efeito, <span class="dv">1</span>))<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>))</span>
-<span id="cb20-217"><a href="#cb20-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-218"><a href="#cb20-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-219"><a href="#cb20-219" aria-hidden="true" tabindex="-1"></a>Tente alguns valores de <span class="in">`efeito`</span> e veja a partir de qual deles este delineamento passaria a detectar o efeito em cerca de 80% das vezes. O resultado costuma surpreender.</span>
-<span id="cb20-220"><a href="#cb20-220" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-221"><a href="#cb20-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-222"><a href="#cb20-222" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="minimal" title="Leitura adicional"}</span>
-<span id="cb20-223"><a href="#cb20-223" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Comparando médias: teste t de Student</span><span class="co">](https://fcopf.github.io/mead/content/teste-hipoteses/teste-t.html)</span>{target="_blank"} (MEAD) — procure a seção sobre o teste para duas amostras independentes e a versão de Welch, que é a que o R usa por padrão.</span>
-<span id="cb20-224"><a href="#cb20-224" aria-hidden="true" tabindex="-1"></a>:::</span>
-</code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "...."</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Prática em R 06"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Prof. Fabio Cop (*fcferreira@unifesp.br*)"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  - "Instituto do Mar - Unifesp"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> pt-BR</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="an">language:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-single: ""</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">  title-block-author-plural: ""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Conteúdo"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

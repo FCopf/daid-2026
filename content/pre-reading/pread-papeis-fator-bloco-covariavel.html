@@ -414,7 +414,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">13 de agosto de 2026</p>
+      <p class="date">14 de agosto de 2026</p>
     </div>
   </div>
   
@@ -550,16 +550,16 @@ Y_i=\beta_0+\beta_1X_i+\alpha_{g(i)}+\varepsilon_i.
 <pre><code># A tibble: 10 × 3
    modelo     termo            estimativa
    &lt;chr&gt;      &lt;chr&gt;                 &lt;dbl&gt;
- 1 bloco      (Intercept)           23.3 
- 2 bloco      grupotratado           2.31
- 3 bloco      factor(bandeja)2       4.61
- 4 bloco      factor(bandeja)3       9.25
- 5 bloco      factor(bandeja)4      13.4 
- 6 bloco      factor(bandeja)5      17.3 
- 7 bloco      factor(bandeja)6      20.6 
- 8 covariável (Intercept)            5.22
- 9 covariável grupotratado           3.04
-10 covariável peso_inicial           1.08</code></pre>
+ 1 bloco      (Intercept)           22.7 
+ 2 bloco      grupotratado           3.78
+ 3 bloco      factor(bandeja)2       3.99
+ 4 bloco      factor(bandeja)3       6.89
+ 5 bloco      factor(bandeja)4      14.0 
+ 6 bloco      factor(bandeja)5      16.3 
+ 7 bloco      factor(bandeja)6      22.1 
+ 8 covariável (Intercept)            3.82
+ 9 covariável grupotratado           3.60
+10 covariável peso_inicial           1.14</code></pre>
 </div>
 </div>
 <p>No modelo com bloco, cada bandeja recebe seu próprio coeficiente, e são cinco deles para seis bandejas. No modelo com covariável, uma única inclinação descreve o efeito do peso inicial em toda a faixa medida. Em ambos, o coeficiente de <code>grupo</code> é o que responde à pergunta do estudo, e vale cerca de 3 unidades, como esperado pela construção dos dados.</p>
@@ -606,7 +606,7 @@ Figura&nbsp;2: Relação parcial entre temperatura e crescimento depois de retir
 </div>
 </div>
 </div>
-<p>A inclinação da reta da figura é 0,198, e o coeficiente de <code>temperatura</code> no modelo múltiplo é 0,198. As duas coincidem, e essa coincidência é o conteúdo da expressão “controlar por”: comparar a parte de <span class="math inline">\(X_1\)</span> que ainda varia depois do ajuste, e não apagar magicamente diferenças entre unidades.</p>
+<p>A inclinação da reta da figura é 0,604, e o coeficiente de <code>temperatura</code> no modelo múltiplo é 0,604. As duas coincidem, e essa coincidência é o conteúdo da expressão “controlar por”: comparar a parte de <span class="math inline">\(X_1\)</span> que ainda varia depois do ajuste, e não apagar magicamente diferenças entre unidades.</p>
 </section>
 </section>
 <section id="quando-uma-covariável-não-serve-para-ajustar" class="level1" data-number="5">

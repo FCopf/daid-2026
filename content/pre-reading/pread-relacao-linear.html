@@ -435,7 +435,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">13 de agosto de 2026</p>
+      <p class="date">14 de agosto de 2026</p>
     </div>
   </div>
   
@@ -540,19 +540,19 @@ Call:
 lm(formula = riqueza ~ altura, data = dados_precisos)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--2.01385 -0.67680 -0.05096  0.74612  1.94142 
+    Min      1Q  Median      3Q     Max 
+-2.6825 -0.6500 -0.2725  0.7720  2.5187 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   6.7529     0.1441   46.85   &lt;2e-16 ***
-altura       -2.7756     0.1095  -25.34   &lt;2e-16 ***
+(Intercept)   6.5256     0.1565   41.70   &lt;2e-16 ***
+altura       -2.8699     0.1167  -24.59   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.9899 on 58 degrees of freedom
-Multiple R-squared:  0.9171,    Adjusted R-squared:  0.9157 
-F-statistic:   642 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.055 on 58 degrees of freedom
+Multiple R-squared:  0.9124,    Adjusted R-squared:  0.9109 
+F-statistic: 604.5 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <details class="code-fold">
 <summary>Ver o ajuste da reta em R</summary>
@@ -560,8 +560,8 @@ F-statistic:   642 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
-(Intercept)  6.464446  7.041448
-altura      -2.994877 -2.556321</code></pre>
+(Intercept)  6.212424  6.838841
+altura      -3.103574 -2.636256</code></pre>
 </div>
 </div>
 <p><code>lm()</code> estima os coeficientes, <code>summary()</code> informa erros padrão, testes e <span class="math inline">\(R^2\)</span>, e <code>confint()</code> fornece intervalos para os parâmetros. Como os dados foram gerados com intercepto 6,7 e inclinação -2,9, as estimativas devem ficar próximas desses valores, e os intervalos de confiança quase sempre os contêm.</p>
@@ -750,7 +750,7 @@ Figura&nbsp;5: Relação espécie-área em escala original e logarítmica. A cur
 </div>
 </div>
 </div>
-<p>A inclinação estimada na escala logarítmica foi 0,33, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta, porque <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
+<p>A inclinação estimada na escala logarítmica foi 0,31, próxima do valor 0,32 usado para gerar os dados. Transformações também podem estabilizar a variância, mas mudam a escala da interpretação e exigem valores compatíveis com o logaritmo. Elas devem representar o processo, não funcionar como tentativa automática de melhorar o valor de p.&nbsp;Há ainda um detalhe na volta, porque <span class="math inline">\(\exp(\widehat{\log Y})\)</span> estima a mediana condicional sob erro log-normal, não necessariamente a média, de modo que previsões médias podem exigir correção de retransformação. A transformação é parte do modelo probabilístico e da interpretação, não um ajuste cosmético.</p>
 </section>
 </section>
 <section id="duas-incertezas-de-previsão" class="level1" data-number="5">

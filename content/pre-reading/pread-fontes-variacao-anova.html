@@ -413,7 +413,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">13 de agosto de 2026</p>
+      <p class="date">14 de agosto de 2026</p>
     </div>
   </div>
   
@@ -672,7 +672,7 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 </div>
 </div>
 </div>
-<p>A linha da <a href="#fig-distribuicao-f" class="quarto-xref">Figura&nbsp;2</a> marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 4,4% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
+<p>A linha da <a href="#fig-distribuicao-f" class="quarto-xref">Figura&nbsp;2</a> marca 2,95, o valor acima do qual ficam os 5% maiores <span class="math inline">\(F\)</span> quando não há efeito nenhum. Nesta simulação, 5,4% dos 3000 experimentos passaram dessa marca, próximo dos 5% esperados. É essa raridade que o valor de p quantifica.</p>
 <p>A distribuição F depende de dois graus de liberdade, sendo <span class="math inline">\(k-1\)</span> no numerador e <span class="math inline">\(N-k\)</span> no denominador. Ela assume apenas valores não negativos e tem cauda à direita. O valor de p é a área dessa distribuição a partir do F observado. Sob <span class="math inline">\(H_0\)</span>, numerador e denominador estimam a mesma variância residual, e quando as médias diferem, o numerador incorpora também a separação entre grupos.</p>
 <p>Na prática, uma única função reúne toda a tabela:</p>
 <div class="cell">
@@ -688,8 +688,8 @@ Figura&nbsp;2: Valores de F obtidos em 3000 experimentos simulados sem nenhum ef
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-grupo        3  4.018  1.3393   64.51 1.08e-12 ***
-Residuals   28  0.581  0.0208                     
+grupo        3  3.438  1.1461   90.25 1.67e-14 ***
+Residuals   28  0.356  0.0127                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
